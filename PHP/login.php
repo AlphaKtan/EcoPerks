@@ -86,4 +86,4 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     // メール送信
     return mail($to, $subject, $message, $headers);
 }
-?>
+
