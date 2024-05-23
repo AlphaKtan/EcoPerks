@@ -1,0 +1,61 @@
+<!-- 顧客登録 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アカウント登録</title>
+</head>
+<body>
+    <h1>ご登録が完了した場合ログインページへ移動します。</h1>
+    <form action="PHP/form.php" method="post">
+        <div>
+            <label for="first_name_kanji">姓漢字Firstname</label>
+            <input type="text" id="first_name_kanji" name="first_name_kanji" required>
+        </div>
+        <div>
+            <label for="first_name_furigana">姓フリガナFirstnameJapanFurigana</label>
+            <input type="text" id="first_name_furigana" name="first_name_furigana" required>
+        </div>
+        <div>
+            <label for="last_name_kanji">名漢字Lastname</label>
+            <input type="text" id="last_name_kanji" name="last_name_kanji" required>
+        </div>
+        <div>
+            <label for="last_name_furigana">名フリガナlastnameJapanFurigana</label>
+            <input type="text" id="last_name_furigana" name="last_name_furigana" required>
+        </div>
+        <div>
+            <label for="phonenumber">電話番号phonenumber</label>
+            <input type="tel" id="phonenumber" name="phonenumber" required>
+        </div>
+        <div>
+            <label for="email">メールアドレスmail</label>
+            <input type="mail" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="postal_code">郵便番号postalcode</label>
+            <input type="text" id="postal_code" name="postal_code" required>
+        </div>
+        <div>
+            <label for="address">住所address</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+        <div>
+            <label for="userName">ユーザーネームusername</label>
+            <input type="text" id="userName" name="userName" required>
+        </div>
+        <div>
+            <label for="password">パスワードpassword</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="rePassword">再パスワードRePassword</label>
+            <input type="password" id="rePassword" name="rePassword" required>
+        </div>
+        <button type="submit">登録 Click</button>
+    </form>
+    
+</body>
+</html>
+
