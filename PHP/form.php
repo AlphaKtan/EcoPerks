@@ -1,10 +1,12 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
+
 $servername = "mysql305.phy.lolipop.lan";
 $username = "LAA1516370";
-$password = "Piitasu2024";
-$dbname = "LAA1516370-piitasu";
+$password = "ecoperks2024";
+$dbname = "LAA1516370-ecoperks";
+
 
 // フォームからのデータを取得
 $providedUsername = isset($_POST["userName"]) ? $_POST["userName"] : ''; //ユーザー名

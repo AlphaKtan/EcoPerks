@@ -8,7 +8,7 @@ date_default_timezone_set('Asia/Tokyo');
 
 $servername = "mysql305.phy.lolipop.lan";
 $username = "LAA1516370";
-$password = "ecoperks2025";
+$password = "ecoperks2024";
 $dbname = "LAA1516370-ecoperks";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
