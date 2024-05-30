@@ -1,24 +1,20 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
-
 $servername = "mysql305.phy.lolipop.lan";
 $username = "LAA1516370";
 $password = "ecoperks2024";
 $dbname = "LAA1516370-ecoperks";
 
-
 // フォームからのデータを取得
-$providedUsername = isset($_POST["userName"]) ? $_POST["userName"] : ''; //ユーザー名
-$providedPassword = isset($_POST["password"]) ? $_POST["password"] : ''; //パスワード
-$providedEmail = isset($_POST["email"]) ? $_POST["email"] : '';  //メールアドレス
-$first_name_kanji = isset($_POST["first_name_kanji"]) ? $_POST["first_name_kanji"] : '';  //　姓漢字
-$first_name_furigana = isset($_POST["first_name_furigana"]) ? $_POST["first_name_furigana"] : ''; //姓フリガナ
-$last_name_kanji = isset($_POST["last_name_kanji"]) ? $_POST["last_name_kanji"] : ''; //名前漢字
-$last_name_furigana = isset($_POST["last_name_furigana"]) ? $_POST["last_name_furigana"] : ''; //名前フリガナ
-$address = isset($_POST["address"]) ? $_POST["address"] : '';  //住所
-$postal_code = isset($_POST["postal_code"]) ? $_POST["postal_code"] : ''; //郵便番号
-$phone_number = isset($_POST["phonenumber"]) ? $_POST["phonenumber"] : '';  //電話番号
+$providedUsername = $_POST["userName"] ?? ''; //ユーザー名
+$providedPassword = $_POST["password"] ?? ''; //パスワード
+$providedEmail = $_POST["email"] ?? '';  //メールアドレス
+$first_name_kanji = $_POST["first_name_kanji"] ?? '';  //姓漢字
+$first_name_furigana = $_POST["first_name_furigana"] ?? ''; //姓フリガナ
+$last_name_kanji = $_POST["last_name_kanji"] ?? ''; //名前漢字
+$last_name_furigana = $_POST["last_name_furigana"] ?? ''; //名前フリガナ
+$phone_number = $_POST["phonenumber"] ?? '';  //電話番号
 
 // ハッシュ化 SHA-256
 $hashedPassword = hash("sha256", $providedPassword);
@@ -61,8 +57,8 @@ try {
     $stmtUser->close();
 
     // 顧客テーブルへの挿入クエリ
-    $stmtCustomer = $mysqli->prepare("INSERT INTO users_kokyaku (user_id, first_name_kanji, first_name_furigana, last_name_kanji, last_name_furigana, address, postal_code, phone_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmtCustomer->bind_param("isssssss", $user_id, $first_name_kanji, $first_name_furigana, $last_name_kanji, $last_name_furigana, $address, $postal_code, $phone_number);
+    $stmtCustomer = $mysqli->prepare("INSERT INTO users_kokyaku (user_id, first_name_kanji, first_name_furigana, last_name_kanji, last_name_furigana, phone_number) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmtCustomer->bind_param("isssss", $user_id, $first_name_kanji, $first_name_furigana, $last_name_kanji, $last_name_furigana, $phone_number);
 
     // 顧客テーブルに挿入
     if (!$stmtCustomer->execute()) {
@@ -83,8 +79,6 @@ try {
 
     // エラーメッセージの表示
     echo "エラー: " . $e->getMessage();
-    // リダイレクト
-    header("Location: ../form.html");
-    exit();
+    // エラーメッセージを表示した後、リダイレクトを削除
 }
-
+?>

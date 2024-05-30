@@ -17,10 +17,11 @@ CREATE TABLE users_kokyaku (
     first_name_furigana VARCHAR(255) NOT NULL,
     last_name_kanji VARCHAR(255) NOT NULL,
     last_name_furigana VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    postal_code VARCHAR(10) NOT NULL,
     phone_number VARCHAR(20) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- 
+
+
+--address VARCHAR(255) NOT NULL, 
+--  postal_code VARCHAR(10) NOT NULL,
