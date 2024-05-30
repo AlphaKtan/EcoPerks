@@ -23,4 +23,4 @@ CREATE TABLE users_kokyaku (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-
+-- 
