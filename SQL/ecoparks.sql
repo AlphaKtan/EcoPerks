@@ -8,7 +8,7 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL
 );
 
--- 顧客情報（機密性が高い情報：住所や電話番号が含まれます。）
+-- 顧客情報（機密性が高い情報：電話番号が含まれます。）
 
 CREATE TABLE users_kokyaku (
     id INT AUTO_INCREMENT PRIMARY KEY,
