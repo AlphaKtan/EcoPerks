@@ -8,10 +8,10 @@ date_default_timezone_set('Asia/Tokyo');
 
 $servername = "mysql305.phy.lolipop.lan";
 $username = "LAA1516370";
-$password = "ecoperks2024";
+$providedPassword = "ecoperks2024";
 $dbname = "LAA1516370-ecoperks";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $providedPassword, $dbname);
 
 if ($conn->connect_error) {
     die("データベースに接続できないよ？ちゃんとみなおしてよね(-V-): " . $conn->connect_error);
@@ -19,18 +19,18 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $providedUsername = isset($_POST["providedUsername"]) ? $_POST["providedUsername"] : '';
-    $providedPassword = isset($_POST["providedPassword"]) ? $_POST["providedPassword"] : '';
+    $providedprovidedPassword = isset($_POST["providedprovidedPassword"]) ? $_POST["providedprovidedPassword"] : '';
 
-    $getHashedPasswordSql = "SELECT password FROM users WHERE username = '$providedUsername'";
-    $getHashedPasswordResult = $conn->query($getHashedPasswordSql);
+    $getHashedprovidedPasswordSql = "SELECT providedPassword FROM users WHERE username = '$providedUsername'";
+    $getHashedprovidedPasswordResult = $conn->query($getHashedprovidedPasswordSql);
 
-    if ($getHashedPasswordResult->num_rows > 0) {
-        $userRow = $getHashedPasswordResult->fetch_assoc();
-        $storedHashedPassword = $userRow['password'];
+    if ($getHashedprovidedPasswordResult->num_rows > 0) {
+        $userRow = $getHashedprovidedPasswordResult->fetch_assoc();
+        $storedHashedprovidedPassword = $userRow['providedPassword'];
                 //SHA256でハッシュ化
-        $hashedPassword = hash("sha256", $providedPassword);
+        $hashedprovidedPassword = hash("sha256", $providedprovidedPassword);
 
-        if (hash_equals($storedHashedPassword, $hashedPassword)) {
+        if (hash_equals($storedHashedprovidedPassword, $hashedprovidedPassword)) {
             // ログイン成功
 
             // 6桁の2ファクタ認証コード生成
