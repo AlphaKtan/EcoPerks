@@ -1,53 +1,46 @@
 <!doctype html>
-<html lang = "ja">
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-  rel="stylesheet"
-  href="#"
-/>
-<link rel="stylesheet" href="css/login_style.css">
-<link href="css/style.css" rel="stylesheet" type="text/css">
-<title>ログイン</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/login_style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>ログイン</title>
 </head>
-
 <body>
 <header>
-	<h1><a href="#">ロゴマーク</a></h1>
-	<nav class = "menu_flex">
-	<div class = "top_menu_left">
-	<ul>
-		<li><a href="form.html">アカウント登録</a></li>
-		<li><a href="">テキスト</a></li>
-		<li><a href="">テキスト</a></li>
-		<li><a href="">テキスト</a></li>
-	</ul>		
-	</div>
-		<div class = "top_menu_right">
-	<ul>
-		<li><a href="">Login</a></li>	
-	</ul>
-			</nav>
+    <h1><a href="#">ロゴマーク</a></h1>
+    <nav class="menu_flex">
+        <div class="top_menu_left">
+            <ul>
+                <li><a href="form.html">アカウント登録</a></li>
+                <li><a href="#">テキスト</a></li>
+                <li><a href="#">テキスト</a></li>
+                <li><a href="#">テキスト</a></li>
+            </ul>        
+        </div>
+        <div class="top_menu_right">
+            <ul>
+                <li><a href="#">Login</a></li>    
+            </ul>
+        </div>
+    </nav>
 </header>
 
-	<section class="login_form">
-	<h1>アカウントにサインアップ</h1>
+<section class="login_form">
+    <h1>アカウントにサインアップ</h1>
     <form action="php/login.php" method="post">
         <div class="form-group">
-            <label for="login_id">ログインID</label>
-            <input type="user"  name="providedUsername" required>
+            <label for="providedUsername">ログインID</label>
+            <input type="text" name="providedUsername" required>
         </div>
         <div class="form-group">
-            <label for="providedPassword">PASS</label>
-            <input type="providedPassword" name="providedprovidedPassword" required>
+            <label for="providedPassword">パスワード</label>
+            <input type="password" name="providedPassword" required>
         </div>
         <button type="submit">続行</button>
-		
     </form>
-<p>続行すると、利用規約とプライバシーポリシーを理解し、同意したことになります。</p>
+    <p>続行すると、利用規約とプライバシーポリシーを理解し、同意したことになります。</p>
 </section>
 </body>
 </html>
-
-

@@ -1,37 +1,51 @@
 <?php
-session_start();
+// セッションが開始されていない場合のみセッションを開始
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 session_regenerate_id(true);
 
 header('Content-Type: text/html; charset=utf-8');
-
 date_default_timezone_set('Asia/Tokyo');
 
 $servername = "mysql305.phy.lolipop.lan";
 $username = "LAA1516370";
-$providedPassword = "ecoperks2024";
+$password = "ecoperks2024";
 $dbname = "LAA1516370-ecoperks";
 
-$conn = new mysqli($servername, $username, $providedPassword, $dbname);
-
+// データベース接続
+$conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-    die("データベースに接続できないよ？ちゃんとみなおしてよね(-V-): " . $conn->connect_error);
+    die("データベースに接続できない: " . $conn->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $providedUsername = isset($_POST["providedUsername"]) ? $_POST["providedUsername"] : '';
-    $providedprovidedPassword = isset($_POST["providedprovidedPassword"]) ? $_POST["providedprovidedPassword"] : '';
+    $providedPassword = isset($_POST["providedPassword"]) ? $_POST["providedPassword"] : '';
 
-    $getHashedprovidedPasswordSql = "SELECT providedPassword FROM users WHERE username = '$providedUsername'";
-    $getHashedprovidedPasswordResult = $conn->query($getHashedprovidedPasswordSql);
+    // 準備されたステートメントを使用してSQLインジェクション対策
+    $stmt = $conn->prepare("SELECT providedPassword FROM users WHERE username = ?");
+    $stmt->bind_param("s", $providedUsername);
+    $stmt->execute();
+    $stmt->store_result();
 
-    if ($getHashedprovidedPasswordResult->num_rows > 0) {
-        $userRow = $getHashedprovidedPasswordResult->fetch_assoc();
-        $storedHashedprovidedPassword = $userRow['providedPassword'];
-                //SHA256でハッシュ化
-        $hashedprovidedPassword = hash("sha256", $providedprovidedPassword);
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($storedHashedPassword);
+        $stmt->fetch();
 
-        if (hash_equals($storedHashedprovidedPassword, $hashedprovidedPassword)) {
+        // SHA256でハッシュ化
+        $hashedPassword = hash("sha256", $providedPassword);
+
+        if (hash_equals($storedHashedPassword, $hashedPassword)) {
             // ログイン成功
+
+            // QRコードの特別なパラメータを確認
+            if (isset($_GET['skip2fa']) && $_GET['skip2fa'] === 'true') {
+                // 2FAをスキップ
+                $_SESSION['username'] = $providedUsername;
+                header("Location: dashboard.php"); // 2FAなしでダッシュボードにリダイレクト
+                exit;
+            }
 
             // 6桁の2ファクタ認証コード生成
             $verificationCode = sprintf("%06d", mt_rand(0, 999999));
@@ -41,17 +55,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $providedUsername;
 
             // ユーザーのメールアドレスをデータベースから取得
-            $getUserEmailSql = "SELECT email FROM users WHERE username = '$providedUsername'";
-            $userEmailResult = $conn->query($getUserEmailSql);
+            $stmt = $conn->prepare("SELECT email FROM users WHERE username = ?");
+            $stmt->bind_param("s", $providedUsername);
+            $stmt->execute();
+            $stmt->store_result();
 
-            if ($userEmailResult->num_rows > 0) {
-                $userEmailRow = $userEmailResult->fetch_assoc();
-                $userEmail = $userEmailRow['email'];
+            if ($stmt->num_rows > 0) {
+                $stmt->bind_result($userEmail);
+                $stmt->fetch();
 
                 // ローカルでメール送信
                 if (sendVerificationCodeByEmailLocal($userEmail, $verificationCode)) {
                     // メール送信が成功した場合にのみリダイレクト
-                    header("Location: 2FA_2.php");
+                    header("Location: ../2FA_2.php");
                     exit;
                 } else {
                     // エラー: メール送信が失敗した場合
@@ -66,10 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ログイン失敗時の処理
     echo '<h2 style="color: red;">ユーザーネームとパスワードを確認してください。</h2>';
-    echo "<h2><a href='../login.html'>入力されたパスワードが一致しなかったため、<br>
-    お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
-    //echo '<h2 id="countdown"></h2>';
-    //echo '<script src="../JS/login_countdown.js"></script>';
+    echo "<h2><a href='../login.html'>入力されたパスワードが一致しなかったため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
 }
 
 $conn->close();
@@ -81,8 +94,9 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     $message = '２ファクタ認証コードです。第三者には絶対に教えないでください。';
     $message .= '2ファクタ認証コード: ' . $verificationCode;
     $message .= '心当たりがない場合は無視してください';
-    $headers = "From: pitasuweb@gmail.com";
+    $headers = "From: ecoparks202404@gmail.com";
 
     // メール送信
     return mail($to, $subject, $message, $headers);
 }
+
