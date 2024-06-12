@@ -39,6 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (hash_equals($storedHashedPassword, $hashedPassword)) {
             // ログイン成功
 
+            // QRコードの特別なパラメータを確認
+            if (isset($_GET['skip2fa']) && $_GET['skip2fa'] === 'true') {
+                // 2FAをスキップ
+                $_SESSION['username'] = $providedUsername;
+                header("Location: dashboard.php"); // 2FAなしでダッシュボードにリダイレクト
+                exit;
+            }
+
             // 6桁の2ファクタ認証コード生成
             $verificationCode = sprintf("%06d", mt_rand(0, 999999));
 
