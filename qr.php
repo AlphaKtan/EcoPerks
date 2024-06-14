@@ -38,7 +38,7 @@ $result = $writer->write($qrCode);
 $qrCodeBase64 = base64_encode($result->getString());
 
 // QRコードのimg
-$qrCodeImg = '<img src="data:image/gif;base64,'.$qrCodeBase64.'" alt="QR Code" style="width:1200px;">';
+$qrCodeImg = '<img src="data:image/gif;base64,'.$qrCodeBase64.'" alt="QR Code" style="width:1100px;">';
 
 
 echo $qrCodeImg;
