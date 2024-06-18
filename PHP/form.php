@@ -81,8 +81,3 @@ try {
     echo "エラー: " . $e->getMessage();
 }
 
-
-
-
-
-
