@@ -29,11 +29,12 @@ h1 {
 .top_menu_right ul {
     list-style-type: none;
     padding: 0;
+    display: inline-block;
 }
 
 .top_menu_left ul li,
 .top_menu_right ul li {
-    display: inline;
+    display: inline-block;
     margin-left: 20px;
 }
 
@@ -66,13 +67,19 @@ label {
     font-weight: bold;
 }
 
+/* 入力フォームを追加した場合、ここにtypeを記入するだけでｃｓｓが動いてくれる
+また、入力フォームを弄る場合はここのｃｓｓを書き換えると良い
+*/
 input[type="user"],
-input[type="password"] {
+input[type="text"],
+input[type="password"]
+ {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 
 button[type="submit"] {
     width: 100%;
