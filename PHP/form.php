@@ -1,6 +1,9 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
+// セッションの開始
+session_start();
+
 $servername = "mysql305.phy.lolipop.lan";
 $username = "LAA1516370";
 $password = "ecoperks2024";
@@ -16,7 +19,7 @@ $last_name_kanji = $_POST["last_name_kanji"] ?? ''; //名前漢字
 $last_name_furigana = $_POST["last_name_furigana"] ?? ''; //名前フリガナ
 $phone_number = $_POST["phonenumber"] ?? '';  //電話番号
 
-// ハッシュ化 SHA-256
+// パスワードのハッシュ化 (SHA256)
 $hashedPassword = hash("sha256", $providedPassword);
 
 // データベースに接続
@@ -32,6 +35,9 @@ $mysqli->begin_transaction();
 try {
     // 電話番号の重複をチェックするクエリ
     $stmtCheckPhone = $mysqli->prepare("SELECT COUNT(*) FROM users_kokyaku WHERE phone_number = ?");
+    if (!$stmtCheckPhone) {
+        throw new Exception("電話番号重複チェックの準備に失敗しました: " . $mysqli->error);
+    }
     $stmtCheckPhone->bind_param("s", $phone_number);
     $stmtCheckPhone->execute();
     $stmtCheckPhone->bind_result($phoneCount);
@@ -43,8 +49,27 @@ try {
         throw new Exception("大変恐縮ではありますが、ご入力いただきました電話番号が既に登録されています。");
     }
 
+    // メールアドレスの重複をチェックするクエリ
+    $stmtCheckEmail = $mysqli->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+    if (!$stmtCheckEmail) {
+        throw new Exception("メールアドレス重複チェックの準備に失敗しました: " . $mysqli->error);
+    }
+    $stmtCheckEmail->bind_param("s", $providedEmail);
+    $stmtCheckEmail->execute();
+    $stmtCheckEmail->bind_result($emailCount);
+    $stmtCheckEmail->fetch();
+    $stmtCheckEmail->close();
+
+    if ($emailCount > 0) {
+        // メールアドレスが重複している場合
+        throw new Exception("大変恐縮ではありますが、ご入力いただきましたメールアドレスが既に登録されています。");
+    }
+
     // ユーザーテーブルへの挿入クエリ
-    $stmtUser = $mysqli->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+    $stmtUser = $mysqli->prepare("INSERT INTO users (username, providedPassword, email) VALUES (?, ?, ?)");
+    if (!$stmtUser) {
+        throw new Exception("ユーザー情報挿入クエリの準備に失敗しました: " . $mysqli->error);
+    }
     $stmtUser->bind_param("sss", $providedUsername, $hashedPassword, $providedEmail);
 
     // ユーザーテーブルに挿入
@@ -58,6 +83,9 @@ try {
 
     // 顧客テーブルへの挿入クエリ
     $stmtCustomer = $mysqli->prepare("INSERT INTO users_kokyaku (user_id, first_name_kanji, first_name_furigana, last_name_kanji, last_name_furigana, phone_number) VALUES (?, ?, ?, ?, ?, ?)");
+    if (!$stmtCustomer) {
+        throw new Exception("顧客情報挿入クエリの準備に失敗しました: " . $mysqli->error);
+    }
     $stmtCustomer->bind_param("isssss", $user_id, $first_name_kanji, $first_name_furigana, $last_name_kanji, $last_name_furigana, $phone_number);
 
     // 顧客テーブルに挿入
@@ -80,4 +108,5 @@ try {
     // エラーメッセージの表示
     echo "エラー: " . $e->getMessage();
 }
-
+$mysqli->close();
+?>

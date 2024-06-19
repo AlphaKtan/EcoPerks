@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // ローカルでメール送信
                 if (sendVerificationCodeByEmailLocal($userEmail, $verificationCode)) {
                     // メール送信が成功した場合にのみリダイレクト
-                    header("Location: ../2FA_2.php");
+                    header("Location: 2FA_2.php");
                     exit;
                 } else {
                     // エラー: メール送信が失敗した場合
