@@ -39,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (hash_equals($storedHashedPassword, $hashedPassword)) {
             // ログイン成功
 
+            // 2024/6/19 katayama ここに可能であればQRコードで2段階認証スキップを追加予定
+
             // 6桁の2ファクタ認証コード生成
             $verificationCode = sprintf("%06d", mt_rand(0, 999999));
 
