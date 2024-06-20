@@ -32,7 +32,7 @@ $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verificat
                 // 入力されたコードとセッションから取得したコードを比較
                 if ($userEnteredCode == $verificationCode) {
                     // 認証成功したとき
-                    header("Location: ../index.html");
+                    header("Location: ../map.html");
                     exit;
                 } else {
                     // 認証失敗したとき
