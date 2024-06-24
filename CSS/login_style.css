@@ -6,36 +6,20 @@
 }
 
 body {
-    background-color: #f4f4f4;
+    background-color: #FFF6E9;
 }
 
 header {
-    background-color: #333;
+    background-color: #fff;
     color: #fff;
-    padding: 20px;
 }
 
-h1 {
-    margin: 0;
+#flexBox{
+    display:flex; 
 }
 
-.menu_flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.top_menu_left ul,
-.top_menu_right ul {
-    list-style-type: none;
-    padding: 0;
-    display: inline-block;
-}
-
-.top_menu_left ul li,
-.top_menu_right ul li {
-    display: inline-block;
-    margin-left: 20px;
+.flexItem{
+    width: 130px;
 }
 
 a {
@@ -84,7 +68,7 @@ input[type="password"]
 button[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #43AEA9;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -93,5 +77,5 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #557981;
 }
