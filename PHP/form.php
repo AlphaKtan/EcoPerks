@@ -65,6 +65,22 @@ try {
         throw new Exception("大変恐縮ではありますが、ご入力いただきましたメールアドレスが既に登録されています。");
     }
 
+    // ユーザー名の重複をチェックするクエリ
+    $stmtCheckUsername = $mysqli->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+    if (!$stmtCheckUsername) {
+        throw new Exception("ユーザー名重複チェックの準備に失敗しました: " . $mysqli->error);
+    }
+    $stmtCheckUsername->bind_param("s", $providedUsername);
+    $stmtCheckUsername->execute();
+    $stmtCheckUsername->bind_result($usernameCount);
+    $stmtCheckUsername->fetch();
+    $stmtCheckUsername->close();
+
+    if ($usernameCount > 0) {
+        // ユーザー名が重複している場合
+        throw new Exception("大変恐縮ではありますが、ご入力いただきましたユーザー名が既に登録されています。");
+    }
+
     // ユーザーテーブルへの挿入クエリ
     $stmtUser = $mysqli->prepare("INSERT INTO users (username, providedPassword, email) VALUES (?, ?, ?)");
     if (!$stmtUser) {
@@ -109,4 +125,5 @@ try {
     echo "エラー: " . $e->getMessage();
 }
 $mysqli->close();
-?>
+
+
