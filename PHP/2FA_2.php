@@ -1,8 +1,11 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
 
 // セッションの開始
 session_start();
+
+header('Content-Type: text/html; charset=utf-8');
+
+
 
 // セッションから認証コードを取得
 $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';

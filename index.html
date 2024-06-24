@@ -1,12 +1,41 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <title>Google マップの表示</title>
+    <style>
+        #map {
+            height: 400px; /* マップの表示領域の高さ */
+            width: 100%; /* マップの表示領域の幅 */
+        }
+    </style>
 </head>
 <body>
-    <h1>ここホーム画面？的なのになる。</h1>
-    <p>マップ<a href="map.html"></a></p>
+    <h1>Google マップの表示テスト段階by KATAYAMA</h1>
+    <div id="map"></div>
+    <script>
+        // Google マップの初期化
+        function initMap() {
+            // マップの中心座標を指定
+            var myLatLng = {lat: 35.0116, lng: 135.7681}; //中心位置
+
+            // マップを作成
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12, // ズームレベル
+                center: myLatLng // 中心座標
+            });
+
+            // マーカーの設置
+            var marker = new google.maps.Marker({
+                position: myLatLng, // マーカーの座標
+                map: map,
+                title: '任意' // マーカーに表示するタイトル
+            });
+        }
+    </script>
+    <!-- Google マップ JavaScript API の読み込み -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq9TaIM9GgM0e1YeTdIideom17_I0AsbA&callback=initMap">
+    </script>
 </body>
 </html>
