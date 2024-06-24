@@ -1,8 +1,11 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
 
 // セッションの開始
 session_start();
+
+header('Content-Type: text/html; charset=utf-8');
+
+
 
 // セッションから認証コードを取得
 $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';
@@ -32,7 +35,7 @@ $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verificat
                 // 入力されたコードとセッションから取得したコードを比較
                 if ($userEnteredCode == $verificationCode) {
                     // 認証成功したとき
-                    header("Location: ../map.html");
+                    header("Location: ../index.html");
                     exit;
                 } else {
                     // 認証失敗したとき
