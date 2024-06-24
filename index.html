@@ -2,31 +2,41 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="CSS/iindex_style.css">
+    <link rel="stylesheet" href="CSS/index_style.css">
     <title>Google マップの表示</title>
+    <style>
+        html{
+            zoom:normal !important;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/5-1-15.css">
 </head>
 <body>
     
     <header>
-        <h1><a href="#">ロゴマーク</a></h1>
-        <nav class="menu_flex">
-            <div class="top_menu_left">
-                <ul id="header_ul">
-                    <li><a href="form.html">アカウント登録</a></li>
-                    <li><a href="#">テキスト</a></li>
-                    <li><a href="#">テキスト</a></li>
-                    <li><a href="#">テキスト</a></li>
-                </ul>        
+        <div id="flexBox">
+            <div class="flexItem">
+                <div class="openbtn"><span></span><span></span><span></span></div>
+                <nav id="g-nav">
+                    <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
+                        <ul>
+                            <li><a href="#">Top</a></li> 
+                            <li><a href="#">About</a></li> 
+                            <li><a href="#">Service</a></li> 
+                            <li><a href="#">Contact</a></li> 
+                        </ul>
+                    </div>
+                </nav>
             </div>
-            <div class="top_menu_right">
-                <ul>
-                    <li><a href="#">Login</a></li>    
-                </ul>
+            <div class="flexItem">
+                <img src="Img/fogo.png">
             </div>
-        </nav>
+            <div class="flexItem">
+            </div>
+        </div>
     </header>
 
-    <h1>Google マップの表示テスト段階by KATAYAMA</h1>
+    <!-- <h1>Google マップの表示テスト段階by KATAYAMA</h1>
     <div class="flexBox">
     <div id="map"></div>
     </div>
@@ -49,43 +59,16 @@
                 title: '任意' // マーカーに表示するタイトル
             });
         }
-    </script>
+    </script> -->
     <!-- Google マップ JavaScript API の読み込み -->
-    <script async defer
+    <!-- <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq9TaIM9GgM0e1YeTdIideom17_I0AsbA&callback=initMap">
-    </script>
+    </script> -->
     <footer>
-        <div class="footer">
-            <div class="footer-block">
-              <h3>ブロック1</h3>
-              <ul>
-                <li><a href="#">リンク1</a></li>
-                <li><a href="#">リンク2</a></li>
-                <li><a href="#">リンク3</a></li>
-              </ul>
-            </div>
-            
-            <div class="footer-block">
-              <h3>ブロック2</h3>
-              <ul>
-                <li><a href="#">リンク4</a></li>
-                <li><a href="#">リンク5</a></li>
-                <li><a href="#">リンク6</a></li>
-              </ul>
-            </div>
-            
-            <div class="footer-block">
-              <h3>ブロック3</h3>
-              <ul>
-                <li><a href="#">リンク7</a></li>
-                <li><a href="#">リンク8</a></li>
-                <li><a href="#">リンク9</a></li>
-              </ul>
-            </div>
-            
-            <div style="clear: both;"></div>
-          </div>
           
     </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!--自作のJS-->
+<script src="js/hamburger.js"></script>
 </body>
 </html>
