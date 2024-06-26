@@ -11,15 +11,17 @@ header {
 footer {
     background-color: #fff;
     color: #fff;
+    bottom: 0; /*下に固定*/
 }
 
 #flexBox02{
     display:flex; 
+    position: fixed;
 }
 
 .flexItem02{
     height: 70px;
-    width: 100%;
+    width: 250px;
     margin: 0 1px 0 0;
     text-align: center;
     background-color: #43AEA9;
@@ -68,6 +70,7 @@ footer {
 
 .flexBox {
     display: flex;
+    position: fixed;
 }
 
 .map {
