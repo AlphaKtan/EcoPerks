@@ -29,7 +29,6 @@ header {
 
 .flexBox {
     display: flex;
-    position: fixed;
 }
 
 #flexBox{
