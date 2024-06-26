@@ -33,3 +33,37 @@ header {
     width: 360px;
     margin: 0 auto;
 }
+
+.userFlex{
+    display: flex;
+    height: 90px;
+    margin: 20px 16px 0 16px;
+    background-color: white;
+    border: 1px solid#43AEA9;
+}
+
+.userFlexItem {
+    width: 100%;
+}
+
+.irasto {
+    height: 88px;
+}
+
+.pointArea {
+    display: flex;
+    justify-content: center;
+}
+
+.point {
+    width: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+.footer {
+    height: 60px;
+    background-color: #43AEA9;
+}
