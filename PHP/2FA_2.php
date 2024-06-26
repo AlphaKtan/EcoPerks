@@ -1,34 +1,11 @@
 <?php
 // セッションの開始
 session_start();
-
-header('Content-Type: text/html; charset=utf-8');
-
-// セッションから認証コードを取得
-$verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';
-
-// デバッグ用の出力
-// echo "Session Verification Code: " . $verificationCode;
-?>
-
-<!DOCTYPE html>
-<html lang="jp">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="#">
-    <title>2ファクタ認証</title>
-</head>
-<body>
-
-<h2 class="h2">2ファクタ認証</h2>
-<div class="#">
-    <h2 class="#">認証コードをecoparks202404@gmail.comからご登録いただいたメールに送信しました。<br>受信箱にない場合は迷惑メールフォルダの中などをご確認ください。</h2>
-    
-    <?php
     // POST データの処理
     if (isset($_POST['submit'])) {
         $userEnteredCode = $_POST['verification_code'];
+        //セッションから取ってくる
+        $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';
 
         // 入力されたコードとセッションから取得したコードを比較
         if ($userEnteredCode == $verificationCode) {
@@ -41,7 +18,23 @@ $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verificat
             echo "<h2><a href='../login.html'>ログインページよりもう一度実行してください</a></h2>";
         }
     }
-    ?>
+?>
+    
+
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="#">
+    <title>2ファクタ認証</title>
+</head>
+<body>
+<h2 class="h2">2ファクタ認証</h2>
+<div class="#">
+    <h2 class="#">認証コードをecoparks202404@gmail.comからご登録いただいたメールに送信しました。<br>受信箱にない場合は迷惑メールフォルダの中などをご確認ください。</h2>
+    
+   
     
     <hr>
     <form method="post" action="" class="#">
@@ -54,4 +47,3 @@ $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verificat
 
 </body>
 </html>
-
