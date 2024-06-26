@@ -9,19 +9,42 @@ body {
     background-color: #FFF6E9;
 }
 
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
 header {
+    background-color: #fff;
+    color: #fff;
+    position: fixed; /* ヘッダーを固定する */
+}
+
+footer {
     background-color: #fff;
     color: #fff;
 }
 
-#flexBox{
+#flexBox01{
     display:flex; 
 }
 
-.flexItem{
+#flexBox02{
+    display:flex; 
+}
+
+.flexItem01{
+    height: 70px;
     width: 130px;
 }
 
+.flexItem02{
+    height: 70px;
+    width: 130px;
+    margin: 0 1px 0 0;
+    text-align: center;
+    background-color: #43AEA9;
+}
 
 /*========= ナビゲーションのためのCSS ===============*/
 
@@ -140,28 +163,37 @@ header {
     width: 30%;
 }
 
-
-
-a {
-    color: #fff;
-    text-decoration: none;
+/* ここからメインの要素 */
+#testBox{
+    width: 500px;
+    padding: 500px;
 }
 
-.login_form {
-    max-width: 75%;
-    margin: 50px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+
+/* ここからフッターの要素 */
+.loadingBar {
+    width: 0;
+    height: 4px;
+    background: #03a7eb;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.2s linear 0s;
 }
 
-.login_form h1 {
-    margin-bottom: 20px;
+.progress {
+    position: relative;
+    width: 100%;
+    height: 15px;
+    background-color: #f3f3f3;
+    border-radius: 12px;
+    overflow: hidden;
 }
-
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
+.progress-bar {
+    position: absolute;
+    height: 100%;
+    background-color: #557981;
+    width: 0;
+    transition: width 0.4s ease;
 }
