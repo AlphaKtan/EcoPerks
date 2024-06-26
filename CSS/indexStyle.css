@@ -3,14 +3,22 @@ body {
 }
 
 header {
+    width: 100%;
     height: 60px;
+    top: 0; /* 上部から配置の基準位置を決める */
     background-color: white;
+    position: fixed
 }
 
 
 footer {
     background-color: #fff;
     color: #fff;
+    width: 100%;
+    height: 60px;
+    bottom: 0; /* 上部から配置の基準位置を決める */
+    background-color: white;
+    position: fixed
 }
 
 #flexBox02{
@@ -72,7 +80,7 @@ footer {
 
 .map {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 100px;
 }
 
 .map2 {
