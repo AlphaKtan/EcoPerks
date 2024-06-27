@@ -1,8 +1,5 @@
-<!-- 顧客登録 -->
- <!-- テーブル二つまたぐ　users users_kokyaku -->
-<?php
-header('Content-Type: text/html; charset=utf-8');
 
+<?php
 // セッションの開始
 session_start();
 
@@ -20,6 +17,17 @@ $first_name_furigana = $_POST["first_name_furigana"] ?? ''; //姓フリガナ
 $last_name_kanji = $_POST["last_name_kanji"] ?? ''; //名前漢字
 $last_name_furigana = $_POST["last_name_furigana"] ?? ''; //名前フリガナ
 $phone_number = $_POST["phonenumber"] ?? '';  //電話番号
+
+// パスワードの要件チェック
+if (strlen($providedPassword) < 8 ||
+    !preg_match("#[0-9]+#", $providedPassword) ||
+    !preg_match("#[a-z]+#", $providedPassword) ||
+    !preg_match("#[A-Z]+#", $providedPassword)) {
+    // パスワードが要件を満たしていない場合の処理
+    die("パスワードは英数字を含む8桁以上で、大文字・小文字をそれぞれ1文字以上含めて設定してください。
+    <br><a href='../form.html'>もう一度入力する</a>");
+
+}
 
 // パスワードのハッシュ化 (SHA256)
 $hashedPassword = hash("sha256", $providedPassword);
@@ -48,7 +56,7 @@ try {
 
     if ($phoneCount > 0) {
         // 電話番号が重複している場合
-        throw new Exception("大変恐縮ではありますが、ご入力いただきました電話番号が既に登録されています。");
+        throw new Exception("大変恐縮ではありませんが、ご入力いただきました電話番号が既に登録されています。");
     }
 
     // メールアドレスの重複をチェックするクエリ
@@ -64,7 +72,7 @@ try {
 
     if ($emailCount > 0) {
         // メールアドレスが重複している場合
-        throw new Exception("大変恐縮ではありますが、ご入力いただきましたメールアドレスが既に登録されています。");
+        throw new Exception("大変恐縮ではありませんが、ご入力いただきましたメールアドレスが既に登録されています。");
     }
 
     // ユーザー名の重複をチェックするクエリ
@@ -80,7 +88,7 @@ try {
 
     if ($usernameCount > 0) {
         // ユーザー名が重複している場合
-        throw new Exception("大変恐縮ではありますが、ご入力いただきましたユーザー名が既に登録されています。");
+        throw new Exception("大変恐縮ではありませんが、ご入力いただきましたユーザー名が既に登録されています。");
     }
 
     // ユーザーテーブルへの挿入クエリ
@@ -127,5 +135,3 @@ try {
     echo "エラー: " . $e->getMessage();
 }
 $mysqli->close();
-
-
