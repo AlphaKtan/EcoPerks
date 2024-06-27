@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['targetHash'])) {
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>SHA-256 Collision Search</title>
+    <title>SHA-256 衝突検索</title>
     <style>
         body { font-family: Arial, sans-serif; }
         #output { white-space: pre; font-size: 1.5em; } /* 文字の大きさを1.2emに設定 */
@@ -72,13 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['targetHash'])) {
     </style>
 </head>
 <body>
-    <h1>SHA-256 Collision Search</h1>
+    <h1>SHA-256 衝突検索</h1>
     <form id="hashForm">
         <label for="targetHash">ターゲットハッシュ:</label>
         <input type="text" id="targetHash" name="targetHash" required>
         <button type="submit">検索開始</button>
     </form>
-    <div id="output">Start by entering a target hash and clicking "検索開始".</div>
+    <div id="output">ターゲットハッシュを入力して、「検索開始」をクリックしてください。</div>
 
     <script>
         let intervalId;
@@ -87,12 +87,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['targetHash'])) {
             try {
                 const response = await fetch(window.location.href + '?json=true');
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('ネットワークの応答が正しくありません');
                 }
                 const data = await response.json();
                 return data;
             } catch (error) {
-                console.error('Fetch Error:', error);
+                console.error('フェッチエラー:', error);
                 throw error;
             }
         }
@@ -110,13 +110,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['targetHash'])) {
                     const output = document.getElementById('output');
 
                     if (data.hash === targetHash) {
-                        output.textContent = `Collision found!\nInput: ${data.input}\nHash: ${data.hash}\nAttempts: ${attempts}\nElapsed time: ${elapsedTime} seconds\n`;
+                        output.textContent = `衝突が見つかりました！\nInput: ${data.input}\nHash: ${data.hash}\n試行回数: ${attempts}\n経過時間: ${elapsedTime} 秒\n`;
                         clearInterval(intervalId);
                     } else {
-                        output.textContent = `Attempts: ${attempts}\nCurrent input: ${data.input}\nCurrent hash: ${data.hash}\nElapsed time: ${elapsedTime} seconds\n`;
+                        output.textContent = `試行回数: ${attempts}\n現在の入力: ${data.input}\n現在のハッシュ: ${data.hash}\n経過時間: ${elapsedTime} 秒\n`;
                     }
                 } catch (error) {
-                    console.error('Interval Error:', error);
+                    console.error('インターバルエラー:', error);
                     clearInterval(intervalId);
                 }
             }, 1); // ms
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['targetHash'])) {
         document.getElementById('hashForm').addEventListener('submit', function(event) {
             event.preventDefault(); // フォームのデフォルトの送信動作を防ぐ
             const targetHash = document.getElementById('targetHash').value.trim();
-            document.getElementById('output').textContent = 'Searching...';
+            document.getElementById('output').textContent = '検索中...';
             if (intervalId) clearInterval(intervalId); // 既存の検索をクリア
             startSearch(targetHash);
 
@@ -137,10 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['targetHash'])) {
                 },
                 body: 'targetHash=' + encodeURIComponent(targetHash),
             }).catch(error => {
-                console.error('Clear Session Error:', error);
+                console.error('セッションクリアエラー:', error);
             });
         });
     </script>
 </body>
 </html>
+
 
