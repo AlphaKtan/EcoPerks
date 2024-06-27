@@ -1,3 +1,4 @@
+<!-- QRの生成に関するもの -->
 <?php
 require_once( 'vendor/autoload.php');
 //ここは絶対に変更してはいけない

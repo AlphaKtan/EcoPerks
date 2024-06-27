@@ -1,3 +1,4 @@
+<!-- ログインに関するPHP -->
 <?php
 // セッションが開始されていない場合のみセッションを開始
 if (session_status() == PHP_SESSION_NONE) {

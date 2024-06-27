@@ -1,3 +1,5 @@
+<!-- 顧客登録 -->
+ <!-- テーブル二つまたぐ　users users_kokyaku -->
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
