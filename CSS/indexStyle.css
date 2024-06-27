@@ -68,7 +68,12 @@ footer {
 .logo {
     height: 60px;
     width: 100%;
+    text-align: center  ;
 }
+
+.logo2 {
+    height: 60px;
+            }
 
 .icon {
     width: 100%;
@@ -121,3 +126,6 @@ footer {
     height: 60px;
     background-color: #43AEA9;
 }
+
+/* @media screen and (min-width:400px) { 
+} */
