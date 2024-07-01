@@ -27,24 +27,36 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="#">
+    <link rel="stylesheet" href="../CSS/2FA_2.css">
     <title>2ファクタ認証</title>
 </head>
 <body>
-<h2 class="h2">2ファクタ認証</h2>
-<div class="#">
-    <h2 class="#">認証コードをecoparks202404@gmail.comからご登録いただいたメールに送信しました。<br>受信箱にない場合は迷惑メールフォルダの中などをご確認ください。</h2>
-    
-   
-    
+<header>
+        <div class="flexBox">
+            <div class="menu">
+            </div>
+            <div class="logo">
+                <img src="../img/logo.jpg" alt="" class="logo">
+            </div>
+            <div class="icon"></div>
+        </div>
+    </header>
+<section class=form-a>
+<h2>2ファクタ認証</h2>
+<div class="form-b">
+<br>
+  <p>認証コードをecoparks202404@gmail.comからご登録いただいたメールに送信しました</p>
     <hr>
+    <br>
     <form method="post" action="" class="#">
         <label for="verification_code">6桁の認証コードを入力</label>
         <h5 class="#">↓　↓　↓</h5>
         <input type="text" id="verification_code" name="verification_code" required><br>
         <button type="submit" name="submit" class="example">認証する</button>
-    </form>
+    <p>※受信箱にない場合は迷惑メールフォルダの中などをご確認ください。</p>
+</form>
 </div>
+</section>
 
 </body>
 </html>
