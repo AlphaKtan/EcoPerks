@@ -1,0 +1,178 @@
+body {
+    background-color: #FFF6E9;
+}
+
+h1{
+    color: #f3f3f3;
+}
+
+p{
+    color: #f3f3f3;
+}
+
+
+header {
+    width: 100%;
+    height: 60px;
+    top: 0; /* 上部から配置の基準位置を決める */
+    background-color: white;
+    position: fixed
+}
+
+footer {
+    background-color: #fff;
+    color: #fff;
+    width: 100%;
+    height: 60px;
+    bottom: 0; /* 上部から配置の基準位置を決める */
+    background-color: white;
+    position: fixed
+}
+
+.footer {
+    height: 60px;
+    background-color: #43AEA9;
+}
+
+#flexBox02{
+    display:flex; 
+}
+
+.flexItem02{
+    height: 70px;
+    width: 100%;
+    margin: 0 1px 0 0;
+    text-align: center;
+    background-color: #43AEA9;
+}
+
+/* ここからフッターの要素 */
+.loadingBar {
+    width: 0;
+    height: 4px;
+    background: #03a7eb;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all 0.2s linear 0s;
+}
+
+.progress {
+    position: relative;
+    width: 100%;
+    height: 15px;
+    background-color: #f3f3f3;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.progress-bar {
+    position: absolute;
+    height: 100%;
+    background-color: #557981;
+    width: 0;
+    transition: width 0.4s ease;
+}
+
+.menu {
+    width: 100%;
+}
+
+.logo {
+    height: 60px;
+    width: 100%;
+}
+
+.icon {
+    width: 100%;
+}
+
+.flexBox {
+    display: flex;
+}
+
+
+/* mapはいつか消す */
+.map {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.map2 {
+    width: 360px;
+    margin: 0 auto;
+}
+/* mapはいつか消す */
+
+.profile{
+    margin-top: 80px;
+}
+
+.userFlex{
+    height: auto;
+    margin: 20px 16px 0 16px;
+}
+
+.userFlexItem {
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.irasto {
+    height: 88px;
+}
+
+.pointArea {
+    display: flex;
+    justify-content: center;
+}
+
+.point {
+    width: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+.informationBox{
+    margin:20px 70px 0 70px;
+}
+
+.boxA {
+    border: none;
+    text-align: center;
+  }
+
+.box1{
+    float: left;
+    background-color: #43AEA9;
+    width: 45%;
+    height: 50px;
+    margin: 2.5px;
+  }
+
+  .box2{
+    float: left;
+    background-color: #43AEA9;
+    width: 45%;
+    height: 50px;
+    margin: 2.5px;
+  }
+
+  .box3{
+    float: left;
+    background-color: #43AEA9;
+    width: 45%;
+    height: 50px;
+    margin: 2.5px;
+  }
+
+  .box4{
+    float: left;
+    background-color: #43AEA9;
+    width: 45%;
+    height: 50px;
+    margin: 2.5px;
+  }
