@@ -50,8 +50,8 @@ session_start();
     <br>
     <form method="post" action="" class="#">
         <label for="verification_code">6桁の認証コードを入力</label>
-        <h5 class="#">↓　↓　↓</h5>
-        <input type="text" id="verification_code" name="verification_code" required><br>
+        <!-- <h5 class="#">↓　↓　↓</h5> -->
+        <input type="text" id="verification_code" class="authCode" name="verification_code" required><br>
         <button type="submit" name="submit" class="example">認証する</button>
     <p>※受信箱にない場合は迷惑メールフォルダの中などをご確認ください。</p>
 </form>
