@@ -21,6 +21,11 @@ header {
 .logo {
     height: 60px;
     width: 100%;
+    text-align: center;
+}
+
+.logo2{
+    height: 60px;
 }
 
 .icon {
