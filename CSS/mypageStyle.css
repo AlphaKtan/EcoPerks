@@ -60,8 +60,9 @@ footer {
 
 .progress {
     position: relative;
-    width: 100%;
+    width: 90%;
     height: 15px;
+    margin: 10px auto 0 auto;
     background-color: #f3f3f3;
     border-radius: 12px;
     overflow: hidden;
@@ -81,6 +82,11 @@ footer {
 .logo {
     height: 60px;
     width: 100%;
+    text-align: center;
+}
+
+.logo2{
+    height: 60px;
 }
 
 .icon {
