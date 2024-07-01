@@ -36,7 +36,7 @@ session_start();
             <div class="menu">
             </div>
             <div class="logo">
-                <img src="../img/logo.jpg" alt="" class="logo">
+                <img src="../img/logo.jpg" alt="" class="logo2">
             </div>
             <div class="icon"></div>
         </div>
