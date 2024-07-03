@@ -2,25 +2,26 @@
 <?php
 // セッションの開始
 session_start();
-    // POST データの処理
-    if (isset($_POST['submit'])) {
-        $userEnteredCode = $_POST['verification_code'];
-        //セッションから取ってくる
-        $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';
 
-        // 入力されたコードとセッションから取得したコードを比較
-        if ($userEnteredCode == $verificationCode) {
-            // 認証成功したとき
-            header("Location: ../index.html");
-            exit;
-        } else {
-            // 認証失敗したとき
-            echo '<h2 style="color: red;">認証コードが正しくありません。</h2>';
-            echo "<h2><a href='../login.html'>ログインページよりもう一度実行してください</a></h2>";
-        }
+// POST データの処理
+if (isset($_POST['submit'])) {
+    $userEnteredCode = $_POST['verification_code'];
+    //セッションから取ってくる
+    $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';
+
+    // 入力されたコードとセッションから取得したコードを比較
+    if ($userEnteredCode == $verificationCode) {
+        // 認証成功したとき
+        $_SESSION['login_siteru'] = true;  // ログイン状態をセッションに保存
+        header("Location: ../index.html");
+        exit;
+    } else {
+        // 認証失敗したとき
+        echo '<h2 style="color: red;">認証コードが正しくありません。</h2>';
+        echo "<h2><a href='../login.html'>ログインページよりもう一度実行してください</a></h2>";
     }
+}
 ?>
-    
 
 <!DOCTYPE html>
 <html lang="jp">
@@ -60,3 +61,6 @@ session_start();
 
 </body>
 </html>
+
+
+
