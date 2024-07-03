@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // 2ファクタ認証コードをセッションに保存
             $_SESSION['verification_code'] = $verificationCode;
             $_SESSION['username'] = $providedUsername;
-            setcookie('verification_code', $verificationCode, time() + 720, '/');
+            //setcookie('verification_code', $verificationCode, time() + 720, '/');
 
             // ユーザーのメールアドレスをデータベースから取得
             $stmt = $conn->prepare("SELECT email FROM users WHERE username = ?");

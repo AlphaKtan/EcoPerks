@@ -7,7 +7,7 @@ session_start();
 if (isset($_POST['submit'])) {
     $userEnteredCode = $_POST['verification_code'];
     // クッキーから取ってくる
-    $verificationCode = isset($_COOKIE['verification_code']) ? $_COOKIE['verification_code'] : '';
+    $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';
 
     // 入力されたコードとクッキーから取得したコードを比較
     if ($userEnteredCode == $verificationCode) {
