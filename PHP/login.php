@@ -1,10 +1,14 @@
-<!-- ログインに関するPHP -->
 <?php
+// エラーレポートを有効にする
+// もし不具合が起きれば以下のコードを有効にする。
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+
 // セッションが開始されていない場合のみセッションを開始
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-session_regenerate_id(true);
 
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
@@ -78,6 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // ログイン失敗時の処理
     echo '<h2 style="color: red;">ユーザーネームとパスワードを確認してください。</h2>';
     echo "<h2><a href='../login.html'>入力されたパスワードが一致しなかったため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
+    $stmt->close();
 }
 
 $conn->close();
@@ -94,4 +99,4 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     // メール送信
     return mail($to, $subject, $message, $headers);
 }
-
+?>
