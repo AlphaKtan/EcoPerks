@@ -10,6 +10,9 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+
+
+
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
 
@@ -47,11 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // 2024/6/19 katayama ここに可能であればQRコードで2段階認証スキップを追加予定
 
             // 6桁の2ファクタ認証コード生成
-            //$verificationCode = sprintf("%06d", mt_rand(0, 999999));
-            $verificationCode = '123456';
+            $verificationCode = sprintf("%06d", mt_rand(0, 999999));
+            //$verificationCode = '123456';
+            
             // 2ファクタ認証コードをセッションに保存
             $_SESSION['verification_code'] = $verificationCode;
             $_SESSION['username'] = $providedUsername;
+            setcookie('verification_code', $verificationCode, time() + 720, '/');
 
             // ユーザーのメールアドレスをデータベースから取得
             $stmt = $conn->prepare("SELECT email FROM users WHERE username = ?");
@@ -66,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // ローカルでメール送信
                 if (sendVerificationCodeByEmailLocal($userEmail, $verificationCode)) {
                     // メール送信が成功した場合にのみリダイレクト
+                    //echo $verificationCode;
                     header("Location: 2FA_2.php");
                     exit;
                 } else {

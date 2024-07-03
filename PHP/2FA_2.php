@@ -1,20 +1,20 @@
-<!-- 2段階認証コード入力 -->
 <?php
 // セッションの開始
 session_start();
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 // POST データの処理
-
 if (isset($_POST['submit'])) {
     $userEnteredCode = $_POST['verification_code'];
-    //セッションから取ってくる
-    $verificationCode = isset($_SESSION['verification_code']) ? $_SESSION['verification_code'] : '';
+    // クッキーから取ってくる
+    $verificationCode = isset($_COOKIE['verification_code']) ? $_COOKIE['verification_code'] : '';
 
-    // 入力されたコードとセッションから取得したコードを比較
+    // 入力されたコードとクッキーから取得したコードを比較
     if ($userEnteredCode == $verificationCode) {
         // 認証成功したとき
-        //$_SESSION['login_siteru'] = true;  // ログイン状態をセッションに保存
+        // クッキーに認証成功を保存する
+        //setcookie('verification_code', $verificationCode, time() + 720, '/'); // 有効期限は1時間
+
         header("Location: ../index.html");
         exit;
     } else {
@@ -23,7 +23,6 @@ if (isset($_POST['submit'])) {
         echo "<h2><a href='../login.html'>ログインページよりもう一度実行してください</a></h2>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -36,35 +35,30 @@ if (isset($_POST['submit'])) {
 </head>
 <body>
 <header>
-        <div class="flexBox">
-            <div class="menu">
-            </div>
-            <div class="logo">
-                <img src="../img/logo.jpg" alt="" class="logo2">
-            </div>
-            <div class="icon"></div>
+    <div class="flexBox">
+        <div class="menu"></div>
+        <div class="logo">
+            <img src="../img/logo.jpg" alt="" class="logo2">
         </div>
-    </header>
+        <div class="icon"></div>
+    </div>
+</header>
 <section class=form-a>
-<h2>2ファクタ認証</h2>
-<div class="form-b">
-<br>
-  <p>認証コードをecoparks202404@gmail.comからご登録いただいたメールに送信しました</p>
-    <hr>
-    <br>
-    <p>デバッグ用: 現在の認証コードは <strong><?php echo ($verificationCode); ?></strong> です。</p> <!-- デバッグ用に追加 -->
-    <form method="post" action="" class="#">
-        <label for="verification_code">6桁の認証コードを入力</label>
-        <!-- <h5 class="#">↓　↓　↓</h5> -->
-        <input type="text" id="verification_code" class="authCode" name="verification_code" required><br>
-        <button type="submit" name="submit" class="example">認証する</button>
-    <p>※受信箱にない場合は迷惑メールフォルダの中などをご確認ください。</p>
-</form>
-</div>
+    <h2>2ファクタ認証</h2>
+    <div class="form-b">
+        <br>
+        <p>認証コードをecoparks202404@gmail.comからご登録いただいたメールに送信しました</p>
+        <hr>
+        <br>
+       
+        <form method="post" action="#" class="#">
+            <label for="verification_code">6桁の認証コードを入力</label>
+            <input type="text" id="verification_code" class="authCode" name="verification_code" required><br>
+            <button type="submit" name="submit" class="example">認証する</button>
+            <p>※受信箱にない場合は迷惑メールフォルダの中などをご確認ください。</p>
+        </form>
+    </div>
 </section>
 
 </body>
 </html>
-
-
-
