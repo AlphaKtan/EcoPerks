@@ -47,8 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // 2024/6/19 katayama ここに可能であればQRコードで2段階認証スキップを追加予定
 
             // 6桁の2ファクタ認証コード生成
-            $verificationCode = sprintf("%06d", mt_rand(0, 999999));
-
+            //$verificationCode = sprintf("%06d", mt_rand(0, 999999));
+            $verificationCode = '123456';
             // 2ファクタ認証コードをセッションに保存
             $_SESSION['verification_code'] = $verificationCode;
             $_SESSION['username'] = $providedUsername;
@@ -99,4 +99,3 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     // メール送信
     return mail($to, $subject, $message, $headers);
 }
-?>

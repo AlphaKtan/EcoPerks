@@ -2,8 +2,10 @@
 <?php
 // セッションの開始
 session_start();
+var_dump($_SESSION);
 
 // POST データの処理
+
 if (isset($_POST['submit'])) {
     $userEnteredCode = $_POST['verification_code'];
     //セッションから取ってくる
@@ -12,7 +14,7 @@ if (isset($_POST['submit'])) {
     // 入力されたコードとセッションから取得したコードを比較
     if ($userEnteredCode == $verificationCode) {
         // 認証成功したとき
-        $_SESSION['login_siteru'] = true;  // ログイン状態をセッションに保存
+        //$_SESSION['login_siteru'] = true;  // ログイン状態をセッションに保存
         header("Location: ../index.html");
         exit;
     } else {
@@ -21,6 +23,7 @@ if (isset($_POST['submit'])) {
         echo "<h2><a href='../login.html'>ログインページよりもう一度実行してください</a></h2>";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +52,7 @@ if (isset($_POST['submit'])) {
   <p>認証コードをecoparks202404@gmail.comからご登録いただいたメールに送信しました</p>
     <hr>
     <br>
+    <p>デバッグ用: 現在の認証コードは <strong><?php echo ($verificationCode); ?></strong> です。</p> <!-- デバッグ用に追加 -->
     <form method="post" action="" class="#">
         <label for="verification_code">6桁の認証コードを入力</label>
         <!-- <h5 class="#">↓　↓　↓</h5> -->
