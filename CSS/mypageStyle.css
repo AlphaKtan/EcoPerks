@@ -143,12 +143,13 @@ footer {
 }
 
 .informationBox{
-    margin:20px 70px 0 70px;
+    text-align: center;
+    margin:20px 20%;
 }
 
 .boxA {
+    width: 110%;
     border: none;
-    text-align: center;
   }
 
 .box1{
