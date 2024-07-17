@@ -158,3 +158,11 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     return mail($to, $subject, $message, $headers);
 }
 ?>
+
+
+
+
+
+
+
+
