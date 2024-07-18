@@ -1,35 +1,16 @@
 <?php
-
-if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
-    header('Location: auth.php');
-    exit;
-}
-
 // セッションが開始されていない場合のみセッションを開始
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-header('Content-Type: text/html; charset=utf-8');
-date_default_timezone_set('Asia/Tokyo');
-
-$servername = "mysql305.phy.lolipop.lan";
-$username = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
-
-// データベース接続
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
+// 認証されていない場合はログインページにリダイレクト
+if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+    header('Location: auth.php');
+    exit;
 }
 
-// ログイン状況の取得
-$sql = "SELECT u.username, us.login_time, us.logout_time, us.is_logged_in 
-        FROM users u
-        LEFT JOIN user_sessions us ON u.id = us.user_id 
-        ORDER BY us.login_time DESC";
-$result = $conn->query($sql);
+// データベース接続やログイン状況の取得処理をここに続ける
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +29,26 @@ $result = $conn->query($sql);
             <th>ログアウト時間</th>
             <th>ログイン状態</th>
         </tr>
+        <!-- ここにログイン状況を表示するPHPコードを記述 -->
         <?php
+        // データベース接続
+        $servername = "mysql305.phy.lolipop.lan";
+        $username = "LAA1516370";
+        $password = "ecoperks2024";
+        $dbname = "LAA1516370-ecoperks";
+
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        if ($conn->connect_error) {
+            die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
+        }
+
+        // ログイン状況の取得クエリ
+        $sql = "SELECT u.username, us.login_time, us.logout_time, us.is_logged_in 
+                FROM users u
+                LEFT JOIN user_sessions us ON u.id = us.user_id 
+                ORDER BY us.login_time DESC";
+        $result = $conn->query($sql);
+
         if ($result->num_rows > 0) {
             $currentUser = '';
             while($row = $result->fetch_assoc()) {
@@ -69,10 +69,16 @@ $result = $conn->query($sql);
         } else {
             echo "<tr><td colspan='4'>ログイン情報がありません</td></tr>";
         }
+        $conn->close();
         ?>
     </table>
+    <form action="adminlogout.php" method="post">
+        <input type="submit" value="ログアウト">
+    </form>
+
+
 </body>
 </html>
 
-<?php
-$conn->close();
+
+
