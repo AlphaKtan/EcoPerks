@@ -1,5 +1,9 @@
-
 <?php
+// エラーレポートを有効化（開発時のみ）
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
+
 // セッションの開始
 session_start();
 
@@ -26,7 +30,6 @@ if (strlen($providedPassword) < 8 ||
     // パスワードが要件を満たしていない場合の処理
     die("パスワードは英数字を含む8桁以上で、大文字・小文字をそれぞれ1文字以上含めて設定してください。
     <br><a href='../form.html'>もう一度入力する</a>");
-
 }
 
 // パスワードのハッシュ化 (SHA256)
@@ -123,7 +126,8 @@ try {
 
     // トランザクションをコミット
     $mysqli->commit();
-
+    // デバッグメッセージ（到達確認用）
+    //echo "データベースへの登録が成功しました。リダイレクトします。";
     // リダイレクト
     header("Location: ../login.html");
     exit();
@@ -134,5 +138,8 @@ try {
     // エラーメッセージの表示
     echo "エラー: " . $e->getMessage();
 }
+
 $mysqli->close();
+
+
 
