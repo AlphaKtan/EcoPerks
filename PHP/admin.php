@@ -19,9 +19,13 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン状況</title>
+    <script src="../JS/update_time.js" defer></script>
 </head>
 <body>
-    <h1>ログイン状況　　管理者の方のみ閲覧が許されています。許可なきもののアクセスは固くお断りします。</h1>
+    <h1>ログイン状況　　</h1>
+    
+    <h1 id="time">現在の時刻:</h1>
+    
     <table border="1">
         <tr>
             <th>ユーザー名</th>
@@ -56,8 +60,8 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
                     $currentUser = $row['username'];
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($row['username']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['login_time'] ?? 'N/A') . "</td>";
-                    echo "<td>" . htmlspecialchars($row['logout_time'] ?? 'N/A') . "</td>";
+                    echo "<td>" . htmlspecialchars($row['login_time'] ?? 'N/A（空白）') . "</td>";
+                    echo "<td>" . htmlspecialchars($row['logout_time'] ?? 'N/A（空白）') . "</td>";
                     if ($row['login_time'] === null) {
                         echo "<td>未ログイン</td>";
                     } else {
