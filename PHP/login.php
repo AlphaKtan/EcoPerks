@@ -1,17 +1,16 @@
 <?php
-// エラーレポートを有効にする
-// もし不具合が起きれば以下のコードを有効にする。
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 
 // セッションが開始されていない場合のみセッションを開始
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
-
-
 
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
@@ -32,13 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $providedPassword = isset($_POST["providedPassword"]) ? $_POST["providedPassword"] : '';
 
     // 準備されたステートメントを使用してSQLインジェクション対策
-    $stmt = $conn->prepare("SELECT providedPassword FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT id, providedPassword FROM users WHERE username = ?");
     $stmt->bind_param("s", $providedUsername);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($storedHashedPassword);
+        $stmt->bind_result($userId, $storedHashedPassword);
         $stmt->fetch();
 
         // SHA256でハッシュ化
@@ -47,16 +46,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (hash_equals($storedHashedPassword, $hashedPassword)) {
             // ログイン成功
 
-            // 2024/6/19 katayama ここに可能であればQRコードで2段階認証スキップを追加予定
-
-            // 6桁の2ファクタ認証コード生成
+            // 2ファクタ認証コード生成
             $verificationCode = sprintf("%06d", mt_rand(0, 999999));
-            //$verificationCode = '123456';
-            
+
             // 2ファクタ認証コードをセッションに保存
             $_SESSION['verification_code'] = $verificationCode;
             $_SESSION['username'] = $providedUsername;
-            //setcookie('verification_code', $verificationCode, time() + 720, '/');
 
             // ユーザーのメールアドレスをデータベースから取得
             $stmt = $conn->prepare("SELECT email FROM users WHERE username = ?");
@@ -70,8 +65,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // ローカルでメール送信
                 if (sendVerificationCodeByEmailLocal($userEmail, $verificationCode)) {
+                    // セッション情報をuser_sessionsテーブルに挿入
+                    $loginTime = date("Y-m-d H:i:s");
+                    $stmt = $conn->prepare("INSERT INTO user_sessions (user_id, login_time, is_logged_in) VALUES (?, ?, ?)");
+                    $isLoggedIn = true;
+                    $stmt->bind_param("isi", $userId, $loginTime, $isLoggedIn);
+                    $stmt->execute();
+
                     // メール送信が成功した場合にのみリダイレクト
-                    //echo $verificationCode;
                     header("Location: 2FA_2.php");
                     exit;
                 } else {

@@ -26,3 +26,9 @@ CREATE TABLE user_sessions (
     is_logged_in BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+
+
+
+
+
