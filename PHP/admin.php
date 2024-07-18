@@ -21,7 +21,7 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
     <title>ログイン状況</title>
 </head>
 <body>
-    <h1>ログイン状況</h1>
+    <h1>ログイン状況　　管理者の方のみ閲覧が許されています。許可なきもののアクセスは固くお断りします。</h1>
     <table border="1">
         <tr>
             <th>ユーザー名</th>
