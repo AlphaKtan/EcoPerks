@@ -4,7 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-
 // データベース接続
 $servername = "mysql305.phy.lolipop.lan";
 $dbUsername = "LAA1516370";
@@ -19,16 +18,19 @@ if ($conn->connect_error) {
 // 検索キーワードの取得
 $searchUsername = isset($_POST['searchUsername']) ? $_POST['searchUsername'] : '';
 
-// ユーザーごとの最新のセッションを取得するクエリ
-$sql = "SELECT u.username, us.login_time, us.logout_time, us.is_logged_in
+// ユーザーの全情報を取得するクエリ
+$sql = "SELECT u.username, 
+               us.login_time, 
+               us.logout_time, 
+               us.is_logged_in
         FROM users u
         LEFT JOIN user_sessions us ON u.username = us.username
-        WHERE us.id IN (
+        AND us.id = (
             SELECT MAX(id)
             FROM user_sessions
-            GROUP BY username
+            WHERE username = u.username
         )
-        AND u.username LIKE ? 
+        WHERE u.username LIKE ?
         ORDER BY u.username ASC";
 
 $stmt = $conn->prepare($sql);
@@ -38,10 +40,21 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $loginTime = $row['login_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['login_time'])) : '記録無し';
-        $logoutTime = $row['logout_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['logout_time'])) : '記録無し';
-        $status = $row['is_logged_in'] ? 'ログイン中' : 'ログアウト';
+    while ($row = $result->fetch_assoc()) {
+        // 状態の判定
+        if (empty($row['username']) || $row['login_time'] === null) {
+            $status = '未ログイン'; // ユーザー名が空またはセッション情報がない場合
+            $loginTime = '記録無し';
+            $logoutTime = '記録無し';
+        } elseif ($row['is_logged_in']) {
+            $status = 'ログイン中';
+            $loginTime = $row['login_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['login_time'])) : '記録無し';
+            $logoutTime = $row['logout_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['logout_time'])) : '記録無し';
+        } else {
+            $status = 'ログアウト';
+            $loginTime = $row['login_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['login_time'])) : '記録無し';
+            $logoutTime = $row['logout_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['logout_time'])) : '記録無し';
+        }
         
         echo "<tr>";
         echo "<td>" . htmlspecialchars($row['username']) . "</td>";
@@ -57,4 +70,5 @@ if ($result->num_rows > 0) {
 $stmt->close();
 $conn->close();
 ?>
+
 
