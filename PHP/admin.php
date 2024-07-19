@@ -50,6 +50,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン状況</title>
     <script src="../JS/update_time.js" defer></script>
+    <script src="../JS/update_data.js" defer></script> <!-- JSファイルを追加 -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -136,7 +137,8 @@ $result = $stmt->get_result();
 </head>
 <body>
     <h1>ログイン状況</h1>
-    
+    <h1 id="time">現在の時刻:</h1>
+
     <!-- 検索フォーム -->
     <form method="post">
         <label for="searchUsername">ユーザー名で検索:</label>
@@ -146,33 +148,14 @@ $result = $stmt->get_result();
     
     <!-- テーブルコンテナ -->
     <div class="table-container">
-        <table>
+        <table id="data-table">
             <tr>
                 <th>ユーザー名</th>
                 <th>ログイン時間</th>
                 <th>ログアウト時間</th>
                 <th>ログイン状態</th>
             </tr>
-            <?php
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    $loginTime = $row['login_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['login_time'])) : 'N/A（空白）';
-                    $logoutTime = $row['logout_time'] ? date('Y-m-d<br>H:i:s', strtotime($row['logout_time'])) : 'N/A（空白）';
-                    $status = $row['is_logged_in'] ? 'ログイン中' : 'ログアウト';
-                    
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['username']) . "</td>";
-                    echo "<td class='login-time'><div class='time-wrapper'>$loginTime</div></td>";
-                    echo "<td class='logout-time'><div class='time-wrapper'>$logoutTime</div></td>";
-                    echo "<td>$status</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='4'>ログイン情報がありません</td></tr>";
-            }
-            $stmt->close();
-            $conn->close();
-            ?>
+            <!-- データはここに動的に挿入 -->
         </table>
     </div>
     
@@ -181,5 +164,8 @@ $result = $stmt->get_result();
     </form>
 </body>
 </html>
+
+
+
 
 
