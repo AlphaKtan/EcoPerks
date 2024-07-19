@@ -18,6 +18,28 @@ header {
     width: 100%;
 }
 
+.menu_button{
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    margin: 10px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    background-color: #43AEA9;
+  } 
+  
+  .menu_button:hover {
+    background-color: #557981;
+  }
+  
+  .menu_button:active {
+    box-shadow:
+      inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+      inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+  }
+
 .logo {
     height: 60px;
     width: 100%;
