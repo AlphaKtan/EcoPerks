@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function fetchData() {
         const searchUsername = encodeURIComponent(document.getElementById('searchUsername').value);
         
-        fetch('../php/fetch_data.php', {
+        fetch('fetch_data.php', { // fetch_data.php のパスを確認
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -11,16 +11,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 'searchUsername': searchUsername
             })
         })
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
         .then(data => {
-            document.getElementById('data-table').innerHTML = data;
+            // 'data-table' の ID を持つテーブルにデータを挿入
+            const tableBody = document.querySelector('#data-table tbody');
+            if (tableBody) {
+                tableBody.innerHTML = data;
+            } else {
+                console.error("Element with ID 'data-table' not found");
+            }
         })
         .catch(error => console.error('Error fetching data:', error));
     }
 
     // 初回データ取得
     fetchData();
-    //更新時間ms
+    // 更新間隔ms
     setInterval(fetchData, 100);
 
     // フォームのサブミットを防ぐ
@@ -29,4 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchData();
     });
 });
+
+
 

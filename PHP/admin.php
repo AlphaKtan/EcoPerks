@@ -147,17 +147,20 @@ $result = $stmt->get_result();
     </form>
     
     <!-- テーブルコンテナ -->
-    <div class="table-container">
-        <table id="data-table">
-            <tr>
-                <th>ユーザー名</th>
-                <th>ログイン時間</th>
-                <th>ログアウト時間</th>
-                <th>ログイン状態</th>
-            </tr>
-            <!-- データはここに動的に挿入 -->
-        </table>
-    </div>
+    <table id="data-table">
+        <thead>
+           <tr>
+              <th>ユーザー名</th>
+               <th>ログイン時間</th>
+              <th>ログアウト時間</th>
+              <th>ログイン状態</th>
+           </tr>
+        </thead>
+    <tbody>
+        <!-- データはここに動的に挿入されます -->
+    </tbod>
+
+    </table>
     
     <form action="adminlogout.php" method="post">
         <input type="submit" class="large-button" value="ログアウト">
