@@ -2,7 +2,7 @@
 // セッションを開始
 session_start();
 
-// ログインしているユーザーIDを取得
+// ログインしているユーザー名を取得
 if (isset($_SESSION['username'])) {
     // データベース接続情報
     $servername = "mysql305.phy.lolipop.lan";
@@ -16,22 +16,22 @@ if (isset($_SESSION['username'])) {
         die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
     }
 
-    // ユーザーIDを取得
-    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+    // ユーザー名を取得
+    $stmt = $conn->prepare("SELECT username FROM users WHERE username = ?");
     $stmt->bind_param("s", $_SESSION['username']);
     $stmt->execute();
     $stmt->store_result();
     
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($userId);
+        $stmt->bind_result($username);
         $stmt->fetch();
 
         // 現在の日時を取得
         $logoutTime = date("Y-m-d H:i:s");
 
         // `user_sessions`テーブルを更新
-        $stmt = $conn->prepare("UPDATE user_sessions SET logout_time = ?, is_logged_in = FALSE WHERE user_id = ? AND is_logged_in = TRUE");
-        $stmt->bind_param("si", $logoutTime, $userId);
+        $stmt = $conn->prepare("UPDATE user_sessions SET logout_time = ?, is_logged_in = FALSE WHERE username = ? AND is_logged_in = TRUE");
+        $stmt->bind_param("ss", $logoutTime, $username);
         $stmt->execute();
 
         // セッションを終了
@@ -46,3 +46,5 @@ if (isset($_SESSION['username'])) {
 // ログインページにリダイレクト
 header("Location: ../login.html");
 exit;
+
+

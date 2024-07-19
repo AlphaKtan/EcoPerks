@@ -18,16 +18,15 @@ CREATE TABLE users_kokyaku (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 -- ユーザーセッションの記録
+
 CREATE TABLE user_sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    username VARCHAR(255),
     login_time DATETIME NOT NULL,
     logout_time DATETIME,
     is_logged_in BOOLEAN NOT NULL DEFAULT TRUE,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (username) REFERENCES users(username)
 );
-
-
 
 
 

@@ -1,11 +1,8 @@
 <?php
 
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
-
 
 // セッションが開始されていない場合のみセッションを開始
 if (session_status() == PHP_SESSION_NONE) {
@@ -16,12 +13,12 @@ header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
 
 $servername = "mysql305.phy.lolipop.lan";
-$username = "LAA1516370";
+$dbUsername = "LAA1516370";
 $password = "ecoperks2024";
 $dbname = "LAA1516370-ecoperks";
 
 // データベース接続
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $dbUsername, $password, $dbname);
 if ($conn->connect_error) {
     die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
 }
@@ -65,12 +62,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // ローカルでメール送信
                 if (sendVerificationCodeByEmailLocal($userEmail, $verificationCode)) {
-                    // セッション情報をuser_sessionsテーブルに挿入
                     $loginTime = date("Y-m-d H:i:s");
-                    $stmt = $conn->prepare("INSERT INTO user_sessions (user_id, login_time, is_logged_in) VALUES (?, ?, ?)");
-                    $isLoggedIn = true;
-                    $stmt->bind_param("isi", $userId, $loginTime, $isLoggedIn);
-                    $stmt->execute();
+
+                    // 既存セッションの更新
+                    $stmtUpdate = $conn->prepare("UPDATE user_sessions 
+                                                  SET login_time = ?, logout_time = NULL, is_logged_in = TRUE 
+                                                  WHERE username = ?");
+                    $stmtUpdate->bind_param("ss", $loginTime, $providedUsername);
+                    $stmtUpdate->execute();
+
+                    // 既存のセッションが更新されていない場合、新しいセッションを挿入
+                    if ($stmtUpdate->affected_rows == 0) {
+                        $stmtInsert = $conn->prepare("INSERT INTO user_sessions (username, login_time, is_logged_in) VALUES (?, ?, ?)");
+                        $isLoggedIn = true;
+                        $stmtInsert->bind_param("ssi", $providedUsername, $loginTime, $isLoggedIn);
+                        $stmtInsert->execute();
+                    }
 
                     // メール送信が成功した場合にのみリダイレクト
                     header("Location: 2FA_2.php");
@@ -83,12 +90,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // エラー: メールアドレスが見つからない場合の処理
                 echo '<p style="color: red;">エラー: メールアドレスが見つかりませんでした。</p>';
             }
+        } else {
+            // パスワードが一致しない場合の処理
+            echo '<h2 style="color: red;">ユーザーネームとパスワードを確認してください。</h2>';
+            echo "<h2><a href='../login.html'>入力されたパスワードが一致しなかったため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
         }
+    } else {
+        // ユーザーが見つからない場合の処理
+        echo '<h2 style="color: red;">ユーザーが見つかりませんでした。</h2>';
+        echo "<h2><a href='../login.html'>ユーザー名が存在しないため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
     }
-
-    // ログイン失敗時の処理
-    echo '<h2 style="color: red;">ユーザーネームとパスワードを確認してください。</h2>';
-    echo "<h2><a href='../login.html'>入力されたパスワードが一致しなかったため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
     $stmt->close();
 }
 
@@ -106,3 +117,4 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     // メール送信
     return mail($to, $subject, $message, $headers);
 }
+
