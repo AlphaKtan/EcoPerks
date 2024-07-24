@@ -98,7 +98,7 @@ footer {
 .userFlex{
     display: flex;
     height: 90px;
-    margin: 20px 16px 0 16px;
+    margin: 90px 16px 0 16px;
     background-color: white;
     border: 1px solid#43AEA9;
 }
