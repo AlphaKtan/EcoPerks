@@ -15,14 +15,16 @@
         }
 
         #resetButton {
-            position: absolute;
-            top: 75px;
-            left: 10px;
-            z-index: 5;
             background-color: white;
-            border: 2px solid #000;
             padding: 10px;
             cursor: pointer;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+        }
+        .reset {
+            position: absolute;
+            top: 10px !important;
+            left: 10px !important;
+            z-index: 5;
         }
     </style>
 </head>
@@ -56,7 +58,6 @@
     
 
 <!-- 元の位置に戻るボタン -->
-<div id="resetButton">元の位置に戻る</div>
 <div id="map" style="height: 400px"></div>
 
     <div class="profile">
@@ -130,8 +131,26 @@ function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: initialZoom, // 初期ズームレベルを設定
         center: center,
-        mapTypeId: 'roadmap'
+        mapTypeId: 'roadmap',
+        mapTypeControl: false // デフォルトの「航空写真」ボタンを非表示
     });
+
+        // 「元の位置に戻る」ボタンを作成
+        var resetButtonDiv = document.createElement('div');
+        resetButtonDiv.classList.add('reset');
+        var resetButton = document.createElement('button');
+        resetButton.textContent = '元の位置に戻る';
+        resetButton.id = "resetButton";
+        resetButtonDiv.appendChild(resetButton);
+
+        // カスタムコントロールを地図に追加
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(resetButtonDiv);
+
+        // 「元の位置に戻る」ボタンのクリックイベントを追加
+        resetButton.addEventListener('click', function() {
+            map.setCenter(center);
+            map.setZoom(initialZoom);
+        });
 
     function updateGridSize() {
         var zoom = map.getZoom();

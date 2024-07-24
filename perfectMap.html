@@ -15,12 +15,17 @@
             padding: 10px;
             cursor: pointer;
         }
+
+        #map {
+            height: 400px; /* マップの表示領域の高さ */
+            width: 70%; /* マップの表示領域の幅 */
+        }
     </style>
 </head>
 <body>
-        <!-- 元の位置に戻るボタン -->
-        <div id="resetButton">元の位置に戻る</div>
-<div id="map" style="height: 100vh"></div>
+<!-- 元の位置に戻るボタン -->
+<div id="resetButton">元の位置に戻る</div>
+<div id="map" style="height: 400px"></div>
 <script>
         var initialZoom = 12; // 初期ズームレベル
         let center = {lat: 35.010121680059264, lng: 135.7370724742484};

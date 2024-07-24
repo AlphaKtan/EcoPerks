@@ -8,7 +8,6 @@
     /*ナビの位置と形状*/
 	top:0;
 	width:100%;
-    height: 100vh;/*ナビの高さ*/
 	background:#999;
     /*動き*/
 	transition: all 0.3s;

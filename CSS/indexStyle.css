@@ -7,7 +7,8 @@ header {
     height: 60px;
     top: 0; /* 上部から配置の基準位置を決める */
     background-color: white;
-    position: fixed
+    position: fixed;
+    z-index: 100;
 }
 
 
