@@ -1,87 +1,100 @@
 <!doctype html>
-<!--
- @license
- Copyright 2023 Google LLC. All Rights Reserved.
- SPDX-License-Identifier: Apache-2.0
--->
 <html>
-  <head>
-    <title>Info Windows</title>
-    <script>
-      /**
-       * @license
-       * Copyright 2023 Google LLC. All Rights Reserved.
-       * SPDX-License-Identifier: Apache-2.0
-       */
-
-      // This example displays a marker at the center of Australia.
-      // When the user clicks the marker, an info window opens.
-      async function initMap() {
-        const contentString = `
-          <div>
-            <h1>Uluru</h1>
-            <div>
-              <p>
-                <b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large
-                sandstone rock formation in the southern part of the
-                Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi)
-                south west of the nearest large town, Alice Springs; 450&#160;km
-                (280&#160;mi) by road. Kata Tjuta and Uluru are the two major
-                features of the Uluru - Kata Tjuta National Park. Uluru is
-                sacred to the Pitjantjatjara and Yankunytjatjara, the
-                Aboriginal people of the area. It has many springs, waterholes,
-                rock caves and ancient paintings. Uluru is listed as a World
-                Heritage Site.
-              </p>
-              <p>
-                Attribution: Uluru,
-                <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">
-                  https://en.wikipedia.org/w/index.php?title=Uluru
-                </a>
-                (last visited June 22, 2009).
-              </p>
-            </div>
-          </div>`;
-        const infoWindow = new google.maps.InfoWindow({
-          content: contentString,
-          ariaLabel: "Uluru",
-        });
-
-        const marker = document.querySelector('gmp-advanced-marker');
-        marker.addEventListener('gmp-click', () => {
-          infoWindow.open({anchor: marker});
-        });
-      }
-
-      window.initMap = initMap;
-    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map with Street View Toggle</title>
     <style>
-      /**
-       * @license
-       * Copyright 2023 Google LLC. All Rights Reserved.
-       * SPDX-License-Identifier: Apache-2.0
-       */
-
-      /*
-       * Optional: Makes the sample page fill the window.
-       */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-      }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            height: 100vh; /* ビューポートの高さに合わせる */
+        }
+        #toggle-street-view {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 5;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif; /* フォント設定 */
+            overflow: hidden; /* オーバーフローを隠す */
+        }
+        @media (max-width: 600px) {
+            #toggle-street-view {
+                font-size: 14px; /* モバイル向けのフォントサイズ */
+                padding: 8px; /* モバイル向けのパディング */
+                top: 5px; /* モバイル向けの位置調整 */
+                left: 5px;
+            }
+            #map {
+                height: 100%; /* 高さを画面の高さに合わせる */
+            }
+        }
     </style>
-  </head>
-  <body>
-    <!-- 座標関係 -->
-    <gmp-map center="35.0116, 135.7681" zoom="16" map-id="DEMO_MAP_ID">
-      <gmp-advanced-marker position="35.0116, 135.7681" title="試験テスト" gmp-clickable></gmp-advanced-marker>
-    </gmp-map>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq9TaIM9GgM0e1YeTdIideom17_I0AsbA&callback=initMap&libraries=marker&v=beta&solution_channel=GMP_CCS_infowindows_v2"
-      defer
-    ></script>
-  </body>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq9TaIM9GgM0e1YeTdIideom17_I0AsbA&callback=initMap&libraries=marker&v=beta&solution_channel=GMP_CCS_infowindows_v2" defer></script>
+    <script>
+        let map;
+        let panorama;
+        let streetViewMode = false;
+
+        function initMap() {
+            const initialPosition = { lat: 35.0116, lng: 135.7681 };
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: initialPosition,
+                zoom: 16,
+                mapTypeId: 'roadmap'
+            });
+
+            panorama = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+                position: initialPosition,
+                pov: {
+                    heading: 34,
+                    pitch: 10
+                },
+                visible: false
+            });
+
+            const marker = new google.maps.Marker({
+                position: initialPosition,
+                map: map,
+                title: '試験テスト'
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: '<div><h1>情報タイトル</h1><p>情報内容...</p></div>'
+            });
+
+            marker.addListener('click', function() {
+                infoWindow.open(map, marker);
+            });
+
+            document.getElementById('toggle-street-view').addEventListener('click', function() {
+                streetViewMode = !streetViewMode;
+                if (streetViewMode) {
+                    map.getDiv().style.display = 'none';
+                    document.getElementById('map').style.height = '100%'; // ストリートビューに全画面表示
+                    panorama.setVisible(true);
+                } else {
+                    panorama.setVisible(false);
+                    document.getElementById('map').style.height = '100vh';
+                    map.getDiv().style.display = 'block';
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="toggle-street-view">ストリートビュー切替</div>
+    <div id="map"></div>
+</body>
 </html>
 
 
