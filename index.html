@@ -126,13 +126,23 @@ function initMap() {
         div.classList.add('divBox');
 
         return div;
-    };
+    };  
 
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: initialZoom, // 初期ズームレベルを設定
         center: center,
         mapTypeId: 'roadmap',
-        mapTypeControl: false // デフォルトの「航空写真」ボタンを非表示
+        mapTypeControl: false, // デフォルトの「航空写真」ボタンを非表示
+        minZoom: initialZoom,
+        maxZoom: initialZoom + 3,
+        restriction: {
+            latLngBounds: {
+                north: 35.510121680059264, // 最北の緯度
+                south: 34.510121680059264, // 最南の緯度
+                east: 136.7370724742484,   // 最東の経度
+                west: 134.7370724742484,   // 最西の経度
+            },
+        },
     });
 
         // 「元の位置に戻る」ボタンを作成
