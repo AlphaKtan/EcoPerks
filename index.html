@@ -189,14 +189,18 @@ function initMap() {
 
             // タイルにクリックした時のイベント
             google.maps.event.addDomListener(map.getDiv(), 'click', function(event) {
-                var tiles = document.getElementsByClassName('divBox');
-                for (var i = 0; i < tiles.length; i++) {
-                    var tile = tiles[i];
-                    if (tile && isMouseOverTile(event, tile)) {
-                        alert('参加人数10人 ' + tile.innerHTML); // クリック時の動作
-                    }
-                }
-            });
+    var tiles = document.getElementsByClassName('divBox');
+    for (var i = 0; i < tiles.length; i++) {
+        var tile = tiles[i];
+        if (tile && isMouseOverTile(event, tile)) {
+           
+            var targetUrl = 'https://google.com'; // リンク先のURLを指定
+            alert('参加人数10人 ' + tile.innerHTML); // クリック時の動作
+            window.location.href = targetUrl;
+            break; // リンクに飛んだ後はループを終了
+        }
+    }
+});
 
             // タイルにマウスが乗ったかどうかを判定する関数
             function isMouseOverTile(event, tile) {
