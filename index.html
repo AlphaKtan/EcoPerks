@@ -189,6 +189,7 @@ function initMap() {
 
             // タイルにクリックした時のイベント
             google.maps.event.addDomListener(map.getDiv(), 'click', function(event) {
+<<<<<<< HEAD
     var tiles = document.getElementsByClassName('divBox');
     for (var i = 0; i < tiles.length; i++) {
         var tile = tiles[i];
@@ -201,6 +202,16 @@ function initMap() {
         }
     }
 });
+=======
+                var tiles = document.getElementsByClassName('divBox');
+                for (var i = 0; i < tiles.length; i++) {
+                    var tile = tiles[i];
+                    if (tile && isMouseOverTile(event, tile)) {
+                        alert('参加人数10人' + tile.innerHTML); // クリック時の動作
+                    }
+                }
+            });
+>>>>>>> 84e1856407d47334e1a895478879a10f548ca1e1
 
             // タイルにマウスが乗ったかどうかを判定する関数
             function isMouseOverTile(event, tile) {
