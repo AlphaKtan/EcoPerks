@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 初回データ取得
     fetchData();
     // 更新間隔ms
-    setInterval(fetchData, 100);
+    setInterval(fetchData, 3000);
 
     // フォームのサブミットを防ぐ
     document.querySelector('form').addEventListener('submit', function (event) {
