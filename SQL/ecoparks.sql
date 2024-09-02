@@ -28,6 +28,11 @@ CREATE TABLE user_sessions (
     FOREIGN KEY (username) REFERENCES users(username)
 );
 
-
+CREATE TABLE travel_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    area_id INT NOT NULL, -- エリアを識別するためのカラム
+    facility_name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL
+);
 
 
