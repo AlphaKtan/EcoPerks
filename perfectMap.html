@@ -117,10 +117,56 @@
 
             // タイル内容からエリアIDを取得する関数（例: 座標に基づくマッピング）
             function getAreaIdFromTile(tileContent) {
-                if (tileContent === "(9197, 4153)") {
-                    return 10; // 清水寺のエリアID
+                if (tileContent === "(9196, 4151)") {
+                    return 1; // 金閣寺のID
+                } else if (tileContent === "(9197, 4151)") {
+                    return 2; // 大田神社のID
+                } else if (tileContent === "(9194, 4152)") {
+                    return 3; // 大覚寺のID
+                } else if (tileContent === "(9195, 4152)") {
+                    return 4; // 仁和寺のID
+                } else if (tileContent === "(9196, 4152)") {
+                    return 5; // 晴明神社のID
+                } else if (tileContent === "(9197, 4152)") {
+                    return 6; // 平安神宮のID
+                } else if (tileContent === "(9198, 4152)") {
+                    return 7; // 東山慈照寺のID
+                } else if (tileContent === "(9195, 4153)") {
+                    return 8; // 桂離宮のID
                 } else if (tileContent === "(9196, 4153)") {
                     return 9; // 清水寺の左エリアID
+                } else if (tileContent === "(9197, 4153)") {
+                    return 10; // 清水寺ID
+                } else if (tileContent === "(9198, 4153)") {
+                    return 11; // 清水寺の右エリアID
+                } else if (tileContent === "(9194, 4154)") {
+                    return 12; // 大原野神社のID
+                } else if (tileContent === "(9195, 4154)") {
+                    return 13; // 京都市洛西竹林公園のID
+                } else if (tileContent === "(9196, 4154)") {
+                    return 14; // ID
+                } else if (tileContent === "(9197, 4154)") {
+                    return 15; // ID
+                } else if (tileContent === "(9198, 4154)") {
+                    return 16; // ID
+                } else if (tileContent === "(9194, 4155)") {
+                    return 17; // ID
+                } else if (tileContent === "(9195, 4155)") {
+                    return 18; // ID
+                } else if (tileContent === "(9196, 4155)") {
+                    return 19; // ID
+                } else if (tileContent === "(9197, 4155)") {
+                    return 20; // ID
+                } else if (tileContent === "(9198, 4155)") {
+                    return 21; // ID
+                } else if (tileContent === "(9195, 4156)") {
+                    return 22; // ID
+                } else if (tileContent === "(9196, 4156)") {
+                    return 23; // ID
+                } else if (tileContent === "(9197, 4156)") {
+                    return 24; // ID
+                } else if (tileContent === "(9198, 4156)") {
+                    return 25; // ID
                 }
                 // 他のタイルに対応するエリアIDも追加
                 return null;
