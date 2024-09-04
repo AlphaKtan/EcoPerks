@@ -35,4 +35,12 @@ CREATE TABLE travel_data (
     address VARCHAR(255) NOT NULL
 );
 
-
+CREATE TABLE yoyaku (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL, -- ユーザーID
+    reservation_date DATE NOT NULL, -- 予約日
+    start_time TIME NOT NULL, -- 予約開始時間
+    end_time TIME NOT NULL, -- 予約終了時間
+    status VARCHAR(20) DEFAULT 'pending', -- 予約ステータス（例: pending, confirmed, cancelled）
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 作成日時
+);

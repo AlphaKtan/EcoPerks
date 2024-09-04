@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>予約フォーム</title>
+</head>
+<body>
+    <h1>予約フォーム</h1>
+    <form action="php/yoyaku.php" method="post">
+        <label for="reservation_date">予約日:</label>
+        <input type="date" id="reservation_date" name="reservation_date" required><br><br>
+
+        <label for="start_time">開始時間:</label>
+        <input type="time" id="start_time" name="start_time" required><br><br>
+
+        <label for="end_time">終了時間:</label>
+        <input type="time" id="end_time" name="end_time" required><br><br>
+
+        <input type="submit" value="予約する">
+    </form>
+</body>
+</html>
