@@ -26,6 +26,7 @@ try {
     if (count($results) > 0) {
         echo "<h1>エリアID: $area_id の施設一覧</h1>";
         echo 'マップに戻る: <a href="https://i2322117.chips.jp/perfectMap.html">こちらをクリック</a>';
+        echo '予約: <a href="https://i2322117.chips.jp/yoyaku.html">こちらをクリック</a>';
         echo "<ul>";
         foreach ($results as $row) {
             echo "<li>" . htmlspecialchars($row['facility_name']) . " - " . htmlspecialchars($row['address']) . "</li>";
@@ -33,6 +34,7 @@ try {
         echo "</ul>";
     } else {
         echo "該当する施設はありません。";
+        echo 'マップに戻る: <a href="https://i2322117.chips.jp/perfectMap.html">こちらをクリック</a>';
     }
 } catch (PDOException $e) {
     echo "データベースエラー: " . $e->getMessage();
