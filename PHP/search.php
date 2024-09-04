@@ -25,6 +25,7 @@ try {
     // 結果を表示
     if (count($results) > 0) {
         echo "<h1>エリアID: $area_id の施設一覧</h1>";
+        echo 'マップに戻る: <a href="https://i2322117.chips.jp/perfectMap.html">こちらをクリック</a>';
         echo "<ul>";
         foreach ($results as $row) {
             echo "<li>" . htmlspecialchars($row['facility_name']) . " - " . htmlspecialchars($row['address']) . "</li>";
