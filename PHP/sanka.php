@@ -14,16 +14,17 @@ use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\Logo\Logo;
 
-
-
 // サーバーURLを設定（開始用と終了用で異なる）
 $baseUrl = 'http://i2322117.chips.jp/php/gomiclean.php';
 
-// ゴミ拾い開始用QRコードのURL
-$startUrl = $baseUrl . '?location_id=10&action=start';
+// 現在時刻（60秒ごとに変更される動的パラメータとして使用）
+$timestamp = time();
 
-// ゴミ拾い終了用QRコードのURL
-$endUrl = $baseUrl . '?location_id=10&action=end';
+// ゴミ拾い開始用QRコードのURL（60秒ごとに動的に変更）
+$startUrl = $baseUrl . '?location_id=10&action=start&time=' . $timestamp;
+
+// ゴミ拾い終了用QRコードのURL（60秒ごとに動的に変更）
+$endUrl = $baseUrl . '?location_id=10&action=end&time=' . $timestamp;
 
 // QRコード生成関数
 function generateQrCode($url) {
@@ -41,6 +42,13 @@ function generateQrCode($url) {
     return '<img src="data:image/png;base64,' . base64_encode($result->getString()) . '" alt="QR Code">';
 }
 
+// ページの自動リロードを行うJavaScriptコード
+echo '<script>
+    setTimeout(function() {
+        location.reload();
+    }, 60000); 
+</script>';
+
 // ゴミ拾い開始用QRコード
 echo "<h3>ゴミ拾い開始用QRコード</h3>";
 echo generateQrCode($startUrl);
@@ -48,5 +56,6 @@ echo generateQrCode($startUrl);
 // ゴミ拾い終了用QRコード
 echo "<h3>ゴミ拾い終了用QRコード</h3>";
 echo generateQrCode($endUrl);
+
 
 
