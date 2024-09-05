@@ -1,7 +1,7 @@
 -- ログインID及びパスワード
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
     providedPassword VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL
 );
@@ -25,7 +25,7 @@ CREATE TABLE user_sessions (
     login_time DATETIME NOT NULL,
     logout_time DATETIME,
     is_logged_in BOOLEAN NOT NULL DEFAULT TRUE,
-    FOREIGN KEY (username) REFERENCES users(username)
+    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE 
 );
 
 CREATE TABLE travel_data (
