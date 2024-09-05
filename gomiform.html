@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ゴミ拾い開始・終了</title>
+</head>
+<body>
+    <!-- フォーム -->
+    <form action="php/gomiclean.php" method="post">
+        <input type="hidden" name="action" value="start">
+        <button type="submit">ゴミ拾い開始</button>
+    </form>
+
+    <form action="php/gomiclean.php" method="post">
+        <input type="hidden" name="action" value="end">
+        <button type="submit">ゴミ拾い終了</button>
+    </form>
+</body>
+</html>
+
+

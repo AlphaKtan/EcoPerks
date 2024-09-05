@@ -44,3 +44,14 @@ CREATE TABLE yoyaku (
     status VARCHAR(20) DEFAULT 'pending', -- 予約ステータス（例: pending, confirmed, cancelled）
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 作成日時
 );
+
+
+CREATE TABLE cleaning_records (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- レコードの一意のID
+    username VARCHAR(255) NOT NULL,     -- ユーザー名（ゴミ拾いを行った人）
+    start_time DATETIME NOT NULL,       -- ゴミ拾いの開始時刻
+    end_time DATETIME DEFAULT NULL,     -- ゴミ拾いの終了時刻（最初はNULL）
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- レコード作成日時
+);
+
+
