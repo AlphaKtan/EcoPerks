@@ -10,42 +10,43 @@ try {
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // アクションを判別（開始 or 終了）
-    if (isset($_POST['action']) && $_POST['action'] === 'start') {
-        // ゴミ拾い開始
+    // QRコードからの情報を取得
+    if (isset($_GET['location_id']) && isset($_GET['action'])) {
+        $location_id = $_GET['location_id'];
+        $action = $_GET['action'];
         $username = "testuser"; // 仮のユーザー名、ログインシステムから取得することを想定
-        $start_time = date("Y-m-d H:i:s");
+        $current_time = date("Y-m-d H:i:s");
 
-        // 開始データの挿入
-        $sql = "INSERT INTO cleaning_records (username, start_time) VALUES (:username, :start_time)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':start_time', $start_time);
-        $stmt->execute();
+        if ($action === 'start') {
+            // ゴミ拾い開始
+            $sql = "INSERT INTO cleaning_records (username, location_id, start_time) VALUES (:username, :location_id, :start_time)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':location_id', $location_id);
+            $stmt->bindParam(':start_time', $current_time);
+            $stmt->execute();
 
-        echo "ゴミ拾いが開始されました！";
+            echo "ゴミ拾いが地点 $location_id で開始されました！";
 
-    } elseif (isset($_POST['action']) && $_POST['action'] === 'end') {
-        // ゴミ拾い終了
-        $username = "testuser"; // 仮のユーザー名
-        $end_time = date("Y-m-d H:i:s");
+        } elseif ($action === 'end') {
+            // ゴミ拾い終了
+            $sql = "UPDATE cleaning_records SET end_time = :end_time WHERE username = :username AND location_id = :location_id AND end_time IS NULL";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':location_id', $location_id);
+            $stmt->bindParam(':end_time', $current_time);
+            $stmt->execute();
 
-        // 終了データの更新
-        $sql = "UPDATE cleaning_records SET end_time = :end_time WHERE username = :username AND end_time IS NULL";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':end_time', $end_time);
-        $stmt->execute();
-
-        echo "ゴミ拾いが終了しました！";
+            echo "ゴミ拾いが地点 $location_id で終了しました！";
+        } else {
+            echo "無効なアクションです。";
+        }
     } else {
-        echo "アクションが指定されていません。";
+        echo "QRコードの情報が不完全です。";
     }
 
 } catch (PDOException $e) {
     echo "データベースエラー: " . $e->getMessage();
 }
-
-
 
 

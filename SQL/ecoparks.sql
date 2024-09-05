@@ -47,11 +47,13 @@ CREATE TABLE yoyaku (
 
 
 CREATE TABLE cleaning_records (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- レコードの一意のID
-    username VARCHAR(255) NOT NULL,     -- ユーザー名（ゴミ拾いを行った人）
-    start_time DATETIME NOT NULL,       -- ゴミ拾いの開始時刻
-    end_time DATETIME DEFAULT NULL,     -- ゴミ拾いの終了時刻（最初はNULL）
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL, -- ユーザー名
+    location_id INT NOT NULL,       -- QRスポットの地点ID
+    start_time DATETIME,            -- 開始時間
+    end_time DATETIME,              -- 終了時間
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- レコード作成日時
 );
+
 
 
