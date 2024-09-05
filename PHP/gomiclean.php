@@ -12,32 +12,32 @@ try {
 
     // QRコードからの情報を取得
     if (isset($_GET['location_id']) && isset($_GET['action'])) {
-        $location_id = $_GET['location_id'];
+        $area_id = $_GET['location_id']; // QRコードに含まれる地点ID（area_id）
         $action = $_GET['action'];
-        $username = "testuser"; // 仮のユーザー名、ログインとの連携が必要
+        $username = "testuser"; // 仮のユーザー名。ログインシステムとの連携が必要
         $current_time = date("Y-m-d H:i:s");
 
         if ($action === 'start') {
-            // ゴミ拾い開始
-            $sql = "INSERT INTO cleaning_records (username, location_id, start_time) VALUES (:username, :location_id, :start_time)";
+            // ゴミ拾い開始の処理
+            $sql = "INSERT INTO cleaning_records (username, area_id, start_time) VALUES (:username, :area_id, :start_time)";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':location_id', $location_id);
+            $stmt->bindParam(':area_id', $area_id);
             $stmt->bindParam(':start_time', $current_time);
             $stmt->execute();
 
-            echo "ゴミ拾いが地点 $location_id で開始されました！";
+            echo "ゴミ拾いが地点 $area_id で開始されました！";
 
         } elseif ($action === 'end') {
-            // ゴミ拾い終了
-            $sql = "UPDATE cleaning_records SET end_time = :end_time WHERE username = :username AND location_id = :location_id AND end_time IS NULL";
+            // ゴミ拾い終了の処理
+            $sql = "UPDATE cleaning_records SET end_time = :end_time WHERE username = :username AND area_id = :area_id AND end_time IS NULL";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':location_id', $location_id);
+            $stmt->bindParam(':area_id', $area_id);
             $stmt->bindParam(':end_time', $current_time);
             $stmt->execute();
 
-            echo "ゴミ拾いが地点 $location_id で終了しました！";
+            echo "ゴミ拾いが地点 $area_id で終了しました！";
         } else {
             echo "無効なアクションです。";
         }
