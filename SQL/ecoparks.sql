@@ -35,21 +35,25 @@ CREATE TABLE travel_data (
     address VARCHAR(255) NOT NULL
 );
 
+
 CREATE TABLE yoyaku (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL, -- ユーザーID
+    username VARCHAR(255) NOT NULL, -- ユーザーネーム
     reservation_date DATE NOT NULL, -- 予約日
+    area_id INT NOT NULL,      -- エリアID
     start_time TIME NOT NULL, -- 予約開始時間
     end_time TIME NOT NULL, -- 予約終了時間
-    status VARCHAR(20) DEFAULT 'pending', -- 予約ステータス（例: pending, confirmed, cancelled）
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 作成日時
+    status INT DEFAULT '0', -- 予約ステータス（0ーQR未読み込み、１ーQRを使用して当日参加中の時 2-QRを使用して、終了した場合
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 作成日時
+    update_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 予約変更更新日時
 );
+
 
 
 CREATE TABLE cleaning_records (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL, -- ユーザー名
-    location_id INT NOT NULL,       -- QRスポットの地点ID
+    area_id INT NOT NULL,       -- QRスポットの地点ID
     start_time DATETIME,            -- 開始時間
     end_time DATETIME,              -- 終了時間
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- レコード作成日時

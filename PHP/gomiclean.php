@@ -14,7 +14,7 @@ try {
     if (isset($_GET['location_id']) && isset($_GET['action'])) {
         $location_id = $_GET['location_id'];
         $action = $_GET['action'];
-        $username = "testuser"; // 仮のユーザー名、ログインシステムから取得することを想定
+        $username = "testuser"; // 仮のユーザー名、ログインとの連携が必要
         $current_time = date("Y-m-d H:i:s");
 
         if ($action === 'start') {
