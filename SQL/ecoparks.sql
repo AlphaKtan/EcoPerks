@@ -30,7 +30,7 @@ CREATE TABLE user_sessions (
 
 CREATE TABLE travel_data (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    area_id INT NOT NULL UNIQUE, -- エリアを識別するためのカラム
+    area_id INT NOT NULL, -- エリアを識別するためのカラム
     facility_name VARCHAR(255) NOT NULL UNIQUE,
     address VARCHAR(255) NOT NULL
 );
@@ -68,7 +68,6 @@ CREATE TABLE PRODUCT(
 	start_time TIME NOT NULL,
 	end_time TIME NOT NULL,
     status INT DEFAULT '0',
-  	FOREIGN KEY (area_id) REFERENCES travel_data(area_id),
     FOREIGN KEY (facility_name) REFERENCES travel_data(facility_name)
 );
 
