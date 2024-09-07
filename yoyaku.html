@@ -2,10 +2,45 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="CSS/indexStyle.css">
+    <link rel="stylesheet" href="CSS/yoyakuStyle.css">
     <title>予約フォーム</title>
 </head>
 <body>
-    <h1>予約フォーム</h1>
+
+    <header>
+        <div class="flexBox">
+            <div class="menu">
+            </div>
+            <div class="logo">
+                <img src="img/logo.jpg" alt="" class="logo2">
+            </div>
+            <div class="icon"></div>
+        </div>
+    </header>
+
+
+
+    <form class="yoyaku_form" action="php/yoyaku.php" method="post">
+        <h1>予約フォーム</h1>
+        <label for="reservation_date">予約日:</label>
+        <input type="date" id="reservation_date" name="reservation_date" required>
+    
+        <label for="start_time">開始時間:</label>
+        <input type="time" id="start_time" name="start_time" required>
+    
+        <label for="end_time">終了時間:</label>
+        <input type="time" id="end_time" name="end_time" required>
+    
+        <label for="location">場所指定:</label>
+        <input type="text" id="location" name="location" placeholder="例とか入れれる" required>
+    
+        <input type="submit" value="予約する">
+    </form>
+
+
+    
+    <!-- <h1>予約フォーム</h1>
     <form action="php/yoyaku.php" method="post">
         <label for="reservation_date">予約日:</label>
         <input type="date" id="reservation_date" name="reservation_date" required><br><br>
@@ -20,6 +55,6 @@
         <input type="text">
 
         <input type="submit" value="予約する">
-    </form>
+    </form> -->
 </body>
 </html>

@@ -1,9 +1,9 @@
 <?php
 // データベース接続情報
-$servername = "mysql305.phy.lolipop.lan";
-$dbUsername = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
+$servername = "localhost";
+$dbUsername = "root";
+$password = "";
+$dbname = "ecoperks";
 
 try {
     // データベースに接続

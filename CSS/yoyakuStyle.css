@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    .flexBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo img {
+        height: 40px;
+    }
+    
+    .yoyaku_form {
+        max-width: 75%;
+        margin: 80px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .yoyaku_form h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .yoyaku_form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    .yoyaku_form input[type="date"],
+    .yoyaku_form input[type="time"],
+    .yoyaku_form input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    .yoyaku_form input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #43AEA9;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    
+    .yoyaku_form input[type="submit"]:hover {
+        background-color: #557981;
+    }
