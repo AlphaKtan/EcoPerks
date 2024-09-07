@@ -13,7 +13,7 @@ try {
     $area_id = $_GET['area_id'];
 
     // SQLクエリを準備して実行
-    $sql = "SELECT facility_name, address FROM travel_data WHERE area_id = :area_id";
+    $sql = "SELECT id, facility_name, address FROM travel_data WHERE area_id = :area_id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
     $stmt->execute();
@@ -52,15 +52,16 @@ try {
                 // 結果を表示
                 if (count($results) > 0) {
                     echo "<h1>エリア: $area_id の施設一覧</h1>";
-                    echo '<a href="https://i2322117.chips.jp/perfectMap.html" class="link_button">マップに戻る</a>';
+                    echo '<a href="../perfectMap.html" class="link_button">マップに戻る</a>';
                     echo "<ul>";
                     foreach ($results as $row) {
-                        echo "<li>" . htmlspecialchars($row['facility_name']) . " - " . htmlspecialchars($row['address']) . " 予約: <a href='../yoyaku.html' class = 'yoyaku_button'>こちらをクリック</a></li>";
+                        echo "<li>" . htmlspecialchars($row['facility_name']) . " - " . htmlspecialchars($row['address']) . 
+                        " 予約. $row[id]: <a href='../yoyaku.html?location=" . $row['id'] . "' class='yoyaku_button'>こちらをクリック</a></li>";
                     }
                     echo "</ul>";
                 } else {
                     echo "<p>該当する施設はありません。</p>";
-                    echo '<a href="https://i2322117.chips.jp/perfectMap.html" class="link_button">マップに戻る</a>';
+                    echo '<a href="../perfectMap.html" class="link_button">マップに戻る</a>';
                 }
             ?>
         </div>
