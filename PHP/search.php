@@ -7,7 +7,7 @@ $dbname = "ecoperks";
 try {
     // データベースに接続
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PHP例外フロー
 
     // URLからエリアIDを取得
     $area_id = $_GET['area_id'];
