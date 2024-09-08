@@ -74,7 +74,7 @@
             $stmt->execute();
 
             if ($stmt->rowCount() > 0) {
-                echo "<p>この時間帯は既に予約されています。別の時間を選択してください。</p>";
+                $pop ="<p>この時間帯は既に予約されています。別の時間を選択してください。</p>";
             } else {
                 // SQLクエリを準備して実行
                 $sql = "INSERT INTO yoyaku (username, reservation_date, start_time, end_time, location) 
@@ -87,7 +87,7 @@
                 $stmt->bindParam(':location', $facility_name, PDO::PARAM_STR);
                 $stmt->execute();
 
-                echo "<p>予約が正常に完了しました！</p>";
+                $pop = "<p>予約が正常に完了しました！</p>";
             }
         }
     } catch (PDOException $e) {
@@ -110,6 +110,10 @@
     
         <input type="submit" value="予約する">
     </form>
-
+        <?php 
+            if (isset($pop)) {
+                echo "<p>$pop</p>";
+            } 
+        ?>
 </body>
 </html>
