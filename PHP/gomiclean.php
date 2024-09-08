@@ -1,22 +1,22 @@
 <?php
-// データベース接続情報
-$servername = "mysql305.phy.lolipop.lan";
-$dbUsername = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
+session_start();
+require_once('db_connection.php'); // データベース接続ファイル
 
-try {
-    // データベース接続
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// ログイン確認
+if (!isset($_SESSION['username'])) {
+    header('Location: ../login.html');
+    exit;
+}
 
-    // QRコードからの情報を取得
-    if (isset($_GET['location_id']) && isset($_GET['action'])) {
-        $area_id = $_GET['location_id']; // QRコードに含まれる地点ID（area_id）
-        $action = $_GET['action'];
-        $username = "testuser"; // 仮のユーザー名。ログインシステムとの連携が必要
-        $current_time = date("Y-m-d H:i:s");
+$username = $_SESSION['username']; // ログイン中のユーザー名
 
+// QRコードからの情報を取得
+if (isset($_GET['location_id']) && isset($_GET['action'])) {
+    $area_id = $_GET['location_id']; // QRコードに含まれる地点ID（area_id）
+    $action = $_GET['action'];
+    $current_time = date("Y-m-d H:i:s");
+
+    try {
         if ($action === 'start') {
             // ゴミ拾い開始の処理
             $sql = "INSERT INTO cleaning_records (username, area_id, start_time) VALUES (:username, :area_id, :start_time)";
@@ -41,12 +41,12 @@ try {
         } else {
             echo "無効なアクションです。";
         }
-    } else {
-        echo "QRコードの情報が不完全です。";
+    } catch (PDOException $e) {
+        echo "エラーが発生しました: " . $e->getMessage();
     }
-
-} catch (PDOException $e) {
-    echo "データベースエラー: " . $e->getMessage();
+} else {
+    echo "QRコードの情報が不完全です。";
 }
+
 
 
