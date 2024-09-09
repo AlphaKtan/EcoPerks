@@ -52,7 +52,7 @@ try {
         }
 
         /* ダークモードのスタイル */
-        body.dark-mode {
+        /* body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
         }
@@ -73,12 +73,12 @@ try {
         }
         .toggle-btn:hover {
             background-color: #0056b3;
-        }
+        } */
     </style>
 </head>
 <body>
     <h1>参加人数管理</h1>
-    <button class="toggle-btn" onclick="toggleDarkMode()">ダークモード切り替え</button>
+    <!-- <button class="toggle-btn" onclick="toggleDarkMode()">ダークモード切り替え</button> -->
     <p>総参加人数: <strong><?php echo $totalParticipants; ?></strong></p>
 
     <table>
@@ -108,7 +108,7 @@ try {
         </tbody>
     </table>
 
-    <script>
+    <!-- <script>
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             // ダークモードが有効かどうかをローカルストレージに保存
@@ -125,7 +125,7 @@ try {
                 document.body.classList.add('dark-mode');
             }
         }
-    </script>
+    </script> -->
 </body>
 </html>
 
