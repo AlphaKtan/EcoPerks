@@ -56,7 +56,7 @@ try {
                     echo "<ul>";
                     foreach ($results as $row) {
                         echo "<li>" . htmlspecialchars($row['facility_name']) . " - " . htmlspecialchars($row['address']) . 
-                        " 予約. $row[id]: <a href='yoyaku.php?location=" . $row['id'] . "' class='yoyaku_button'>こちらをクリック</a></li>";
+                        " 予約: <a href='yoyaku.php?location=" . $row['id'] . "' class='yoyaku_button'>こちらをクリック</a></li>";
                     }
                     echo "</ul>";
                 } else {
