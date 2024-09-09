@@ -8,7 +8,11 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-$username = $_SESSION['username']; // ログイン中のユーザー名
+// セッション変数に直接ユーザー名を設定（例として 'yuikatayama'）
+$_SESSION['username'] = 'yuikatayama';
+
+// ログイン中のユーザー名を取得
+$username = $_SESSION['username'];
 
 // QRコードからの情報を取得
 if (isset($_GET['location_id']) && isset($_GET['action'])) {
@@ -17,8 +21,8 @@ if (isset($_GET['location_id']) && isset($_GET['action'])) {
     $current_time = date("Y-m-d H:i:s");
 
     try {
+        // ゴミ拾い開始の場合
         if ($action === 'start') {
-            // ゴミ拾い開始の処理
             $sql = "INSERT INTO cleaning_records (username, area_id, start_time) VALUES (:username, :area_id, :start_time)";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':username', $username);
@@ -28,8 +32,8 @@ if (isset($_GET['location_id']) && isset($_GET['action'])) {
 
             echo "ゴミ拾いが地点 $area_id で開始されました！";
 
+        // ゴミ拾い終了の場合
         } elseif ($action === 'end') {
-            // ゴミ拾い終了の処理
             $sql = "UPDATE cleaning_records SET end_time = :end_time WHERE username = :username AND area_id = :area_id AND end_time IS NULL";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':username', $username);
