@@ -30,6 +30,12 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>参加人数の管理</title>
     <style>
+        body {
+            background-color: #fff;
+            color: #000;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -44,10 +50,35 @@ try {
         th {
             background-color: #f2f2f2;
         }
+
+        /* ダークモードのスタイル */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        body.dark-mode th {
+            background-color: #333;
+        }
+        body.dark-mode table, body.dark-mode th, body.dark-mode td {
+            border: 1px solid #555;
+        }
+        .toggle-btn {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .toggle-btn:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <h1>参加人数管理</h1>
+    <button class="toggle-btn" onclick="toggleDarkMode()">ダークモード切り替え</button>
     <p>総参加人数: <strong><?php echo $totalParticipants; ?></strong></p>
 
     <table>
@@ -76,6 +107,25 @@ try {
             <?php endif; ?>
         </tbody>
     </table>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            // ダークモードが有効かどうかをローカルストレージに保存
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+
+        // ページ読み込み時にダークモードを適用
+        window.onload = function() {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+    </script>
 </body>
 </html>
 
