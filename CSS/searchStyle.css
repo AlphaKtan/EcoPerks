@@ -15,7 +15,7 @@ text-align: center;
 
 a {
 color: #1a73e8;
-text-decoration: none;
+text-decoration-line: none;
 }
 
 a:hover {
@@ -35,6 +35,7 @@ text-decoration: none;
 
 .link_button:hover {
 background-color: #557981;
+text-decoration-line: none;
 }
 
 .yoyaku_button{
@@ -50,6 +51,7 @@ text-decoration: none;
 
 .yoyaku_button:hover{
 background-color: #557981;
+text-decoration-line: none;
 }
 
 li {
