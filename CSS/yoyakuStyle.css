@@ -10,10 +10,6 @@
         align-items: center;
     }
     
-    .logo img {
-        height: 40px;
-    }
-    
     .yoyaku_form {
         max-width: 75%;
         margin: 80px auto;
