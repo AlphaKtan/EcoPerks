@@ -2,15 +2,14 @@
 session_start();
 require_once('db_connection.php'); // データベース接続ファイル
 
-// ログイン確認
+
+
+// セッション変数に直接ユーザー名を設定（例として 'yuikatayama'）
+$_SESSION['username'] = 'yuikatayama';
 if (!isset($_SESSION['username'])) {
     header('Location: ../login.html');
     exit;
 }
-
-// セッション変数に直接ユーザー名を設定（例として 'yuikatayama'）
-$_SESSION['username'] = 'yuikatayama';
-
 // ログイン中のユーザー名を取得
 $username = $_SESSION['username'];
 

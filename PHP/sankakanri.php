@@ -1,0 +1,84 @@
+<?php
+session_start();
+require_once('db_connection.php'); // データベース接続ファイル
+
+try {
+    // テーブルよりデータを取得する（終了時刻がnullのもののみ取得する場合）
+    $sql = "SELECT username, area_id, start_time, end_time FROM cleaning_records";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+
+    // 取得したデータを配列として取得
+    $cleaningRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // 終了時刻がNULLのレコードのみカウント
+    $activeRecords = array_filter($cleaningRecords, function($record) {
+        return is_null($record['end_time']);
+    });
+    $totalParticipants = count($activeRecords);
+
+} catch (PDOException $e) {
+    echo "データベースエラー: " . $e->getMessage();
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>参加人数の管理</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>参加人数管理</h1>
+    <p>総参加人数: <strong><?php echo $totalParticipants; ?></strong></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ユーザー名</th>
+                <th>地点ID</th>
+                <th>開始時間</th>
+                <th>終了時間</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($activeRecords): ?>
+                <?php foreach ($activeRecords as $record): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($record['username'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($record['area_id'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($record['start_time'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo is_null($record['end_time']) ? '進行中' : ''; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4">進行中の参加記録がありません。</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
