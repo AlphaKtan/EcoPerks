@@ -4,8 +4,8 @@ require_once('db_connection.php'); // データベース接続ファイル
 
 
 
-// セッション変数に直接ユーザー名を設定（例として 'yuikatayama'）
-$_SESSION['username'] = 'yuikatayama';
+// セッション変数に直接ユーザー名を設定
+$_SESSION['username'] = 'testman';
 if (!isset($_SESSION['username'])) {
     header('Location: ../login.html');
     exit;
