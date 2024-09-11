@@ -84,7 +84,7 @@
     </style>
 
     <script>
-        var countdownTime = 10; // カウントダウンの秒数
+        var countdownTime = 60; // カウントダウンの秒数
 
         // QRコードをqrtime.phpから取得して更新
         function updateQrCodes() {
@@ -93,7 +93,7 @@
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     document.getElementById('qr-codes').innerHTML = xhr.responseText;
-                    countdownTime = 10; // QRコード更新後にカウントダウンをリセット
+                    countdownTime = 60; // QRコード更新後にカウントダウンをリセット
                 }
             };
             xhr.send();
@@ -107,7 +107,7 @@
                     countdownTime--;
                 } else {
                     updateQrCodes(); // カウントが0になったらQRコードを更新
-                    countdownTime = 10; // カウントダウンをリセット
+                    countdownTime = 60; // カウントダウンをリセット
                 }
             }, 1000); // 1秒ごとにカウントダウン
         }
