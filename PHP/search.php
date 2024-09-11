@@ -1,9 +1,11 @@
 <?php
 // データベース接続情報
-$servername = "localhost";
-$dbUsername = "root";
-$password = "";
-$dbname = "ecoperks";
+require_once('db_connection.php');
+
+
+
+
+
 try {
     // データベースに接続
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
