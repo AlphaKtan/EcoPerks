@@ -1,9 +1,6 @@
 <?php
 // データベース接続情報
-$servername = "mysql305.phy.lolipop.lan";
-$dbUsername = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
+require_once('db_connection.php'); // データベース接続
 
 try {
     // データベースに接続

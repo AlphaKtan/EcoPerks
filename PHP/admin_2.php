@@ -2,10 +2,7 @@
 // ログアウト処理スクリプトの例
 
 // データベース接続情報
-$servername = "mysql305.phy.lolipop.lan";
-$username = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
+require_once('db_connection.php'); // データベース接続ファイル
 
 // タイムゾーンを日本時間に設定
 date_default_timezone_set('Asia/Tokyo');
@@ -62,10 +59,7 @@ if (session_status() == PHP_SESSION_NONE) {
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
 
-$servername = "mysql305.phy.lolipop.lan";
-$username = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
+require_once('db_connection.php'); // データベース接続ファイル
 
 // データベース接続
 $conn = new mysqli($servername, $username, $password, $dbname);

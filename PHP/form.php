@@ -7,10 +7,7 @@
 // セッションの開始
 session_start();
 
-$servername = "mysql305.phy.lolipop.lan";
-$username = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
+require_once('db_connection.php'); // データベース接続ファイル
 
 // フォームからのデータを取得
 $providedUsername = $_POST["userName"] ?? ''; //ユーザー名

@@ -5,10 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // データベース接続
-$servername = "mysql305.phy.lolipop.lan";
-$dbUsername = "LAA1516370";
-$password = "ecoperks2024";
-$dbname = "LAA1516370-ecoperks";
+require_once('db_connection.php'); // データベース接続ファイル
 
 $conn = new mysqli($servername, $dbUsername, $password, $dbname);
 if ($conn->connect_error) {

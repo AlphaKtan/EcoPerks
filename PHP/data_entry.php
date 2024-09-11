@@ -1,9 +1,7 @@
 <?php
 // データベース接続情報
-$servername = "localhost";
-$dbUsername = "root";
-$password = "";
-$dbname = "ecoperks";
+require_once('db_local.php'); // データベース接続に関する
+
 
 try {
     // データベースに接続
