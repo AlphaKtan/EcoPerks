@@ -104,78 +104,76 @@
             </div>
         </div>
     </footer>
+    <div id="resetButton">元の位置に戻る</div>
+    <div id="map" style="height: 100vh"></div>
+
 
     <script>
         var initialZoom = 12; // 初期ズームレベル
         let center = {lat: 35.010121680059264, lng: 135.7370724742484};
         
-function initMap() {
-    function Grid(size) {
-        this.tileSize = size;
-    }
+        function initMap() {
+            function Grid(size) {
+                this.tileSize = size;
+            }
 
-    Grid.prototype.getTile = function(coord, zoom, ownerDocument) {
-        var div = ownerDocument.createElement('div');
-        if (zoom > 11) {
-          div.innerHTML = coord;
-        }
-        div.style.width = this.tileSize.width + 'px';
-        div.style.height = this.tileSize.height + 'px';
-        div.style.borderStyle = 'solid';
-        div.style.borderWidth = '1px';
-        // div.style.boxSizing = 'border-box';
-        div.classList.add('divBox');
+            Grid.prototype.getTile = function(coord, zoom, ownerDocument) {
+                var div = ownerDocument.createElement('div');
+                if (zoom > 11) {
+                    div.innerHTML = coord;
+                }
+                
+                console.log(zoom);
+                div.style.width = this.tileSize.width + 'px';
+                div.style.height = this.tileSize.height + 'px';
+                div.style.borderStyle = 'solid';
+                div.style.borderWidth = '1px';
 
-        return div;
-    };  
+                // Gridオブジェクトのインスタンスプロパティとして持つnextIdを使って連番のidを設定する
+                if (!this.nextId) {
+                    this.nextId = 1; // 最初のdiv要素のidを1から始める
+                }
 
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: initialZoom, // 初期ズームレベルを設定
-        center: center,
-        mapTypeId: 'roadmap',
-        mapTypeControl: false, // デフォルトの「航空写真」ボタンを非表示
-        minZoom: initialZoom,
-        maxZoom: initialZoom + 3,
-        restriction: {
-            latLngBounds: {
-                north: 35.510121680059264, // 最北の緯度
-                south: 34.510121680059264, // 最南の緯度
-                east: 136.7370724742484,   // 最東の経度
-                west: 134.7370724742484,   // 最西の経度
-            },
-        },
-    });
+                // div要素にidを設定する
+                div.id = "div" + this.nextId;
+                console.log(div.id);
+                div.classList.add('divBox');
 
-        // 「元の位置に戻る」ボタンを作成
-        var resetButtonDiv = document.createElement('div');
-        resetButtonDiv.classList.add('reset');
-        var resetButton = document.createElement('button');
-        resetButton.textContent = '元の位置に戻る';
-        resetButton.id = "resetButton";
-        resetButtonDiv.appendChild(resetButton);
+                // 次のdiv要素のidに進める
+                this.nextId++;
+                
+                return div;
+            };
 
-        // カスタムコントロールを地図に追加
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(resetButtonDiv);
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: initialZoom, // 初期ズームレベルを設定
+                center: center,
+                mapTypeId: 'roadmap',
+                minZoom: initialZoom,
+                maxZoom: initialZoom + 3,
+                restriction: {
+                    latLngBounds: {
+                        north: 35.510121680059264, // 最北の緯度
+                        south: 34.510121680059264, // 最南の緯度
+                        east: 136.7370724742484,   // 最東の経度
+                        west: 134.7370724742484,   // 最西の経度
+                    },
+                },
+            });
 
-        // 「元の位置に戻る」ボタンのクリックイベントを追加
-        resetButton.addEventListener('click', function() {
-            map.setCenter(center);
-            map.setZoom(initialZoom);
-        });
+            function updateGridSize() {
+                var zoom = map.getZoom();
+                var baseSize = 100; // 基本サイズ
+                var tileSize = baseSize * Math.pow(2, zoom - 12); // ズームレベル12を基準とする
+                map.overlayMapTypes.clear(); // 以前のオーバーレイをクリア
+                map.overlayMapTypes.insertAt(0, new Grid(new google.maps.Size(tileSize, tileSize)));
+            }
 
-    function updateGridSize() {
-        var zoom = map.getZoom();
-        var baseSize = 100; // 基本サイズ
-        var tileSize = baseSize * Math.pow(2, zoom - 12); // ズームレベル12を基準とする
-        map.overlayMapTypes.clear(); // 以前のオーバーレイをクリア
-        map.overlayMapTypes.insertAt(0, new Grid(new google.maps.Size(tileSize, tileSize)));
-    }
+            map.addListener('zoom_changed', updateGridSize); // ズームレベルが変わったときに呼び出す
+            updateGridSize(); // 初期設定
 
-    map.addListener('zoom_changed', updateGridSize); // ズームレベルが変わったときに呼び出す
-    updateGridSize(); // 初期設定
-
-                // タイルにマウスが乗った時のイベント
-                google.maps.event.addDomListener(map.getDiv(), 'mousemove', function(event) {
+            // タイルにマウスが乗った時のイベント
+            google.maps.event.addDomListener(map.getDiv(), 'mousemove', function(event) {
                 var tiles = document.getElementsByClassName('divBox');
                 for (var i = 0; i < tiles.length; i++) {
                     var tile = tiles[i];
@@ -188,21 +186,76 @@ function initMap() {
             });
 
             // タイルにクリックした時のイベント
+            // タイルにクリックした時のイベント
             google.maps.event.addDomListener(map.getDiv(), 'click', function(event) {
-            var tiles = document.getElementsByClassName('divBox');
-            for (var i = 0; i < tiles.length; i++) {
-                var tile = tiles[i];
-                if (tile && isMouseOverTile(event, tile)) {
-           
-                var targetUrl = 'https://google.com'; // リンク先のURLを指定
-                alert('参加人数10人 ' + tile.innerHTML); // クリック時の動作
-                window.location.href = targetUrl;
-                break; // リンクに飛んだ後はループを終了
-        }
-    }
-});
+                var tiles = document.getElementsByClassName('divBox');
+                for (var i = 0; i < tiles.length; i++) {
+                    var tile = tiles[i];
+                    if (tile && isMouseOverTile(event, tile)) {
+                        var areaId = getAreaIdFromTile(tile.innerHTML); // タイルの内容に基づいてエリアIDを取得
+                        if (areaId !== null) {
+                            window.location.href = 'php/search.php?area_id=' + areaId; // PHPスクリプトにエリアIDを送信
+                        }
+                    }
+                }
+            });
 
-
+            // タイル内容からエリアIDを取得する関数（例: 座標に基づくマッピング）
+            function getAreaIdFromTile(tileContent) {
+                if (tileContent === "(9196, 4151)") {
+                    return 1; // 金閣寺のID
+                } else if (tileContent === "(9197, 4151)") {
+                    return 2; // 大田神社のID
+                } else if (tileContent === "(9194, 4152)") {
+                    return 3; // 大覚寺のID
+                } else if (tileContent === "(9195, 4152)") {
+                    return 4; // 仁和寺のID
+                } else if (tileContent === "(9196, 4152)") {
+                    return 5; // 晴明神社のID
+                } else if (tileContent === "(9197, 4152)") {
+                    return 6; // 平安神宮のID
+                } else if (tileContent === "(9198, 4152)") {
+                    return 7; // 東山慈照寺のID
+                } else if (tileContent === "(9195, 4153)") {
+                    return 8; // 桂離宮のID
+                } else if (tileContent === "(9196, 4153)") {
+                    return 9; // 清水寺の左エリアID
+                } else if (tileContent === "(9197, 4153)") {
+                    return 10; // 清水寺ID
+                } else if (tileContent === "(9198, 4153)") {
+                    return 11; // 清水寺の右エリアID
+                } else if (tileContent === "(9194, 4154)") {
+                    return 12; // 大原野神社のID
+                } else if (tileContent === "(9195, 4154)") {
+                    return 13; // 京都市洛西竹林公園のID
+                } else if (tileContent === "(9196, 4154)") {
+                    return 14; // ID
+                } else if (tileContent === "(9197, 4154)") {
+                    return 15; // ID
+                } else if (tileContent === "(9198, 4154)") {
+                    return 16; // ID
+                } else if (tileContent === "(9194, 4155)") {
+                    return 17; // ID
+                } else if (tileContent === "(9195, 4155)") {
+                    return 18; // ID
+                } else if (tileContent === "(9196, 4155)") {
+                    return 19; // ID
+                } else if (tileContent === "(9197, 4155)") {
+                    return 20; // ID
+                } else if (tileContent === "(9198, 4155)") {
+                    return 21; // ID
+                } else if (tileContent === "(9195, 4156)") {
+                    return 22; // ID
+                } else if (tileContent === "(9196, 4156)") {
+                    return 23; // ID
+                } else if (tileContent === "(9197, 4156)") {
+                    return 24; // ID
+                } else if (tileContent === "(9198, 4156)") {
+                    return 25; // ID
+                }
+                // 他のタイルに対応するエリアIDも追加
+                return null;
+            }
 
             // タイルにマウスが乗ったかどうかを判定する関数
             function isMouseOverTile(event, tile) {
@@ -217,12 +270,10 @@ function initMap() {
             });
         }
 
-
-    window.initMap = initMap;
+        window.initMap = initMap;
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq9TaIM9GgM0e1YeTdIideom17_I0AsbA&callback=initMap"></script>
-
-    
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq9TaIM9GgM0e1YeTdIideom17_I0AsbA&callback=initMap"></script>
+   
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!--自作のJS-->
 <script src="JS/hannbaka.js"></script>
