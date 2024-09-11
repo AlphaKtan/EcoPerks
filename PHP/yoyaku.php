@@ -21,7 +21,7 @@
     </header>
 
     <?php
-    // データベース接続情報
+    // データベース接続情報B
     $servername = "localhost";
     $dbUsername = "root";
     $password = "";
@@ -44,10 +44,20 @@
             }
 
             // SQLクエリを準備して実行
+            $timeSql = "SELECT id, DATE_FORMAT(start_time, '%H') AS hour_only, end_time, facility_name, areaid, status FROM time_change WHERE id = 1";
+            $timeStmt = $pdo->prepare($timeSql);
+            $timeStmt->execute();
+
+            $rowtime = $timeStmt->fetch(PDO::FETCH_ASSOC);
+
+            // SQLクエリを準備して実行
             $locationSql = "SELECT id, facility_name, address FROM travel_data WHERE id = :location";
             $newStmt = $pdo->prepare($locationSql);
             $newStmt->bindParam(':location', $location, PDO::PARAM_INT);
             $newStmt->execute();
+
+            // var_dump($rowtime);
+
 
             // 結果を取得
             $row = $newStmt->fetch(PDO::FETCH_ASSOC);
@@ -60,22 +70,38 @@
 
             // フォームから送信されたデータを取得
             $reservation_date = $_POST['reservation_date'];
-            $start_time = $_POST['start_time'];
-            $end_time = $_POST['end_time'];
+
+            // $start_time_post = $_POST['start_time'];
+            // $end_time_post = $_POST['end_time'];
+
+            //選ばれた日にちのデータを持ってくる
+            if ($rowtime) {
+                $start_time = $rowtime['hour_only'];
+                $end_time = $rowtime['end_time'];
+                $aa = $rowtime['id'];
+              
+            } else {
+                throw new Exception("指定された時間が見つかりません。");
+            }
+            
+
+            
 
             // 予約の重複チェック
-            $sql = "SELECT * FROM yoyaku WHERE reservation_date = :reservation_date AND 
-                    ((start_time <= :start_time AND end_time > :start_time) OR 
-                     (start_time < :end_time AND end_time >= :end_time))";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':reservation_date', $reservation_date);
-            $stmt->bindParam(':start_time', $start_time);
-            $stmt->bindParam(':end_time', $end_time);
-            $stmt->execute();
+            // $sql = "SELECT * FROM yoyaku WHERE reservation_date = :reservation_date AND 
+            //         ((start_time <= :start_time AND end_time > :start_time) OR 
+            //          (start_time < :end_time AND end_time >= :end_time))";
+            // $stmt = $pdo->prepare($sql);
+            // $stmt->bindParam(':reservation_date', $reservation_date);
+            // $stmt->bindParam(':start_time', $start_time);
+            // $stmt->bindParam(':end_time', $end_time);
+            // $stmt->execute();
 
-            if ($stmt->rowCount() > 0) {
-                $pop ="<p>この時間帯は既に予約されています。別の時間を選択してください。</p>";
-            } else {
+            // if ($stmt->rowCount() > 0) {
+            //     $pop ="<p>この時間帯は既に予約されています。別の時間を選択してください。</p>";
+            // } else {
+            $count = 0;
+            if($count != 0){
                 // SQLクエリを準備して実行
                 $sql = "INSERT INTO yoyaku (username, reservation_date, start_time, end_time, location) 
                         VALUES (:username, :reservation_date, :start_time, :end_time, :location)";
@@ -88,7 +114,8 @@
                 $stmt->execute();
 
                 $pop = "<p>予約が正常に完了しました！</p>";
-            }
+             }
+             $count ++; 
         }
     } catch (PDOException $e) {
         echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
@@ -99,21 +126,28 @@
 
     <form class="yoyaku_form" action="" method="post">
         <?php 
+        //echo "<p>テスト: $aa</p>";
             if (isset($pop)) {
                 echo "<p>$pop</p>";
             } 
+
+            if (isset($aa)) {
+                echo "<p>テスト: $aa</p>";
+            } 
+
+            if (isset($start_time)) {
+                echo "<p> $start_time</p>";
+            }
         ?>
+
         <h1>予約フォーム</h1>
         <label for="reservation_date">予約日:</label>
         <input type="date" id="reservation_date" name="reservation_date" required>
     
-        <label for="start_time">開始時間:</label>
-        <input type="time" id="start_time" name="start_time" required>
-    
-        <label for="end_time">終了時間:</label>
-        <input type="time" id="end_time" name="end_time" required>
-    
-        <input type="submit" value="予約する">
+        <input type="submit" value="予約">
+        <?php 
+
+        ?>
     </form>
 </body>
 </html>
