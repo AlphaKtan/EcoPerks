@@ -11,12 +11,12 @@ use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Color\Color;
 
 // サーバーURLを設定
-$baseUrl = 'http://i2322117.chips.jp/php/gomiclean.php';
+$baseUrl = 'http://i2322117.chips.jp/php/gomiclean_end.php';
 $timestamp = time();
 
 // 開始・終了用QRコードのURLを生成
-$startUrl = $baseUrl . '?location_id=10&action=start&time=' . $timestamp;
 
+$endUrl = $baseUrl . '?location_id=10&action=end&time=' . $timestamp;
 
 function generateQrCode($url) {
     $qrCode = QrCode::create($url)
@@ -35,9 +35,8 @@ function generateQrCode($url) {
 }
 
 // QRコードのHTMLを出力
-echo "<div><strong>ゴミ拾い開始用QRコード</strong></div>";
-echo generateQrCode($startUrl);
-
+echo "<div><strong>ゴミ拾い終了用QRコード</strong></div>";
+echo generateQrCode($endUrl);
 
 
 

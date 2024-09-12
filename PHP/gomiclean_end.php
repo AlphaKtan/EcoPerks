@@ -17,16 +17,16 @@ if (isset($_GET['location_id']) && isset($_GET['action'])) {
     $current_time = date("Y-m-d H:i:s");
 
     try {
-        // ゴミ拾い開始の場合
-        if ($action === 'start') {
-            $sql = "INSERT INTO cleaning_records (username, area_id, start_time) VALUES (:username, :area_id, :start_time)";
+        // ゴミ拾い終了の場合
+        if ($action === 'end') {
+            $sql = "UPDATE cleaning_records SET end_time = :end_time WHERE username = :username AND area_id = :area_id AND end_time IS NULL";
             $stmt = $pdo->prepare($sql);
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':area_id', $area_id);
-            $stmt->bindParam(':start_time', $current_time);
+            $stmt->bindParam(':end_time', $current_time);
             $stmt->execute();
 
-            echo "ゴミ拾いが地点 $area_id で開始されました！";
+            echo "ゴミ拾いが地点 $area_id で終了しました！";
         } else {
             echo "無効なアクションです。";
         }
@@ -36,5 +36,6 @@ if (isset($_GET['location_id']) && isset($_GET['action'])) {
 } else {
     echo "QRコードの情報が不完全です。";
 }
+
 
 

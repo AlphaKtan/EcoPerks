@@ -120,7 +120,7 @@
     </script>
 </head>
 <body>
-    <h3>ゴミ拾い開始・終了用QRコード</h3>
+    <h3>ゴミ拾い開始</h3>
     <div id="qr-codes" class="qr-container">
         <!-- ここにQRコードが表示されます -->
     </div>
