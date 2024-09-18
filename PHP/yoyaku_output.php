@@ -70,9 +70,9 @@ try {
         }
 
         // デバッグ用の出力
-        echo "<pre>";
-        print_r($row);
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r($row);
+        // echo "</pre>";
 
         $status = 1;
 

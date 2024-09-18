@@ -31,15 +31,11 @@ if (isset($_GET['location'])) {
         </div>
     </header>
 
-
-
     <form class="yoyaku_form" action="yoyaku_output.php" method="post">
         <h1>予約フォーム</h1>
         <label for="reservation_date">予約日:</label>
         <input type="date" id="reservation_date" name="reservation_date" required>
-    
         <input type="submit" value="時間を確認">
-
     </form>
 </body>
 </html>
