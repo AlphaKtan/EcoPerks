@@ -44,7 +44,7 @@ if (isset($_GET['location'])) {
         <label for="reservation_date">予約日:</label>
         <input type="date" id="reservation_date" name="reservation_date" required>
     
-        <input type="submit" value="予約">
+        <input type="submit" value="時間を確認">
 
     </form>
 </body>
