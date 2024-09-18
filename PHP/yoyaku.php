@@ -34,12 +34,6 @@ if (isset($_GET['location'])) {
 
 
     <form class="yoyaku_form" action="yoyaku_output.php" method="post">
-        <?php 
-            if (isset($pop)) {
-                echo "<p>$pop</p>";
-            }
-        ?>
-
         <h1>予約フォーム</h1>
         <label for="reservation_date">予約日:</label>
         <input type="date" id="reservation_date" name="reservation_date" required>
