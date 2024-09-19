@@ -1,42 +1,31 @@
-<?php
-    require_once('db_local.php'); // データベース接続
 
-try {
-        // データベースに接続
-        $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        $sql = "SELECT id, start_time, end_time, facility_name, areaid, status FROM time_change";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
+<select name="area" id="areaSelect">
+    <option value="">選択してください</option>
+    <?php 
+    for($i=1; $i <= 25; $i++){
+        echo '<option value="' . $i . '">' . 'エリア'. $i .'</option>';
+    } ?>
+</select>
 
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+<div id="areaInfo"></div>
 
-        if (isset($row)) {
-            $start_time = $row['start_time'];
-            $end_time = $row['end_time'];
-            $facility_name = $row['facility_name'];
-            $areaid = $row['areaid'];
-            $status = $row['status'];
+<script>
+document.getElementById('areaSelect').addEventListener('change', function() {
+    var areaValue = this.value;
 
-            foreach ($row as $rowArea) {
-                $areaid = $rowArea['areaid'];
-                echo <<<HTML
-                <select name="area">
-                    <option value="{$areaid}">エリア$areaid</option>
-                </select>
-                HTML;
+    if (areaValue) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'get_time_chage.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('areaInfo').innerHTML = xhr.responseText;
             }
+        };
+        xhr.send('area=' + areaValue);
+    } else {
+        document.getElementById('areaInfo').innerHTML = '';
+    }
+});
+</script>
 
-        } else {
-            echo '時間が挿入されてません';
-        }
-
-
-
-        } catch (PDOException $e) {
-            echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
-        } catch (Exception $e) {
-            echo "<p>エラー: " . $e->getMessage() . "</p>";
-        }
-    ?>
