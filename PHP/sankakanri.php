@@ -78,7 +78,7 @@ try {
 </head>
 <body>
     <h1>参加人数管理</h1>
-    <!-- <button class="toggle-btn" onclick="toggleDarkMode()">ダークモード切り替え</button> -->
+    <button class="toggle-btn" onclick="toggleDarkMode()">ダークモード切り替え</button>
     <p>総参加人数: <strong><?php echo $totalParticipants; ?></strong></p>
 
     <table>
