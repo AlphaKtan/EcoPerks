@@ -52,7 +52,7 @@ try {
         }
 
         /* ダークモードのスタイル */
-        /* body.dark-mode {
+        body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
         }
@@ -73,7 +73,7 @@ try {
         }
         .toggle-btn:hover {
             background-color: #0056b3;
-        } */
+        } 
     </style>
 </head>
 <body>
@@ -108,7 +108,7 @@ try {
         </tbody>
     </table>
 
-    <!-- <script>
+     <script>
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             // ダークモードが有効かどうかをローカルストレージに保存
@@ -125,7 +125,7 @@ try {
                 document.body.classList.add('dark-mode');
             }
         }
-    </script> -->
+    </script> 
 </body>
 </html>
 
