@@ -20,11 +20,38 @@
         th {
             background-color: #f2f2f2;
         }
+
+        body.light-mode {
+            background-color: white;
+            color: black;
+        }
+
+        body.dark-mode {
+            background-color: #333;
+            color: white;
+        }
+
+        body.dark-mode th, body.dark-mode td {
+            border-color: white;
+        }
+
+        body.dark-mode th {
+            background-color: #444;
+        }
+
+        .mode-toggle {
+            margin: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
-<body>
+<body class="light-mode">
     <h1>施設名称および住所</h1>
     <h1 id="time">現在の時刻:</h1>
+    
+    <button class="mode-toggle" onclick="toggleDarkMode()">ダークモード切り替え</button>
+
     <table>
         <thead>
             <tr>
@@ -85,6 +112,13 @@
         window.onload = function() {
             setInterval(loadTravelData, 500); 
         };
+
+        // ダークモードを切り替える関数
+        function toggleDarkMode() {
+            var body = document.body;
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+        }
     </script>
 </body>
 </html>
