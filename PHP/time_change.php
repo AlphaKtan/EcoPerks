@@ -17,12 +17,20 @@ document.getElementById('areaSelect').addEventListener('change', function() {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'get_time_chage.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('area=' + areaValue);
         xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                document.getElementById('areaInfo').innerHTML = xhr.responseText;
+            try {
+                const jsonData = JSON.parse(xhr.responseText); // JSONをパース
+                let output = "";
+                jsonData.forEach(function(item) {
+                    output += "施設名: " + item.facility_name + "<br>";
+                });
+                document.getElementById('areaInfo').innerHTML = output;
+            } catch (e) {
+                console.error("JSONパースエラー: ", e);
+                document.getElementById('areaInfo').innerHTML = "データを取得できませんでした。";
             }
         };
-        xhr.send('area=' + areaValue);
     } else {
         document.getElementById('areaInfo').innerHTML = '';
     }
