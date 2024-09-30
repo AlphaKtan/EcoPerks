@@ -1,3 +1,4 @@
+<!-- ゴミ拾い開始QR -->
 <?php
 require_once('vendor/autoload.php');
 use Endroid\QrCode\Builder\Builder;
@@ -14,7 +15,7 @@ use Endroid\QrCode\Color\Color;
 $baseUrl = 'http://i2322117.chips.jp/php/gomiclean.php';
 $timestamp = time();
 
-// 開始・終了用QRコードのURLを生成
+// 開始QRコードのURLを生成
 $startUrl = $baseUrl . '?location_id=10&action=start&time=' . $timestamp;
 
 

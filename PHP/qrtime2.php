@@ -1,3 +1,4 @@
+<!-- 終了用QR -->
 <?php
 require_once('vendor/autoload.php');
 use Endroid\QrCode\Builder\Builder;
@@ -14,7 +15,7 @@ use Endroid\QrCode\Color\Color;
 $baseUrl = 'http://i2322117.chips.jp/php/gomiclean_end.php';
 $timestamp = time();
 
-// 開始・終了用QRコードのURLを生成
+//終了用QRコードのURLを生成
 
 $endUrl = $baseUrl . '?location_id=10&action=end&time=' . $timestamp;
 
