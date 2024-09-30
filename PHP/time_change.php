@@ -4,7 +4,11 @@
     <?php 
     for($i=1; $i <= 25; $i++){
         echo '<option value="' . $i . '">' . 'エリア'. $i .'</option>';
-    } ?>
+    }
+    ?>
+    <option value="">選択してください</option>
+
+
 </select>
 
 <div id="areaInfo"></div>
