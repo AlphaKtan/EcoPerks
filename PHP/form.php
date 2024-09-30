@@ -7,7 +7,10 @@
 // セッションの開始
 session_start();
 
-require_once('db_connection.php'); // データベース接続ファイル
+// require_once('db_connection.php'); // データベース接続ファイル
+require_once('db_local.php'); // データベース接続ファイル
+
+$mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
 
 // フォームからのデータを取得
 $providedUsername = $_POST["userName"] ?? ''; //ユーザー名
@@ -33,7 +36,7 @@ if (strlen($providedPassword) < 8 ||
 $hashedPassword = hash("sha256", $providedPassword);
 
 // データベースに接続
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+//$mysqli = new mysqli($servername, $dbusername, $password, $dbname);
 
 if ($mysqli->connect_error) {
     die("データベース接続エラー: " . $mysqli->connect_error);

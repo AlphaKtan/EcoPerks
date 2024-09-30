@@ -2,7 +2,7 @@
 // ログアウト処理スクリプトの例
 
 // データベース接続情報
-require_once('db_connection.php'); // データベース接続ファイル
+require_once('db_local.php'); // データベース接続ファイル
 
 // タイムゾーンを日本時間に設定
 date_default_timezone_set('Asia/Tokyo');
@@ -59,7 +59,8 @@ if (session_status() == PHP_SESSION_NONE) {
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
 
-require_once('db_connection.php'); // データベース接続ファイル
+// require_once('db_connection.php');
+require_once('db_local.php'); // データベース接続ファイル
 
 // データベース接続
 $conn = new mysqli($servername, $username, $password, $dbname);

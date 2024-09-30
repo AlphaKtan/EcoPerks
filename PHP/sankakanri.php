@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once('db_connection.php'); // データベース接続ファイル
+// require_once('db_connection.php');
+require_once('db_local.php'); // データベース接続ファイル
 
 try {
     // テーブルよりデータを取得する（終了時刻がnullのもののみ取得する場合）
