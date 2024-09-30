@@ -12,7 +12,7 @@ try {
     // データベースに接続
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    //1回目は回らない
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['time'])) {
         // フォームから送信された時間帯のデータを取得
         $user_id = 1; // 仮のユーザーID（本来はログインシステムから取得）
