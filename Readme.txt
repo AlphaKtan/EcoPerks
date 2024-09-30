@@ -8,6 +8,17 @@ index.htmlなど
     SQL
     test
 
+
+
+構造について
+login.html,login.php,2FA_2.php,ログインに関わる
+index.htmlホームページ
+admin.php,auth.php,feth_data.php,login_process.phpログイン管理者
+data.phpエリアデータ確認（管理者向け）
+sanka.php,gomiclean.php,qrtime.phpゴミ拾い開始
+gomiclean_end.php,qrtime2.php,owari.phpゴミ拾い終了
+input_data.php,submit_data.php施設登録
+
 階層はこのようになっています。スペルミスなどないように気をつけてください。
 ウェブサイトリンク
 https://i2322117.chips.jp/login.html
