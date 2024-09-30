@@ -21,6 +21,7 @@
     </header>
     <?php
     // データベース接続情報
+    // require_once('db_connection.php');
     require_once('db_local.php'); // データベース接続
 
     $location = '';
