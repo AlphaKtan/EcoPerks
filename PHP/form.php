@@ -33,7 +33,7 @@ if (strlen($providedPassword) < 8 ||
 $hashedPassword = hash("sha256", $providedPassword);
 
 // データベースに接続
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+$mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
 
 if ($mysqli->connect_error) {
     die("データベース接続エラー: " . $mysqli->connect_error);
