@@ -4,8 +4,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area'])) {
     require_once('db_local.php'); // データベース接続
 
     try {
+        require '../Model/dbModel.php';
         // データベースに接続
-        $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
+        $pdo = dbConnect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // travel_dataからfacility_nameを取得
@@ -16,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area'])) {
         $locationRow = $locationstmt->fetchAll(PDO::FETCH_ASSOC);
 
         $status = 1;
-
         if ($locationRow) {
             foreach ($locationRow as $k) {
                 // 各facility_nameごとに関連するtime_changeのデータを取得
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area'])) {
 }
 
 function displayArea() {
-    
+
 }
 
 ?>
