@@ -1,28 +1,20 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area'])) {
     $area = $_POST['area'];
-    require_once('db_local.php'); // データベース接続
-
     try {
-        require '../Model/dbModel.php';
+        require_once('../Model/dbModel.php');
         // データベースに接続
         $pdo = dbConnect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // travel_dataからfacility_nameを取得
-        $locationRow = getFacility_name($pdo,$area);
+        $locationRow = getFacilityNames($pdo, $area);
 
         $status = 1;
         if ($locationRow) {
             foreach ($locationRow as $k) {
                 // 各facility_nameごとに関連するtime_changeのデータを取得
-                $sql = "SELECT status, start_time, end_time, facility_name FROM time_change WHERE facility_name = :facility_name AND areaid = :area_id AND status = :status";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':facility_name', $k['facility_name'], PDO::PARAM_STR);
-                $stmt->bindParam(':area_id', $area, PDO::PARAM_INT);
-                $stmt->bindParam(':status', $status, PDO::PARAM_INT);
-                $stmt->execute();
-                $areaRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $areaRows = timeDisplay($pdo, $k['facility_name'], $status, $area);
 
                 // 開始時間と終了時間を表示
                 if ($areaRows) {
@@ -42,31 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area'])) {
                 }
             }
             // 取得したデータがあればJSONで出力
-            if (!$noDataFound) {
-                echo json_encode($jsonArray, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-            } else {
-                echo '該当する時間のデータがありません。<br>';
-            }
+            outputJson($noDataFound, $jsonArray);
 
         } else {
             // travel_dataからすべてのfacility_nameを取得
-            $locationsql = "SELECT id, area_id, facility_name FROM travel_data";
-            $locationstmt = $pdo->prepare($locationsql);
-            $locationstmt->execute();
-            $locationRow = $locationstmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // echo '<pre>';
-            // var_dump( $locationRow );
-            // echo '</pre>';
+            $locationRow = getFacilityNames($pdo);
 
             foreach ($locationRow as $k) {
                 // 各facility_nameごとに関連するtime_changeのデータを取得
-                $sql = "SELECT status, start_time, end_time, facility_name FROM time_change WHERE facility_name = :facility_name AND status = :status";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':facility_name', $k['facility_name'], PDO::PARAM_STR);
-                $stmt->bindParam(':status', $status, PDO::PARAM_INT);
-                $stmt->execute();
-                $areaRows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $areaRows = timeDisplay($pdo, $k['facility_name'], $status);
 
                 // 開始時間と終了時間を表示
                 if ($areaRows) {
@@ -86,12 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area'])) {
                 }
             }
             // 取得したデータがあればJSONで出力
-            if (!$noDataFound) {
-                echo json_encode($jsonArray, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-            } else {
-                echo '該当する時間のデータがありません。<br>';
-            }
-
+            outputJson($noDataFound, $jsonArray);
         }
                 
 
@@ -100,10 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area'])) {
     } catch (Exception $e) {
         echo "<p>エラー: " . $e->getMessage() . "</p>";
     }
-}
-
-function displayArea() {
-
 }
 
 ?>

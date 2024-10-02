@@ -1,4 +1,5 @@
 <select name="area" id="areaSelect">
+    <option  hidden value="">選択してください</option>
     <option value="">すべて</option>
     <?php 
     for($i=1; $i <= 25; $i++){
@@ -8,6 +9,7 @@
 </select>
 
 <select name="facility_name" id="">
+    <option  hidden value="">選択してください</option>
     <option value="">すべて</option>
 </select>
 
