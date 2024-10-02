@@ -8,7 +8,6 @@
 session_start();
 
 require_once('db_connection.php'); // データベース接続ファイル
-// require_once('db_connection.php'); // データベース接続ファイル
 require_once('db_local.php'); // データベース接続ファイル
 
 $mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
@@ -17,9 +16,7 @@ $mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
 $providedUsername = $_POST["userName"] ?? ''; //ユーザー名
 $providedPassword = $_POST["password"] ?? ''; //パスワード
 $providedEmail = $_POST["email"] ?? '';  //メールアドレス
-$first_name_kanji = $_POST["first_name_kanji"] ?? '';  //姓漢字
 $first_name_furigana = $_POST["first_name_furigana"] ?? ''; //姓フリガナ
-$last_name_kanji = $_POST["last_name_kanji"] ?? ''; //名前漢字
 $last_name_furigana = $_POST["last_name_furigana"] ?? ''; //名前フリガナ
 $phone_number = $_POST["phonenumber"] ?? '';  //電話番号
 
@@ -60,7 +57,7 @@ try {
 
     if ($phoneCount > 0) {
         // 電話番号が重複している場合
-        throw new Exception("大変恐縮ではありませんが、ご入力いただきました電話番号が既に登録されています。");
+        throw new Exception("大変恐縮ではありますが、ご入力いただきました電話番号が既に登録されています。");
     }
 
     // メールアドレスの重複をチェックするクエリ
@@ -112,11 +109,11 @@ try {
     $stmtUser->close();
 
     // 顧客テーブルへの挿入クエリ
-    $stmtCustomer = $mysqli->prepare("INSERT INTO users_kokyaku (user_id, first_name_kanji, first_name_furigana, last_name_kanji, last_name_furigana, phone_number) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmtCustomer = $mysqli->prepare("INSERT INTO users_kokyaku (user_id, first_name_furigana, last_name_furigana, phone_number) VALUES (?, ?, ?, ?)");
     if (!$stmtCustomer) {
         throw new Exception("顧客情報挿入クエリの準備に失敗しました: " . $mysqli->error);
     }
-    $stmtCustomer->bind_param("isssss", $user_id, $first_name_kanji, $first_name_furigana, $last_name_kanji, $last_name_furigana, $phone_number);
+    $stmtCustomer->bind_param("isss", $user_id, $first_name_furigana, $last_name_furigana, $phone_number);
 
     // 顧客テーブルに挿入
     if (!$stmtCustomer->execute()) {
@@ -127,8 +124,7 @@ try {
 
     // トランザクションをコミット
     $mysqli->commit();
-    // デバッグメッセージ（到達確認用）
-    //echo "データベースへの登録が成功しました。リダイレクトします。";
+    
     // リダイレクト
     header("Location: ../login.html");
     exit();
@@ -141,6 +137,3 @@ try {
 }
 
 $mysqli->close();
-
-
-
