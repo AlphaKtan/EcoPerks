@@ -32,6 +32,7 @@
     require_once('db_local.php'); // データベース接続
 
     $location = '';
+    $username = '';
     $reservation_date = "";
     $start_time = "";
     $end_time = "";
@@ -45,7 +46,7 @@
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
 
-        $yoyakusql = "SELECT id, reservation_date, start_time, end_time, location FROM yoyaku WHERE location = :location";
+        $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location FROM yoyaku WHERE location = :location";
         $stmt = $pdo->prepare($yoyakusql);
         $stmt->bindParam(':location', $location, PDO::PARAM_INT);
         $stmt->execute();
@@ -58,6 +59,7 @@
             $reservation_date = $_GET['reservation'] ?? $reservation_date;
             $start_time = $_GET['start_time'] ?? $start_time;
             $end_time = $_GET['end_time'] ?? $end_time;
+            $username = $_GET['username'] ?? $username;
 
         } catch (PDOException $e) {
             echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
@@ -72,14 +74,17 @@
                 <?php
                         if($row){
                             foreach($row as $rows){
+                                $username = $rows['username'];
                                 $location = $rows['location'];
-                                echo "<li><h2>$location</h2>";
                                 $reservation_date = $rows['reservation_date'];
-                                echo "<p>日程：$reservation_date</p>";
                                 $start_time = $rows['start_time'];
-                                echo "<p>開始時間：$start_time</p>";
                                 $end_time = $rows['end_time'];
-                                echo "<p>終了時間：$end_time</p></li>";
+                    
+                                echo "<li><h2>施設名: $location</h2>";
+                                echo "<p>ユーザー名: $username</p>";
+                                echo "<p>日程: $reservation_date</p>";
+                                echo "<p>開始時間: $start_time</p>";
+                                echo "<p>終了時間: $end_time</p></li>";
                             }
                         } else {
                             throw new Exception("指定された施設が見つかりません。");
