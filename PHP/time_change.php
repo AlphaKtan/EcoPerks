@@ -1,5 +1,5 @@
 <select name="area" id="areaSelect">
-    <option hidden value="">選択してください</option>
+    <option value="">すべて</option>
     <?php 
     for($i=1; $i <= 25; $i++){
         echo '<option value="' . $i . '">' . 'エリア'. $i .'</option>';
@@ -7,13 +7,16 @@
     ?>
 </select>
 
+<select name="facility_name" id="">
+    <option value="">すべて</option>
+</select>
+
 <div id="areaInfo"></div>
 
 <script>
 document.getElementById('areaSelect').addEventListener('change', function() {
     var areaValue = this.value;
-
-    if (areaValue) {
+    
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'get_time_chage.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -55,9 +58,5 @@ document.getElementById('areaSelect').addEventListener('change', function() {
 
             }
         };
-    } else {
-        document.getElementById('areaInfo').innerHTML = '';
-    }
 });
-
 </script>
