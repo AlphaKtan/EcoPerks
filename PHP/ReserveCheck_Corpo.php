@@ -26,25 +26,23 @@
 
     <?php
     // データベース接続情報
-    require_once('db_local.php'); // データベース接続
+    // require_once('db_local.php'); // データベース接続
+
 
     try {
-        // データベースに接続
-        $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
+
+        require_once('../Model/dbModel.php');
+        $pdo = dbConnect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // // データベースに接続
+        // $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
+        // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // POSTで送信されたエリアIDを取得
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
             $selected_area = $_POST['area_id'];
-
-            // 選択されたエリアIDに基づいてデータベースから施設情報を取得
-            $yoyakusql = "SELECT username, area_id, reservation_date, start_time, end_time, location FROM yoyaku WHERE area_id = :area_id";
-            $stmt = $pdo->prepare($yoyakusql);
-            $stmt->bindParam(':area_id', $selected_area, PDO::PARAM_INT);
-            $stmt->execute();
-
-            // 結果を取得
-            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $row = ReserveAreaID($pdo, $selected_area);
         }
 
     } catch (PDOException $e) {
