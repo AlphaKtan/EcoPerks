@@ -38,7 +38,7 @@
             $selected_area = $_POST['area_id'];
 
             // 選択されたエリアIDに基づいてデータベースから施設情報を取得
-            $yoyakusql = "SELECT area_id, reservation_date, start_time, end_time, location FROM yoyaku WHERE area_id = :area_id";
+            $yoyakusql = "SELECT username, area_id, reservation_date, start_time, end_time, location FROM yoyaku WHERE area_id = :area_id";
             $stmt = $pdo->prepare($yoyakusql);
             $stmt->bindParam(':area_id', $selected_area, PDO::PARAM_INT);
             $stmt->execute();
@@ -56,7 +56,6 @@
 
     <div class="container">
         <h1>予約確認フォーム</h1>
-
         <!-- エリア選択のためのフォーム -->
         <form method="POST" id="areaForm" action="">
             <label for="areaSelect">エリアを選択してください：</label>
