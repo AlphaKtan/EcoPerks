@@ -86,41 +86,41 @@
 
     </style>
 
-    <script>
-        var countdownTime = 60; // カウントダウンの秒数
+<script>
+    var countdownTime = 60; // カウントダウンの秒数
 
-        // QRコードをqrtime.phpから取得して更新
-        function updateQrCodes() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'qrtime.php', true);
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    document.getElementById('qr-codes').innerHTML = xhr.responseText;
-                    countdownTime = 60; // QRコード更新後にカウントダウンをリセット
-                }
-            };
-            xhr.send();
-        }
-
-        // カウントダウンを開始
-        function startCountdown() {
-            setInterval(function() {
-                if (countdownTime > 0) {
-                    document.getElementById('countdown').textContent = "QRコード更新まで: " + countdownTime + "秒";
-                    countdownTime--;
-                } else {
-                    updateQrCodes(); // カウントが0になったらQRコードを更新
-                    countdownTime = 60; // カウントダウンをリセット
-                }
-            }, 500); // 1秒ごとにカウントダウン
-        }
-
-        // ページが読み込まれたらQRコードを取得し、カウントダウンを開始
-        window.onload = function() {
-            updateQrCodes();
-            startCountdown();
+    // QRコードをqrtime.phpから取得して更新
+    function updateQrCodes() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'qrtime.php', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                document.getElementById('qr-codes').innerHTML = xhr.responseText;
+                countdownTime = 60; // QRコード更新後にカウントダウンをリセット
+            }
         };
-    </script>
+        xhr.send();
+    }
+
+    // カウントダウンを開始
+    function startCountdown() {
+        setInterval(function() {
+            if (countdownTime > 0) {
+                document.getElementById('countdown').textContent = "QRコード更新まで: " + countdownTime + "秒";
+                countdownTime--;
+            } else {
+                updateQrCodes(); // カウントが0になったらQRコードを更新
+                countdownTime = 60; // カウントダウンをリセット
+            }
+        }, 1000); // 1秒ごとにカウントダウン
+    }
+
+    // ページが読み込まれたらQRコードを取得し、カウントダウンを開始
+    window.onload = function() {
+        updateQrCodes();
+        startCountdown();
+    };
+</script>
 </head>
 <body>
     <h3>ゴミ拾い開始</h3>
