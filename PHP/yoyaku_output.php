@@ -2,15 +2,10 @@
 session_start(); // セッションを開始
 $location = $_SESSION['location'];
 
-// データベース接続情報
-$servername = "localhost";
-$dbUsername = "root";
-$password = "";
-$dbname = "ecoperks";
-
 try {
+    require_once('../Model/dbModel.php');
     // データベースに接続
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
+    $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //1回目は回らない
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['time'])) {
@@ -27,21 +22,8 @@ try {
         $facility_name = $_SESSION['facility_name'];
 
         // SQLクエリを準備して実行
-        $sql = "INSERT INTO yoyaku (username, reservation_date, area_id, start_time, end_time, location) 
-                VALUES (:username, :reservation_date, :area_id,:start_time, :end_time, :facility_name)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':username', $user_id, PDO::PARAM_INT);
-        $stmt->bindParam(':reservation_date', $reservation_date, PDO::PARAM_STR);
-        $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
-        $stmt->bindParam(':start_time', $radio_start_time, PDO::PARAM_STR);
-        $stmt->bindParam(':end_time', $radio_end_time, PDO::PARAM_STR);
-        $stmt->bindParam(':facility_name', $facility_name, PDO::PARAM_STR);
-
-        if (empty($radio_start_time) || empty($radio_end_time)) {
-            throw new Exception("開始時間または終了時間が設定されていません。");
-        }
-
-        $stmt->execute();
+        reservationEntry($pdo, $user_id, $reservation_date, $area_id, $radio_start_time, $radio_end_time, $facility_name);
+        
         echo "<p>予約が正常に完了しました！</p>";
 
     } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -54,12 +36,7 @@ try {
         }
 
         // エリア情報の取得
-        $locationSql = "SELECT id,area_id, facility_name, address FROM travel_data WHERE id = :location";
-        $newStmt = $pdo->prepare($locationSql);
-        $newStmt->bindParam(':location', $location, PDO::PARAM_INT);
-        $newStmt->execute();
-
-        $row = $newStmt->fetch(PDO::FETCH_ASSOC);
+        $row = getArea($pdo, $location);
 
         if ($row) {
             $facility_name = $row['facility_name'];
@@ -77,15 +54,7 @@ try {
         $status = 1;
 
         // 時間帯の取得
-        $timeSql = "SELECT DATE_FORMAT(start_time, '%H') AS hour_only, DATE_FORMAT(end_time, '%H') AS hour_only_end FROM time_change
-                    WHERE DATE_FORMAT(start_time, '%Y-%m-%d') = :reservation_date AND facility_name = :facility_name AND status = :status";
-        $timeStmt = $pdo->prepare($timeSql);
-        $timeStmt->bindParam(':reservation_date', $reservation_date, PDO::PARAM_STR);
-        $timeStmt->bindParam(':facility_name', $facility_name, PDO::PARAM_STR);
-        $timeStmt->bindParam(':status', $status, PDO::PARAM_INT);
-        $timeStmt->execute();
-
-        $rowtimes = $timeStmt->fetchAll(PDO::FETCH_ASSOC);
+        $rowtimes = getTimeAll($pdo, $reservation_date, $facility_name, $status);
 
         if (isset($rowtimes) && count($rowtimes) > 0) {
             echo "<form method='post'>";
