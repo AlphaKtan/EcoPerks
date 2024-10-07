@@ -14,6 +14,7 @@ use Endroid\QrCode\Color\Color;
 // サーバーURLを設定
 $baseUrl = 'http://i2322117.chips.jp/php/gomiclean.php';
 $timestamp = time();
+$expiryTime = $timestamp + 60;
 
 // 開始QRコードのURLを生成
 $startUrl = $baseUrl . '?location_id=10&action=start&time=' . $timestamp;
