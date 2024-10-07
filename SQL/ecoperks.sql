@@ -13839,6 +13839,23 @@ CREATE TABLE `yoyaku` (
   `location` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+
+CREATE TABLE qr_codes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    area_id INT NOT NULL,
+    username VARCHAR(255) NOT NULL,
+    generated_time DATETIME NOT NULL,
+    expiry_time DATETIME NOT NULL,
+    used TINYINT(1) DEFAULT 0
+);
+
+
+
+
+
+
+
 --
 -- テーブルのデータのダンプ `yoyaku`
 --

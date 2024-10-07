@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once('db_connection.php');
 
 // ユーザー名の確認
@@ -10,7 +15,7 @@ if (!isset($_SESSION['username'])) {
 
 $username = $_SESSION['username'];
 $area_id = filter_input(INPUT_GET, 'location_id', FILTER_VALIDATE_INT);
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+$action = htmlspecialchars($_GET['action'], ENT_QUOTES, 'UTF-8');
 
 // 無効なリクエストのチェック
 if ($area_id === false || $action === null) {
