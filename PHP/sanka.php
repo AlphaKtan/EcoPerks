@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QRコードの更新</title>
     <style>
-        body {
+         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
@@ -81,6 +81,9 @@
                 height: 150px;
             }
         }
+
+
+
     </style>
 
     <script>
@@ -109,7 +112,7 @@
                     updateQrCodes(); // カウントが0になったらQRコードを更新
                     countdownTime = 60; // カウントダウンをリセット
                 }
-            }, 1000); // 1秒ごとにカウントダウン
+            }, 500); // 1秒ごとにカウントダウン
         }
 
         // ページが読み込まれたらQRコードを取得し、カウントダウンを開始
@@ -132,5 +135,3 @@
     </div>
 </body>
 </html>
-
-
