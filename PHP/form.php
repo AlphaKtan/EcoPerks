@@ -7,8 +7,8 @@
 // セッションの開始
 session_start();
 
-require_once('db_connection.php'); // データベース接続ファイル
-//require_once('db_local.php'); // データベース接続ファイル
+// require_once('db_connection.php'); // データベース接続ファイル
+require_once('db_local.php'); // データベース接続ファイル
 
 $mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
 
@@ -107,6 +107,7 @@ try {
     // ユーザーテーブルへの挿入が成功した場合
     $user_id = $stmtUser->insert_id;
     $stmtUser->close();
+    $_SESSION['user_id'] = $user_id;
 
     // 顧客テーブルへの挿入クエリ
     $stmtCustomer = $mysqli->prepare("INSERT INTO users_kokyaku (user_id, first_name_furigana, last_name_furigana, phone_number) VALUES (?, ?, ?, ?)");

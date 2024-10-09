@@ -48,6 +48,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['verification_code'] = $verificationCode;
             $_SESSION['username'] = $providedUsername;
 
+            // ユーザーIDをSESSTIONに保存するためのSQL
+            $stmtUserId = $conn->prepare("SELECT id FROM users WHERE username = ?");
+            $stmtUserId->bind_param("s", $providedUsername);
+            $stmtUserId->execute();
+            $stmtUserId->bind_result($userId);
+            $stmtUserId->fetch();
+            $stmtUserId->close();
+
+            $_SESSION['user_id'] = $userId;
+
             // ユーザーのメールアドレスをデータベースから取得
             $stmt = $conn->prepare("SELECT email FROM users WHERE username = ?");
             $stmt->bind_param("s", $providedUsername);
