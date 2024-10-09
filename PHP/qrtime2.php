@@ -30,7 +30,7 @@ function generateQrCode($url) {
 
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
-
+    
     // Base64にエンコードして返す
     return '<img src="data:image/png;base64,' . base64_encode($result->getString()) . '" alt="QR Code">';
 }
