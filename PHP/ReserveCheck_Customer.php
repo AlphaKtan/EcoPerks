@@ -27,7 +27,8 @@
     // print_r($row);
     // echo "</pre>";
 
-
+    session_start();    
+    $user_id = $_SESSION['user_id'];
     // データベース接続情報
     require_once('db_local.php'); // データベース接続
 
@@ -46,20 +47,12 @@
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
 
-        $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location FROM yoyaku WHERE location = :location";
+        $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location FROM yoyaku WHERE username = :user_id";
         $stmt = $pdo->prepare($yoyakusql);
-        $stmt->bindParam(':location', $location, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
 
         $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-            // $_GET から値を取得して変数に設定
-            $reservation_date = $_GET['reservation'] ?? $reservation_date;
-            $start_time = $_GET['start_time'] ?? $start_time;
-            $end_time = $_GET['end_time'] ?? $end_time;
-            $username = $_GET['username'] ?? $username;
 
         } catch (PDOException $e) {
             echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
@@ -69,30 +62,30 @@
     ?>
 
     
-            <div class="container">
-            <h1>予約確認フォーム</h1>
-                <?php
-                        if($row){
-                            foreach($row as $rows){
-                                $username = $rows['username'];
-                                $location = $rows['location'];
-                                $reservation_date = $rows['reservation_date'];
-                                $start_time = $rows['start_time'];
-                                $end_time = $rows['end_time'];
-                    
-                                echo "<li><h2>施設名: $location</h2>";
-                                echo "<p>ユーザー名: $username</p>";
-                                echo "<p>日程: $reservation_date</p>";
-                                echo "<p>開始時間: $start_time</p>";
-                                echo "<p>終了時間: $end_time</p></li>";
-                            }
-                        } else {
-                            throw new Exception("指定された施設が見つかりません。");
-                        }
-                ?>
+    <div class="container">
+        <h1>予約確認フォーム</h1>
+        <?php
+            if($row){
+                foreach($row as $rows){
+                    $username = $rows['username'];
+                    $location = $rows['location'];
+                    $reservation_date = $rows['reservation_date'];
+                    $start_time = $rows['start_time'];
+                    $end_time = $rows['end_time'];
+        
+                    echo "<li><h2>施設名: $location</h2>";
+                    echo "<p>ユーザー名: $username</p>";
+                    echo "<p>日程: $reservation_date</p>";
+                    echo "<p>開始時間: $start_time</p>";
+                    echo "<p>終了時間: $end_time</p></li>";
+                }
+            } else {
+                throw new Exception("指定された施設が見つかりません。");
+            }
+        ?>
 
 
         
-            </div>
+    </div>
 </body>
 </html>
