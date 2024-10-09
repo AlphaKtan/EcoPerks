@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmtUserId->fetch();
             $stmtUserId->close();
 
-            $_SESSION['user_id'] = $providedUsername;
+            $_SESSION['user_id'] = $userId;
 
             // ユーザーのメールアドレスをデータベースから取得
             $stmt = $conn->prepare("SELECT email FROM users WHERE username = ?");

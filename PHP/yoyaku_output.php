@@ -10,7 +10,7 @@ try {
     //1回目は回らない
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['time'])) {
         // フォームから送信された時間帯のデータを取得
-        $user_id = 1; // 仮のユーザーID（本来はログインシステムから取得）
+        $user_id = $_SESSION['user_id']; // ログインシステムから取得
         $reservation_date = $_SESSION['reservation_date']; // 前回のPOSTで保持した日付を利用
 
         // 選択された時間の処理
