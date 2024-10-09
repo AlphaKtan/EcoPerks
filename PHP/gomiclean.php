@@ -9,7 +9,8 @@ require_once('db_connection.php');
 
 // ユーザー名の確認
 if (!isset($_SESSION['username'])) {
-    header('Location: ../login.html');
+    $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+    header('Location: message.php');
     exit;
 }
 
