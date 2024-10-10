@@ -15,32 +15,27 @@
 <body>
     <header>
     <?php
-
-    
         // デバッグ用の出力
         // echo "<pre>";
         // print_r($row);
         // echo "</pre>";
 
-        session_start();    
+        session_start();
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+            header('Location: message.php');
+            exit;
+        }
+
         $user_id = $_SESSION['user_id'];
         // データベース接続情報
         require_once('db_local.php'); // データベース接続
+        require_once('../Model/dbmodel.php');
 
-        $location = '';
-        $username = '';
-        $reservation_date = "";
-        $start_time = "";
-        $end_time = "";
-        $id = "";
 
         try {
-            // データベースに接続
-            $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
 
-            $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location FROM yoyaku WHERE username = :user_id";
+            $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
             $stmt = $pdo->prepare($yoyakusql);
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
@@ -52,31 +47,27 @@
             } catch (Exception $e) {
                 echo "<p>エラー: " . $e->getMessage() . "</p>";
             }
-        ?>
-        <div class="flexBox">
-            <div class="menu">
-                <div class="openbtn"><span></span><span></span><span></span></div>
-                <nav id="g-nav">
-                    <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
-                        <ul>
-                            <li><a href="#">Top</a></li>
-                            <li><a href="login.html">ログイン</a></li> 
-                            <li><a href="form.html">アカウント作成</a></li> 
-                            <li><a href="#">Contact</a></li> 
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            <div class="logo">
-                <img src="../img/logo.jpg" alt="" class="logo2">
-            </div>
-            <div class="icon"></div>
+    ?>
+    <div class="flexBox">
+        <div class="menu">
+            <div class="openbtn"><span></span><span></span><span></span></div>
+            <nav id="g-nav">
+                <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
+                    <ul>
+                        <li><a href="#">Top</a></li>
+                        <li><a href="login.html">ログイン</a></li> 
+                        <li><a href="form.html">アカウント作成</a></li> 
+                        <li><a href="#">Contact</a></li> 
+                    </ul>
+                </div>
+            </nav>
         </div>
+        <div class="logo">
+            <img src="../img/logo.jpg" alt="" class="logo2">
+        </div>
+        <div class="icon"></div>
+    </div>
     </header>
-
-
-
-
     <div class="profile">
         <div class="userFlex">
             <div class="userFlexItem">
@@ -84,9 +75,14 @@
             </div>
             <div class="userFlexItem">
                 <h2 class="center">
-                    <?php echo "$username";?>
+                    <?php
+                    if($row){
+                        foreach($row as $rows){
+                    $username = $rows['username'];
+                     echo "$username";
+                        }
+                    }?>
                 </h2>
-                <h4 class="center">Emily</h4>
             </div>
             <div class="userFlexItem">
                 <h2 class="center">現在のポイント</h2>
