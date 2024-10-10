@@ -19,7 +19,7 @@ $action = htmlspecialchars($_GET['action'] ?? '', ENT_QUOTES, 'UTF-8'); // actio
 $expiry_time = htmlspecialchars($_GET['expiry_time'] ?? '', ENT_QUOTES, 'UTF-8'); // expiry_timeを取得
 
 if (!$expiry_time) {
-    echo "無効な expiry_time です。";
+    echo "<h3>無効な expiry_time です。</h3>";
     exit;
 }
 
@@ -66,7 +66,7 @@ if (!$qrCode) {
     $updateStmt->bindParam(':current_time', $current_datetime);
     $updateStmt->execute();
     
-    echo "このQRコードは無効または期限切れです。";
+    echo "<h3>このQRコードは無効または期限切れです。</h3>";
     
     exit; // 処理を終了
 
@@ -90,9 +90,9 @@ if ($qrCode) {
         $updateStmt->bindParam(':id', $qrCode['id']);
         $updateStmt->execute();
 
-        echo "ゴミ拾いが地点 {$location_id} で開始されました！"; // location_idを使用
+        echo "<h3>ゴミ拾いが地点 {$location_id} で開始されました！</h3>"; // location_idを使用
     } else {
-        echo "無効なアクションです。";
+        echo "<h3>無効なアクションです。</h3>";
     }
 }
 
