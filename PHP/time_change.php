@@ -1,56 +1,85 @@
-<select name="area" id="areaSelect">
-    <option hidden value="">選択してください</option>
-    <option value="">すべて</option>
-    <?php 
-    for ($i = 1; $i <= 25; $i++) {
-        echo '<option value="' . $i . '">' . 'エリア' . $i . '</option>';
-    }
-    ?>
-</select>
-<br>
-<br>
-<br>
-<select name="facility_name" id="facilitySelect">
-    <option hidden value="">選択してください</option>
-</select>
-<br>
-<br>
-<br>
-<input type="date" id="reservation_date" name="reservation_date">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        select {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <select name="area" id="area">
+            <option hidden>選択してください</option>
+            <option value="">すべて</option>
+            <?php for($i=1;$i<=25;$i++){ ?>
+                <option value="<?php echo $i ?>">エリア<?php echo $i ?></option>
+            <?php }?>
+        </select>
+        <br>
+        <select name="facility" id="facility">
+            <option hidden>選択してください</option>
+            <option value="">すべて</option>
+        </select>
+        <br>
+        <input name="date" type="date" id="date" />
+    </form>
+    <div id="yoyaku"></div>
 
-<div id="areaInfo"></div>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../Js/custom.js"></script>
 <script>
-// 施設名と時間帯をマッピングするためのオブジェクト
-let facilityMap = {};
-let jsonData = [];
+    var optval;
+    $(function(){
+        // よく使う要素を変数へ格納する
+        var area = document.getElementById("area");
+        var facility = document.getElementById("facility");
+        var date = document.getElementById("date");
+        var yoyaku = document.getElementById('yoyaku');
+        
+        // エリア情報切り替え
+        $('#area').on("change",function(){
 
-document.getElementById('areaSelect').addEventListener('change', function() {
-    let selectedFacility = this.value;
+            // 予約一覧をクリアする
+            yoyaku.innerHTML = '';
 
-    document.getElementById('areaInfo').innerHTML = '';
+            // 施設情報をクリアする
+            selectDataClear(facility);
 
-    if (facilityMap[selectedFacility]) {
-        let times = Array.from(facilityMap[selectedFacility]).join('<br>'); // Setを配列に変換して時間帯を連結
-        document.getElementById('areaInfo').innerHTML = '<strong>' + selectedFacility + '</strong><br>' + times;
-    }   
-    ariaTimeFilter();
-});
+            // 施設のデータを取得する
+            getAreaData(area.value);
 
-document.getElementById('facilitySelect').addEventListener('change', function() {
-    ariaTimeFilter();
-});
+            // 予約情報を取得する
+            getYoyakuData(area.value,facility.value,date.value);
 
-document.getElementById('reservation_date').addEventListener('change', function() {
-    ariaTimeFilter();
-});
-
-function ariaTimeFilter() {
-    alert("ああああ");
-}
+        })
 
 
+        // 施設情報切り替え
+        $('#facility').on("change",function(){
+
+            // 予約一覧をクリアする
+            yoyaku.innerHTML = '';
+
+            // 予約情報を取得する
+            getYoyakuData(area.value,facility.value,date.value);
+        })
 
 
+        // 時間情報切り替え
+        $('#date').on("change",function(){
 
+            // 予約一覧をクリアする
+            yoyaku.innerHTML = '';
+
+            // 予約情報を取得する
+            getYoyakuData(area.value,facility.value,date.value);
+        });
+        
+    });
 </script>
+</body>
+</html>
