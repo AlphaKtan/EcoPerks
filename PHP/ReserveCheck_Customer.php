@@ -39,8 +39,6 @@
     $end_time = "";
     $id = "";
 
-
-
     try {
         // データベースに接続
         $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
