@@ -63,7 +63,7 @@ try {
                 $end_time = $rowtime['hour_only_end'];
                 echo <<<HTML
                 <div class='timeSelect'>
-                    <input type="radio" name="time" value="{$start_time}:00:00,{$end_time}:00:00"> {$start_time} 時 ～ {$end_time} 時
+                    <input type="radio" name="time" class="distime" value="{$start_time}:00:00,{$end_time}:00:00"> {$start_time} 時 ～ {$end_time} 時
                 </div>
                 HTML;
             }
