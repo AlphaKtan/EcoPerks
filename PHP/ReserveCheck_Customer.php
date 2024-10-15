@@ -82,7 +82,15 @@
                     echo "<p>ユーザー名: $username</p>";
                     echo "<p>日程: $reservation_date</p>";
                     echo "<p>開始時間: $start_time</p>";
-                    echo "<p>終了時間: $end_time</p></li>";
+                    echo "<p>終了時間: $end_time</p>";
+                    echo <<<HTML
+                    <form action="resv_change.php" method="post">
+                        <div class='resvChange'>
+                            <input type="submit" class="" value="変更">
+                        </div>
+                    </form>
+                    </li>
+                    HTML;
                 }
             } else {
                 echo "指定された施設が見つかりません。";
