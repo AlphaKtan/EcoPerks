@@ -52,6 +52,13 @@
 
         $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $usersql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
+        $stmt = $pdo->prepare($usersql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $userrow = $stmt->fetch(PDO::FETCH_ASSOC);
+
         } catch (PDOException $e) {
             echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
         } catch (Exception $e) {
@@ -65,7 +72,7 @@
         <?php
             if($row){
                 foreach($row as $rows){
-                    $username = $rows['username'];
+                    $username = $userrow['username'];
                     $location = $rows['location'];
                     $reservation_date = $rows['reservation_date'];
                     $start_time = $rows['start_time'];
@@ -78,7 +85,7 @@
                     echo "<p>終了時間: $end_time</p></li>";
                 }
             } else {
-                throw new Exception("指定された施設が見つかりません。");
+                echo "指定された施設が見つかりません。";
             }
         ?>
 
