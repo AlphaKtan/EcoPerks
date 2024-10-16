@@ -72,13 +72,13 @@ try {
                 <form action="./resv_change.php" method="post">
                     <div class='resvChange'>
                         <input type="hidden" name="reservation_id" value="$id">
-                        <input type="submit" class="" value="変更">
+                        <input type="submit" class="changeStyle" value="変更">
                     </div>
                 </form>
 
                 <form method='POST' action='' onsubmit='return confirmDelete();'>
                     <input type='hidden' name='delete_id' value='$id'>
-                    <input type='submit' name='delete' value='削除'>
+                    <input type='submit' name='delete' value='削除' class='deleteStyle'>
                 </form>
                 </li>
                 HTML;

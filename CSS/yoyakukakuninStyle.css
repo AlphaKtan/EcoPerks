@@ -22,8 +22,10 @@ li {
     background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    .container input[type="submit"] {
+    .deleteStyle,
+    .changeStyle {
         width: 100%;
+        margin-top: 10px;
         padding: 10px;
         background-color: #43AEA9;
         color: #fff;
@@ -33,6 +35,6 @@ li {
         font-size: 16px;
     }
     
-    .container input[type="submit"]:hover {
+    .deleteStyle:hover, .changeStyle:hover {
         background-color: #557981;
     }
