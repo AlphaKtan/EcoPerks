@@ -102,14 +102,25 @@
                 <p>Reservation</p>
                 </a>
             </div>
+            <div class="box2">
+                <h1>ランキング</h1>
+                <p>Ranking</p>
+            </div>
         </div>
         <div class="boxA">
             <div class="box3">
                 <h1>クーポン</h1>
                 <p>Conpon</p>
             </div>
+            <a href="ReserveCheck_Customer.php">
+            <div class="box4">
+                <h1>予約確認</h1>
+                <p>CheckReserve</p>
+            </div>
+            </a>
         </div>
     </div>
+
     
 
     <div class="test" style="height: 700px;"></div>
