@@ -168,13 +168,20 @@ footer {
     margin: 2.5px;
   }
 
-  .box3{
+  .box3{    
     float: left;
     background-color: #43AEA9;
     width: 45%;
     height: 50px;
     margin: 2.5px;
   }
+
+/*もしbox4がいらなかった時のCSS*/
+    /*float: left;
+    background-color: #43AEA9;
+    width: 90%;
+    height: 50px;
+    margin: 5.5px;*/
 
   .box4{
     float: left;
