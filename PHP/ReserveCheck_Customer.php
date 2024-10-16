@@ -31,6 +31,8 @@
     $user_id = $_SESSION['user_id'];
     // データベース接続情報
     require_once('db_local.php'); // データベース接続
+    require_once('../Model/Delete_Rserve.php');
+
 
     $location = '';
     $username = '';
@@ -60,30 +62,43 @@
     ?>
 
     
-    <div class="container">
-        <h1>予約確認フォーム</h1>
-        <?php
-            if($row){
-                foreach($row as $rows){
-                    $username = $rows['username'];
-                    $location = $rows['location'];
-                    $reservation_date = $rows['reservation_date'];
-                    $start_time = $rows['start_time'];
-                    $end_time = $rows['end_time'];
-        
-                    echo "<li><h2>施設名: $location</h2>";
-                    echo "<p>ユーザー名: $username</p>";
-                    echo "<p>日程: $reservation_date</p>";
-                    echo "<p>開始時間: $start_time</p>";
-                    echo "<p>終了時間: $end_time</p></li>";
-                }
-            } else {
-                throw new Exception("指定された施設が見つかりません。");
+<div class="container">
+    <h1>予約確認フォーム</h1>
+    <?php
+        // データがある場合は予約情報を表示
+        if ($row) {
+            foreach ($row as $rows) {
+                $username = $rows['username'];
+                $location = $rows['location'];
+                $reservation_date = $rows['reservation_date'];
+                $start_time = $rows['start_time'];
+                $end_time = $rows['end_time'];
+                $id = $rows['id'];
+
+                echo "<li><h2>施設名: $location</h2>";
+                echo "<p>ユーザー名: $username</p>";
+                echo "<p>日程: $reservation_date</p>";
+                echo "<p>開始時間: $start_time</p>";
+                echo "<p>終了時間: $end_time</p>";
+                
+                // 削除ボタンと確認ダイアログ
+                echo "<form method='POST' action='' onsubmit='return confirmDelete();'>";
+                echo "<input type='hidden' name='delete_id' value='$id'>";
+                echo "<input type='submit' name='delete' value='削除'>";
+                echo "</form>";
+                echo "</li>";
             }
-        ?>
+        } else {
+            echo "<p>予約情報が見つかりませんでした。</p>";
+        }
+    ?>
+</div>
 
+<script>
+    function confirmDelete() {
+        return confirm("本当に削除してもよろしいですか？");
+    }
+</script>
 
-        
-    </div>
 </body>
 </html>
