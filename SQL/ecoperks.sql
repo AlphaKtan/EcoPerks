@@ -27,6 +27,20 @@ SET time_zone = "+00:00";
 -- テーブルの構造 `cleaning_records`
 --
 
+
+-- クーポン管理
+CREATE TABLE coupons (
+    coupon_id INT AUTO_INCREMENT PRIMARY KEY,
+    coupon_code VARCHAR(255) NOT NULL,
+    expiry_date DATETIME NOT NULL,
+    status TINYINT(1) DEFAULT 0, -- 使用済みかどうかを示す（0: 未使用, 1: 使用済み）
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
+
 CREATE TABLE `cleaning_records` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
