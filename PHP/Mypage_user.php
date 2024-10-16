@@ -54,7 +54,7 @@
             <nav id="g-nav">
                 <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
                     <ul>
-                        <li><a href="#">Top</a></li>
+                        <li><a href="../index.html">Top</a></li>
                         <li><a href="login.html">ログイン</a></li> 
                         <li><a href="form.html">アカウント作成</a></li> 
                         <li><a href="#">Contact</a></li> 
@@ -97,8 +97,10 @@
     <div class="informationBox">
         <div class="boxA">
             <div class="box1">
-                <h1>会員情報</h1>
-                <p>Account</p>
+                <a href="./ReserveCheck_Customer.php">
+                <h1>予約確認</h1>
+                <p>Reservation</p>
+                </a>
             </div>
         </div>
         <div class="boxA">
