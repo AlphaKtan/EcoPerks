@@ -28,6 +28,7 @@ if (isset($_GET['location_id']) && isset($_GET['action'])) {
             $stmt->execute();
 
             echo "ゴミ拾いが地点 $area_id で終了しました！";
+            header("Location: ");
         } else {
             echo "無効なアクションです。";
         }
