@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/yoyakuoutputstyle.css">
+    <title>予約システム</title>
+</head>
+<body>
 <?php
 session_start(); // セッションを開始
 $location = $_SESSION['location'];
@@ -24,7 +33,9 @@ try {
         // SQLクエリを準備して実行
         reservationEntry($pdo, $user_id, $reservation_date, $area_id, $radio_start_time, $radio_end_time, $facility_name);
         
-        echo "<p>予約が正常に完了しました！</p>";
+        $_SESSION['resv_comp'] = "予約が正常に完了しました！";
+        header('Location: homeback.php');
+
 
     } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 初回のPOSTリクエストの処理
@@ -33,6 +44,7 @@ try {
             $_SESSION['reservation_date'] = $reservation_date; // 後のPOST用にセッションに保存
         } else {
             echo "予約日が指定されていません。";
+            echo '<input type="button" onclick="window.history.back();" value="直前のページに戻る">';
         }
 
         // エリア情報の取得
@@ -52,24 +64,41 @@ try {
         // echo "</pre>";
 
         $status = 1;
+        $i = 0;
 
         // 時間帯の取得
         $rowtimes = getTimeAll($pdo, $reservation_date, $facility_name, $status);
 
         if (isset($rowtimes) && count($rowtimes) > 0) {
-            echo "<form method='post'>";
-            foreach ($rowtimes as $rowtime) {
-                $start_time = $rowtime['hour_only'];
-                $end_time = $rowtime['hour_only_end'];
-                echo <<<HTML
-                <div class='timeSelect'>
-                    <input type="radio" name="time" class="distime" value="{$start_time}:00:00,{$end_time}:00:00"> {$start_time} 時 ～ {$end_time} 時
-                </div>
-                HTML;
+            echo <<<HTML
+                <form method='post'>
+                <div class='container'>
+                <h1>予約時間を選択してください</h1>
+                <form action="submit.php" method="POST">
+                <div class="radioBoxGroup">
+            HTML;
+            for ($hour = 9; $hour < 17; $hour++) {
+                $start_time = sprintf("%02d", $hour);
+                $end_time = sprintf("%02d", $hour + 1);
+                echo "<div class='timeSelect'>
+                        <label class='checkbox-label' for='radioLabel$hour'>
+                            <input type='radio' name='time' class='distime' id='radioLabel$hour' value='{$start_time}:00:00,{$end_time}:00:00'> 
+                            {$start_time} 時 ～ {$end_time} 時
+                        </label>
+                      </div>";
             }
-            echo "<input type='submit' value='予約'></form>";
+            
+
+
+            
+            echo "</div><input type='submit' value='予約'></form>";
         } else {
-            echo "<p>指定された時間が見つかりません。</p>";
+            echo <<<HTML
+                <div class="error-container">
+                    <p class="error-message">指定された時間が見つかりません。</p>
+                    <button class="back-button" onclick="window.history.back();">直前のページに戻る</button>
+                </div>
+            HTML;
         }
     }
 
@@ -79,3 +108,7 @@ try {
     echo "<p>エラー: " . $e->getMessage() . "</p>";
 }
 ?>
+</form>
+    </div>
+</body>
+</html>
