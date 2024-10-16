@@ -23,12 +23,11 @@
 session_start();
 $user_id = $_SESSION['user_id'];
 
-// データベース接続情報
-require_once('db_local.php'); // データベース接続
-
 try {
+    require_once('../Model/dbModel.php');
+    require_once('../Model/Delete_Reserve.php');
     // データベースに接続
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
+    $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location FROM yoyaku WHERE username = :user_id";
@@ -62,6 +61,7 @@ try {
                 $reservation_date = $rows['reservation_date'];
                 $start_time = $rows['start_time'];
                 $end_time = $rows['end_time'];
+                $id = $rows['id'];
 
                 echo "<li><h2>施設名: $location</h2>";
                 echo "<p>ユーザー名: $username</p>";
@@ -71,17 +71,27 @@ try {
                 echo <<<HTML
                 <form action="./resv_change.php" method="post">
                     <div class='resvChange'>
-                        <input type="hidden" name="reservation_id" value="{$rows['id']}">
+                        <input type="hidden" name="reservation_id" value="$id">
                         <input type="submit" class="" value="変更">
                     </div>
+                </form>
+
+                <form method='POST' action='' onsubmit='return confirmDelete();'>
+                    <input type='hidden' name='delete_id' value='$id'>
+                    <input type='submit' name='delete' value='削除'>
                 </form>
                 </li>
                 HTML;
             }
         } else {
-            echo "指定された施設が見つかりません。";
+            echo "<p>予約情報が見つかりませんでした。</p>";
         }
     ?>
 </div>
 </body>
 </html>
+<script>
+    function confirmDelete() {
+        return confirm("本当に削除してもよろしいですか？");
+    }
+</script>
