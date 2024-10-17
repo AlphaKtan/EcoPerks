@@ -12,7 +12,7 @@
 
     // SQL成形
     $sql="SELECT tc.id,tc.areaid, tc.facility_name, tc.start_time, tc.end_time FROM time_change tc ";
-    $sql.="INNER JOIN travel_data td ON tc.facility_name = td.facility_name WHERE 1 = 1 ";
+    $sql.="INNER JOIN travel_data td ON tc.facility_name = td.facility_name WHERE tc.status = '1'";
 
     // エリアIDがあれば検索条件にエリアIDを追加
     if($area_id != ""){ $sql.="AND tc.areaid = :areaId ";}

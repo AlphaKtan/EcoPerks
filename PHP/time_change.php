@@ -8,6 +8,10 @@
         select {
             width: 200px;
         }
+
+        .deleteDiv {
+            display: flex;
+        }
     </style>
 </head>
 <body>

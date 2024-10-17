@@ -71,9 +71,16 @@ function getYoyakuData(areaId,facility_id,time){
             }
 
             // 予約情報をセット
+            let deleteDiv = document.createElement('div');
+            deleteDiv.classList.add("deleteDiv");
             let new_element = document.createElement('p');
+            let inputDelete = document.createElement('input');
+            inputDelete.type = 'submit';
+            inputDelete.value = '削除';
             new_element.textContent = test.start_time+" ～ "+test.end_time;
-            yoyaku.appendChild(new_element);
+            deleteDiv.appendChild(new_element);
+            deleteDiv.appendChild(inputDelete);
+            yoyaku.appendChild(deleteDiv);
         });
     });
 }
