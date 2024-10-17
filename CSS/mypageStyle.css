@@ -125,6 +125,38 @@ footer {
     padding-top: 20px;
 }
 
+#dragDropArea{
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+}
+#dragDropArea:hover{
+    opacity: 0.8;
+}
+
+#dragDropArea .drag-drop-buttons{
+    margin-top: 20px;
+}
+.drag-drop-buttons input{
+    margin: auto;
+}
+
+.label_l {
+  display: inline-block;
+  width: 250px;
+  vertical-align: top;
+}
+
+.nav-user-photo-large {
+    margin: 4px 8px 0 0;
+    border-radius: 50%;
+    height: 140px;
+    width: 140px;
+    background-color: #d3d3d3;
+    border: 1px solid #d3d3d3;
+    cursor: pointer;
+}
+
 .irasto {
     height: 88px;
 }
