@@ -1,10 +1,54 @@
+<?php
+    session_start();
+    require_once('db_connection.php'); 
+
+    function getClientIp() {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            return $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            return $_SERVER['REMOTE_ADDR'];
+        }
+    }
+    
+    // IPアドレスの取得
+    $ip_address = getClientIp();
+    
+    // アクセス時間の取得
+    $access_time = date('Y-m-d H:i:s');
+    
+    // ログイン中のユーザー名の取得（必要に応じて）
+    $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'ゲスト';
+    
+    // データベースにアクセス情報を保存
+    try {
+        $sql = "INSERT INTO access_logs (username, ip_address, access_time) 
+                VALUES (:username, :ip_address, :access_time)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':ip_address', $ip_address);
+        $stmt->bindParam(':access_time', $access_time);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo "エラー: " . $e->getMessage();
+    }
+    ?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QRコードの更新</title>
+    
+    
     <style>
+
          body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -135,3 +179,6 @@
     </div>
 </body>
 </html>
+
+
+
