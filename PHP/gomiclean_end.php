@@ -4,7 +4,7 @@ session_start();
 require_once('db_connection.php'); // データベース接続ファイル
 
 if (!isset($_SESSION['username'])) {
-    header('Location: ../login.html');
+    header('Location: ../login_page.php');
     exit;
 }
 

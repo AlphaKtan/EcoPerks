@@ -3,7 +3,7 @@ session_start();
 
 // セッションにメッセージが保存されていない場合は、直接ログインページへ
 if (!isset($_SESSION['login_message'])) {
-    header('Location: ../login.html');
+    header('Location: ../login_page.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ unset($_SESSION['login_message']);
     <script type="text/javascript">
         // 3秒後にリダイレクトする
         setTimeout(function() {
-            window.location.href = '../login.html';
+            window.location.href = '../login_page.php';
         }, 3000); // 3000ミリ秒 = 3秒
     </script>
 </head>

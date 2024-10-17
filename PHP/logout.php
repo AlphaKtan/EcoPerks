@@ -42,7 +42,7 @@ if (isset($_SESSION['username'])) {
 }
 
 // ログインページにリダイレクト
-header("Location: ../login.html");
+header("Location: ../login_page.php");
 exit;
 
 

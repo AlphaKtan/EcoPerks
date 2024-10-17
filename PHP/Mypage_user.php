@@ -21,11 +21,11 @@
         // echo "</pre>";
 
         session_start();
-        // if (!isset($_SESSION['user_id'])) {
-        //     $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
-        //     header('Location: message.php');
-        //     exit;
-        // }
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+            header('Location: message.php');
+            exit;
+        }
 
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
@@ -58,7 +58,7 @@
                 <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
                     <ul>
                         <li><a href="../index.html">Top</a></li>
-                        <li><a href="login.html">ログイン</a></li> 
+                        <li><a href="login_page.php">ログイン</a></li> 
                         <li><a href="form.html">アカウント作成</a></li> 
                         <li><a href="#">Contact</a></li> 
                     </ul>

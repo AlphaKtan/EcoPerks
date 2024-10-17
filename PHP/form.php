@@ -127,7 +127,7 @@ try {
     $mysqli->commit();
     
     // リダイレクト
-    header("Location: ../login.html");
+    header("Location: ../login_page.php");
     exit();
 } catch (Exception $e) {
     // トランザクションをロールバック

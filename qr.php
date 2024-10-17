@@ -20,7 +20,7 @@ use Endroid\QrCode\Logo\Logo;
 
 
 // URL設定
-$url = 'http://i2322117.chips.jp/login.html';//自分のに置き換え
+$url = 'http://i2322117.chips.jp/login_page.php';//自分のに置き換え
 
 // QrCodeに関する設定
 $qrCode = QrCode::create($url)

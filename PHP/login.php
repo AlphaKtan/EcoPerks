@@ -102,12 +102,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // パスワードが一致しない場合の処理
             echo '<h2 style="color: red;">ユーザーネームとパスワードを確認してください。</h2>';
-            echo "<h2><a href='../login.html'>入力されたパスワードが一致しなかったため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
+            echo "<h2><a href='../login_page.php'>入力されたパスワードが一致しなかったため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
         }
     } else {
         // ユーザーが見つからない場合の処理
         echo '<h2 style="color: red;">ユーザーが見つかりませんでした。</h2>';
-        echo "<h2><a href='../login.html'>ユーザー名が存在しないため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
+        echo "<h2><a href='../login_page.php'>ユーザー名が存在しないため、<br>お手数ではございますがもう一度ログインページよりログインしてください。</a></h2>";
     }
     $stmt->close();
 }
@@ -127,3 +127,4 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     return mail($to, $subject, $message, $headers);
 }
 
+    
