@@ -74,14 +74,15 @@ function getYoyakuData(areaId,facility_id,time){
             let deleteDiv = document.createElement('div');
             deleteDiv.classList.add("deleteDiv");
             let new_element = document.createElement('p');
-            let formDelete = document.createElement('form');
-            let inputDelete = document.createElement('input');
-            inputDelete.type = 'submit';
-            inputDelete.value = '削除';
             new_element.textContent = test.start_time+" ～ "+test.end_time;
             deleteDiv.appendChild(new_element);
-            deleteDiv.appendChild(inputDelete);
             yoyaku.appendChild(deleteDiv);
         });
     });
 }
+
+// let formDelete = document.createElement('form');
+// let inputDelete = document.createElement('input');
+// inputDelete.type = 'submit';
+// inputDelete.value = '削除';
+// deleteDiv.appendChild(inputDelete);
