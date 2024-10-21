@@ -21,11 +21,11 @@
         // echo "</pre>";
 
         session_start();
-        if (!isset($_SESSION['user_id'])) {
-            $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
-            header('Location: message.php');
-            exit;
-        }
+        // if (!isset($_SESSION['user_id'])) {
+        //     $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+        //     header('Location: message.php');
+        //     exit;
+        // }
 
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
