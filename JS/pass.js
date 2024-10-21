@@ -10,7 +10,7 @@ document.body.addEventListener('keydown', function(event) {
         event.preventDefault(); // Enterキーのデフォルト動作を防止
         console.log(inputText);
         // 入力されたテキストが "[start]" ならリダイレクト
-        if (inputText === pass) {
+        if (inputText.toUpperCase() === pass.toUpperCase()) {
             window.location.href = './start_user.php'; // リダイレクト先のURL
         }
 

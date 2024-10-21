@@ -42,3 +42,5 @@ session_start();
         <button><input type="submit" name="upload" value="送信"></button>
     </form>
 <?php endif;?>
+
+<script src="../JS/pass.js"></script>
