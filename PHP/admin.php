@@ -11,8 +11,8 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
 }
 
 // データベース接続
-// require_once('db_connection.php');
-require_once('db_local.php');
+require_once('db_connection.php');
+//require_once('db_local.php');
 
 $conn = new mysqli($servername, $dbUsername, $password, $dbname);
 if ($conn->connect_error) {
