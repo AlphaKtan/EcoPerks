@@ -74,8 +74,35 @@ function getYoyakuData(areaId,facility_id,time){
             let deleteDiv = document.createElement('div');
             deleteDiv.classList.add("deleteDiv");
             let new_element = document.createElement('p');
+            // let formDelete = document.createElement('form');
+            let inputDelete = document.createElement('input');
+            inputDelete.type = 'button';
+            inputDelete.value = '削除';
+            
+            // 削除ボタンのイベントリスナーを追加
+            inputDelete.addEventListener('click', function() {
+                // 予約を削除するAPIを呼び出す
+                $.ajax({
+                    type: "POST",
+                    url: "../PHP/delete_reservation.php", // 削除用のエンドポイント
+                    data: { reservation_id: test.id }, // 予約のIDを送信
+                    dataType: "json"
+                }).done(function(response) {
+                    if (response.success) {
+                        // 削除成功の処理
+                        alert("予約が削除されました。");
+                        deleteDiv.remove(); // 削除された予約情報を表示から消去
+                    } else {
+                        alert("削除に失敗しました。");
+                    }
+                }).fail(function() {
+                    alert("削除処理中にエラーが発生しました。");
+                });
+            });
+
             new_element.textContent = test.start_time+" ～ "+test.end_time;
             deleteDiv.appendChild(new_element);
+            deleteDiv.appendChild(inputDelete);
             yoyaku.appendChild(deleteDiv);
         });
     });
