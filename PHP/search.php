@@ -1,16 +1,15 @@
 <?php
-// データベース接続情報
-// require_once('db_connection.php');
 
-require_once('db_local.php');
 
 
 
 
 
 try {
-    // データベースに接続
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
+    require '../Model/dbModel.php';
+
+    // DB接続
+    $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PHP例外フロー
 
     // URLからエリアIDを取得
