@@ -1,8 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 // セッションが開始されていない場合のみセッションを開始
 if (session_status() == PHP_SESSION_NONE) {
@@ -12,8 +12,8 @@ if (session_status() == PHP_SESSION_NONE) {
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
 
-// require_once('db_connection.php');
-require_once('db_local.php');
+require_once('db_connection.php');
+//require_once('db_local.php');
 
 // データベース接続
 $conn = new mysqli($servername, $dbUsername, $password, $dbname);

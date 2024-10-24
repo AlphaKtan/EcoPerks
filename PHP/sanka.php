@@ -19,7 +19,7 @@
     $access_time = date('Y-m-d H:i:s');
     
     // ログイン中のユーザー名の取得（必要に応じて）
-    $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'ゲスト';
+    $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
     
     // データベースにアクセス情報を保存
     try {
