@@ -18,6 +18,5 @@
     // 各modelファイルより情報取得
     require_once('time_change_func.php');
     // require_once('ReserveCheck_Corpo_func.php');
-    require_once('reservation_func.php');
+    require_once('Reservation_func.php');
 
-?>
