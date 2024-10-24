@@ -1,10 +1,5 @@
 <?php
 
-
-
-
-
-
 try {
     require '../Model/dbModel.php';
 
