@@ -46,11 +46,6 @@ try {
             <div class="icon"></div>
         </div>
     </header>
-
-
-
-
-
         <div class="container">
             <?php
                 // 結果を表示

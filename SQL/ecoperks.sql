@@ -13847,7 +13847,7 @@ CREATE TABLE `user_sessions` (
 --
 -- テーブルの構造 `yoyaku`
 --
-
+-- ステータス 0未参加１参加２終了
 CREATE TABLE `yoyaku` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
