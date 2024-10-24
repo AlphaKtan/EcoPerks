@@ -107,9 +107,3 @@ function getYoyakuData(areaId,facility_id,time){
         });
     });
 }
-
-// let formDelete = document.createElement('form');
-// let inputDelete = document.createElement('input');
-// inputDelete.type = 'submit';
-// inputDelete.value = '削除';
-// deleteDiv.appendChild(inputDelete);
