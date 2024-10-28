@@ -1,7 +1,7 @@
 <?php
 // データベース接続情報
 session_start();
-    require_once('db_connection.php');
+    // require_once('db_connection.php');
     //require_once('db_local.php'); // データベース接続
     require_once('../Model/dbmodel.php');
     try {

@@ -10,6 +10,11 @@ p{
     color: #f3f3f3;
 }
 
+.iconImg {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 
 header {
     width: 100%;
