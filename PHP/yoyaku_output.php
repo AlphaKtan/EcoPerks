@@ -1,3 +1,4 @@
+<?php session_start(); // セッションを開始 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -8,7 +9,6 @@
 </head>
 <body>
 <?php
-session_start(); // セッションを開始
 $location = $_SESSION['location'];
 
 try {
