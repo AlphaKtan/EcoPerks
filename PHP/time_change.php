@@ -9,9 +9,9 @@
             width: 200px;
         }
 
-        .deleteDiv {
+        /* .deleteDiv {
             display: flex;
-        }
+        } */
     </style>
 </head>
 <body>
@@ -32,8 +32,7 @@
         <input name="date" type="date" id="date" />
     </form>
     <div id="yoyaku"></div>
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../Js/custom.js"></script>
 <script>
     var optval;
