@@ -133,7 +133,23 @@
             </div>
             </a>
         </div>
+        <div class="boxA">
+            <a href="upload.php">
+            <div class="box5">
+                <h1>クーポン</h1>
+                <p>Conpon</p>
+            </div>
+            </a>
+            <!-- <a href="ReserveCheck_Customer.php">
+            <div class="box4">
+                <h1>予約確認</h1>
+                <p>CheckReserve</p>
+            </div>
+            </a> -->
+        </div>
     </div>
+    </div>
+    
 
     
 

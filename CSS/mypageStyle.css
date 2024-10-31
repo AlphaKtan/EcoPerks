@@ -227,3 +227,11 @@ footer {
     height: 50px;
     margin: 2.5px;
   }
+
+  .box5{
+    float: left;
+    background-color: #43AEA9;
+    width: 45%;
+    height: 50px;
+    margin: 2.5px;
+  }
