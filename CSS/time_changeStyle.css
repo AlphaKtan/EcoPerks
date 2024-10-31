@@ -1,0 +1,33 @@
+body {
+    background-color: #FFF6E9; 
+}
+
+.deleteDiv {
+    background-color: white;
+    margin:0 0 15px 0;
+    border: solid 1px #43AEA9;
+    width: 70%;
+}
+
+.divBox {
+    padding: 5px 0 5px 10px;
+}
+
+.countDiv {
+    padding: 7px 10px;
+    background-color: #43AEA9;
+    color: white;
+    width:-moz-fit-content; /* Firefox */
+    width:fit-content; /* other browsers */
+}
+
+.divBox:nth-child(5) {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.inputDelete {
+    border: none;
+    background-color: white;
+    border-bottom: 1px solid rgb(199, 183, 183);
+}

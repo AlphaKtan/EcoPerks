@@ -49,6 +49,7 @@ function getAreaData(areaId){
  * param time 時間
  */
 function getYoyakuData(areaId,facility_id,time){
+    let count = 1;
     area_name = ""
 
     // エリア情報があれば情報取得する
@@ -77,7 +78,10 @@ function getYoyakuData(areaId,facility_id,time){
             // let formDelete = document.createElement('form');
             let inputDelete = document.createElement('input');
             inputDelete.type = 'button';
-            inputDelete.value = '削除';
+            inputDelete.value = '予定を削除';
+            inputDelete.classList.add('inputDelete');
+            let divBtn = document.createElement('div');
+            divBtn.classList.add('divBox');
             
             // 削除ボタンのイベントリスナーを追加
             inputDelete.addEventListener('click', function() {
@@ -112,15 +116,26 @@ function getYoyakuData(areaId,facility_id,time){
             let endMinutes = endDate.getMinutes().toString().padStart(2, '0');
             let new_element2 = document.createElement('div');
             let facility_element = document.createElement('div');
+            let countDiv = document.createElement('div');
+            new_element.classList.add('divBox');
+            new_element2.classList.add('divBox');
+            facility_element.classList.add('divBox');
+            countDiv.classList.add('countDiv');
+
+            countDiv.textContent = count;
             facility_element.textContent = test.facility_name;
+
             
+            deleteDiv.appendChild(countDiv);
             deleteDiv.appendChild(facility_element);
             new_element.textContent = " 開催日付 : "+yearOnly+"年"+monthOnly+"月"+dayOnly+"日";
             new_element2.textContent = "予定時刻 : "+hourOnly+":"+minutes+" ～ "+endHourOnly+":"+endMinutes;
             deleteDiv.appendChild(new_element);
             deleteDiv.appendChild(new_element2);
-            deleteDiv.appendChild(inputDelete);
+            divBtn.appendChild(inputDelete);
+            deleteDiv.appendChild(divBtn);
             yoyaku.appendChild(deleteDiv);
+            count++;
         });
     });
 }
