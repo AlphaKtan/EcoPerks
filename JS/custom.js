@@ -63,17 +63,17 @@ function getYoyakuData(areaId,facility_id,time){
         data.forEach(function(test){
             
             // 施設名のラベルを設定 
-            if(area_name!=test.facility_name){
-                let new_element = document.createElement('h3');
-                new_element.textContent = test.facility_name;
-                yoyaku.appendChild(new_element);
-                area_name = test.facility_name;
-            }
+            // if(area_name!=test.facility_name){
+            //     let new_element = document.createElement('h3');
+            //     new_element.textContent = test.facility_name;
+            //     yoyaku.appendChild(new_element);
+            //     area_name = test.facility_name;
+            // }
 
             // 予約情報をセット
             let deleteDiv = document.createElement('div');
             deleteDiv.classList.add("deleteDiv");
-            let new_element = document.createElement('p');
+            let new_element = document.createElement('div');
             // let formDelete = document.createElement('form');
             let inputDelete = document.createElement('input');
             inputDelete.type = 'button';
@@ -99,9 +99,26 @@ function getYoyakuData(areaId,facility_id,time){
                     alert("削除処理中にエラーが発生しました。");
                 });
             });
+            let startDate = new Date(test.start_time);
+            let endDate = new Date(test.end_time);
+            let yearOnly = startDate.getFullYear();
+            let monthOnly = startDate.getMonth();
+            let dayOnly = startDate.getDay();
+            let hourOnly = startDate.getHours().toString().padStart(2, '0');
+            let minutes = startDate.getMinutes().toString().padStart(2, '0');
 
-            new_element.textContent = test.start_time+" ～ "+test.end_time;
+            let endDayOnly = endDate.getDay();
+            let endHourOnly = endDate.getHours().toString().padStart(2, '0');
+            let endMinutes = endDate.getMinutes().toString().padStart(2, '0');
+            let new_element2 = document.createElement('div');
+            let facility_element = document.createElement('div');
+            facility_element.textContent = test.facility_name;
+            
+            deleteDiv.appendChild(facility_element);
+            new_element.textContent = " 開催日付 : "+yearOnly+"年"+monthOnly+"月"+dayOnly+"日";
+            new_element2.textContent = "予定時刻 : "+hourOnly+":"+minutes+" ～ "+endHourOnly+":"+endMinutes;
             deleteDiv.appendChild(new_element);
+            deleteDiv.appendChild(new_element2);
             deleteDiv.appendChild(inputDelete);
             yoyaku.appendChild(deleteDiv);
         });
