@@ -9,7 +9,7 @@ if (isset($_SESSION['username'])) {
     //require_once('db_local.php'); // データベース接続ファイル
 
     // データベース接続
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $dbUsername, $password, $dbname);
     if ($conn->connect_error) {
         die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
     }
