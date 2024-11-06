@@ -33,5 +33,6 @@ if (isset($_SESSION['user_id'])) {
 <h1>画像表示</h1>
 <img src="../images/<?php echo $image['imgpath']; ?>" width="300" height="300">
 <a href="upload.php">画像アップロード</a>
+<a href="Mypage_user.php">マイページ</a>
 
 <script src="../JS/pass.js"></script>
