@@ -1,7 +1,10 @@
 <?php
     session_start();
     require_once('db_connection.php'); 
-
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
+        $_SESSION['area_id'] = htmlspecialchars($_POST['area_id'], ENT_QUOTES, 'UTF-8');
+    }
+    
     function getClientIp() {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             return $_SERVER['HTTP_CLIENT_IP'];
