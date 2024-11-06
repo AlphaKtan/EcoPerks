@@ -11,9 +11,12 @@ session_start();
     }
     echo isset($_FILES['image']) ? 'yes' : 'no';
 
-    echo isset($_POST['name']) ? 'yes' : 'no';
+    echo isset($_POST['username']) ? 'yes' : 'no';
+    echo !empty($_POST['username']) ? 'yes' : 'no';
 
-        if (isset($_POST['upload'])) {//送信ボタンが押された場合
+    $message = "";
+
+        if (isset($_FILES['image'])) {//送信ボタンが押された場合
             echo $_SESSION['user_id'];
             $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
             $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
@@ -33,12 +36,14 @@ session_start();
             }
         }
 
-        if (isset($_POST['name_upload'])) {//送信ボタンが押された場合
+        if (!empty($_POST['username'])) {//送信ボタンが押された場合
             echo $_SESSION['user_id'];
-            $sql = "UPDATE users SET username = ':name' WHERE id = :user_id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':name', $name, PDO::PARAM_STR);
-            $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+            $username = $_POST['username'];
+            $sql_username = "UPDATE users SET username = :username WHERE id = :user_id";
+            $stmt_username = $pdo->prepare($sql_username);
+            $stmt_username->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt_username->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+            $stmt_username->execute();
         }
 ?>
 
@@ -54,7 +59,7 @@ session_start();
         <input type="file" name="image">
         
         <p>名前変更</p>
-        <input type="text" name="name">
+        <input type="text" name="username">
         
         <button><input type="submit" name="upload" value="送信"></button>
     
