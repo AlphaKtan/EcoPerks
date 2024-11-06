@@ -56,10 +56,9 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
     $date = $ym . '-' . $day;
 
     if ($today == $date) {
-        // 今日の日付の場合は、class="today"をつける
-        $week .= '<td class="today">' . $day;
+        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day;
     } else {
-        $week .= '<td>' . $day;
+        $week .= "<td onclick='selectDate(\"$date\")'>" . $day;
     }
     $week .= '</td>';
 
@@ -98,13 +97,17 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
             height: 100px;
         }
         .today {
-            background: orange !important;
+            background: #afa48f61 !important;
         }
         th:nth-of-type(1), td:nth-of-type(1) {
             color: red;
         }
         th:nth-of-type(7), td:nth-of-type(7) {
             color: blue;
+        }
+
+        .selected {
+            background-color: yellow; 
         }
     </style>
 </head>
@@ -129,6 +132,8 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         </table>
     </div>
 
+    <button>時間追加</button>
+
     <!-- JavaScript -->
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-3.5.1.min.js"></script>
@@ -137,6 +142,21 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 <script src="../js/bootstrap-datetimepicker.min.js"></script>
 
 <script>
+let previouslySelected = null;
+
+function selectDate(date) {
+    alert("選択された日付："+ date);
+
+    // 前に選択されていたセルの選択を解除
+    if (previouslySelected) {
+        previouslySelected.classList.remove('selected');
+    }
+
+    // 新しく選択されたセルにselectedクラスを追加
+    element.classList.add('selected');
+    previouslySelected = element;
+}
+
 $(function () {
     var ua = navigator.userAgent;
     if ((ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) && ua.indexOf('Mobile') > 0) {
