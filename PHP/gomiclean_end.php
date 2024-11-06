@@ -21,50 +21,54 @@ if (!$expiry_time) {
 }
 
 // 現在の時間
-$current_datetime = date('Y-m-d H:i:s'); // 現在時刻をDATETIME形式に変換
+$current_datetime = date('Y-m-d H:i:s');
 
-// QRコードの有効期限を確認
+// QRコードを取得するためのクエリ
 $sql = "SELECT * FROM qr_codes 
         WHERE area_id = :area_id 
         AND username = ''  
-        AND expiry_time > :current_time
         AND used = 0
         ORDER BY generated_time DESC 
         LIMIT 1";
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(':area_id', $location_id); // location_idを使用
-$stmt->bindParam(':current_time', $current_datetime); // 現在時刻を使用
+$stmt->bindParam(':area_id', $area_id);
 $stmt->execute();
 
-$qrCode = $stmt->fetch(); // QRコードを取得
+$qrCode = $stmt->fetch();
 
-// QRコードが見つからなかった場合
 if (!$qrCode) {
+    echo "<h3>無効なQRコードです。</h3>";
+    echo "<p>エリアID: {$area_id}</p>";
+    echo "<p>使用フラグ: 0</p>";
+    echo "<p>現在の時刻: {$current_datetime}</p>";
+    exit;
+}
+
+// QRコードの有効期限が切れているかを確認
+if ($qrCode['expiry_time'] <= $current_datetime) {
+    echo "<h3>このQRコードは期限切れです。有効期限は " . htmlspecialchars($qrCode['expiry_time'], ENT_QUOTES, 'UTF-8') . " でした。</h3>";
+
     // 期限切れの場合、used を 1 に更新する
-    $updateSql = "UPDATE qr_codes SET used = 1 WHERE area_id = :area_id AND expiry_time <= :current_time";
+    $updateSql = "UPDATE qr_codes SET used = 1 WHERE id = :id";
     $updateStmt = $pdo->prepare($updateSql);
-    $updateStmt->bindParam(':area_id', $location_id);
-    $updateStmt->bindParam(':current_time', $current_datetime);
+    $updateStmt->bindParam(':id', $qrCode['id']);
     $updateStmt->execute();
-    
-    echo "<h3>このQRコードは無効または期限切れです。</h3>";
+
     exit;
 }
 
 // QRコードが見つかった場合の終了処理
-if ($qrCode && $action === 'end') {
-    // ゴミ拾い終了のデータをログに保存
-    $sql = "UPDATE cleaning_records 
-            SET end_time = :end_time 
-            WHERE username = :username 
-            AND area_id = :area_id 
-            AND end_time IS NULL";
+if ($action === 'end') {
+    // ゴミ拾い開始のデータをログに保存
+    $sql = "INSERT INTO cleaning_records (username, area_id, end_time) 
+            VALUES (:username, :area_id, :end_time)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':area_id', $location_id);
+    $stmt->bindParam(':area_id', $area_id);
     $stmt->bindParam(':end_time', $current_datetime);
     $stmt->execute();
+
 
     // QRコードを無効化
     $updateSql = "UPDATE qr_codes SET used = 1 WHERE id = :id";
