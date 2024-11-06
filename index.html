@@ -186,6 +186,14 @@
                 }
             });
 
+            if(Priority==1){
+                tile.style.backgroundColor = 'rgba(0, 0, 255, 0.5)'; // 青色の半透明背景
+            }else if(Priority==2){
+                tile.style.backgroundColor = 'rgba(0, 0, 255, 0.5)'; // 青色の半透明背景
+            }else if(Priority==3){
+                tile.style.backgroundColor = 'rgba(0, 0, 255, 0.5)'; // 青色の半透明背景
+            }
+
             
             // タイルにクリックした時のイベント
             google.maps.event.addDomListener(map.getDiv(), 'click', function(event) {
