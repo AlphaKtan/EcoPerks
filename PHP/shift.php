@@ -107,7 +107,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         }
 
         .selected {
-            background-color: yellow; 
+            background: yellow!important; 
         }
     </style>
 </head>
@@ -132,7 +132,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         </table>
     </div>
 
-    <button>時間追加</button>
+    <input type="button" value="時間追加" onclick="buttonClick()">
 
     <!-- JavaScript -->
 <script src="../js/bootstrap.min.js"></script>
@@ -143,9 +143,10 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 
 <script>
 let previouslySelected = null;
+let selectedDate = null;
 
 function selectDate(date) {
-    alert("選択された日付："+ date);
+    // alert("選択された日付："+ date);
 
     // 前に選択されていたセルの選択を解除
     if (previouslySelected) {
@@ -153,8 +154,21 @@ function selectDate(date) {
     }
 
     // 新しく選択されたセルにselectedクラスを追加
+    let element = event.target;
     element.classList.add('selected');
     previouslySelected = element;
+
+    // 選択された日付を保持
+    selectedDate = date;
+    
+}
+
+function buttonClick() {
+    if (selectedDate) {
+        alert("選択された日付：" + selectedDate);
+    } else {
+        alert("日付を選択してください。");
+    }
 }
 
 $(function () {
