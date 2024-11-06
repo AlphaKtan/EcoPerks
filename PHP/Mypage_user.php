@@ -45,6 +45,13 @@
 
             $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+            $sql = "SELECT imgpath FROM users WHERE id = :id";
+            $stmt2 = $pdo->prepare($sql);
+            $stmt2->bindValue(':id', $user_id);
+            $stmt2->execute();
+
+            $image = $stmt2->fetch();
+
             } catch (PDOException $e) {
                 echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
             } catch (Exception $e) {
