@@ -1,5 +1,5 @@
-<!-- 終了用QR -->
 <?php
+session_start();
 require_once('vendor/autoload.php');
 require_once('db_connection.php');
 use Endroid\QrCode\Builder\Builder;
@@ -17,6 +17,7 @@ $baseUrl = 'http://i2322117.chips.jp/php/gomiclean_end.php';
 $timestamp = time();
 
 //終了用QRコードのURLを生成
+$area_id = $_SESSION['area_id'] ?? null;
 if (!$area_id) {
     echo "<h3>エリアが選択されていません。</h3>";
     exit;

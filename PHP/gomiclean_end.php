@@ -76,7 +76,7 @@ if ($action === 'end') {
     $updateStmt->bindParam(':id', $qrCode['id']);
     $updateStmt->execute();
 
-    echo "<h3>ゴミ拾いが地点 {$location_id} で終了しました！</h3>";
+    echo "<h3>ゴミ拾いが地点 {$area_id} で終了しました！</h3>";
 } else {
     echo "<h3>無効なアクションです。</h3>";
 }
