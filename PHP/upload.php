@@ -1,3 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/formStyle.css">
+    <title>アカウント登録</title>
+</head>
+<body>
+
+<header>
+        <div class="flexBox">
+            <div class="menu">
+                <button class="menu_button" type="button">
+                    管理者?
+                </button>
+            </div>
+            <div class="logo">
+                <img src="../img/logo.jpg" alt="" class="logo2">
+            </div>
+            <div class="icon"></div>
+        </div>
+</header>
+
 <?php
 // データベース接続情報
 session_start();
@@ -47,23 +71,31 @@ session_start();
         }
 ?>
 
-<h1>画像アップロード</h1>
-<!--送信ボタンが押された場合-->
-<?php if (isset($_POST['upload'])): ?>
-    <p><?php echo $message; ?></p>
-    <p><a href="image.php">画像表示へ</a></p>
-<?php else: ?>
-    <form method="post" enctype="multipart/form-data">
+<section class="login_form">
+    <h1>画像アップロード</h1>
+    <!--送信ボタンが押された場合-->
+    <?php if (isset($_POST['upload'])): ?>
+        <p><?php echo $message; ?></p>
+        <button class="menu_button" type="button">
+            <a href="image.php">画像表示へ</a>
+        </botton>
+    <?php else: ?>
+        <form method="post" enctype="multipart/form-data">
 
-        <p>アップロード画像</p>
-        <input type="file" name="image">
+        <div class="form-group">
+            <label>アップロード画像</label>
+            <input type="file" name="image">
+        </div>
+            
+        <div class="form-group">
+            <label>名前変更</label>
+            <input type="text" name="username">
+        </div>    
+            <button type="submit" name="upload" value="送信">送信ボタン</button>
         
-        <p>名前変更</p>
-        <input type="text" name="username">
-        
-        <button><input type="submit" name="upload" value="送信"></button>
-    
-    </form>
-<?php endif;?>
+        </form>
+    <?php endif;?>
+</section>
+</body>
+</html>
 
-<script src="../JS/pass.js"></script>

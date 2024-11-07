@@ -1,3 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/formStyle.css">
+    <title>アカウント登録</title>
+</head>
+<body>
+    <header>
+        <div class="flexBox">
+            <div class="menu">
+                <button class="menu_button" type="button">
+                    管理者?
+                </button>
+            </div>
+            <div class="logo">
+                <img src="img/logo.jpg" alt="" class="logo2">
+            </div>
+            <div class="icon"></div>
+        </div>
+    </header>
+
 <?php
 // データベース接続情報
 
@@ -36,3 +59,6 @@ if (isset($_SESSION['user_id'])) {
 <a href="Mypage_user.php">マイページ</a>
 
 <script src="../JS/pass.js"></script>
+
+</body>
+</html>
