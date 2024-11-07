@@ -4,7 +4,7 @@ session_start(); // セッションを開始
 // POSTリクエストが送信された場合にエリアIDをセッションに保存
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
     $_SESSION['area_id'] = htmlspecialchars($_POST['area_id'], ENT_QUOTES, 'UTF-8');
-    header('Location: sanka.php'); // QRコード生成ページにリダイレクト
+    header('Location: owari.php'); // QRコード生成ページにリダイレクト
     exit();
 }
 ?>
