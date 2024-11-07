@@ -181,20 +181,21 @@ echo "</pre>";
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
     <?php 
-    $i = 1;
     foreach ($row as $rows) {
         // 文字列をDateTimeオブジェクトに変換
         $start_time = new DateTime($rows['start_time']);
         $end_time = new DateTime($rows['end_time']);
+        //行のidを取得
+        $rowId = $rows['id'];
         
         // フォーマットして表示
+        // とってきた時間帯のid(番号)をクラスに適応
         echo <<<HTML
-        <label for="preset{$i}" class="box">
-            <input type="checkbox" name="preset" id="preset{$i}">
-            <label for="preset{$i}">{$start_time->format('H:i')} ～ {$end_time->format('H:i')}</label>
+        <label for="preset{$rowId}" class="box">
+            <input type="checkbox" name="preset" id="preset{$rowId}">
+            <label for="preset{$rowId}">{$start_time->format('H:i')} ～ {$end_time->format('H:i')}</label>
         </label>
         HTML;
-        $i++;
     }
     ?>
 
