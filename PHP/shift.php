@@ -130,7 +130,7 @@ echo "</pre>";
         }
 
         #shiftDiv {
-            background: black;
+            background-color: rgba(0,0,0,0.8);
             padding: 30px;
         }
 
@@ -143,7 +143,7 @@ echo "</pre>";
         }
 
         .presetDiv {
-            background: grey;
+            background-color: rgb(81,81,81,0.8);
             padding: 5px;
         }
 
