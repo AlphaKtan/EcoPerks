@@ -1,4 +1,9 @@
 <?php
+require '../Model/dbModel.php';
+
+// DB接続
+$pdo = dbConnect();
+
 // タイムゾーンを設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -56,9 +61,9 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
     $date = $ym . '-' . $day;
 
     if ($today == $date) {
-        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day;
+        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day . "<div class='circle'></div>";
     } else {
-        $week .= "<td onclick='selectDate(\"$date\")'>" . $day;
+        $week .= "<td onclick='selectDate(\"$date\")'>" . $day . "<div class='circle'></div>";
     }
     $week .= '</td>';
 
@@ -78,6 +83,16 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         $week = '';
     }
 }
+
+$sql = "SELECT id, start_time, end_time FROM preset";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//デバッグ用の出力
+echo "<pre>";
+print_r($row[0]);
+echo "</pre>";
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -107,7 +122,36 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         }
 
         .selected {
-            background: yellow!important; 
+            background: yellow!important;
+        }
+
+        .shiftDiv {
+            display: none;
+        }
+
+        #shiftDiv {
+            background: black;
+            padding: 30px;
+        }
+
+        .box {
+            background: white;
+            display: block;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .presetDiv {
+            background: grey;
+            padding: 5px;
+        }
+
+        .circle {
+            width: 7px;
+            height: 7px;
+            background: green;
+            /* display: block; */
         }
     </style>
 </head>
@@ -133,8 +177,34 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
     </div>
 
     <input type="button" value="時間追加" onclick="buttonClick()">
+    <div class="shiftDiv" id="shiftDiv">
+        <p style="color: white;">プリセットから追加</p>
+    <div class="presetDiv">
+    <?php 
+    $i = 1;
+    foreach ($row as $rows) {
+        // 文字列をDateTimeオブジェクトに変換
+        $start_time = new DateTime($rows['start_time']);
+        $end_time = new DateTime($rows['end_time']);
+        
+        // フォーマットして表示
+        echo <<<HTML
+        <label for="preset{$i}" class="box">
+            <input type="checkbox" name="preset" id="preset{$i}">
+            <label for="preset{$i}">{$start_time->format('H:i')} ～ {$end_time->format('H:i')}</label>
+        </label>
+        HTML;
+        $i++;
+    }
+    ?>
 
-    <!-- JavaScript -->
+        <button>その他時間追加</button>
+        <button>シフト追加</button>
+    </div>
+
+
+
+<!-- JavaScript -->
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-3.5.1.min.js"></script>
 <script src="../js/moment.min.js"></script>
@@ -144,6 +214,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 <script>
 let previouslySelected = null;
 let selectedDate = null;
+let displayNone = document.getElementsByClassName('shiftDiv');
 
 function selectDate(date) {
     // alert("選択された日付："+ date);
@@ -164,13 +235,13 @@ function selectDate(date) {
 }
 
 function buttonClick() {
+    // display:none;を解除
     if (selectedDate) {
-        alert("選択された日付：" + selectedDate);
-    } else {
-        alert("日付を選択してください。");
+        for (let i = 0; i < displayNone.length; i++) {
+            displayNone[i].classList.remove('shiftDiv');
+        }
     }
 }
-
 $(function () {
     var ua = navigator.userAgent;
     if ((ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) && ua.indexOf('Mobile') > 0) {
