@@ -76,8 +76,15 @@ session_start();
     <!--送信ボタンが押された場合-->
     <?php if (isset($_POST['upload'])): ?>
         <p><?php echo $message; ?></p>
+
+
+
+
         <button class="menu_button" type="button">
-            <a href="image.php">画像表示へ</a>
+            <a href="Mypage_user.php">マイページへ</a>
+        </botton>
+        <button class="menu_button" type="button">
+            <a href="upload.php">再アップロード</a>
         </botton>
     <?php else: ?>
         <form method="post" enctype="multipart/form-data">

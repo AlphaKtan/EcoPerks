@@ -80,7 +80,7 @@
     </header>
     <div class="profile">
         <div class="userFlex">
-        <div class="userFlexItem">
+            <div class="userFlexItem">
                 <div id="dragDropArea">
                     <div class="drag-drop-inside">
                         <div id="previewArea">
