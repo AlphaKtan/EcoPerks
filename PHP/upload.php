@@ -12,7 +12,7 @@
         <div class="flexBox">
             <div class="menu">
                 <button class="menu_button" type="button">
-                    管理者?
+                <a href="Mypage_user.php">マイページに戻る</a>
                 </button>
             </div>
             <div class="logo">
@@ -52,10 +52,10 @@ session_start();
             if (!empty($_FILES['image']['name'])) {//ファイルが選択されていれば$imageにファイル名を代入
                 move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $image);//imagesディレクトリにファイル保存
                 if (exif_imagetype($file)) {//画像ファイルかのチェック
-                    $message = '画像をアップロードしました';
+                    $message = '<p>画像をアップロードしました</p>';
                     $stmt->execute();
                 } else {
-                    $message = '画像ファイルではありません';
+                    $message = '<p>画像ファイルではありません</p>';
                 }
             }
         }
@@ -75,10 +75,9 @@ session_start();
     <h1>画像アップロード</h1>
     <!--送信ボタンが押された場合-->
     <?php if (isset($_POST['upload'])): ?>
+        <img src="../images/<?php echo $file; ?>"
+         width="300" height="300" class="iconImg">
         <p><?php echo $message; ?></p>
-
-
-
 
         <button class="menu_button" type="button">
             <a href="Mypage_user.php">マイページへ</a>
