@@ -1,42 +1,42 @@
 <?php
     session_start();
-    require_once('db_connection.php'); 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
-        $_SESSION['area_id'] = htmlspecialchars($_POST['area_id'], ENT_QUOTES, 'UTF-8');
-    }
+    // require_once('db_connection.php'); 
+    // if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
+    //     $_SESSION['area_id'] = htmlspecialchars($_POST['area_id'], ENT_QUOTES, 'UTF-8');
+    // }
     
-    function getClientIp() {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            return $_SERVER['REMOTE_ADDR'];
-        }
-    }
+    // function getClientIp() {
+    //     if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    //         return $_SERVER['HTTP_CLIENT_IP'];
+    //     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    //         return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    //     } else {
+    //         return $_SERVER['REMOTE_ADDR'];
+    //     }
+    // }
     
-    // IPアドレスの取得
-    $ip_address = getClientIp();
+    // // IPアドレスの取得
+    // $ip_address = getClientIp();
     
-    // アクセス時間の取得
-    $access_time = date('Y-m-d H:i:s');
+    // // アクセス時間の取得
+    // $access_time = date('Y-m-d H:i:s');
     
-    // ログイン中のユーザー名の取得（必要に応じて）
-    $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
+    // // ログイン中のユーザー名の取得（必要に応じて）
+    // $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
     
-    // データベースにアクセス情報を保存
-    try {
-        $sql = "INSERT INTO access_logs (username, ip_address, access_time) 
-                VALUES (:username, :ip_address, :access_time)";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':ip_address', $ip_address);
-        $stmt->bindParam(':access_time', $access_time);
-        $stmt->execute();
-    } catch (PDOException $e) {
-        echo "エラー: " . $e->getMessage();
-    }
-    ?>
+    // // データベースにアクセス情報を保存
+    // try {
+    //     $sql = "INSERT INTO access_logs (username, ip_address, access_time) 
+    //             VALUES (:username, :ip_address, :access_time)";
+    //     $stmt = $pdo->prepare($sql);
+    //     $stmt->bindParam(':username', $username);
+    //     $stmt->bindParam(':ip_address', $ip_address);
+    //     $stmt->bindParam(':access_time', $access_time);
+    //     $stmt->execute();
+    // } catch (PDOException $e) {
+    //     echo "エラー: " . $e->getMessage();
+    // }
+    // ?>
 
 
 
