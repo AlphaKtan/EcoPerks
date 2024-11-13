@@ -38,7 +38,9 @@ CREATE TABLE access_logs (
 -- クーポン管理
 CREATE TABLE coupons (
     coupon_id INT AUTO_INCREMENT PRIMARY KEY,
+    username varchar(255) NOT NULL,
     coupon_code VARCHAR(255) NOT NULL,
+    discount INT(255) NOT NULL,
     expiry_date DATETIME NOT NULL,
     status TINYINT(1) DEFAULT 0, -- 使用済みかどうかを示す（0: 未使用, 1: 使用済み）
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
