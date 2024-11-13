@@ -60,7 +60,7 @@ if ($qrCode['expiry_time'] <= $current_datetime) {
 
 // QRコードが見つかった場合の終了処理
 if ($action === 'end') {
-    // ゴミ拾い開始のデータをログに保存
+    // ゴミ拾い終了のデータをログに保存
     $sql = "INSERT INTO cleaning_records (username, area_id, end_time) 
             VALUES (:username, :area_id, :end_time)";
     $stmt = $pdo->prepare($sql);
@@ -69,16 +69,15 @@ if ($action === 'end') {
     $stmt->bindParam(':end_time', $current_datetime);
     $stmt->execute();
 
-
     // QRコードを無効化
     $updateSql = "UPDATE qr_codes SET used = 1 WHERE id = :id";
     $updateStmt = $pdo->prepare($updateSql);
     $updateStmt->bindParam(':id', $qrCode['id']);
     $updateStmt->execute();
 
-    echo "<h3>ゴミ拾いが地点 {$area_id} で終了しました！</h3>";
+    // クーポン発行ページへリダイレクト
+    header("Location: coupons.php"); 
+    exit;
 } else {
     echo "<h3>無効なアクションです。</h3>";
 }
-
-
