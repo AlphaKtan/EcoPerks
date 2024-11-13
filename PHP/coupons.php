@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-require_once('db_connection.php');
-
+//require_once('db_connection.php');
+require_once('db_local.php');
+$_SESSION['username'] = 'やー';
 if (!isset($_SESSION['username'])) {
     $_SESSION['login_message'] = "ログインしてください。";
     header('Location: message.php');
@@ -12,9 +13,9 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'];
 
 // クーポンが発行されているか確認し、未定義の場合は初期化
-if (!isset($_SESSION['coupon_issued'])) {
-    $_SESSION['coupon_issued'] = false;
-}
+// if (!isset($_SESSION['coupon_issued'])) {
+//     $_SESSION['coupon_issued'] = false;
+// }
 
 // クーポンコードを生成する関数
 function generateSequentialCouponCode($pdo) {
@@ -68,7 +69,7 @@ function incrementAlphabet($alphabet) {
 }
 
 // クーポン発行処理
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['coupon_issued'] === false) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $couponCode = generateSequentialCouponCode($pdo);
         
@@ -77,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['coupon_issued'] === fals
         }
 
         $expiry_date = date('Y-m-d H:i:s', strtotime('+35 days'));
+        
         $couponSql = "INSERT INTO coupons (username, coupon_code, discount, expiry_date) 
                       VALUES (:username, :coupon_code, :discount, :expiry_date)";
         $couponStmt = $pdo->prepare($couponSql);
@@ -85,10 +87,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['coupon_issued'] === fals
         $couponStmt->bindValue(':discount', 50);
         $couponStmt->bindParam(':expiry_date', $expiry_date);
         $couponStmt->execute();
-
-        echo "<h3>50円引きのクーポンが発行されました！</h3>";
-        echo "<p>クーポンコード: {$couponCode}</p>";
-        echo "<p>有効期限: {$expiry_date}</p>";
+        // クーポンコードと有効期限をセッション変数に保存
+        $_SESSION['coupon_code'] = $couponCode;
+        $_SESSION['expiry_date'] = $expiry_date;
+        echo "<div class='coupon'>";
+        echo "<h2>50円引きのクーポンが発行されました！</h2>";
+        echo "<p class='discount'>¥50 OFF</p>";
+        echo "クーポンコード: {$couponCode}<br>";
+        echo "有効期限: {$expiry_date}<br>";
+        echo "</div>";
 
         // クーポン発行済みフラグを設定
         $_SESSION['coupon_issued'] = true;
@@ -97,24 +104,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['coupon_issued'] === fals
         echo "<p>エラー: " . $e->getMessage() . "</p>";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="../CSS/indexStyle.css">
+    <link rel="stylesheet" href="../CSS/coupons.css">
     <title>クーポン発行</title>
 </head>
 <body>
-    <?php if ($_SESSION['coupon_issued'] === false): ?>
-        <!-- クーポン発行ボタンを表示 -->
-        <form method="post">
-            <button type="submit">クーポンを発行する</button>
-        </form>
-    <?php else: ?>
-        <!-- 発行済みメッセージを表示 -->
-        <p>クーポンは既に発行されています。</p>
-    <?php endif; ?>
+
+<!-- クーポン外枠 -->
+<div class="coupon-container">
+    <div class="coupon-message">
+        <h3>50円引きのクーポンが発行されました！</h3>
+    </div>
+
+    <!-- クーポン内容 -->
+    <div class="coupon">
+        <p class="discount">¥50 OFF</p>
+        <p class="coupon-code">クーポンコード: <?= isset($_SESSION['coupon_code']) ? $_SESSION['coupon_code'] : 'N/A'; ?></p>
+        <p class="expiry-date">有効期限: <?= isset($_SESSION['expiry_date']) ? $_SESSION['expiry_date'] : 'N/A'; ?></p>
+        <div class="coupon-right">
+            <button id="use-coupon-btn" onclick="useCoupon()">使用する</button>
+        </div>
+    </div>
+</div>
+
+<!-- <script>
+function useCoupon() {
+    document.querySelector('.coupon').classList.add('used');
+    document.getElementById('use-coupon-btn').remove();
+}
+</script> -->
+
 </body>
 </html>
-

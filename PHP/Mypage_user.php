@@ -124,8 +124,10 @@
         </div>
         <div class="boxA">
             <div class="box3">
+            <a href="./coupons.php">
                 <h1>クーポン</h1>
                 <p>Conpon</p>
+                </a>
             </div>
             <a href="ReserveCheck_Customer.php">
             <div class="box4">

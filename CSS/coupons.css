@@ -1,0 +1,59 @@
+/* クーポン全体のコンテナ */
+.coupon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align:center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+/* メッセージのスタイル */
+.coupon-message {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* クーポンのデザイン */
+.coupon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px; /* クーポンのサイズを大きく */
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px  solid black; 
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+/* 割引額のデザイン */
+.coupon .discount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff5722;
+}
+
+/* 切り取り線右側のスタイル */
+.coupon .coupon-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 2px dashed #ffa000;
+    padding-left: 10px;
+    position: relative;
+}
+
+/* 使用ボタン */
+#use-coupon-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+}
