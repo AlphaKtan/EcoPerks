@@ -100,8 +100,8 @@
         }
 
         .qr-container img {
-            width: 200px;
-            height: 200px;
+            width: 600px;
+            height: 600px;
             margin: 0 auto;
             display: block;
         }
@@ -124,8 +124,8 @@
             }
 
             .qr-container img {
-                width: 150px;
-                height: 150px;
+                width: 600px;
+                height: 600px;
             }
         }
 

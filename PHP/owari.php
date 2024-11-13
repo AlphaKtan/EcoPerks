@@ -68,7 +68,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
+            margin: 70px 0;
         }
 
         #countdown {
@@ -97,8 +97,8 @@
         }
 
         .qr-container img {
-            width: 200px;
-            height: 200px;
+            width: 600px;
+            height: 600px;
             margin: 0 auto;
             display: block;
         }
@@ -113,6 +113,7 @@
         @media (max-width: 768px) {
             h3 {
                 font-size: 1.5em;
+                
             }
 
             #countdown {
@@ -121,8 +122,8 @@
             }
 
             .qr-container img {
-                width: 150px;
-                height: 150px;
+                width: 600px;
+                height: 600px;
             }
         }
     </style>
