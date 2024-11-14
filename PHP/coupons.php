@@ -117,13 +117,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<!-- クーポン外枠 -->
 <div class="coupon-container">
     <div class="coupon-message">
         <h3>50円引きのクーポンが発行されました！</h3>
     </div>
 
-    <!-- クーポン内容 -->
     <div class="coupon">
         <p class="discount">¥50 OFF</p>
         <p class="coupon-code">クーポンコード: <?= isset($_SESSION['coupon_code']) ? $_SESSION['coupon_code'] : 'N/A'; ?></p>
@@ -134,12 +132,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<!-- <script>
+<script>
 function useCoupon() {
-    document.querySelector('.coupon').classList.add('used');
-    document.getElementById('use-coupon-btn').remove();
+    const couponRight = document.querySelector('.coupon-right');
+    const coupon = document.querySelector('.coupon');
+    
+    // 右半分をスライドアウトさせて消す
+    couponRight.classList.add('coupon-slide-out');
+    
+    // アニメーション終了後に「使用済み」表示に切り替え
+    couponRight.addEventListener('animationend', () => {
+        coupon.classList.add('used');
+        couponRight.remove();  // 右側部分を削除
+    });
 }
-</script> -->
+</script>
 
 </body>
 </html>
+
