@@ -10,6 +10,11 @@ p{
     color: #f3f3f3;
 }
 
+.iconImg {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 
 header {
     width: 100%;
@@ -216,6 +221,14 @@ footer {
     margin: 5.5px;*/
 
   .box4{
+    float: left;
+    background-color: #43AEA9;
+    width: 45%;
+    height: 50px;
+    margin: 2.5px;
+  }
+
+  .box5{
     float: left;
     background-color: #43AEA9;
     width: 45%;
