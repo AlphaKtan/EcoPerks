@@ -202,21 +202,20 @@ echo "</pre>";
         </form>
 
         <button>その他時間追加</button>
-        <button>シフト追加</button>
+        <button onclick='entryFunction()'>シフト追加</button>
     </div>
 
 
 
 <!-- JavaScript -->
+<script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-3.5.1.min.js"></script>
 <script src="../js/moment.min.js"></script>
 <script src="../js/ja.js"></script>
 <script src="../js/bootstrap-datetimepicker.min.js"></script>
 
-<script>
 
-</script>
 
 <script>
 let previouslySelected = null;
@@ -291,6 +290,30 @@ $(function () {
         $(this).addClass('form-select').addClass($(this).val());
     });
 });
+</script>
+
+<script>
+function entryFunction() {
+        // チェックされたチェックボックスの値を取得
+        let selectedPresets = [];
+        $('input[name="preset"]:checked').each(function() {
+            selectedPresets.push($(this).val());
+        });
+        // エリア情報があれば情報取得する
+        $.ajax({
+        type: "POST",
+        url: "../PHP/shift_entry.php",
+        dataType: "json",
+        data: { presets: selectedPresets, date: selectedDate }
+    }).done(function(responseData) {
+        // レスポンスデータを確認
+        responseData.forEach(data => {
+            console.log(data);
+        });
+    }).fail(function() {
+        console.error("データの取得に失敗しました");
+    });  
+}
 </script>
 </body>
 </html>
