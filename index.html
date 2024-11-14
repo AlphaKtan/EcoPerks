@@ -27,8 +27,11 @@
             left: 10px !important;
             z-index: 5;
         }
-        .div.active{
-            background-color: white !important;
+        /* .divBox.active{
+            background-color:seashell !important;
+        } */
+        .active{
+            background-color:gray !important;
         }
     </style>
 </head>
@@ -127,7 +130,7 @@
                     div.innerHTML = coord;
                 }
                 
-                console.log(zoom);
+                // console.log(zoom);
                 div.style.width = this.tileSize.width + 'px';
                 div.style.height = this.tileSize.height + 'px';
                 div.style.borderStyle = 'solid';
@@ -140,12 +143,10 @@
 
                 // div要素にidを設定する
                 div.id = "div" + this.nextId;
-                console.log(div.id);
+                // console.log(div.id);
                 div.classList.add('divBox');
-
                 // div.classList.add('active');
                 // 次のdiv要素のidに進める
-                div.classList.add('a')
                 this.nextId++;
                 
                 return div;
@@ -262,38 +263,32 @@
                 // 他のタイルに対応するエリアIDも追加
                 return null;
             }
+            
+            //IDが付与されていないタイルにclass"active"を付与してカラーを変える
+            const locationID = [
+                    "(9196, 4151)", "(9197, 4151)", "(9194, 4152)", "(9195, 4152)", "(9196, 4152)",
+                    "(9197, 4152)", "(9198, 4152)", "(9195, 4153)", "(9196, 4153)", "(9197, 4153)",
+                    "(9198, 4153)", "(9194, 4154)", "(9195, 4154)", "(9196, 4154)", "(9197, 4154)",
+                    "(9198, 4154)", "(9194, 4155)", "(9195, 4155)", "(9196, 4155)", "(9197, 4155)",
+                    "(9198, 4155)", "(9195, 4156)", "(9196, 4156)", "(9197, 4156)", "(9198, 4156)"
+                ];
 
-            function getAreaIdFromTile(tileContent){
-                const locationID = [ "(9196, 4151)", // 金閣寺のID
-                                    "(9197, 4151)", // 大田神社のID
-                                    "(9194, 4152)", // 大覚寺のID
-                                    "(9195, 4152)", // 仁和寺のID
-                                    "(9196, 4152)", // 晴明神社のID
-                                    "(9197, 4152)", // 平安神宮のID
-                                    "(9198, 4152)", // 東山慈照寺のID
-                                    "(9195, 4153)", // 桂離宮のID
-                                    "(9196, 4153)", // 清水寺の左エリアID
-                                    "(9197, 4153)", // 清水寺ID
-                                    "(9198, 4153)", // 清水寺の右エリアID
-                                    "(9194, 4154)", // 大原野神社のID
-                                    "(9195, 4154)", // 京都市洛西竹林公園のID
-                                    "(9196, 4154)",
-                                    "(9197, 4154)",
-                                    "(9198, 4154)",
-                                    "(9194, 4155)",
-                                    "(9195, 4155)",
-                                    "(9196, 4155)",
-                                    "(9197, 4155)",
-                                    "(9198, 4155)",
-                                    "(9195, 4156)",
-                                    "(9196, 4156)",
-                                    "(9197, 4156)",
-                                    "(9198, 4156)"];
-                if (!locationID.includes(tileContent)){
-                    div.classList.add('active');
-                }       
+        // タイルが DOM に追加されるまで定期的に確認
+        const checkTiles = setInterval(() => {
+            const tiles = document.querySelectorAll('.divBox');
+            
+            if (tiles.length > 0) {
+                console.log(tiles); // `tiles` に要素があることを確認
+                // clearInterval(checkTiles); // タイルが取得できたら確認を停止
+
+                tiles.forEach((element) => {
+                    // タイルの内容が除外リストに含まれていない場合のみ `active` クラスを追加
+                    if (!locationID.includes(element.textContent.trim())) {
+                        element.classList.add('active');
+                    }
+                });
             }
-
+        }, 500);
 
             // タイルにマウスが乗ったかどうかを判定する関数
             function isMouseOverTile(event, tile) {
