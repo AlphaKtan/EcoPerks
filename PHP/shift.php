@@ -90,9 +90,9 @@ $stmt->execute();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //デバッグ用の出力
-echo "<pre>";
-print_r($row[0]);
-echo "</pre>";
+// echo "<pre>";
+// print_r($row[0]);    
+// echo "</pre>";
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -306,13 +306,20 @@ function entryFunction() {
         dataType: "json",
         data: { presets: selectedPresets, date: selectedDate }
     }).done(function(responseData) {
-        // レスポンスデータを確認
-        responseData.forEach(data => {
-            console.log(data);
-        });
-    }).fail(function() {
-        console.error("データの取得に失敗しました");
-    });  
+        console.log("レスポンスデータ:", responseData);
+        if (Array.isArray(responseData)) {
+            responseData.forEach(data => {
+                console.log(data);
+            });
+        } else {
+            console.warn("期待していない形式のデータが返されました:", responseData);
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    });
 }
 </script>
 </body>
