@@ -31,7 +31,7 @@
             background-color:seashell !important;
         } */
         .active{
-            background-color:gray !important;
+            background-color:#f5f5f580 !important;
         }
     </style>
 </head>
@@ -207,6 +207,9 @@
                 }
             });
 
+
+            //
+
             // タイル内容からエリアIDを取得する関数（例: 座標に基づくマッピング）
             function getAreaIdFromTile(tileContent) {
                 if (tileContent === "(9196, 4151)") {
@@ -275,17 +278,25 @@
 
         // タイルが DOM に追加されるまで定期的に確認
         const checkTiles = setInterval(() => {
-            const tiles = document.querySelectorAll('.divBox');
+            const point = document.querySelectorAll('.divBox');
             
-            if (tiles.length > 0) {
-                console.log(tiles); // `tiles` に要素があることを確認
-                // clearInterval(checkTiles); // タイルが取得できたら確認を停止
+            if (point.length > 0) {              
+                clearInterval(checkTiles);  
+                // 該当クラスの一覧をループする
+                // 「element」にはループ中の値、「index」には何回目のループかという情報が入っています
+                point.forEach((element, index) => {
 
-                tiles.forEach((element) => {
-                    // タイルの内容が除外リストに含まれていない場合のみ `active` クラスを追加
-                    if (!locationID.includes(element.textContent.trim())) {
+                    // 座標の一覧に該当座標があるかどうかを調べる
+                    const findMethod = locationID.find(int => int == element.textContent);
+
+                    // もし座標が一覧にあった場合
+                    if (!findMethod) {
+                        // 対象行にactiveクラスを付与する
                         element.classList.add('active');
-                    }
+                    } // else if (findMethod === "(9196, 4151)"){
+                    //     element.textContent = "エリア１";
+                    // }
+
                 });
             }
         }, 500);
