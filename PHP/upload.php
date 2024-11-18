@@ -1,3 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/formStyle.css">
+    <title>アカウント登録</title>
+</head>
+<body>
+
+<header>
+        <div class="flexBox">
+            <div class="menu">
+                <button class="menu_button" type="button">
+                <a href="Mypage_user.php">マイページに戻る</a>
+                </button>
+            </div>
+            <div class="logo">
+                <img src="../img/logo.jpg" alt="" class="logo2">
+            </div>
+            <div class="icon"></div>
+        </div>
+</header>
+
 <?php
 // データベース接続情報
 session_start();
@@ -9,8 +33,14 @@ session_start();
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
-    
-        if (isset($_POST['upload'])) {//送信ボタンが押された場合
+    echo isset($_FILES['image']) ? 'yes' : 'no';
+
+    echo isset($_POST['username']) ? 'yes' : 'no';
+    echo !empty($_POST['username']) ? 'yes' : 'no';
+
+    $message = "";
+
+        if (isset($_FILES['image'])) {//送信ボタンが押された場合
             echo $_SESSION['user_id'];
             $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
             $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
@@ -22,56 +52,56 @@ session_start();
             if (!empty($_FILES['image']['name'])) {//ファイルが選択されていれば$imageにファイル名を代入
                 move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $image);//imagesディレクトリにファイル保存
                 if (exif_imagetype($file)) {//画像ファイルかのチェック
-                    $message = '画像をアップロードしました';
+                    $message = '<p>画像をアップロードしました</p>';
                     $stmt->execute();
                 } else {
-                    $message = '画像ファイルではありません';
+                    $message = '<p>画像ファイルではありません</p>';
                 }
             }
         }
 
-        if (isset($_POST['name_upload'])) {//送信ボタンが押された場合
+        if (!empty($_POST['username'])) {//送信ボタンが押された場合
             echo $_SESSION['user_id'];
-            // // $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
-            // // $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
-            // $file = "../images/$image";
-            $sql = "UPDATE users SET username = :name WHERE id = :user_id";
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindValue(':name', $image, PDO::PARAM_STR);
-            $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-            if (!empty($_FILES['image']['name'])) {//ファイルが選択されていれば$imageにファイル名を代入
-                move_uploaded_file($_FILES['image']['tmp_name'], '../images/' . $image);//imagesディレクトリにファイル保存
-                if (exif_imagetype($file)) {//画像ファイルかのチェック
-                    $name_message = '画像をアップロードしました';
-                    $stmt->execute();
-                } else {
-                    $name_message = '画像ファイルではありません';
-                }
-            }
+            $username = $_POST['username'];
+            $sql_username = "UPDATE users SET username = :username WHERE id = :user_id";
+            $stmt_username = $pdo->prepare($sql_username);
+            $stmt_username->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt_username->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+            $stmt_username->execute();
         }
 ?>
 
-<h1>画像アップロード</h1>
-<!--送信ボタンが押された場合-->
-<?php if (isset($_POST['upload'])): ?>
-    <p><?php echo $message; ?></p>
-    <p><a href="image.php">画像表示へ</a></p>
-<?php else: ?>
-    <form method="post" enctype="multipart/form-data">
-        <p>アップロード画像</p>
-        <input type="file" name="image">
-        <button><input type="submit" name="upload" value="送信"></button>
-    </form>
-<?php endif;?>
+<section class="login_form">
+    <h1>画像アップロード</h1>
+    <!--送信ボタンが押された場合-->
+    <?php if (isset($_POST['upload'])): ?>
+        <img src="../images/<?php echo $file; ?>"
+         width="300" height="300" class="iconImg">
+        <p><?php echo $message; ?></p>
 
-<?php if (isset($_POST['neme_upload'])): ?>
-    <p><?php echo $name_message; ?></p>
-<?php else: ?>
-    <form method="post" enctype="multipart/form-data">
-        <p>名前変更</p>
-        <input type="text" name="name">
-        <button><input type="submit" name="neme_upload" value="送信"></button>
-    </form>
-<?php endif;?>
+        <button class="menu_button" type="button">
+            <a href="Mypage_user.php">マイページへ</a>
+        </botton>
+        <button class="menu_button" type="button">
+            <a href="upload.php">再アップロード</a>
+        </botton>
+    <?php else: ?>
+        <form method="post" enctype="multipart/form-data">
 
-<script src="../JS/pass.js"></script>
+        <div class="form-group">
+            <label>アップロード画像</label>
+            <input type="file" name="image">
+        </div>
+            
+        <div class="form-group">
+            <label>名前変更</label>
+            <input type="text" name="username">
+        </div>    
+            <button type="submit" name="upload" value="送信">送信ボタン</button>
+        
+        </form>
+    <?php endif;?>
+</section>
+</body>
+</html>
+

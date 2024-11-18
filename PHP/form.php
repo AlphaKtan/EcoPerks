@@ -7,8 +7,8 @@
 // セッションの開始
 session_start();
 
-require_once('db_connection.php'); // データベース接続ファイル
-//require_once('db_local.php'); // データベース接続ファイル
+// require_once('db_connection.php'); // データベース接続ファイル
+require_once('db_local.php'); // データベース接続ファイル
 
 $mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
 

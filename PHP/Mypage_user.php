@@ -43,7 +43,7 @@
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
 
-            $row = $stmt->fetch();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $sql = "SELECT imgpath FROM users WHERE id = :id";
             $stmt2 = $pdo->prepare($sql);
@@ -80,7 +80,7 @@
     </header>
     <div class="profile">
         <div class="userFlex">
-        <div class="userFlexItem">
+            <div class="userFlexItem">
                 <div id="dragDropArea">
                     <div class="drag-drop-inside">
                         <div id="previewArea">
@@ -94,7 +94,10 @@
                 <h2 class="center">
                     <?php
                     if($row){
-                     echo $row['username'];
+                        foreach($row as $rows){
+                    $username = $rows['username'];
+                     echo "$username";
+                        }
                     }?>
                 </h2>
             </div>
@@ -137,21 +140,13 @@
         </div>
         <div class="boxA">
             <a href="upload.php">
-            <div class="box5">
-                <h1>クーポン</h1>
-                <p>Conpon</p>
-            </div>
-            </a>
-            <!-- <a href="ReserveCheck_Customer.php">
             <div class="box4">
                 <h1>予約確認</h1>
                 <p>CheckReserve</p>
             </div>
-            </a> -->
+            </a>
         </div>
     </div>
-    </div>
-    
 
     
 
