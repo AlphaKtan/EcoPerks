@@ -110,6 +110,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         td {
             height: 100px;
+            text-align: center;
         }
         .today {
             background: #afa48f61 !important;
@@ -151,13 +152,34 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             width: 7px;
             height: 7px;
             background: green;
-            /* display: block; */
+            margin: 20% auto;
+            border-radius: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h3 class="mb-4"><a href="?ym=<?= $prev ?>">&lt;</a><span class="mx-3"><?= $html_title ?></span><a href="?ym=<?= $next ?>">&gt;</a></h3>
+        <h3 class="mb-4">
+            <a href="?ym=<?= $prev ?>">&lt;</a>
+            <span class="mx-3">
+                <?= $html_title ?>
+            </span>
+            <a href="?ym=<?= $next ?>">&gt;</a>
+
+            <form action="" method="post">
+                <select name="area" id="area">
+                    <option hidden>選択してください</option>
+                    <?php for($i=1;$i<=25;$i++){ ?>
+                        <option value="<?php echo $i ?>">エリア<?php echo $i ?></option>
+                    <?php }?>
+                </select>
+                <br>
+                <select name="facility" id="facility">
+                    <option hidden>選択してください</option>
+                    <option disabled="disabled" id="notApplicable">該当なし</option>
+                </select>
+            </form>
+        </h3>
         <table class="table table-bordered">
             <tr>
                 <th>日</th>
@@ -214,13 +236,38 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="../js/moment.min.js"></script>
 <script src="../js/ja.js"></script>
 <script src="../js/bootstrap-datetimepicker.min.js"></script>
-
+<script src="../Js/custom.js"></script>
 
 
 <script>
+    var optval;
+    let flag = 0;
+    $(function(){
+        // よく使う要素を変数へ格納する
+        var area = document.getElementById("area");
+        var facility = document.getElementById("facility");
+        var notApplicable = document.getElementById("notApplicable");
+        
+        // エリア情報切り替え
+        $('#area').on("change",function(){
+
+            // 施設のデータを取得する
+            getAreaData(area.value);
+            $('#facility').on("change",function(){
+                console.log("うごいた！");
+                flag = 1;
+                console.log(flag);
+                
+            })
+
+            // ここにエリアが選ばれていたら「該当なし」を消す処理
+            notApplicable.style.display ='none';
+
+        })
+    });
 let previouslySelected = null;
 let selectedDate = null;
-let displayNone = document.getElementsByClassName('shiftDiv');
+let shiftDiv = document.getElementsByClassName('shiftDiv');
 
 function selectDate(date) {
     // alert("選択された日付："+ date);
@@ -241,10 +288,10 @@ function selectDate(date) {
 }
 
 function buttonClick() {
-    // display:none;を解除
+    // shiftDivのdisplay:none;を解除
     if (selectedDate) {
-        for (let i = 0; i < displayNone.length; i++) {
-            displayNone[i].classList.remove('shiftDiv');
+        for (let i = 0; i < shiftDiv.length; i++) {
+            shiftDiv[i].classList.remove('shiftDiv');
         }
     }
 }
@@ -294,32 +341,41 @@ $(function () {
 
 <script>
 function entryFunction() {
-        // チェックされたチェックボックスの値を取得
-        let selectedPresets = [];
-        $('input[name="preset"]:checked').each(function() {
-            selectedPresets.push($(this).val());
-        });
-        // エリア情報があれば情報取得する
-        $.ajax({
-        type: "POST",
-        url: "../PHP/shift_entry.php",
-        dataType: "json",
-        data: { presets: selectedPresets, date: selectedDate }
-    }).done(function(responseData) {
-        console.log("レスポンスデータ:", responseData);
-        if (Array.isArray(responseData)) {
-            responseData.forEach(data => {
-                console.log(data);
+    if (flag === 1) {// #facilityを選択したとき
+
+            // チェックされたチェックボックスの値を取得
+            let selectedPresets = [];
+            $('input[name="preset"]:checked').each(function() {
+                selectedPresets.push($(this).val());
             });
-        } else {
-            console.warn("期待していない形式のデータが返されました:", responseData);
-        }
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error("AJAXリクエストに失敗しました");
-        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
-        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
-        console.error("エラーメッセージ:", errorThrown);
-    });
+            // エリア情報があれば情報取得する
+            $.ajax({
+            type: "POST",
+            url: "../PHP/shift_entry.php",
+            dataType: "json",
+            data: { presets: selectedPresets, date: selectedDate }
+        }).done(function(responseData) {
+            console.log("レスポンスデータ:", responseData);
+            if (Array.isArray(responseData)) {
+                responseData.forEach(data => {
+                    console.log(data);
+                });
+            } else {
+                console.warn("期待していない形式のデータが返されました:", responseData);
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("AJAXリクエストに失敗しました");
+            console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+            console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+            console.error("エラーメッセージ:", errorThrown);
+        });            
+    } else if(flag === 0) {
+        console.log("ボタン押せません");
+        //shiftDiv.innerHTML += '<p class="error">施設名まで選択してください</p>';
+        // let error = '<p class="error">施設名まで選択してください</p>';
+        // shiftDiv.appendChild(error);
+        shiftDiv.insertAdjacentHTML('afterend', '<p class="error">施設名まで選択してください</p>');
+    }
 }
 </script>
 </body>
