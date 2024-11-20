@@ -166,7 +166,6 @@ try {
 
     <table>
         <tr>
-            <th>ID</th>
             <th>ユーザー名</th>
             <th>IPアドレス</th>
             <th>アクセス時間</th>
@@ -174,7 +173,6 @@ try {
         <?php if (!empty($logs)): ?>
             <?php foreach ($logs as $log): ?>
             <tr>
-                <td><?= htmlspecialchars($log['id']) ?></td>
                 <td><?= htmlspecialchars($log['username']) ?></td>
                 <td><?= htmlspecialchars($log['ip_address']) ?></td>
                 <td><?= htmlspecialchars($log['access_time']) ?></td>
