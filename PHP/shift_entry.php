@@ -10,6 +10,19 @@ error_reporting(E_ALL);
         $date = $_POST["date"];
     } 
 
+    if ($_POST["area"]) {
+        $areaId = $_POST["area"];
+    } 
+
+    if ($_POST["facility"]) {
+        $facilityName = $_POST["facility"];
+            $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";
+            $facilityStmt = $pdo->prepare($facilitySql);
+            $facilityStmt->bindParam(':facility', $facilityName, PDO::PARAM_INT);
+            $facilityStmt->execute();
+            $facilityRow = $facilityStmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     if ($_POST["presets"]) {
     // POST情報取得
         $i = 0;
@@ -39,13 +52,11 @@ error_reporting(E_ALL);
                 $endTime = $rows['end_time'];
                 $end_time = "$date $endTime ";
 
-                $facilityName = 'テスト';
-                $areaId = 1;
-                $status = '0';
+                $status = '1';
 
                 $insertStmt->bindParam(':start_time', $start_time, PDO::PARAM_STR);
                 $insertStmt->bindParam(':end_time', $end_time, PDO::PARAM_STR);
-                $insertStmt->bindParam(':facility_name', $facilityName, PDO::PARAM_STR);
+                $insertStmt->bindParam(':facility_name', $facilityRow['facility_name'], PDO::PARAM_STR);
                 $insertStmt->bindParam(':area_id', $areaId, PDO::PARAM_INT);
                 $insertStmt->bindParam(':status', $status, PDO::PARAM_INT);
 

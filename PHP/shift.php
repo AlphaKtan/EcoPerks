@@ -155,7 +155,26 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 20% auto;
             border-radius: 100%;
         }
-    </style>
+
+        select#area {
+            height: 25px;
+            font-size: 16px;
+        }
+
+        select#facility {
+            height: 25px;
+            font-size: 16px;
+        }
+
+        form {
+            margin-bottom: 10px;
+            margin-left: auto;
+        }
+
+        .mb-4 {
+            display: flex;
+        }
+            </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -242,6 +261,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script>
     var optval;
     let flag = 0;
+    let area_id;
     $(function(){
         // よく使う要素を変数へ格納する
         var area = document.getElementById("area");
@@ -250,18 +270,28 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // エリア情報切り替え
         $('#area').on("change",function(){
+            // 選ばれたエリアを保存
+            area_id = area.value;
 
+            // 施設情報をクリアする
+            selectDataClearOnly(facility);
+            
             // 施設のデータを取得する
             getAreaData(area.value);
             $('#facility').on("change",function(){
-                console.log("うごいた！");
+                // フラグが1なら施設が選択されている状態
                 flag = 1;
-                console.log(flag);
-                
+                // 施設IDを保存
+                facility_id = facility.value;
             })
 
             // ここにエリアが選ばれていたら「該当なし」を消す処理
             notApplicable.style.display ='none';
+
+            // 施設が選択されたらerrorを消す
+            if (document.querySelector('.error')) {
+                document.querySelector('.error').style.display = 'none';
+            }
 
         })
     });
@@ -341,7 +371,7 @@ $(function () {
 
 <script>
 function entryFunction() {
-    if (flag === 1) {// #facilityを選択したとき
+    if (flag === 1) {       // 施設が選択されている時
 
             // チェックされたチェックボックスの値を取得
             let selectedPresets = [];
@@ -353,12 +383,13 @@ function entryFunction() {
             type: "POST",
             url: "../PHP/shift_entry.php",
             dataType: "json",
-            data: { presets: selectedPresets, date: selectedDate }
+            data: { presets: selectedPresets, date: selectedDate, area: area_id, facility: facility_id }
         }).done(function(responseData) {
             console.log("レスポンスデータ:", responseData);
             if (Array.isArray(responseData)) {
                 responseData.forEach(data => {
                     console.log(data);
+                    alert(data);
                 });
             } else {
                 console.warn("期待していない形式のデータが返されました:", responseData);
@@ -370,11 +401,11 @@ function entryFunction() {
             console.error("エラーメッセージ:", errorThrown);
         });            
     } else if(flag === 0) {
-        console.log("ボタン押せません");
-        //shiftDiv.innerHTML += '<p class="error">施設名まで選択してください</p>';
-        // let error = '<p class="error">施設名まで選択してください</p>';
-        // shiftDiv.appendChild(error);
-        shiftDiv.insertAdjacentHTML('afterend', '<p class="error">施設名まで選択してください</p>');
+        const shiftDivElement = document.getElementById('shiftDiv');
+        // 既にエラーメッセージが存在しないか確認
+        if (!shiftDivElement.querySelector('.error')) {
+            shiftDivElement.insertAdjacentHTML('afterbegin', '<p class="error" style="color: red; margin-top: 10px;">施設名まで選択してください</p>');
+        }
     }
 }
 </script>
