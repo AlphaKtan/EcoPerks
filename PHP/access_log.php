@@ -37,6 +37,7 @@ try {
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>アクセスログ管理</title>
     <style>
         /* 共通スタイル */
@@ -94,14 +95,15 @@ try {
             background-color: #45a049;
         }
         .dark-mode {
-            background-color: #333;
-            color: #fff;
+            background-color: #121212;
+            color: #ffffff;
         }
         .dark-mode table {
             background-color: #444;
         }
         .dark-mode table th {
-            background-color: #666;
+            background-color: #72f400;   /*表の上*/
+            color: black;
         }
         .dark-mode table tr:nth-child(even) {
             background-color: #555;

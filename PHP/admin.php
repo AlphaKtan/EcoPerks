@@ -48,18 +48,18 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ログイン状況</title>
     <script src="../JS/update_time.js" defer></script>
-    <script src="../JS/update_data.js" defer></script> <!-- JSファイルを追加 -->
+    <script src="../JS/update_data.js" defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            overflow-x: hidden; /* 全体の横スクロールを防止 */
+            overflow-x: hidden;
         }
 
         .large-button {
-            font-size: 18px; /* PC版のボタンサイズ */
+            font-size: 18px;
             padding: 12px 24px;
             cursor: pointer;
             display: block;
@@ -67,7 +67,7 @@ $result = $stmt->get_result();
         }
 
         .large-input {
-            font-size: 18px; /* PC版の入力サイズ */
+            font-size: 18px;
             padding: 12px;
             width: 100%;
             max-width: 300px;
@@ -76,7 +76,7 @@ $result = $stmt->get_result();
 
         .table-container {
             margin: 20px 0;
-            overflow-x: auto; /* 横スクロールを許可 */
+            overflow-x: auto;
         }
 
         table {
@@ -88,52 +88,95 @@ $result = $stmt->get_result();
             padding: 12px;
             text-align: left;
             border: 1px solid #ddd;
-            font-size: 16px; /* PC版のフォントサイズ */
+            font-size: 16px;
         }
 
         th {
             background-color: #f2f2f2;
         }
 
+        /* ダークモードのスタイル */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode h1 {
+            color: #ffffff;
+        }
+
+        body.dark-mode table {
+            border-color: #444;
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode th {
+            background-color: #333;
+            color: #ffffff;
+        }
+
+        body.dark-mode td {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        body.dark-mode input,
+        body.dark-mode button {
+            background-color: #333;
+            color: #ffffff;
+            border: 1px solid #555;
+        }
+
+        body.dark-mode input.large-input {
+            background-color: #222;
+        }
+
+        body.dark-mode input.large-button {
+            background-color: #555;
+        }
+
         /* スマホ対応 */
         @media (max-width: 600px) {
             .large-button {
-                font-size: 14px; /* スマホ版のボタンサイズ */
+                font-size: 14px;
                 padding: 8px 16px;
             }
 
             .large-input {
-                font-size: 14px; /* スマホ版の入力サイズ */
+                font-size: 14px;
                 padding: 8px;
                 max-width: 100%;
             }
 
             table {
-                font-size: 12px; /* スマホ版のフォントサイズ */
-                width: 100%; /* テーブル幅を100%に */
+                font-size: 12px;
+                width: 100%;
             }
 
             th, td {
                 padding: 8px;
-                font-size: 12px; /* スマホ版のテーブルフォントサイズ */
+                font-size: 12px;
             }
 
-            /* スマホ版で時刻を折り返す設定 */
             td.login-time, td.logout-time {
-                white-space: normal; /* テキストの折り返しを許可 */
-                word-break: break-word; /* 単語単位での折り返しを許可 */
+                white-space: normal;
+                word-break: break-word;
             }
 
-            /* 日付と時刻を分けて表示 */
             .time-wrapper {
                 display: flex;
-                flex-direction: column; /* 縦方向に並べる */
-                line-height: 1.2; /* 行間を狭める */
+                flex-direction: column;
+                line-height: 1.2;
             }
         }
     </style>
 </head>
 <body>
+    <div style="text-align: right; margin: 10px;">
+        <label for="darkModeToggle">ダークモード</label>
+        <input type="checkbox" id="darkModeToggle">
+    </div>
+
     <h1>ログイン状況</h1>
     <h1 id="time">現在の時刻:</h1>
 
@@ -154,19 +197,50 @@ $result = $stmt->get_result();
               <th>ログイン状態</th>
            </tr>
         </thead>
-    <tbody>
-        <!-- データはここに動的に挿入されます -->
-    </tbod>
-
+        <tbody>
+            <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($row['login_time'], ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($row['logout_time'], ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= $row['is_logged_in'] ? 'オンライン' : 'オフライン' ?></td>
+            </tr>
+            <?php endwhile; ?>
+        </tbody>
     </table>
     
     <form action="adminlogout.php" method="post">
         <input type="submit" class="large-button" value="ログアウト">
     </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+
+            // ユーザーの設定を取得
+            const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+
+            // 初期状態を設定
+            if (isDarkMode) {
+                body.classList.add('dark-mode');
+                toggle.checked = true;
+            }
+
+            // トグルスイッチのイベントリスナー
+            toggle.addEventListener('change', function () {
+                if (this.checked) {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('dark-mode', 'true');
+                } else {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('dark-mode', 'false');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-
-
 
 
 
