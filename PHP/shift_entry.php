@@ -40,10 +40,20 @@ error_reporting(E_ALL);
 
         // $results[] = $row;
         if ($row) {
+            // INSERT前に重複チェック
             $insertSql = "INSERT INTO test_time_change (start_time, end_time, facility_name, areaid, status)
-            VALUE (:start_time, :end_time, :facility_name, :area_id, :status)";
+                          SELECT :start_time, :end_time, :facility_name, :area_id, :status
+                          WHERE NOT EXISTS (
+                              SELECT 1 FROM test_time_change 
+                              WHERE start_time = :start_time 
+                              AND end_time = :end_time
+                              AND facility_name = :facility_name
+                              AND areaid = :area_id
+                          )";
         
             $insertStmt = $pdo->prepare($insertSql);
+            $duplicates = false;
+            $duplicateDetails = [];
 
             foreach ($row as $rows) {
                 $startTime = $rows['start_time'];
@@ -61,8 +71,23 @@ error_reporting(E_ALL);
                 $insertStmt->bindParam(':status', $status, PDO::PARAM_INT);
 
                 $insertStmt->execute();
+
+                // もしデータが挿入されていなかった場合（重複していた場合）
+                if ($insertStmt->rowCount() == 0) {
+                    $duplicates = true;
+                    // 時間のみにした
+                    $endTime = substr($end_time, 11);
+                    // 重複シフトの詳細を追加
+                    $duplicateDetails[] = "$start_time ～ $endTime " . $facilityRow['facility_name'];
+                }
             }
-            $results[] = "正常に完了";
+
+            if ($duplicates) {
+                // 重複シフトの詳細をメッセージに追加
+                $results[] = "以下のシフトが重複しています:\n" . implode("\n", $duplicateDetails);
+            } else {
+                $results[] = "正常に完了";
+            }
         } else {
             $results[] = "プリセットデータが見つかりませんでした";
         }

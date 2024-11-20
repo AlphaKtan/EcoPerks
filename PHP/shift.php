@@ -247,7 +247,6 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
 
-
 <!-- JavaScript -->
 <script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
@@ -256,6 +255,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="../js/ja.js"></script>
 <script src="../js/bootstrap-datetimepicker.min.js"></script>
 <script src="../Js/custom.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 <script>
@@ -367,6 +367,14 @@ $(function () {
         $(this).addClass('form-select').addClass($(this).val());
     });
 });
+
+function amazingSample(data) {
+    swal.fire({
+    title: "シフトを登録出来ました！！",
+    text: data,
+    icon: "success",
+    });
+}
 </script>
 
 <script>
@@ -389,7 +397,7 @@ function entryFunction() {
             if (Array.isArray(responseData)) {
                 responseData.forEach(data => {
                     console.log(data);
-                    alert(data);
+                    amazingSample(data);
                 });
             } else {
                 console.warn("期待していない形式のデータが返されました:", responseData);
