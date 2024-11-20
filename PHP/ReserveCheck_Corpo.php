@@ -11,6 +11,9 @@
         function submitForm() {
             document.getElementById('areaForm').submit();
         }
+        function goBack() {
+            history.back();
+        }
     </script>
 </head>
 <body>
@@ -93,6 +96,9 @@
             echo "<p>選択されたエリアに施設は見つかりませんでした。</p>";
         }
         ?>
+    </div>
+    <div class="backButton">
+        <button onclick="goBack()">ひとつ前に戻る</button>
     </div>
 </body>
 </html>

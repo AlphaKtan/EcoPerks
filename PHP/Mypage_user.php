@@ -105,7 +105,7 @@
                 <h2 class="center">現在のポイント</h2>
                 <div class="pointArea">
                     <img src="../img/point.jpg" alt="" class="point">
-                    <h4>111</h4>
+                    <h4>？？pt</h4>
                 </div>
             </div>
         </div>
@@ -113,16 +113,8 @@
     
     <div class="informationBox">
         <div class="boxA">
-            <div class="box1">
-                <a href="./ReserveCheck_Customer.php">
-                <h1>予約確認</h1>
-                <p>Reservation</p>
-                </a>
-            </div>
-            <div class="box2">
-                <h1>ランキング</h1>
-                <p>Ranking</p>
-            </div>
+            
+            
         </div>
         <div class="boxA">
             <div class="box3">
@@ -139,17 +131,17 @@
             </a>
         </div>
         <div class="boxA">
-            <a href="upload.php">
+            <a href="../index.html">
             <div class="box4">
-                <h1>予約確認</h1>
-                <p>CheckReserve</p>
+                <h1>ホームに戻る</h1>
+                <p>back home</p>
             </div>
             </a>
         </div>
     </div>
 
+ 
     
-
     <div class="test" style="height: 700px;"></div>
     <footer>
         <div id="flexBox02">
@@ -236,6 +228,7 @@
 </script>
 
 <script src="../JS/pass.js"></script>
+
 
 </body>
 </html>
