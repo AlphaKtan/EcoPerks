@@ -1,109 +1,102 @@
-/* indexStyle.css または coupons.css */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-/* クーポン全体のコンテナ */
+/* クーポン全体の外枠 */
 .coupon-container {
-    width: 400px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 2px dashed #ccc; /* 切り取り線のような見た目 */
     border-radius: 10px;
+    background-color: #fff;
+    font-family: Arial, sans-serif;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* クーポンのメッセージ部分 */
 .coupon-message {
+    padding: 10px 15px;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #eee;
     text-align: center;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+    font-size: 1.2em;
+    color: #333;
     font-weight: bold;
 }
 
-/* クーポン内容部分 */
+/* クーポン内容全体 */
 .coupon {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    padding: 15px;
     position: relative;
 }
 
-.discount {
-    font-size: 1.5em;
+/* 割引金額の表示 */
+.coupon .discount {
+    font-size: 2em;
+    color: #e74c3c;
     font-weight: bold;
-    color: #E63946;
 }
 
-.coupon-code, .expiry-date {
-    font-size: 0.9em;
-    color: #555;
-}
-
-/* クーポンの右半分、切り取られる部分 */
-.coupon-right {
-    border-left: 2px dashed #ccc;
-    padding-left: 20px;
-    text-align: center;
-    position: relative;
-}
-
-button#use-coupon-btn {
-    background-color: #E63946;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
+/* クーポンコード */
+.coupon .coupon-code {
     font-size: 1em;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* 有効期限 */
+.coupon .expiry-date {
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* クーポン右半分 */
+.coupon-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    border-left: 2px dashed #ccc; /* 切り取り線 */
+}
+
+/* 使用するボタン */
+#use-coupon-btn {
+    padding: 10px 15px;
+    font-size: 1em;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-button#use-coupon-btn:hover {
-    background-color: #d32f2f;
+#use-coupon-btn:hover {
+    background-color: #27ae60;
 }
 
-/* 使用済みクーポンのスタイル */
-.coupon.used .discount, 
-.coupon.used .coupon-code, 
+/* 使用済みスタイル */
+.coupon.used {
+    background-color: #f8f8f8;
+    border-color: #ddd;
+    text-align: center;
+}
+
+.coupon.used .discount,
+.coupon.used .coupon-code,
 .coupon.used .expiry-date {
-    opacity: 0.5;
     text-decoration: line-through;
+    color: #aaa;
+    opacity: 0.6;
 }
 
-.coupon.used::after {
-    content: '使用済み';
-    color: #555;
-    font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* 使用済みのメッセージ */
+.used-message {
+    margin-top: 10px;
     font-size: 1.2em;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 5px 10px;
-    border-radius: 5px;
+    color: #555;
 }
 
-/* アニメーションで消える部分 */
-.coupon-slide-out {
-    animation: slideOut 0.5s forwards;
-}
-
-/* スライドアウトのアニメーション */
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-}
