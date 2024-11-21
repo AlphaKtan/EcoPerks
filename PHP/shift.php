@@ -1,4 +1,5 @@
 <?php
+// 今はデータベースの登録をtest_time_changeにしている
 require '../Model/dbModel.php';
 
 // DB接続
@@ -83,7 +84,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         $week = '';
     }
 }
-
+// プリセットの時間を取得
 $sql = "SELECT id, start_time, end_time FROM preset";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -100,81 +101,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="utf-8">
     <title>PHPカレンダー</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-   <style>
-        a {
-            text-decoration: none;
-        }
-        th {
-            height: 30px;
-            text-align: center;
-        }
-        td {
-            height: 100px;
-            text-align: center;
-        }
-        .today {
-            background: #afa48f61 !important;
-        }
-        th:nth-of-type(1), td:nth-of-type(1) {
-            color: red;
-        }
-        th:nth-of-type(7), td:nth-of-type(7) {
-            color: blue;
-        }
-
-        .selected {
-            background: yellow!important;
-        }
-
-        .shiftDiv {
-            display: none;
-        }
-
-        #shiftDiv {
-            background-color: rgba(0,0,0,0.8);
-            padding: 30px;
-        }
-
-        .box {
-            background: white;
-            display: block;
-            margin: 5px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .presetDiv {
-            background-color: rgb(81,81,81,0.8);
-            padding: 5px;
-        }
-
-        .circle {
-            width: 7px;
-            height: 7px;
-            background: green;
-            margin: 20% auto;
-            border-radius: 100%;
-        }
-
-        select#area {
-            height: 25px;
-            font-size: 16px;
-        }
-
-        select#facility {
-            height: 25px;
-            font-size: 16px;
-        }
-
-        form {
-            margin-bottom: 10px;
-            margin-left: auto;
-        }
-
-        .mb-4 {
-            display: flex;
-        }
-            </style>
+    <link rel="stylesheet" href="../CSS/shiftStyle.css">
 </head>
 <body>
     <div class="container mt-5">
@@ -229,7 +156,6 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 //行のidを取得
                 $rowId = $rows['id'];
                 
-                // フォーマットして表示
                 // とってきた時間帯のid(番号)をクラスに適応
                 echo <<<HTML
                 <label for="preset{$rowId}" class="box">
@@ -277,6 +203,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             // 施設のデータを取得する
             getAreaData(area.value);
+            // 施設が選択されるたびに関数起動
             $('#facility').on("change",function(){
                 // フラグが1なら施設が選択されている状態
                 flag = 1;
@@ -284,7 +211,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 facility_id = facility.value;
             })
 
-            // ここにエリアが選ばれていたら「該当なし」を消す処理
+            // エリアが選ばれていたら「該当なし」を消す処理
             notApplicable.style.display ='none';
 
             // 施設が選択されたらerrorを消す
@@ -372,9 +299,9 @@ $(function () {
 // アラートシフトが登録できたとき
 function amazingSample(data) {
     swal.fire({
+    icon: "success",
     title: "シフトを登録出来ました！！",
     text: data,
-    icon: "success",
     });
 }
 
