@@ -60,11 +60,10 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 
     // 2021-06-03
     $date = $ym . '-' . sprintf('%02d', $day);
-
     if ($today == $date) {
-        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day . "<div class='circle' style='display:none;'></div>";
+        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day;
     } else {
-        $week .= "<td onclick='selectDate(\"$date\")'>" . $day . "<div class='circle' style='display:none;'></div>";
+        $week .= "<td onclick='selectDate(\"$date\")'>" . $day;
     }
     $week .= '</td>';
 
@@ -143,6 +142,8 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ?>
         </table>
     </div>
+    
+    <div class="shift_look"></div>
 
     <div class="shiftDiv" id="shiftDiv">
         <p style="color: white;">プリセットから追加</p>
@@ -381,15 +382,16 @@ function circleFunction() {
         
         // 取得したデータをループで回す
         data.forEach(function(circle){
-            var circle = document.getElementById("circle");
 
-            if (circle.length !== 0) {
-                // 選択された日付 + 施設のシフトが1つでも登録されているとき
-                console.log(circle);
-                circle.style.display = "";
+        if (circle.length !== 0) {
+            // 選択された日付 + 施設のシフトが1つでも登録されているとき
+            console.log(circle);
+            let selectedElement = document.querySelector('.shift_look');
+            if (selectedElement) {
+                selectedElement.innerHTML += '<div class="look">'+${circle}+'</div>';
+            
             } else {
                 console.log("失敗");
-                circle.style.display = "none";
             }
         });  
     }).fail(function(jqXHR, textStatus, errorThrown)  {
