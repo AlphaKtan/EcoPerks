@@ -217,7 +217,6 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </table>
     </div>
 
-    <input type="button" value="時間追加" onclick="buttonClick()">
     <div class="shiftDiv" id="shiftDiv">
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
@@ -295,13 +294,13 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         })
     });
+
+// 選ばれた日付マスに色を付ける処理
 let previouslySelected = null;
 let selectedDate = null;
 let shiftDiv = document.getElementsByClassName('shiftDiv');
 
 function selectDate(date) {
-    // alert("選択された日付："+ date);
-
     // 前に選択されていたセルの選択を解除
     if (previouslySelected) {
         previouslySelected.classList.remove('selected');
@@ -314,7 +313,8 @@ function selectDate(date) {
 
     // 選択された日付を保持
     selectedDate = date;
-    
+    // 
+    buttonClick();
 }
 
 function buttonClick() {
@@ -325,6 +325,7 @@ function buttonClick() {
         }
     }
 }
+// カレンダー関連
 $(function () {
     var ua = navigator.userAgent;
     if ((ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) && ua.indexOf('Mobile') > 0) {
@@ -367,6 +368,7 @@ $(function () {
         $(this).addClass('form-select').addClass($(this).val());
     });
 });
+
 // アラートシフトが登録できたとき
 function amazingSample(data) {
     swal.fire({
@@ -377,9 +379,6 @@ function amazingSample(data) {
 }
 
 // アラートシフトが登録できなかったとき(重複したとき)
-// function oopsSwalSample(data) {
-//   swal ( "重複エラー" ,  data ,  "error" )
-// }
 function oopsSwalSample(data) {
   Swal.fire({
     icon: "error", // エラーメッセージのアイコン
@@ -391,6 +390,7 @@ function oopsSwalSample(data) {
 </script>
 
 <script>
+// データベースに登録する処理
 function entryFunction() {
     if (flag === 1) {       // 施設が選択されている時
 
