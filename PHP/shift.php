@@ -313,11 +313,11 @@ function selectDate(date) {
 
     // 選択された日付を保持
     selectedDate = date;
-    // 
-    buttonClick();
+    // 日付を選択されたらshiftDivが出てくる関数
+    onShiftDiv();
 }
 
-function buttonClick() {
+function onShiftDiv() {
     // shiftDivのdisplay:none;を解除
     if (selectedDate) {
         for (let i = 0; i < shiftDiv.length; i++) {
