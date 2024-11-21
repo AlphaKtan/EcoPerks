@@ -367,13 +367,26 @@ $(function () {
         $(this).addClass('form-select').addClass($(this).val());
     });
 });
-
+// アラートシフトが登録できたとき
 function amazingSample(data) {
     swal.fire({
     title: "シフトを登録出来ました！！",
     text: data,
     icon: "success",
     });
+}
+
+// アラートシフトが登録できなかったとき(重複したとき)
+// function oopsSwalSample(data) {
+//   swal ( "重複エラー" ,  data ,  "error" )
+// }
+function oopsSwalSample(data) {
+  Swal.fire({
+    icon: "error", // エラーメッセージのアイコン
+    title: "重複エラー", 
+    html: data, 
+    confirmButtonText: "閉じる" // ボタンのテキスト
+  });
 }
 </script>
 
@@ -397,7 +410,11 @@ function entryFunction() {
             if (Array.isArray(responseData)) {
                 responseData.forEach(data => {
                     console.log(data);
-                    amazingSample(data);
+                    if (data === "正常に完了") {
+                        amazingSample(data);    
+                    } else {
+                        oopsSwalSample(data);
+                    }
                 });
             } else {
                 console.warn("期待していない形式のデータが返されました:", responseData);

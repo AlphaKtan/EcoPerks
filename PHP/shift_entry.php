@@ -76,7 +76,7 @@ error_reporting(E_ALL);
                 if ($insertStmt->rowCount() == 0) {
                     $duplicates = true;
                     // 時間のみにした
-                    $endTime = substr($end_time, 11);
+                    $endTime = substr($end_time, 10);
                     // 重複シフトの詳細を追加
                     $duplicateDetails[] = "$start_time ～ $endTime " . $facilityRow['facility_name'];
                 }
@@ -84,7 +84,7 @@ error_reporting(E_ALL);
 
             if ($duplicates) {
                 // 重複シフトの詳細をメッセージに追加
-                $results[] = "以下のシフトが重複しています:\n" . implode("\n", $duplicateDetails);
+                $results[] = "以下のシフトが重複しています:<br>" . implode("<br>", $duplicateDetails);
             } else {
                 $results[] = "正常に完了";
             }
