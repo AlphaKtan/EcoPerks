@@ -66,7 +66,7 @@
                     <ul>
                         <li><a href="../index.html">Top</a></li>
                         <li><a href="login_page.php">ログイン</a></li> 
-                        <li><a href="form.html">アカウント作成</a></li> 
+                        <li><a href="regist.php">アカウント作成</a></li> 
                         <li><a href="#">Contact</a></li> 
                     </ul>
                 </div>

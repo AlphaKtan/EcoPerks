@@ -6,44 +6,43 @@
 
 // セッションの開始
 session_start();
-
-// require_once('db_connection.php'); // データベース接続ファイル
-require_once('db_local.php'); // データベース接続ファイル
-
-$mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
-
-// フォームからのデータを取得
-$providedUsername = $_POST["userName"] ?? ''; //ユーザー名
-$providedPassword = $_POST["password"] ?? ''; //パスワード
-$providedEmail = $_POST["email"] ?? '';  //メールアドレス
-$first_name_furigana = $_POST["first_name_furigana"] ?? ''; //姓フリガナ
-$last_name_furigana = $_POST["last_name_furigana"] ?? ''; //名前フリガナ
-$phone_number = $_POST["phonenumber"] ?? '';  //電話番号
-
-// パスワードの要件チェック
-if (strlen($providedPassword) < 8 ||
-    !preg_match("#[0-9]+#", $providedPassword) ||
-    !preg_match("#[a-z]+#", $providedPassword) ||
-    !preg_match("#[A-Z]+#", $providedPassword)) {
-    // パスワードが要件を満たしていない場合の処理
-    die("パスワードは英数字を含む8桁以上で、大文字・小文字をそれぞれ1文字以上含めて設定してください。
-    <br><a href='../form.html'>もう一度入力する</a>");
-}
-
-// パスワードのハッシュ化 (SHA256)
-$hashedPassword = hash("sha256", $providedPassword);
-
-// データベースに接続
-$mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
-
-if ($mysqli->connect_error) {
-    die("データベース接続エラー: " . $mysqli->connect_error);
-}
-
-// トランザクションを開始
-$mysqli->begin_transaction();
-
 try {
+    // require_once('db_connection.php'); // データベース接続ファイル
+    require_once('db_local.php'); // データベース接続ファイル
+
+    $mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
+
+    // フォームからのデータを取得
+    $providedUsername = $_POST["userName"] ?? ''; //ユーザー名
+    $providedPassword = $_POST["password"] ?? ''; //パスワード
+    $providedEmail = $_POST["email"] ?? '';  //メールアドレス
+    $first_name_furigana = $_POST["first_name_furigana"] ?? ''; //姓フリガナ
+    $last_name_furigana = $_POST["last_name_furigana"] ?? ''; //名前フリガナ
+    $phone_number = $_POST["phonenumber"] ?? '';  //電話番号
+
+    // パスワードの要件チェック
+    if (strlen($providedPassword) < 8 ||
+        !preg_match("#[0-9]+#", $providedPassword) ||
+        !preg_match("#[a-z]+#", $providedPassword) ||
+        !preg_match("#[A-Z]+#", $providedPassword)) {
+        // パスワードが要件を満たしていない場合の処理
+        throw new Exception("パスワードは英数字を含む8桁以上で、大文字・小文字をそれぞれ1文字以上含めて設定してください。");
+    }
+
+    // パスワードのハッシュ化 (SHA256)
+    $hashedPassword = hash("sha256", $providedPassword);
+
+    // データベースに接続
+    $mysqli = new mysqli($servername, $dbUsername, $password, $dbname);
+
+    if ($mysqli->connect_error) {
+        die("データベース接続エラー: " . $mysqli->connect_error);
+    }
+
+    // トランザクションを開始
+    $mysqli->begin_transaction();
+
+
     // 電話番号の重複をチェックするクエリ
     $stmtCheckPhone = $mysqli->prepare("SELECT COUNT(*) FROM users_kokyaku WHERE phone_number = ?");
     if (!$stmtCheckPhone) {
@@ -135,6 +134,7 @@ try {
 
     // エラーメッセージの表示
     echo "エラー: " . $e->getMessage();
+    header("Location: ../regist.php", true, 307);
 }
 
 $mysqli->close();

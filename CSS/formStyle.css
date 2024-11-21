@@ -132,3 +132,7 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #557981;
 }
+p{
+    color:red;
+    font-size: 80%;
+}
