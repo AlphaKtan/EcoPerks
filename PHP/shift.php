@@ -58,13 +58,13 @@ $week .= str_repeat('<td></td>', $youbi);
 
 for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 
-    // 2021-06-3
-    $date = $ym . '-' . $day;
+    // 2021-06-03
+    $date = $ym . '-' . sprintf('%02d', $day);
 
     if ($today == $date) {
-        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day . "<div class='circle'></div>";
+        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day . "<div class='circle' style='display:none;'></div>";
     } else {
-        $week .= "<td onclick='selectDate(\"$date\")'>" . $day . "<div class='circle'></div>";
+        $week .= "<td onclick='selectDate(\"$date\")'>" . $day . "<div class='circle' style='display:none;'></div>";
     }
     $week .= '</td>';
 
@@ -99,7 +99,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>PHPカレンダー</title>
+    <title>シフト登録画面</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/shiftStyle.css">
 </head>
@@ -209,6 +209,8 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 flag = 1;
                 // 施設IDを保存
                 facility_id = facility.value;
+
+                circleFunction();
             })
 
             // エリアが選ばれていたら「該当なし」を消す処理
@@ -320,7 +322,8 @@ function oopsSwalSample(data) {
 // データベースに登録する処理
 function entryFunction() {
     if (flag === 1) {       // 施設が選択されている時
-
+            console.log(selectedDate);
+            
             // チェックされたチェックボックスの値を取得
             let selectedPresets = [];
             $('input[name="preset"]:checked').each(function() {
@@ -356,9 +359,45 @@ function entryFunction() {
         const shiftDivElement = document.getElementById('shiftDiv');
         // 既にエラーメッセージが存在しないか確認
         if (!shiftDivElement.querySelector('.error')) {
+            // エラーを出す処理
             shiftDivElement.insertAdjacentHTML('afterbegin', '<p class="error" style="color: red; margin-top: 10px;">施設名まで選択してください</p>');
+        } else {
+            const errorStyle = getComputedStyle(errorElement); 
+            if (errorStyle.display === 'none') {
+                errorStyle.display = '';
+            }
         }
     }
+}
+
+function circleFunction() {
+
+    $.ajax({
+        type: "POST",
+        url: "../PHP/shift_circle.php",
+        dataType: "json",
+        data: { reservation_date: selectedDate, facility: facility_id }
+    }).done(function(data) {
+        
+        // 取得したデータをループで回す
+        data.forEach(function(circle){
+            var circle = document.getElementById("circle");
+
+            if (circle.length !== 0) {
+                // 選択された日付 + 施設のシフトが1つでも登録されているとき
+                console.log(circle);
+                circle.style.display = "";
+            } else {
+                console.log("失敗");
+                circle.style.display = "none";
+            }
+        });  
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    }); 
 }
 </script>
 </body>
