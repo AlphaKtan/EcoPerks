@@ -212,6 +212,12 @@ echo $_SESSION["ym"];
         
         // エリア情報切り替え
         $('#area').on("change",function(){
+            // エリアが切り替わるたびにshift_lookの中身を削除
+            let selectedElement = document.querySelector('.shift_look');
+        // 空にする
+        if(selectedElement) {
+            selectedElement.innerHTML = '';
+        }
             // 選ばれたエリアを保存
             area_id = area.value;
 
@@ -228,8 +234,10 @@ echo $_SESSION["ym"];
                 facility_id = facility.value;
 
                 if(document.querySelector('.selected')) {
+                    // 施設を切り替えるたびにシフトを取ってくる
                     fetchShiftData();
                 }
+                fetchShiftDates();
             })
 
             // エリアが選ばれていたら「該当なし」を消す処理
@@ -263,7 +271,7 @@ function selectDate(date) {
     selectedDate = date;
     // 日付を選択されたらshiftDivが出てくる関数
     onShiftDiv();
-    // 施設名が選択されている状態の時だけシフトを取得
+    // 施設名が選択されていてカーソルがあっている状態の時だけシフトを取得
     if (flag === 1) {
         fetchShiftData()
     }
@@ -368,6 +376,7 @@ function entryFunction() {
                     } else {
                         oopsSwalSample(data);
                     }
+                    fetchShiftDates();
                 });
             } else {
                 console.warn("期待していない形式のデータが返されました:", responseData);
@@ -398,16 +407,41 @@ function fetchShiftDates() {
         type: "POST",
         url: "../PHP/shift_circle.php", // サーバー側のURL
         dataType: "json",
-        data: { 
-            facility: facility_id, 
-            ym: ym, 
-            day_count: day_count 
-        }
+        data: { facility: facility_id, ym: ym, day_count: day_count }
     }).done(function(data) {
         console.log("シフト日付データ:", data); // データが正しく取得されているか確認
 
-        // 取得した日付データを利用して、カレンダーに円を追加
-        addCirclesToCalendar(data);
+        // shiftDates 配列の中に shift_date プロパティがある場合、それを取得
+        const shiftDates = data.map(item => item.shift_date); // 例: ["2024-12-04", "2024-12-08"]
+
+        // すべての td 要素を取得
+        const tdElements = document.querySelectorAll("td[data-date]");
+
+        // まず、すべての td 要素から円を削除
+        tdElements.forEach(function(td) {
+            const existingCircle = td.querySelector("span.circle");
+            if (existingCircle) {
+                td.removeChild(existingCircle); // 既存の円を削除
+            }
+        });
+
+        // 新たに円を追加
+        shiftDates.forEach(function(shiftDate) {
+            // tdArray を使って該当する td を探す
+            const foundTd = Array.from(tdElements).find(td => td.getAttribute("data-date") === shiftDate);
+
+            if (foundTd) {
+                // td に既に <span class="circle"> が含まれていないかチェック
+                if (!foundTd.querySelector("span.circle")) {
+                    // 一致する td に円を追加
+                    const circleSpan = document.createElement("span");
+                    circleSpan.classList.add("circle");
+                    foundTd.appendChild(circleSpan);
+                }
+            } else {
+                console.log("一致するtdは見つかりませんでした:", shiftDate);
+            }
+        });
     }).fail(function(jqXHR, textStatus, errorThrown)  {
         console.error("AJAXリクエストに失敗しました");
         console.error("HTTPステータス:", jqXHR.status); // ステータスコード
@@ -415,30 +449,6 @@ function fetchShiftDates() {
         console.error("エラーメッセージ:", errorThrown);
     }); 
 }
-
-// function addCirclesToCalendar(shiftDates) {
-//     console.log("シフト日付（配列）:", shiftDates); // ここで shiftDates が配列として取得されているか確認
-
-//     // すべての td 要素を取得
-//     const tdElements = document.querySelectorAll("td[data-date]");
-
-//     tdElements.forEach(function(td) {
-//         // data-date を取得
-//         const date = td.getAttribute("data-date");
-//         console.log("カレンダーの日付:", date); // 取得した日付が正しいか確認
-
-//         // shiftDates に日付が含まれているかチェック
-//         if (shiftDates.includes(date)) {
-//             // <span class='circle'></span> を作成
-//             const circleSpan = document.createElement("span");
-//             circleSpan.classList.add("circle");
-
-//             // td に追加
-//             td.appendChild(circleSpan);
-//         }
-//     });
-// }
-
 
 function fetchShiftData() {
     let selectedElement = document.querySelector('.shift_look');
