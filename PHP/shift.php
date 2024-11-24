@@ -1,4 +1,5 @@
 <?php
+session_start();
 // 今はデータベースの登録をtest_time_changeにしている
 require '../Model/dbModel.php';
 
@@ -40,6 +41,10 @@ $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)+1, 1, date('Y', $times
 
 // 該当月の日数を取得
 $day_count = date('t', $timestamp);
+// セッションに保存
+$_SESSION["day_count"] = $day_count;
+$_SESSION["ym"] = '';
+$_SESSION["ym"] = $ym;
 
 // １日が何曜日か　0:日 1:月 2:火 ... 6:土
 // 方法１：mktimeを使う
@@ -61,10 +66,11 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
     // 2021-06-03
     $date = $ym . '-' . sprintf('%02d', $day);
     if ($today == $date) {
-        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day;
+        $week .= "<td class='today' data-date='$date' onclick='selectDate(\"$date\")'>" . $day . " ";
     } else {
-        $week .= "<td onclick='selectDate(\"$date\")'>" . $day;
+        $week .= "<td data-date='$date' onclick='selectDate(\"$date\")'>" . $day;
     }
+    
     $week .= '</td>';
 
     // 週終わり、または、月終わりの場合
@@ -93,6 +99,8 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // echo "<pre>";
 // print_r($row[0]);    
 // echo "</pre>";
+echo $ym.'<br>';
+echo $_SESSION["ym"];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -146,6 +154,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </table>
     </div>
     
+    <button onclick='fetchShiftDates()'>test</button>
     <div class="shift_look"></div>
 
     <div class="shiftDiv" id="shiftDiv">
@@ -177,6 +186,10 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- JavaScript -->
+<script type="text/javascript">
+    let ym = "<?php echo $ym; ?>";  // 無理やりPHPの$ymをJavaScriptの変数ymに代入
+    let day_count = "<?php echo $day_count; ?>";
+</script>
 <script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-3.5.1.min.js"></script>
@@ -380,6 +393,53 @@ function entryFunction() {
     }
 }
 
+function fetchShiftDates() {
+    $.ajax({
+        type: "POST",
+        url: "../PHP/shift_circle.php", // サーバー側のURL
+        dataType: "json",
+        data: { 
+            facility: facility_id, 
+            ym: ym, 
+            day_count: day_count 
+        }
+    }).done(function(data) {
+        console.log("シフト日付データ:", data); // データが正しく取得されているか確認
+
+        // 取得した日付データを利用して、カレンダーに円を追加
+        addCirclesToCalendar(data);
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    }); 
+}
+
+// function addCirclesToCalendar(shiftDates) {
+//     console.log("シフト日付（配列）:", shiftDates); // ここで shiftDates が配列として取得されているか確認
+
+//     // すべての td 要素を取得
+//     const tdElements = document.querySelectorAll("td[data-date]");
+
+//     tdElements.forEach(function(td) {
+//         // data-date を取得
+//         const date = td.getAttribute("data-date");
+//         console.log("カレンダーの日付:", date); // 取得した日付が正しいか確認
+
+//         // shiftDates に日付が含まれているかチェック
+//         if (shiftDates.includes(date)) {
+//             // <span class='circle'></span> を作成
+//             const circleSpan = document.createElement("span");
+//             circleSpan.classList.add("circle");
+
+//             // td に追加
+//             td.appendChild(circleSpan);
+//         }
+//     });
+// }
+
+
 function fetchShiftData() {
     let selectedElement = document.querySelector('.shift_look');
     // 空にする
@@ -388,7 +448,7 @@ function fetchShiftData() {
     }
     $.ajax({
         type: "POST",
-        url: "../PHP/shift_circle.php",
+        url: "../PHP/shift_fetch.php",
         dataType: "json",
         data: { reservation_date: selectedDate, facility: facility_id }
     }).done(function(data) {

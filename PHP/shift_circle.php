@@ -1,13 +1,10 @@
 <?php 
+session_start();
 
     require '../Model/dbModel.php';
     
     // DB接続
     $pdo = dbConnect();
-
-    if ($_POST["reservation_date"]) {
-        $reservation_date = $_POST['reservation_date'];
-    }
 
     if ($_POST["facility"]) {
         $facilityName = $_POST["facility"];
@@ -17,17 +14,35 @@
             $facilityStmt->execute();
             $facilityRow = $facilityStmt->fetch(PDO::FETCH_ASSOC);
     }
-        
+    
+ 
+    if ($_POST["ym"]) {
+        $ym = $_POST["ym"];
+    }
+    if($_POST["day_count"]) {
+        if ($_POST["ym"]) {
+            $firstDay =$ym . '-'. '01';
+            $lastDay = $ym . '-'. $_POST["day_count"];
+        }
+    }
+
     // シフトが入っている日を出す
-    $sql = "SELECT DATE_FORMAT(start_time, '%H:%i') AS start_time_only, DATE_FORMAT(end_time, '%H:%i') AS end_time_only, facility_name, areaid FROM test_time_change WHERE DATE_FORMAT(start_time, '%Y-%m-%d') = :reservation_date AND facility_name = :facilityName AND status = '1'";
+    $sql = "SELECT DISTINCT DATE_FORMAT(start_time, '%Y-%m-%d') AS shift_date 
+            FROM test_time_change 
+            WHERE DATE_FORMAT(start_time, '%Y-%m-%d') BETWEEN :first_day AND :last_day
+            AND facility_name = :facilityName 
+            AND status = '1'
+            ORDER BY shift_date ASC";
+
+
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':reservation_date', $reservation_date, PDO::PARAM_STR);
+    
+    $stmt->bindParam(':first_day', $firstDay, PDO::PARAM_STR);
+    $stmt->bindParam(':last_day', $lastDay, PDO::PARAM_STR);
     $stmt->bindParam(':facilityName', $facilityRow['facility_name'], PDO::PARAM_STR);
+
     $stmt->execute();
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($row);
-
 ?>
-
-

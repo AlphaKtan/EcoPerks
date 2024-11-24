@@ -51,6 +51,7 @@ th:nth-of-type(7), td:nth-of-type(7) {
     background: green;
     margin: 20% auto;
     border-radius: 100%;
+    display: block;
 }
 
 select#area {
