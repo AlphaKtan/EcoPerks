@@ -101,6 +101,9 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>シフト登録画面</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/shiftStyle.css">
+    <style>
+
+</style>
 </head>
 <body>
     <div class="container mt-5">
@@ -211,7 +214,9 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 // 施設IDを保存
                 facility_id = facility.value;
 
-                circleFunction();
+                if(document.querySelector('.selected')) {
+                    fetchShiftData();
+                }
             })
 
             // エリアが選ばれていたら「該当なし」を消す処理
@@ -245,6 +250,10 @@ function selectDate(date) {
     selectedDate = date;
     // 日付を選択されたらshiftDivが出てくる関数
     onShiftDiv();
+    // 施設名が選択されている状態の時だけシフトを取得
+    if (flag === 1) {
+        fetchShiftData()
+    }
 }
 
 function onShiftDiv() {
@@ -371,29 +380,58 @@ function entryFunction() {
     }
 }
 
-function circleFunction() {
-
+function fetchShiftData() {
+    let selectedElement = document.querySelector('.shift_look');
+    // 空にする
+    if(selectedElement) {
+        selectedElement.innerHTML = '';
+    }
     $.ajax({
         type: "POST",
         url: "../PHP/shift_circle.php",
         dataType: "json",
         data: { reservation_date: selectedDate, facility: facility_id }
     }).done(function(data) {
+        console.log(data);
         
-        // 取得したデータをループで回す
-        data.forEach(function(circle){
-
-        if (circle.length !== 0) {
-            // 選択された日付 + 施設のシフトが1つでも登録されているとき
-            console.log(circle);
-            let selectedElement = document.querySelector('.shift_look');
+        // もしdataが空の場合は「シフトが入っていません」を表示
+        if (data.length === 0) {
             if (selectedElement) {
-                selectedElement.innerHTML += '<div class="look">'+${circle}+'</div>';
-            
-            } else {
-                console.log("失敗");
+                let newDate = new Date(selectedDate);
+                let getWeek = newDate.getDay();
+                const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+
+                selectedElement.innerHTML +=
+                    `<div class="date">${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）</div>
+                    <div class="look">シフトが入っていません</div>`;
             }
-        });  
+        } else {
+            if (selectedElement) {
+                // 例) 2024年11月01日（金）のように出力するための処理
+                let newDate = new Date(selectedDate); // 最初のデータを使う
+                let getWeek = newDate.getDay();
+                const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+                
+                selectedElement.innerHTML +=
+                    `<div class="date">${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）</div>`;
+            }
+            // dataが空でない場合、取得したデータをループで回す
+            data.forEach(function(circle) {
+                let selectedElement = document.querySelector('.shift_look');
+                
+                // circleが空でないことを確認
+                if (Object.keys(circle).length !== 0) {
+                    if (selectedElement) {
+                        selectedElement.innerHTML += `
+                            <div class="look">
+                                <span class="time">${circle.start_time_only} -${circle.end_time_only}</span>
+                                <span class="facility">${circle.facility_name}</span>
+                            </div>
+                        `;
+                    }
+                }
+            });
+        }
     }).fail(function(jqXHR, textStatus, errorThrown)  {
         console.error("AJAXリクエストに失敗しました");
         console.error("HTTPステータス:", jqXHR.status); // ステータスコード

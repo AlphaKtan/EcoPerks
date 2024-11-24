@@ -19,16 +19,14 @@
     }
         
     // シフトが入っている日を出す
-    $sql = "SELECT start_time, end_time, facility_name, areaid FROM test_time_change WHERE DATE_FORMAT(start_time, '%Y-%m-%d') = :reservation_date AND facility_name = :facilityName AND status = '1'";
+    $sql = "SELECT DATE_FORMAT(start_time, '%H:%i') AS start_time_only, DATE_FORMAT(end_time, '%H:%i') AS end_time_only, facility_name, areaid FROM test_time_change WHERE DATE_FORMAT(start_time, '%Y-%m-%d') = :reservation_date AND facility_name = :facilityName AND status = '1'";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':reservation_date', $reservation_date, PDO::PARAM_STR);
     $stmt->bindParam(':facilityName', $facilityRow['facility_name'], PDO::PARAM_STR);
     $stmt->execute();
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $results[] = $row;
-
-    echo json_encode($results);
+    echo json_encode($row);
 
 ?>
 
