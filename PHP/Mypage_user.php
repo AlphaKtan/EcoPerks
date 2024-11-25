@@ -95,8 +95,8 @@
                     <?php
                     if($row){
                         foreach($row as $rows){
-                            $username = $rows['username'];
-                            echo "$username";
+                    $username = $rows['username'];
+                     echo "$username";
                         }
                     }?>
                 </h2>
@@ -131,12 +131,6 @@
             </a>
         </div>
         <div class="boxA">
-            <div class="box3">
-            <a href="./upload.php">
-                <h1>アイコン変更</h1>
-                <p>icon</p>
-                </a>
-            </div>
             <a href="../index.html">
             <div class="box4">
                 <h1>ホームに戻る</h1>
