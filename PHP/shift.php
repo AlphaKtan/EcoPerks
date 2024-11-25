@@ -155,12 +155,15 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="shiftDiv" id="shiftDiv">
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
-        <div class="entryTime" style="display: none; background: white; padding: 5px;">
-            <label for="start-time">開始時間:</label><br>
+        <div class="entryTime" style="display: none; background: white; padding: 5px; margin-bottom: 10px;">
+            <label for="start-time" step="1">開始時間:</label><br>
             <input type="time" id="start-time" name="start-time"><br>
-            <label for="end-time">終了時間:</label><br>
+            <label for="end-time" step="1">終了時間:</label><br>
             <input type="time" id="end-time" name="end-time"><br>
         </div>
+
+        <button onclick='entryTimeFunction()' class="back" style="display: none;">戻る</button>
+        <button onclick='entryPresetFunction()' class="entryPreset" style="display: none;">プリセットに追加</button>
 
         <form action="" method="post" class="form">
         <?php 
@@ -182,27 +185,43 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
         </form>
 
-        <button onclick='entryTimeFunction()'>その他時間追加</button>
-        <button onclick='entryFunction()'>シフト追加</button>
-    </div>
+        <button onclick='entryTimeFunction()' class="entryTimeBtn" style="">その他時間追加</button>
+        <button onclick='entryFunction()' class="entryBtn" style="">シフト追加</button>
+        <script>
+            const startTimeInput = document.getElementById("start-time");
+            const endTimeInput = document.getElementById("end-time");
 
-    <script>
-    // 開始時間と終了時間の入力欄を取得
-    const startTimeInput = document.getElementById("start-time");
-    const endTimeInput = document.getElementById("end-time");
+            // 分を00に固定する関数
+            function setTimeToWholeHour(input) {
+                input.addEventListener("input", function() {
+                    const [hour] = input.value.split(":");  // 時間を取得
+                    input.value = `${hour}:00`;  // 分を00に固定して再設定
+                });
+            }
 
-    // 分を00に固定する関数
-    function setTimeToWholeHour(input) {
-        input.addEventListener("input", function() {
-            const [hour] = input.value.split(":");  // 時間を取得
-            input.value = `${hour}:00`;  // 分を00に固定して再設定
-        });
-    }
+            // 開始時間と終了時間が正しい順番かをチェック
+            function validateTimes() {
+                const startTime = startTimeInput.value;
+                const endTime = endTimeInput.value;
 
-    // 開始時間と終了時間に対して分を00に固定
-    setTimeToWholeHour(startTimeInput);
-    setTimeToWholeHour(endTimeInput);
-</script>
+                if(startTime && endTime) {
+                    // 開始時間が終了時間と同じかそれより後の場合
+                    if (startTime > endTime) {
+                        alert("開始時間は終了時間よりも前に設定してください。");
+                        startTimeInput.value = "";  // 入力値をリセット
+                        endTimeInput.value = "";    // 入力値をリセット
+                    }
+                }
+            }
+
+            // 入力された時間が開始時間 < 終了時間 になるように検証
+            startTimeInput.addEventListener("input", validateTimes);
+            endTimeInput.addEventListener("input", validateTimes);
+
+            // 開始時間と終了時間に対して分を00に固定
+            setTimeToWholeHour(startTimeInput);
+            setTimeToWholeHour(endTimeInput);
+        </script>
 <!-- JavaScript -->
 <script type="text/javascript">
     let ym = "<?=$ym; ?>";  // 無理やりPHPの$ymをJavaScriptの変数ymに代入
@@ -371,22 +390,41 @@ function oopsSwalSample(data) {
 </script>
 
 <script>
+// その他時間追加を出す関数
 function entryTimeFunction() {
     let presetForm = document.querySelector('.form');
     let styleForm = getComputedStyle(presetForm);
     let entryTime = document.querySelector('.entryTime');
+    let back = document.querySelector('.back');
+    let entryPreset = document.querySelector('.entryPreset');
+    let entryTimeBtn = document.querySelector('.entryTimeBtn');
+    let entryBtn = document.querySelector('.entryBtn');
 
     if (styleForm.display !== 'none') {
         // 現在表示されている場合に非表示にする
         presetForm.style.display = 'none';
         entryTime.style.display = 'block';
+        back.style.display = '';
+        entryPreset.style.display = '';
+        entryTimeBtn.style.display = 'none';
+        entryBtn.style.display = 'none';
 
     } else {
         // 非表示の場合に再表示
         presetForm.style.display = 'block';
         entryTime.style.display = 'none';
+        back.style.display = 'none';
+        entryPreset.style.display = 'none';
+        entryTimeBtn.style.display = '';
+        entryBtn.style.display = '';
     }
 }
+
+// プリセットに追加ボタンを押すと追加された時間をプリセットテーブルにinsertする処理
+entryTimeFunction() {
+
+}
+
 // データベースに登録する処理
 function entryFunction() {
     if (flag === 1) {       // 施設が選択されている時
