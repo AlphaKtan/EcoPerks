@@ -97,8 +97,6 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // echo "<pre>";
 // print_r($row[0]);    
 // echo "</pre>";
-echo $ym.'<br>';
-echo $_SESSION["ym"];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
