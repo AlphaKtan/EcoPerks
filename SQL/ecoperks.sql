@@ -23,6 +23,17 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+
+
+-- アクセスログ
+
+CREATE TABLE `access_logs` (
+  `id` int NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `access_time` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- テーブルの構造 `cleaning_records`
 --
