@@ -15,6 +15,15 @@
         return $pdo;
     }
 
+    function dbConn(){
+        // local
+        $conn = new mysqli('localhost', 'root', '', 'ecoperks');
+
+        // lolipop
+        // $conn = new mysqli('mysql305.phy.lolipop.lan', 'LAA1516370', 'ecoperks2024', 'LAA1516370-ecoperks');
+        return $conn;
+    }
+
     // 各modelファイルより情報取得
     require_once('time_change_func.php');
     // require_once('ReserveCheck_Corpo_func.php');

@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-require_once('db_connection.php');
+require_once('../Model/dbModel.php');
+$pdo = dbConnect();
 
 if (!isset($_SESSION['username'])) {
     $_SESSION['login_message'] = "ログインしてください。";

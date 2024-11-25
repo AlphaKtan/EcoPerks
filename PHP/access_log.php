@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once('db_connection.php'); // データベース接続
+require_once('../Model/dbModel.php');
+$pdo = dbConnect();
 
 // 検索クエリ処理
 $searchUsername = isset($_GET['search_username']) ? trim($_GET['search_username']) : '';

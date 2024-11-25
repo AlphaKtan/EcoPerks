@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // トランザクションをコミット
         $mysqli->commit();
         
-        header("Location: login_page.php");
+        header("Location: ../login_page.php");
         exit();
     } catch (Exception $e) {
         $mysqli->rollback();

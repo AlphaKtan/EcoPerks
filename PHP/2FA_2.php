@@ -2,7 +2,8 @@
 // セッションの開始
 session_start();
 //var_dump($_SESSION);
-require_once('db_connection.php');
+require_once('../Model/dbModel.php');
+$pdo = dbConnect();
 // POST データの処理
 if (isset($_POST['submit'])) {
     $userEnteredCode = $_POST['verification_code'];

@@ -1,6 +1,7 @@
 <?php
     session_start();
-    require_once('db_connection.php'); 
+    require_once('../Model/dbModel.php');
+    $pdo = dbConnect();
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
         $_SESSION['area_id'] = htmlspecialchars($_POST['area_id'], ENT_QUOTES, 'UTF-8');
     }

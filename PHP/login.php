@@ -12,11 +12,10 @@ if (session_status() == PHP_SESSION_NONE) {
 header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Tokyo');
 
-require_once('db_connection.php');
-//require_once('db_local.php');
+require_once('../Model/dbModel.php');
+$conn = dbConn();
 
 // データベース接続
-$conn = new mysqli($servername, $dbUsername, $password, $dbname);
 if ($conn->connect_error) {
     die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
 }
@@ -121,7 +120,7 @@ function sendVerificationCodeByEmailLocal($userEmail, $verificationCode) {
     $message = '２ファクタ認証コードです。第三者には絶対に教えないでください。';
     $message .= '2ファクタ認証コード: ' . $verificationCode;
     $message .= '心当たりがない場合は無視してください';
-    $headers = "From: ecoparks202404@gmail.com";
+    $headers = "From: ecoperks2024@gmail.com";
 
     // メール送信
     return mail($to, $subject, $message, $headers);

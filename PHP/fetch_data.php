@@ -5,8 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // データベース接続
-// require_once('db_connection.php');
-require_once('db_connection.php'); // データベース接続ファイル
+require_once('../Model/dbModel.php');
+$pdo = dbConnect();
 
 $conn = new mysqli($servername, $dbUsername, $password, $dbname);
 if ($conn->connect_error) {

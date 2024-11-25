@@ -5,8 +5,9 @@ session_start();
 // ログインしているユーザー名を取得
 if (isset($_SESSION['username'])) {
     // データベース接続情報
-    require_once('db_connection.php');
-    //require_once('db_local.php'); // データベース接続ファイル
+    require_once('../Model/dbModel.php');
+    $pdo = dbConnect();
+
 
     // データベース接続
     $conn = new mysqli($servername, $dbUsername, $password, $dbname);

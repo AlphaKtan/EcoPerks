@@ -14,11 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理者様エリア終わり選択ページ</title>
+    <title>管理者エリア終わり選択ページ</title>
 </head>
 <body>
     <h2>エリアを選択してください</h2>
-    <form action="owari" method="post"> <!-- 現在のページにPOSTリクエストを送信 -->
+    <form action="owari.php" method="post"> <!-- 現在のページにPOSTリクエストを送信 -->
         <label for="area_id">エリアID:</label>
         <select name="area_id" id="area_id">
             <?php for ($i = 1; $i <= 25; $i++): ?>

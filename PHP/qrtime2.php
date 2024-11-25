@@ -1,7 +1,8 @@
 <?php
 session_start();
 require_once('vendor/autoload.php');
-require_once('db_connection.php');
+require_once('../Model/dbModel.php');
+$pdo = dbConnect();
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
@@ -13,7 +14,7 @@ use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Color\Color;
 
 // サーバーURLを設定
-$baseUrl = 'http://i2322117.chips.jp/php/gomiclean_end.php';
+$baseUrl = 'localhost/ecoperks/php/gomiclean_end.php';
 $timestamp = time();
 
 //終了用QRコードのURLを生成

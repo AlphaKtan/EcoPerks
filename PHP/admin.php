@@ -11,10 +11,9 @@ if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
 }
 
 // データベース接続
-require_once('db_connection.php');
-//require_once('db_local.php');
+require_once('../Model/dbModel.php');
+$conn = dbConn();
 
-$conn = new mysqli($servername, $dbUsername, $password, $dbname);
 if ($conn->connect_error) {
     die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
 }

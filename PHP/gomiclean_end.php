@@ -1,7 +1,7 @@
 <?php
 session_start();
-
-require_once('db_connection.php'); // データベース接続ファイル
+require_once('../Model/dbModel.php');
+$pdo = dbConnect();
 
 // ユーザー名の確認
 if (!isset($_SESSION['username'])) {
