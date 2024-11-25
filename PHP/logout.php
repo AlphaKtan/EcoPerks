@@ -6,11 +6,9 @@ session_start();
 if (isset($_SESSION['username'])) {
     // データベース接続情報
     require_once('../Model/dbModel.php');
-    $pdo = dbConnect();
-
+    $conn = dbConn();
 
     // データベース接続
-    $conn = new mysqli($servername, $dbUsername, $password, $dbname);
     if ($conn->connect_error) {
         die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
     }
