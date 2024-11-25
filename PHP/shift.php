@@ -155,6 +155,13 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="shiftDiv" id="shiftDiv">
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
+        <div class="entryTime" style="display: none; background: white; padding: 5px;">
+            <label for="start-time">開始時間:</label><br>
+            <input type="time" id="start-time" name="start-time"><br>
+            <label for="end-time">終了時間:</label><br>
+            <input type="time" id="end-time" name="end-time"><br>
+        </div>
+
         <form action="" method="post" class="form">
         <?php 
             foreach ($row as $rows) {
@@ -179,7 +186,23 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button onclick='entryFunction()'>シフト追加</button>
     </div>
 
+    <script>
+    // 開始時間と終了時間の入力欄を取得
+    const startTimeInput = document.getElementById("start-time");
+    const endTimeInput = document.getElementById("end-time");
 
+    // 分を00に固定する関数
+    function setTimeToWholeHour(input) {
+        input.addEventListener("input", function() {
+            const [hour] = input.value.split(":");  // 時間を取得
+            input.value = `${hour}:00`;  // 分を00に固定して再設定
+        });
+    }
+
+    // 開始時間と終了時間に対して分を00に固定
+    setTimeToWholeHour(startTimeInput);
+    setTimeToWholeHour(endTimeInput);
+</script>
 <!-- JavaScript -->
 <script type="text/javascript">
     let ym = "<?=$ym; ?>";  // 無理やりPHPの$ymをJavaScriptの変数ymに代入
@@ -351,13 +374,17 @@ function oopsSwalSample(data) {
 function entryTimeFunction() {
     let presetForm = document.querySelector('.form');
     let styleForm = getComputedStyle(presetForm);
+    let entryTime = document.querySelector('.entryTime');
 
     if (styleForm.display !== 'none') {
         // 現在表示されている場合に非表示にする
         presetForm.style.display = 'none';
+        entryTime.style.display = 'block';
+
     } else {
         // 非表示の場合に再表示
         presetForm.style.display = 'block';
+        entryTime.style.display = 'none';
     }
 }
 // データベースに登録する処理
