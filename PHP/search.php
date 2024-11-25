@@ -45,7 +45,7 @@ try {
                 // 結果を表示
                 if (count($results) > 0) {
                     echo "<h1>エリア: $area_id の施設一覧</h1>";
-                    echo '<a href="../perfectMap.html" class="link_button">マップに戻る</a>';
+                    echo '<button class="link_button" onclick="history.back();">戻る</button>';
                     echo "<ul>";
                     foreach ($results as $row) {
                         echo "<li>" . htmlspecialchars($row['facility_name']) . " - " . htmlspecialchars($row['address']) . 
@@ -54,7 +54,7 @@ try {
                     echo "</ul>";
                 } else {
                     echo "<p>該当する施設はありません。</p>";
-                    echo '<a href="../perfectMap.html" class="link_button">マップに戻る</a>';
+                    echo '<button class="link_button" onclick="history.back();">戻る</button>';
                 }
             ?>
         </div>
