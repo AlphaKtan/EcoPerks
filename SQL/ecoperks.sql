@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-11-25 03:30:36
--- サーバのバージョン： 10.4.32-MariaDB
--- PHP のバージョン: 8.2.12
+-- 生成日時: 2024-11-25 13:20:19
+-- サーバのバージョン： 10.4.28-MariaDB
+-- PHP のバージョン: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -22,42 +22,26 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
--- クーポン
-CREATE TABLE `coupons` (
-  `coupon_id` int NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `coupon_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `discount` int NOT NULL,
-  `expiry_date` datetime NOT NULL,
-  `status` tinyint(1) DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- QRだよ
-CREATE TABLE `qr_codes` (
-  `id` int NOT NULL,
-  `area_id` int NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `generated_time` datetime NOT NULL,
-  `expiry_time` datetime NOT NULL,
-  `used` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
-
-
-
-
-
-
--- アクセスログ
+--
+-- テーブルの構造 `access_logs`
+--
 
 CREATE TABLE `access_logs` (
-  `id` int NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `ip_address` varchar(45) DEFAULT NULL,
   `access_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `access_logs`
+--
+
+INSERT INTO `access_logs` (`id`, `username`, `ip_address`, `access_time`) VALUES
+(0, 'らららいる', '::1', '2024-11-25 12:48:55');
+
+-- --------------------------------------------------------
 
 --
 -- テーブルの構造 `cleaning_records`
@@ -71,6 +55,30 @@ CREATE TABLE `cleaning_records` (
   `end_time` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `coupon_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `coupon_code` varchar(255) NOT NULL,
+  `discount` int(11) NOT NULL,
+  `expiry_date` datetime NOT NULL,
+  `status` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- テーブルのデータのダンプ `coupons`
+--
+
+INSERT INTO `coupons` (`coupon_id`, `username`, `coupon_code`, `discount`, `expiry_date`, `status`, `created_at`) VALUES
+(0, 'やー', 'AA00000001AA', 50, '2024-12-30 12:41:12', 0, '2024-11-25 11:41:12'),
+(0, 'やー', 'AA00000002AA', 50, '2024-12-30 12:41:27', 0, '2024-11-25 11:41:27');
 
 -- --------------------------------------------------------
 
@@ -110,6 +118,21 @@ CREATE TABLE `product` (
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `status` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `qr_codes`
+--
+
+CREATE TABLE `qr_codes` (
+  `id` int(11) NOT NULL,
+  `area_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `generated_time` datetime NOT NULL,
+  `expiry_time` datetime NOT NULL,
+  `used` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -213,7 +236,9 @@ INSERT INTO `test_time_change` (`id`, `start_time`, `end_time`, `facility_name`,
 (144, '2024-11-14 11:00:00', '2024-11-14 12:00:00', '金閣寺', 1, '1'),
 (145, '2024-11-14 12:00:00', '2024-11-14 13:00:00', '金閣寺', 1, '1'),
 (146, '2024-11-14 13:00:00', '2024-11-14 14:00:00', '金閣寺', 1, '1'),
-(147, '2024-11-14 14:00:00', '2024-11-14 15:00:00', '金閣寺', 1, '1');
+(147, '2024-11-14 14:00:00', '2024-11-14 15:00:00', '金閣寺', 1, '1'),
+(148, '2024-11-13 16:00:00', '2024-11-13 17:00:00', '金閣寺', 1, '1'),
+(149, '2024-11-13 09:00:00', '2024-11-13 10:00:00', '金閣寺', 1, '1');
 
 -- --------------------------------------------------------
 
@@ -13960,7 +13985,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `providedPassword`, `email`, `imgpath`) VALUES
-(1, 'らららいる', '6e78305793f9668fd625aeaf42c06081a8cdbb3cd602171136caa2b731914c29', '2312062@i-seifu.jp', '11254075096718603b95f648.35647280.png');
+(1, 'らいる', '6e78305793f9668fd625aeaf42c06081a8cdbb3cd602171136caa2b731914c29', '2312062@i-seifu.jp', '54894678867446b47975976.82831256.png');
 
 -- --------------------------------------------------------
 
@@ -14004,7 +14029,7 @@ CREATE TABLE `user_sessions` (
 --
 
 INSERT INTO `user_sessions` (`id`, `username`, `login_time`, `logout_time`, `is_logged_in`) VALUES
-(1, 'らららいる', '2024-10-16 10:45:09', NULL, 1);
+(1, 'らいる', '2024-11-25 20:48:55', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -14137,7 +14162,7 @@ ALTER TABLE `product`
 -- テーブルの AUTO_INCREMENT `test_time_change`
 --
 ALTER TABLE `test_time_change`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- テーブルの AUTO_INCREMENT `time_change`
@@ -14202,7 +14227,7 @@ ALTER TABLE `users_kokyaku`
 -- テーブルの制約 `user_sessions`
 --
 ALTER TABLE `user_sessions`
-  ADD CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE;
+  ADD CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
