@@ -43,8 +43,6 @@ $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)+1, 1, date('Y', $times
 $day_count = date('t', $timestamp);
 // セッションに保存
 $_SESSION["day_count"] = $day_count;
-$_SESSION["ym"] = '';
-$_SESSION["ym"] = $ym;
 
 // １日が何曜日か　0:日 1:月 2:火 ... 6:土
 // 方法１：mktimeを使う
@@ -187,8 +185,8 @@ echo $_SESSION["ym"];
 
 <!-- JavaScript -->
 <script type="text/javascript">
-    let ym = "<?php echo $ym; ?>";  // 無理やりPHPの$ymをJavaScriptの変数ymに代入
-    let day_count = "<?php echo $day_count; ?>";
+    let ym = "<?=$ym; ?>";  // 無理やりPHPの$ymをJavaScriptの変数ymに代入
+    let day_count = "<?=$day_count; ?>";
 </script>
 <script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
@@ -212,12 +210,13 @@ echo $_SESSION["ym"];
         
         // エリア情報切り替え
         $('#area').on("change",function(){
+            flag = 0;
             // エリアが切り替わるたびにshift_lookの中身を削除
             let selectedElement = document.querySelector('.shift_look');
-        // 空にする
-        if(selectedElement) {
-            selectedElement.innerHTML = '';
-        }
+            // 空にする
+            if(selectedElement) {
+                selectedElement.innerHTML = '';
+            }
             // 選ばれたエリアを保存
             area_id = area.value;
 
@@ -405,11 +404,12 @@ function entryFunction() {
 function fetchShiftDates() {
     $.ajax({
         type: "POST",
-        url: "../PHP/shift_circle.php", // サーバー側のURL
+        url: "../PHP/shift_circle.php",
         dataType: "json",
         data: { facility: facility_id, ym: ym, day_count: day_count }
     }).done(function(data) {
-        console.log("シフト日付データ:", data); // データが正しく取得されているか確認
+        // console.log("シフト日付データ:", data); 
+        // データが正しく取得されているか確認
 
         // shiftDates 配列の中に shift_date プロパティがある場合、それを取得
         const shiftDates = data.map(item => item.shift_date); // 例: ["2024-12-04", "2024-12-08"]
@@ -476,6 +476,9 @@ function fetchShiftData() {
                     <div class="look">シフトが入っていません</div>`;
             }
         } else {
+            if(selectedElement) {
+                selectedElement.innerHTML = '';
+            }
             if (selectedElement) {
                 // 例) 2024年11月01日（金）のように出力するための処理
                 let newDate = new Date(selectedDate); // 最初のデータを使う
@@ -487,7 +490,7 @@ function fetchShiftData() {
             }
             // dataが空でない場合、取得したデータをループで回す
             data.forEach(function(circle) {
-                let selectedElement = document.querySelector('.shift_look');
+                // let selectedElement = document.querySelector('.shift_look');
                 
                 // circleが空でないことを確認
                 if (Object.keys(circle).length !== 0) {
