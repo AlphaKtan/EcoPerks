@@ -1,7 +1,7 @@
 /* Reset CSS 一旦全部消す*/
 * {
     margin: 0;
-    padding: 0;
+    
     box-sizing: border-box;
 }
 
@@ -135,4 +135,27 @@ button[type="submit"]:hover {
 p{
     color:red;
     font-size: 80%;
+}
+button.home_button {
+    margin-top: 10px; /* 登録ボタンとの間隔 */
+    width: 40%;
+    padding: 10px;
+    background-color: #beca16;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    text-align: center;
+}
+
+button.home_button:hover {
+    background-color: #557981;
+}
+
+button.home_button:active {
+    box-shadow:
+        inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+        inset 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
