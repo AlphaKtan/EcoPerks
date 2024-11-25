@@ -348,8 +348,17 @@ function oopsSwalSample(data) {
 </script>
 
 <script>
-entryTimeFunction() {
+function entryTimeFunction() {
     let presetForm = document.querySelector('.form');
+    let styleForm = getComputedStyle(presetForm);
+
+    if (styleForm.display !== 'none') {
+        // 現在表示されている場合に非表示にする
+        presetForm.style.display = 'none';
+    } else {
+        // 非表示の場合に再表示
+        presetForm.style.display = 'block';
+    }
 }
 // データベースに登録する処理
 function entryFunction() {
