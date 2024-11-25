@@ -88,7 +88,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
     }
 }
 // プリセットの時間を取得
-$sql = "SELECT id, start_time, end_time FROM preset";
+$sql = "SELECT id, start_time, end_time FROM preset ORDER BY start_time, end_time ASC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -150,13 +150,12 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </table>
     </div>
     
-    <button onclick='fetchShiftDates()'>test</button>
     <div class="shift_look"></div>
 
     <div class="shiftDiv" id="shiftDiv">
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
-        <form action="" method="post">
+        <form action="" method="post" class="form">
         <?php 
             foreach ($row as $rows) {
                 // 文字列をDateTimeオブジェクトに変換
@@ -176,7 +175,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
         </form>
 
-        <button>その他時間追加</button>
+        <button onclick='entryTimeFunction()'>その他時間追加</button>
         <button onclick='entryFunction()'>シフト追加</button>
     </div>
 
@@ -215,6 +214,8 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(selectedElement) {
                 selectedElement.innerHTML = '';
             }
+            // エリアを変えたときに<span class="circle"></span>を削除
+            circleDeleteAll()
             // 選ばれたエリアを保存
             area_id = area.value;
 
@@ -347,6 +348,9 @@ function oopsSwalSample(data) {
 </script>
 
 <script>
+entryTimeFunction() {
+    let presetForm = document.querySelector('.form');
+}
 // データベースに登録する処理
 function entryFunction() {
     if (flag === 1) {       // 施設が選択されている時
@@ -448,6 +452,15 @@ function fetchShiftDates() {
     }); 
 }
 
+function circleDeleteAll() {
+    const circles = document.querySelectorAll("span.circle");
+
+    // 取得した <span class="circle"> をループで削除
+    circles.forEach(function(circle) {
+        circle.parentElement.removeChild(circle);
+    });
+}
+
 function fetchShiftData() {
     let selectedElement = document.querySelector('.shift_look');
     // 空にする
@@ -462,6 +475,9 @@ function fetchShiftData() {
     }).done(function(data) {
         console.log(data);
         
+        if(selectedElement) {
+            selectedElement.innerHTML = '';
+        }
         // もしdataが空の場合は「シフトが入っていません」を表示
         if (data.length === 0) {
             if (selectedElement) {
@@ -488,8 +504,6 @@ function fetchShiftData() {
             }
             // dataが空でない場合、取得したデータをループで回す
             data.forEach(function(circle) {
-                // let selectedElement = document.querySelector('.shift_look');
-                
                 // circleが空でないことを確認
                 if (Object.keys(circle).length !== 0) {
                     if (selectedElement) {
