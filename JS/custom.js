@@ -15,6 +15,20 @@ function selectDataClear(sl){
     sl.appendChild(option);
 }
 
+function selectDataClearOnly(sl){
+    // 指定した子要素をすべて削除
+    while(sl.lastChild){
+        sl.removeChild(sl.lastChild);
+    }
+
+    // 最初のレコードを追加
+    var option = document.createElement("option");
+    option.text = "選択してください";
+    option.value = "";
+    option.hidden = true;
+    sl.appendChild(option);
+}
+
 /**
  * エリア情報を取得する処理
  * param areaId  エリアID

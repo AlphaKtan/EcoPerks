@@ -16,7 +16,7 @@ use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Color\Color;
 
 // サーバーURLを設定
-$baseUrl = 'http://i2322117.chips.jp/php/gomiclean.php';
+$baseUrl = 'localhost/ecoperks/php/gomiclean.php';
 $timestamp = time();
 
 
