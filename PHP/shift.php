@@ -1,4 +1,6 @@
 <?php
+session_start();
+// 今はデータベースの登録をtest_time_changeにしている
 require '../Model/dbModel.php';
 
 // DB接続
@@ -39,6 +41,8 @@ $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp)+1, 1, date('Y', $times
 
 // 該当月の日数を取得
 $day_count = date('t', $timestamp);
+// セッションに保存
+$_SESSION["day_count"] = $day_count;
 
 // １日が何曜日か　0:日 1:月 2:火 ... 6:土
 // 方法１：mktimeを使う
@@ -57,14 +61,14 @@ $week .= str_repeat('<td></td>', $youbi);
 
 for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 
-    // 2021-06-3
-    $date = $ym . '-' . $day;
-
+    // 2021-06-03
+    $date = $ym . '-' . sprintf('%02d', $day);
     if ($today == $date) {
-        $week .= "<td class='today' onclick='selectDate(\"$date\")'>" . $day . "<div class='circle'></div>";
+        $week .= "<td class='today' data-date='$date' onclick='selectDate(\"$date\")'>" . $day . " ";
     } else {
-        $week .= "<td onclick='selectDate(\"$date\")'>" . $day . "<div class='circle'></div>";
+        $week .= "<td data-date='$date' onclick='selectDate(\"$date\")'>" . $day;
     }
+    
     $week .= '</td>';
 
     // 週終わり、または、月終わりの場合
@@ -83,81 +87,51 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         $week = '';
     }
 }
-
+// プリセットの時間を取得
 $sql = "SELECT id, start_time, end_time FROM preset";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //デバッグ用の出力
-echo "<pre>";
-print_r($row[0]);
-echo "</pre>";
+// echo "<pre>";
+// print_r($row[0]);    
+// echo "</pre>";
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>PHPカレンダー</title>
+    <title>シフト登録画面</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-   <style>
-        a {
-            text-decoration: none;
-        }
-        th {
-            height: 30px;
-            text-align: center;
-        }
-        td {
-            height: 100px;
-        }
-        .today {
-            background: #afa48f61 !important;
-        }
-        th:nth-of-type(1), td:nth-of-type(1) {
-            color: red;
-        }
-        th:nth-of-type(7), td:nth-of-type(7) {
-            color: blue;
-        }
+    <link rel="stylesheet" href="../CSS/shiftStyle.css">
+    <style>
 
-        .selected {
-            background: yellow!important;
-        }
-
-        .shiftDiv {
-            display: none;
-        }
-
-        #shiftDiv {
-            background-color: rgba(0,0,0,0.8);
-            padding: 30px;
-        }
-
-        .box {
-            background: white;
-            display: block;
-            margin: 5px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .presetDiv {
-            background-color: rgb(81,81,81,0.8);
-            padding: 5px;
-        }
-
-        .circle {
-            width: 7px;
-            height: 7px;
-            background: green;
-            /* display: block; */
-        }
-    </style>
+</style>
 </head>
 <body>
     <div class="container mt-5">
-        <h3 class="mb-4"><a href="?ym=<?= $prev ?>">&lt;</a><span class="mx-3"><?= $html_title ?></span><a href="?ym=<?= $next ?>">&gt;</a></h3>
+        <h3 class="mb-4">
+            <a href="?ym=<?= $prev ?>">&lt;</a>
+            <span class="mx-3">
+                <?= $html_title ?>
+            </span>
+            <a href="?ym=<?= $next ?>">&gt;</a>
+
+            <form action="" method="post">
+                <select name="area" id="area">
+                    <option hidden>選択してください</option>
+                    <?php for($i=1;$i<=25;$i++){ ?>
+                        <option value="<?php echo $i ?>">エリア<?php echo $i ?></option>
+                    <?php }?>
+                </select>
+                <br>
+                <select name="facility" id="facility">
+                    <option hidden>選択してください</option>
+                    <option disabled="disabled" id="notApplicable">該当なし</option>
+                </select>
+            </form>
+        </h3>
         <table class="table table-bordered">
             <tr>
                 <th>日</th>
@@ -175,8 +149,10 @@ echo "</pre>";
             ?>
         </table>
     </div>
+    
+    <button onclick='fetchShiftDates()'>test</button>
+    <div class="shift_look"></div>
 
-    <input type="button" value="時間追加" onclick="buttonClick()">
     <div class="shiftDiv" id="shiftDiv">
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
@@ -189,7 +165,6 @@ echo "</pre>";
                 //行のidを取得
                 $rowId = $rows['id'];
                 
-                // フォーマットして表示
                 // とってきた時間帯のid(番号)をクラスに適応
                 echo <<<HTML
                 <label for="preset{$rowId}" class="box">
@@ -202,30 +177,83 @@ echo "</pre>";
         </form>
 
         <button>その他時間追加</button>
-        <button>シフト追加</button>
+        <button onclick='entryFunction()'>シフト追加</button>
     </div>
 
 
-
 <!-- JavaScript -->
+<script type="text/javascript">
+    let ym = "<?=$ym; ?>";  // 無理やりPHPの$ymをJavaScriptの変数ymに代入
+    let day_count = "<?=$day_count; ?>";
+</script>
+<script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-3.5.1.min.js"></script>
 <script src="../js/moment.min.js"></script>
 <script src="../js/ja.js"></script>
 <script src="../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../Js/custom.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
 <script>
+    var optval;
+    let flag = 0;
+    let area_id;
+    $(function(){
+        // よく使う要素を変数へ格納する
+        var area = document.getElementById("area");
+        var facility = document.getElementById("facility");
+        var notApplicable = document.getElementById("notApplicable");
+        
+        // エリア情報切り替え
+        $('#area').on("change",function(){
+            flag = 0;
+            // エリアが切り替わるたびにshift_lookの中身を削除
+            let selectedElement = document.querySelector('.shift_look');
+            // 空にする
+            if(selectedElement) {
+                selectedElement.innerHTML = '';
+            }
+            // 選ばれたエリアを保存
+            area_id = area.value;
 
-</script>
+            // 施設情報をクリアする
+            selectDataClearOnly(facility);
+            
+            // 施設のデータを取得する
+            getAreaData(area.value);
+            // 施設が選択されるたびに関数起動
+            $('#facility').on("change",function(){
+                // フラグが1なら施設が選択されている状態
+                flag = 1;
+                // 施設IDを保存
+                facility_id = facility.value;
 
-<script>
+                if(document.querySelector('.selected')) {
+                    // 施設を切り替えるたびにシフトを取ってくる
+                    fetchShiftData();
+                }
+                fetchShiftDates();
+            })
+
+            // エリアが選ばれていたら「該当なし」を消す処理
+            notApplicable.style.display ='none';
+
+            // 施設が選択されたらerrorを消す
+            if (document.querySelector('.error')) {
+                document.querySelector('.error').style.display = 'none';
+            }
+
+        })
+    });
+
+// 選ばれた日付マスに色を付ける処理
 let previouslySelected = null;
 let selectedDate = null;
-let displayNone = document.getElementsByClassName('shiftDiv');
+let shiftDiv = document.getElementsByClassName('shiftDiv');
 
 function selectDate(date) {
-    // alert("選択された日付："+ date);
-
     // 前に選択されていたセルの選択を解除
     if (previouslySelected) {
         previouslySelected.classList.remove('selected');
@@ -238,17 +266,23 @@ function selectDate(date) {
 
     // 選択された日付を保持
     selectedDate = date;
-    
+    // 日付を選択されたらshiftDivが出てくる関数
+    onShiftDiv();
+    // 施設名が選択されていてカーソルがあっている状態の時だけシフトを取得
+    if (flag === 1) {
+        fetchShiftData()
+    }
 }
 
-function buttonClick() {
-    // display:none;を解除
+function onShiftDiv() {
+    // shiftDivのdisplay:none;を解除
     if (selectedDate) {
-        for (let i = 0; i < displayNone.length; i++) {
-            displayNone[i].classList.remove('shiftDiv');
+        for (let i = 0; i < shiftDiv.length; i++) {
+            shiftDiv[i].classList.remove('shiftDiv');
         }
     }
 }
+// カレンダー関連
 $(function () {
     var ua = navigator.userAgent;
     if ((ua.indexOf('iPhone') > 0 || ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) && ua.indexOf('Mobile') > 0) {
@@ -291,6 +325,191 @@ $(function () {
         $(this).addClass('form-select').addClass($(this).val());
     });
 });
+
+// アラートシフトが登録できたとき
+function amazingSample(data) {
+    swal.fire({
+    icon: "success",
+    title: "シフトを登録出来ました！！",
+    text: data,
+    });
+}
+
+// アラートシフトが登録できなかったとき(重複したとき)
+function oopsSwalSample(data) {
+  Swal.fire({
+    icon: "error", // エラーメッセージのアイコン
+    title: "重複エラー", 
+    html: data, 
+    confirmButtonText: "閉じる" // ボタンのテキスト
+  });
+}
+</script>
+
+<script>
+// データベースに登録する処理
+function entryFunction() {
+    if (flag === 1) {       // 施設が選択されている時
+            console.log(selectedDate);
+            
+            // チェックされたチェックボックスの値を取得
+            let selectedPresets = [];
+            $('input[name="preset"]:checked').each(function() {
+                selectedPresets.push($(this).val());
+            });
+            // エリア情報があれば情報取得する
+            $.ajax({
+            type: "POST",
+            url: "../PHP/shift_entry.php",
+            dataType: "json",
+            data: { presets: selectedPresets, date: selectedDate, area: area_id, facility: facility_id }
+        }).done(function(responseData) {
+            console.log("レスポンスデータ:", responseData);
+            if (Array.isArray(responseData)) {
+                responseData.forEach(data => {
+                    console.log(data);
+                    if (data === "正常に完了") {
+                        amazingSample(data);    
+                    } else {
+                        oopsSwalSample(data);
+                    }
+                    fetchShiftDates();
+                });
+            } else {
+                console.warn("期待していない形式のデータが返されました:", responseData);
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("AJAXリクエストに失敗しました");
+            console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+            console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+            console.error("エラーメッセージ:", errorThrown);
+        });            
+    } else if(flag === 0) {
+        const shiftDivElement = document.getElementById('shiftDiv');
+        // 既にエラーメッセージが存在しないか確認
+        if (!shiftDivElement.querySelector('.error')) {
+            // エラーを出す処理
+            shiftDivElement.insertAdjacentHTML('afterbegin', '<p class="error" style="color: red; margin-top: 10px;">施設名まで選択してください</p>');
+        } else {
+            const errorStyle = getComputedStyle(errorElement); 
+            if (errorStyle.display === 'none') {
+                errorStyle.display = '';
+            }
+        }
+    }
+}
+
+function fetchShiftDates() {
+    $.ajax({
+        type: "POST",
+        url: "../PHP/shift_circle.php",
+        dataType: "json",
+        data: { facility: facility_id, ym: ym, day_count: day_count }
+    }).done(function(data) {
+        // console.log("シフト日付データ:", data); 
+        // データが正しく取得されているか確認
+
+        // shiftDates 配列の中に shift_date プロパティがある場合、それを取得
+        const shiftDates = data.map(item => item.shift_date); // 例: ["2024-12-04", "2024-12-08"]
+
+        // すべての td 要素を取得
+        const tdElements = document.querySelectorAll("td[data-date]");
+
+        // まず、すべての td 要素から円を削除
+        tdElements.forEach(function(td) {
+            const existingCircle = td.querySelector("span.circle");
+            if (existingCircle) {
+                td.removeChild(existingCircle); // 既存の円を削除
+            }
+        });
+
+        // 新たに円を追加
+        shiftDates.forEach(function(shiftDate) {
+            // tdArray を使って該当する td を探す
+            const foundTd = Array.from(tdElements).find(td => td.getAttribute("data-date") === shiftDate);
+
+            if (foundTd) {
+                // td に既に <span class="circle"> が含まれていないかチェック
+                if (!foundTd.querySelector("span.circle")) {
+                    // 一致する td に円を追加
+                    const circleSpan = document.createElement("span");
+                    circleSpan.classList.add("circle");
+                    foundTd.appendChild(circleSpan);
+                }
+            } else {
+                console.log("一致するtdは見つかりませんでした:", shiftDate);
+            }
+        });
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    }); 
+}
+
+function fetchShiftData() {
+    let selectedElement = document.querySelector('.shift_look');
+    // 空にする
+    if(selectedElement) {
+        selectedElement.innerHTML = '';
+    }
+    $.ajax({
+        type: "POST",
+        url: "../PHP/shift_fetch.php",
+        dataType: "json",
+        data: { reservation_date: selectedDate, facility: facility_id }
+    }).done(function(data) {
+        console.log(data);
+        
+        // もしdataが空の場合は「シフトが入っていません」を表示
+        if (data.length === 0) {
+            if (selectedElement) {
+                let newDate = new Date(selectedDate);
+                let getWeek = newDate.getDay();
+                const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+
+                selectedElement.innerHTML +=
+                    `<div class="date">${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）</div>
+                    <div class="look">シフトが入っていません</div>`;
+            }
+        } else {
+            if(selectedElement) {
+                selectedElement.innerHTML = '';
+            }
+            if (selectedElement) {
+                // 例) 2024年11月01日（金）のように出力するための処理
+                let newDate = new Date(selectedDate); // 最初のデータを使う
+                let getWeek = newDate.getDay();
+                const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+                
+                selectedElement.innerHTML +=
+                    `<div class="date">${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）</div>`;
+            }
+            // dataが空でない場合、取得したデータをループで回す
+            data.forEach(function(circle) {
+                // let selectedElement = document.querySelector('.shift_look');
+                
+                // circleが空でないことを確認
+                if (Object.keys(circle).length !== 0) {
+                    if (selectedElement) {
+                        selectedElement.innerHTML += `
+                            <div class="look">
+                                <span class="time">${circle.start_time_only} -${circle.end_time_only}</span>
+                                <span class="facility">${circle.facility_name}</span>
+                            </div>
+                        `;
+                    }
+                }
+            });
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    }); 
+}
 </script>
 </body>
 </html>
