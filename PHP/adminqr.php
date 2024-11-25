@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['area_id'])) {
 </head>
 <body>
     <h2>エリアを選択してください</h2>
-    <form action="sanka" method="post"> <!-- 現在のページにPOSTリクエストを送信 -->
+    <form action="sanka.php" method="post"> <!-- 現在のページにPOSTリクエストを送信 -->
         <label for="area_id">エリアID:</label>
         <select name="area_id" id="area_id">
             <?php for ($i = 1; $i <= 25; $i++): ?>
