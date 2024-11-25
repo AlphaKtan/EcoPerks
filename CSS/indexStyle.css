@@ -11,6 +11,32 @@ header {
     z-index: 100;
 }
 
+.logout_form{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 101%;
+    margin: 0px 25px;
+}
+
+button[type="submit"] {
+    padding: 10px;
+    background-color: #43AEA9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #557981;
+}
+p{
+    color:red;
+    font-size: 80%;
+}
+
 
 footer {
     background-color: #fff;
