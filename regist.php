@@ -5,19 +5,19 @@ $phonenumber_value = "";
 $email_value = "";
 $userName_value = "";
 
-if ($_POST["first_name_furigana"]){
+if (isset($_POST["first_name_furigana"])){
     $first_name_frigana_value = $_POST["first_name_furigana"];
 }
-if ($_POST["last_name_furigana"]){
+if (isset($_POST["last_name_furigana"])){
     $last_name_frigana_value = $_POST["last_name_furigana"];
 }
-if ($_POST["phonenumber"]){
+if (isset($_POST["phonenumber"])){
    $phonenumber_value = $_POST["phonenumber"];
 }
-if ($_POST["email"]){
+if (isset($_POST["email"])){
    $email_value = $_POST["email"];
 }
-if ($_POST["userName"]){
+if (isset($_POST["userName"])){
     $userName_value = $_POST["userName"];
 }
 ?>
