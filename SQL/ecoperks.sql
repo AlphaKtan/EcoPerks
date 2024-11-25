@@ -22,6 +22,31 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+-- クーポン
+CREATE TABLE `coupons` (
+  `coupon_id` int NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `coupon_code` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `discount` int NOT NULL,
+  `expiry_date` datetime NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- QRだよ
+CREATE TABLE `qr_codes` (
+  `id` int NOT NULL,
+  `area_id` int NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `generated_time` datetime NOT NULL,
+  `expiry_time` datetime NOT NULL,
+  `used` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
 
 
 
