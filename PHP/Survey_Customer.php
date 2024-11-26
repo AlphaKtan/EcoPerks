@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/indexStyle.css">
-    <link rel="stylesheet" href="../CSS/yoyakukakuninStyle.css">
+    <link rel="stylesheet" href="../CSS/formStyle.css">
     <title>アンケートフォーム</title>
 </head>
 <body>
@@ -19,7 +18,7 @@
     </div>
 </header>
 
-<div class="container">
+<section class="login_form">
     <h1>アンケートフォーム</h1>
     <form action="Survey_Customer_output.php" method="post" enctype="multipart/form-data">
         <div>
@@ -41,7 +40,7 @@
         </div>
         <button type="submit" name="submit">確認</button>
     </form>
-</div>
+</section>
 
 </body>
 </html>

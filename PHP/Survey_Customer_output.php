@@ -39,8 +39,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/indexStyle.css">
-    <link rel="stylesheet" href="../CSS/yoyakukakuninStyle.css">
+    <link rel="stylesheet" href="../CSS/formStyle.css">
     <title>アンケートフォーム</title>
 </head>
 <body>
@@ -55,7 +54,7 @@ if (isset($_POST['submit'])) {
     </div>
 </header>
 
-<div class="container">
+<section class="login_form">
     <form method="POST" action="Survey_Customer_output.php">
         <h1>フォーム確認ページ</h1>
         <div>
@@ -83,7 +82,6 @@ if (isset($_POST['submit'])) {
         <input type="hidden" name="body" value="<?php echo $body; ?>">
         <input type="hidden" name="image" value="<?php echo $image_path; ?>">
     </form>
-</div>
-
+</section>
 </body>
 </html>
