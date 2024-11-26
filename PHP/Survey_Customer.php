@@ -21,23 +21,26 @@
 <section class="login_form">
     <h1>アンケートフォーム</h1>
     <form action="Survey_Customer_output.php" method="post" enctype="multipart/form-data">
-        <div>
-            <label for="gomi">ゴミの量:</label><br>
+        <div class="form-group"> 
+            <label for="gomi">ゴミの量</label><br>
             <input type="radio" id="gomi1" name="gomi" value="1" required>
-            <label for="gomi1">多い</label><br>
+            <label for="gomi1">多い</label>
             <input type="radio" id="gomi2" name="gomi" value="2" required>
-            <label for="gomi2">まぁまぁ</label><br>
+            <label for="gomi2">まぁまぁ</label>
             <input type="radio" id="gomi3" name="gomi" value="3">
             <label for="gomi3">少ない</label>
         </div>
-        <div>
-            <label for="body">お問い合わせ内容:</label><br>
+        <br>
+        <div class="form-group">
+            <label for="body">お問い合わせ内容</label><br>
             <textarea id="body" name="body" rows="5" cols="50" required></textarea>
         </div>
-        <div>
-            <label for="image">アップロード画像（任意）:</label>
+        <div class="form-group">
+            <label for="image">アップロード画像（任意）
+            </label>
             <input type="file" id="image" name="image">
         </div>
+        <br>
         <button type="submit" name="submit">確認</button>
     </form>
 </section>

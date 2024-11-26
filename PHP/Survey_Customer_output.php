@@ -57,17 +57,17 @@ if (isset($_POST['submit'])) {
 <section class="login_form">
     <form method="POST" action="Survey_Customer_output.php">
         <h1>フォーム確認ページ</h1>
-        <div>
+        <div class="form-group">
             <strong>ゴミの量：</strong> 
             <?php 
                 $gomi_values = ['1' => '多い', '2' => 'まぁまぁ', '3' => '少ない'];
                 echo $gomi_values[$gomi]; 
             ?>
         </div>
-        <div><strong>お問い合わせ内容：</strong><br><?php echo nl2br($body); ?></div>
+        <div class="form-group"> <strong>お問い合わせ内容：</strong><br><?php echo nl2br($body); ?></div>
 
         <?php if (!empty($image_path) && $image_uploaded): ?>
-            <div>
+            <div class="form-group">
                 <strong>アップロードされた画像：</strong><br>
                 <img src="<?php echo $image_path; ?>" alt="Uploaded Image" style="max-width: 300px;">
             </div>
