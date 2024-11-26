@@ -156,10 +156,12 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
         <div class="entryTime" style="display: none; background: white; padding: 5px; margin-bottom: 10px;">
-            <label for="start-time" step="1">開始時間:</label><br>
-            <input type="time" id="start-time" name="start-time"><br>
-            <label for="end-time" step="1">終了時間:</label><br>
-            <input type="time" id="end-time" name="end-time"><br>
+            <form id="presetForm" action="" method="post">
+                <label for="start-time" step="1">開始時間:</label><br>
+                <input type="time" id="start-time" name="start-time"><br>
+                <label for="end-time" step="1">終了時間:</label><br>
+                <input type="time" id="end-time" name="end-time"><br>
+            </form>
         </div>
 
         <button onclick='entryTimeFunction()' class="back" style="display: none;">戻る</button>
@@ -369,6 +371,15 @@ $(function () {
     });
 });
 
+// アラートプリセットに登録できたとき
+function presetAmazingSample(data) {
+    swal.fire({
+    icon: "success",
+    title: "プリセットに登録出来ました！！",
+    text: data,
+    });
+}
+
 // アラートシフトが登録できたとき
 function amazingSample(data) {
     swal.fire({
@@ -408,7 +419,6 @@ function entryTimeFunction() {
         entryPreset.style.display = '';
         entryTimeBtn.style.display = 'none';
         entryBtn.style.display = 'none';
-
     } else {
         // 非表示の場合に再表示
         presetForm.style.display = 'block';
@@ -421,8 +431,28 @@ function entryTimeFunction() {
 }
 
 // プリセットに追加ボタンを押すと追加された時間をプリセットテーブルにinsertする処理
-entryTimeFunction() {
-
+function entryPresetFunction() {
+    const startTimePreset = document.getElementById("start-time").value;
+    const endTimePreset = document.getElementById("end-time").value;
+    $.ajax({
+        type: "POST",
+        url: "../PHP/shift_entryPreset.php",
+        dataType: "json",
+        data: { start_time: startTimePreset, end_time: endTimePreset }
+    }).done(function(data) {
+        
+        if(data === "正常に完了") {
+            presetAmazingSample(data);
+        } else {
+            oopsSwalSample(data);
+        }
+                
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    }); 
 }
 
 // データベースに登録する処理

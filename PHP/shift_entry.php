@@ -85,7 +85,7 @@ error_reporting(E_ALL);
 
             if ($duplicates) {
                 // 重複シフトの詳細をメッセージに追加
-                $results[] = "以下のシフトが重複しています:<br>" . implode("<br>", $duplicateDetails);
+                $results[] = "以下のシフトが重複しています<br>" . implode("<br>", $duplicateDetails);
             } else {
                 $results[] = "正常に完了";
             }
