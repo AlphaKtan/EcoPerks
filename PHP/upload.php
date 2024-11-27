@@ -75,7 +75,13 @@ session_start();
     <?php if (isset($_POST['upload'])): ?>
         <img src="../images/<?php echo $file; ?>"
          width="300" height="300" class="iconImg">
+        <?php 
+        if (isset($username)) {
+            echo "<h3>$username</h>";
+        }
+        ?>
         <p><?php echo $message; ?></p>
+
 
         <button class="menu_button" type="button">
             <a href="Mypage_user.php">マイページへ</a>
