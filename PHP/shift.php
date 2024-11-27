@@ -315,7 +315,7 @@ function selectDate(date) {
     onShiftDiv();
     // 施設名が選択されていてカーソルがあっている状態の時だけシフトを取得
     if (flag === 1) {
-        fetchShiftData()
+        fetchShiftData();
     }
 }
 
