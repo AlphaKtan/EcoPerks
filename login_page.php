@@ -40,6 +40,8 @@
 
     </form>
     <p>続行すると、利用規約とプライバシーポリシーを理解し、同意したことになります。</p>
+    <br>
+    <button onclick="window.location.href='index.html'" type="button" class="home_button">ホームに戻る</button>
 </section>
 <script>
     let inputText = ''; // 入力されたテキストを保持する変数

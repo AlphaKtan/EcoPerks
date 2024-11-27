@@ -139,11 +139,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>ご登録が完了した場合ログインページへ移動します。</h1>
         <form action="" method="post" autocomplete="off">
             <div class="form-group">
-                <label for="first_name_furigana">姓フリガナ first_name_furigana </label>
+                <label for="first_name_furigana">姓 first_name </label>
                 <input type="text" id="first_name_furigana" name="first_name_furigana" required value="<?php echo $first_name_frigana_value; ?>">
             </div>
             <div class="form-group">
-                <label for="last_name_furigana">名フリガナ last_name_furigana</label>
+                <label for="last_name_furigana">名 last_name</label>
                 <input type="text" id="last_name_furigana" name="last_name_furigana" required value="<?php echo $last_name_frigana_value; ?>">
             </div>
             <div class="form-group">
