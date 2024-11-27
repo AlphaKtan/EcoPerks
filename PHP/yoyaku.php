@@ -211,6 +211,7 @@ function selectDate(date) {
 
     // 選択された日付を保持
     selectedDate = date;
+    fetchShiftData();
 }
 
 function fetchShiftDates() {

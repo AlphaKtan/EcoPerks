@@ -69,7 +69,6 @@
 
             try {
                 // データベースに接続
-                $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 // travel_dataテーブルからエリアID順にデータを取得
