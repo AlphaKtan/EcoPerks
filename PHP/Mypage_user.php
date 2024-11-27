@@ -131,6 +131,12 @@
             </a>
         </div>
         <div class="boxA">
+            <div class="box3">
+            <a href="./upload.php">
+                <h1>名前変更</h1>
+                <p>ChangeName</p>
+                </a>
+            </div>
             <a href="../index.html">
             <div class="box4">
                 <h1>ホームに戻る</h1>
