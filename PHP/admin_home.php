@@ -40,7 +40,7 @@
         <li><a href="access_log.php">アクセスログ表示ページ</a></li>
         <li><a href="sankakanri.php">参加者管理ページ</a></li>
         <li><a href="shift.php">シフトページ</a></li>
-        
+        <li><a href="time_change.php">シフト削除</a></li>
     </ul>
 </body>
 </html>
