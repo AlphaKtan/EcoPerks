@@ -235,3 +235,21 @@ footer {
     height: 50px;
     margin: 2.5px;
   }
+
+  .link_button{
+    width: 25%;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 10px;
+    background-color: #43AEA9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.link_button:hover {
+    background-color: #557981;
+}
