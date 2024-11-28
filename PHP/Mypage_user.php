@@ -139,7 +139,7 @@
  
     
     <div class="test" style="height: 700px;"></div>
-    <footer>
+    <!-- <footer>
         <div id="flexBox02">
             <div class="flexItem02">
                 <h4>Mission</h4>
@@ -156,7 +156,7 @@
                 <img src="../img/ranking.png"width="50px" height="30px">
             </div>
         </div>
-    </footer>
+    </footer> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!--自作のJS-->
 <script src="../JS/hannbaka.js"></script>
