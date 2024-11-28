@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="../CSS/yoyakukakuninStyle.css">
     <title>予約フォーム</title>
 </head>
+<style>
+    
+</style>
 <body>
 
 <header>
     <div class="flexBox">
-        <div class="menu"></div>
+        <div class="menu">
+        <button class="link_button" onclick="history.back();">戻る</button>
+        </div>
         <div class="logo">
             <img src="../img/logo.jpg" alt="" class="logo2">
         </div>

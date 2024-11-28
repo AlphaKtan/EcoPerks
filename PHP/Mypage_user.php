@@ -60,17 +60,7 @@
     ?>
     <div class="flexBox">
         <div class="menu">
-            <div class="openbtn"><span></span><span></span><span></span></div>
-            <nav id="g-nav">
-                <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
-                    <ul>
-                        <li><a href="../index.html">Top</a></li>
-                        <li><a href="login_page.php">ログイン</a></li> 
-                        <li><a href="regist.php">アカウント作成</a></li> 
-                        <li><a href="#">Contact</a></li> 
-                    </ul>
-                </div>
-            </nav>
+        <button class="link_button" onclick="history.back();">戻る</button>
         </div>
         <div class="logo">
             <img src="../img/logo.jpg" alt="" class="logo2">
@@ -149,7 +139,7 @@
  
     
     <div class="test" style="height: 700px;"></div>
-    <footer>
+    <!-- <footer>
         <div id="flexBox02">
             <div class="flexItem02">
                 <h4>Mission</h4>
@@ -166,7 +156,7 @@
                 <img src="../img/ranking.png"width="50px" height="30px">
             </div>
         </div>
-    </footer>
+    </footer> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!--自作のJS-->
 <script src="../JS/hannbaka.js"></script>

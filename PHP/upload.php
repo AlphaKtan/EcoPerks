@@ -11,9 +11,7 @@
 <header>
         <div class="flexBox">
             <div class="menu">
-                <button class="menu_button" type="button">
-                <a href="Mypage_user.php">マイページに戻る</a>
-                </button>
+            <button class="link_button" onclick="history.back();">戻る</button>
             </div>
             <div class="logo">
                 <img src="../img/logo.jpg" alt="" class="logo2">
@@ -31,10 +29,10 @@ session_start();
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
-    echo isset($_FILES['image']) ? 'yes' : 'no';
+    // echo isset($_FILES['image']) ? 'yes' : 'no';
 
-    echo isset($_POST['username']) ? 'yes' : 'no';
-    echo !empty($_POST['username']) ? 'yes' : 'no';
+    // echo isset($_POST['username']) ? 'yes' : 'no';
+    // echo !empty($_POST['username']) ? 'yes' : 'no';
 
     $message = "";
 

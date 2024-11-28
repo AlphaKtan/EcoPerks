@@ -15,7 +15,7 @@
         $stmt->execute();
 
         // 予約フォームにリダイレクト
-        header("Location: ../perfectMap.html");
+        header("Location: ../index.html");
         exit();
     }
 ?>
