@@ -32,6 +32,7 @@
         }
         
         // データベース接続情報
+        //require_once('dn_connection.php');
         require_once('db_local.php'); // データベース接続
         require_once('../Model/dbmodel.php');
 

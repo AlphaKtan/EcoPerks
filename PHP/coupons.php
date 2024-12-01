@@ -3,7 +3,7 @@ session_start();
 
 require_once('../Model/dbModel.php');
 $pdo = dbConnect();
-$_SESSION['username'] = 'やー';
+//$_SESSION['username'] = 'やー';
 if (!isset($_SESSION['username'])) {
     $_SESSION['login_message'] = "ログインしてください。";
     header('Location: message.php');
