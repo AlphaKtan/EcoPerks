@@ -8,19 +8,19 @@
     // データベース接続情報
     function dbConnect(){
         // local
-        // $pdo = new PDO('mysql:host=localhost;dbname=ecoperks;charset=utf8','root','');
+        $pdo = new PDO('mysql:host=localhost;dbname=ecoperks;charset=utf8','root','');
         
         // lolipop
-        $pdo = new PDO("mysql:host=mysql305.phy.lolipop.lan;dbname=LAA1516370-ecoperks;charset=utf8", "LAA1516370", "ecoperks2024");
+        // $pdo = new PDO("mysql:host=mysql305.phy.lolipop.lan;dbname=LAA1516370-ecoperks;charset=utf8", "LAA1516370", "ecoperks2024");
         return $pdo;
     }
 
     function dbConn(){
         // local
-        // $conn = new mysqli('localhost', 'root', '', 'ecoperks');
+        $conn = new mysqli('localhost', 'root', '', 'ecoperks');
 
         // lolipop
-        $conn = new mysqli('mysql305.phy.lolipop.lan', 'LAA1516370', 'ecoperks2024', 'LAA1516370-ecoperks');
+        // $conn = new mysqli('mysql305.phy.lolipop.lan', 'LAA1516370', 'ecoperks2024', 'LAA1516370-ecoperks');
         return $conn;
     }
 
