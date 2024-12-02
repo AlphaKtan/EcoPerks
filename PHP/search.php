@@ -10,6 +10,7 @@ try {
 
     // URLからエリアIDを取得
     $area_id = $_GET['area_id'];
+    $_SESSION['area_id'] = $area_id;
 
     // SQLクエリを準備して実行
     $sql = "SELECT id, facility_name, address FROM travel_data WHERE area_id = :area_id";

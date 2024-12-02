@@ -3,7 +3,6 @@ session_start();
 
 if (isset($_POST['location'])) {
     $location = $_POST['location'];
-    echo $location;
     $_SESSION['location'] = $location;
 }
 // } else {
@@ -11,7 +10,7 @@ if (isset($_POST['location'])) {
 // }
 
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -40,7 +39,7 @@ if (isset($_POST['location'])) {
         <input type="submit" value="時間を確認">
     </form>
 </body>
-</html>
+</html> -->
 
 
 <?php
@@ -146,6 +145,10 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
     <style>
         label {
             display: block;
+        }
+
+        .look {
+            padding: 10px;
         }
     </style>
 </head>
@@ -354,7 +357,8 @@ function fetchShiftData() {
                 selectedElement.innerHTML +=
                     `<div class="date">${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）</div>`;
             }
-            selectedElement.textContent +=`<form action="" method="post">`;
+            selectedElement.textContent +=`<form action="yoyaku_insert.php" method="post">
+                <input type="hidden" name="date" value="${selectedDate}">`;
             // dataが空でない場合、取得したデータをループで回す
             data.forEach(function(circle) {
                 // circleが空でないことを確認
@@ -363,6 +367,8 @@ function fetchShiftData() {
                         selectedElement.textContent += `
                             <label for="facility${i}">    
                                 <div class="look">
+                                    <input type="hidden" name="start_time" value="${circle.start_time_only}">
+                                    <input type="hidden" name="end_time" value="${circle.end_time_only}">
                                     <input type="radio" name="facility" id="facility${i}">
                                     <span class="time">${circle.start_time_only} - ${circle.end_time_only}</span>
                                     <span class="facility">${circle.facility_name}</span>
@@ -375,7 +381,7 @@ function fetchShiftData() {
             });
             if (selectedElement) {
                 selectedElement.textContent += 
-                    `</form></div><input type="submit">`;
+                    `<input type="submit"></form></div>`;
                 selectedElement.innerHTML = selectedElement.textContent;
             }
         }

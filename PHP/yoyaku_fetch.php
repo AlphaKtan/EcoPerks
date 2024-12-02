@@ -13,7 +13,7 @@
         $facilityName = $_POST["facility"];
             $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";
             $facilityStmt = $pdo->prepare($facilitySql);
-            $facilityStmt->bindParam(':facility', $facilityName, PDO::PARAM_INT);
+            $facilityStmt->bindParam(':facility', $facilityName, PDO::PARAM_STR);
             $facilityStmt->execute();
             $facilityRow = $facilityStmt->fetch(PDO::FETCH_ASSOC);
     }
