@@ -1,36 +1,23 @@
-<?php 
-if (isset($_POST['submit'])) {
-    // POSTされたデータをエスケープ処理
-    $gomi = htmlspecialchars($_POST['gomi'], ENT_QUOTES, 'UTF-8');
-    $body = htmlspecialchars($_POST['body'], ENT_QUOTES, 'UTF-8');
-    
-    // アップロードされた画像を処理
-    $image_path = "";
-    if (!empty($_FILES['image']['name'])) {
-        $image_name = uniqid(mt_rand(), true) . '.' . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $image_path = "../images/" . $image_name;
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $image_path)) {
-            $image_uploaded = true;
-        } else {
-            $image_uploaded = false;
-        }
-    }
+<?php
+session_start();
+require_once('../Model/dbmodel.php');
 
-    // 確認ページを表示
-    if (isset($_POST['confirm'])) {
-        // データベースへの接続
-        try {
-            
-            //ここにコードを書く
+try {
+    $pdo = dbConnect(); // データベース接続
+} catch (PDOException $e) {
+    echo "データベース接続エラー: " . $e->getMessage();
+    exit;
+}
 
-            // 成功メッセージ
-            echo "<p>アンケートが正常に送信されました。</p>";
-        } catch (PDOException $e) {
-            echo "<p>エラー: " . $e->getMessage() . "</p>";
-        }
-    }
-} else {
-    echo "<p>送信が確認されませんでした。もう一度試してください。</p>";
+// データを取得するSQL
+try {
+    $sql = "SELECT survey_id AS survey_id, gomi, body, image_path, created_at FROM survey_responses ORDER BY created_at DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC); // 結果を取得
+} catch (PDOException $e) {
+    echo "データ取得エラー: " . $e->getMessage();
+    exit;
 }
 ?>
 
@@ -39,8 +26,8 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/formStyle.css">
-    <title>アンケートフォーム</title>
+    <link rel="stylesheet" href="../CSS/displayStyle.css">
+    <title>アンケートデータ表示</title>
 </head>
 <body>
 
@@ -54,34 +41,46 @@ if (isset($_POST['submit'])) {
     </div>
 </header>
 
-<section class="login_form">
-    <form method="POST" action="Survey_Customer_output.php">
-        <h1>フォーム確認ページ</h1>
-        <div class="form-group">
-            <strong>ゴミの量：</strong> 
-            <?php 
-                $gomi_values = ['1' => '多い', '2' => 'まぁまぁ', '3' => '少ない'];
-                echo $gomi_values[$gomi]; 
-            ?>
-        </div>
-        <div class="form-group"> <strong>お問い合わせ内容：</strong><br><?php echo nl2br($body); ?></div>
-
-        <?php if (!empty($image_path) && $image_uploaded): ?>
-            <div class="form-group">
-                <strong>アップロードされた画像：</strong><br>
-                <img src="<?php echo $image_path; ?>" alt="Uploaded Image" style="max-width: 300px;">
-            </div>
-        <?php elseif (!empty($image_path)): ?>
-            <p>画像のアップロードに失敗しました。</p>
-        <?php endif; ?>
-        
-        <!-- 送信ボタン -->
-        <button type="submit" name="confirm">送信</button>
-        <!-- 送信するデータをフォームで保持 -->
-        <input type="hidden" name="gomi" value="<?php echo $gomi; ?>">
-        <input type="hidden" name="body" value="<?php echo $body; ?>">
-        <input type="hidden" name="image" value="<?php echo $image_path; ?>">
-    </form>
+<section class="data_display">
+    <h1>アンケートデータ一覧</h1>
+    <?php if (!empty($results)): ?>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ゴミの量</th>
+                    <th>お問い合わせ内容</th>
+                    <th>画像</th>
+                    <th>作成日時</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($results as $row): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['survey_id'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td>
+                            <?php 
+                                $gomi_values = ['1' => '多い', '2' => 'まぁまぁ', '3' => '少ない'];
+                                echo $gomi_values[$row['gomi']] ?? '不明';
+                            ?>
+                        </td>
+                        <td><?php echo nl2br(htmlspecialchars($row['body'], ENT_QUOTES, 'UTF-8')); ?></td>
+                        <td>
+                            <?php if (!empty($row['image_path'])): ?>
+                                <img src="<?php echo htmlspecialchars($row['image_path'], ENT_QUOTES, 'UTF-8'); ?>" alt="Image" style="max-width: 100px;">
+                            <?php else: ?>
+                                画像なし
+                            <?php endif; ?>
+                        </td>
+                        <td><?php echo htmlspecialchars($row['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>データがありません。</p>
+    <?php endif; ?>
 </section>
+
 </body>
 </html>

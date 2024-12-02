@@ -20,7 +20,7 @@
 
 <section class="login_form">
     <h1>アンケートフォーム</h1>
-    <form action="Survey_Customer_output.php" method="post" enctype="multipart/form-data">
+    <form action="Survey_Customer_upload.php" method="post" enctype="multipart/form-data">
         <div class="form-group"> 
             <label for="gomi">ゴミの量</label><br>
             <input type="radio" id="gomi1" name="gomi" value="1" required>
