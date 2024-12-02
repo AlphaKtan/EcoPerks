@@ -34,6 +34,7 @@
         // データベース接続情報
         // 接続はこれ一つでlocalとlolipop切り替えれる
         require_once('../Model/dbmodel.php');
+        $pdo = dbConnect();
 
 
         try {
