@@ -613,7 +613,7 @@ function fetchShiftData() {
                     if (selectedElement) {
                         selectedElement.innerHTML += `
                             <div class="look">
-                                <span class="time">${circle.start_time_only} -${circle.end_time_only}</span>
+                                <span class="time">${circle.start_time_only} - ${circle.end_time_only}</span>
                                 <span class="facility">${circle.facility_name}</span>
                             </div>
                         `;

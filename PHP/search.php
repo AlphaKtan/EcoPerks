@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 try {
     require '../Model/dbModel.php';
@@ -13,6 +14,7 @@ try {
     // SQLクエリを準備して実行
     $sql = "SELECT id, facility_name, address FROM travel_data WHERE area_id = :area_id";
     $stmt = $pdo->prepare($sql);
+    
     $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
     $stmt->execute();
 
@@ -27,6 +29,21 @@ try {
         <link rel="stylesheet" href="../CSS/indexStyle.css">
         <link rel="stylesheet" href="../CSS/searchStyle.css">        
         <title>施設一覧</title>
+    <style>
+    label {
+        background: #ededed;
+        display: flex; /* ラジオボタンとテキストを横並びにする */
+        align-items: center; /* 垂直方向に中央揃え */
+        margin: 5px;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    input[type="radio"] {
+        margin-right: 10px; /* ラジオボタンとテキストの間にスペースを追加 */
+    }
+
+    </style>
     </head>
     <body>
 
@@ -44,14 +61,23 @@ try {
             <?php
                 // 結果を表示
                 if (count($results) > 0) {
-                    echo "<h1>エリア: $area_id の施設一覧</h1>";
-                    echo '<button class="link_button" onclick="history.back();">戻る</button>';
-                    echo "<ul>";
+                    echo <<<HTML
+                    <form action="yoyaku.php" method="post">
+                    <h1>エリア: $area_id の施設一覧</h1>
+                    <button class="link_button" onclick="history.back();">戻る</button>
+                    <ul>
+                    HTML;
+                    
                     foreach ($results as $row) {
-                        echo "<li>" . htmlspecialchars($row['facility_name']) . " - " . htmlspecialchars($row['address']) . 
-                        " 予約: <a href='yoyaku.php?location=" . $row['id'] . "' class='yoyaku_button'>こちらをクリック</a></li>";
+                        echo <<<HTML
+                        <label for="radio_{$row['id']}">
+                            <input type="radio" name="location"  id="radio_{$row['id']}" value="{$row['id']}">
+                            {$row['facility_name']}
+                        </label>
+                        HTML;
                     }
-                    echo "</ul>";
+                    echo '<input type="submit" value="送信">';
+                    echo "</form>";
                 } else {
                     echo "<p>該当する施設はありません。</p>";
                     echo '<button class="link_button" onclick="history.back();">戻る</button>';
