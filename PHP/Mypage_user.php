@@ -32,8 +32,7 @@
         }
         
         // データベース接続情報
-        //require_once('dn_connection.php');
-        require_once('db_local.php'); // データベース接続
+        // 接続はこれ一つでlocalとlolipop切り替えれる
         require_once('../Model/dbmodel.php');
 
 
