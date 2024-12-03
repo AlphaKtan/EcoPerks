@@ -5,6 +5,8 @@ if (isset($_POST['location'])) {
     $location = $_POST['location'];
     $_SESSION['location'] = $location;
 }
+
+
 // } else {
 //     throw new Exception("locationが指定されていません。");
 // }
@@ -48,6 +50,13 @@ require '../Model/dbModel.php';
 // DB接続
 $pdo = dbConnect();
 
+if ($_SESSION['location']) {
+    $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";
+    $facilityStmt = $pdo->prepare($facilitySql);
+    $facilityStmt->bindParam(':facility', $location, PDO::PARAM_STR);
+    $facilityStmt->execute();
+    $facilityRow = $facilityStmt->fetch(PDO::FETCH_ASSOC);
+}
 // タイムゾーンを設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -160,6 +169,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
                 <?= $html_title ?>
             </span>
             <a href="?ym=<?= $next ?>">&gt;</a>
+            <?php if(isset($facilityRow['facility_name'])){echo $facilityRow['facility_name'];} ?>
         </h3>
         <table class="table table-bordered">
             <tr>
@@ -342,7 +352,7 @@ function fetchShiftData() {
 
                 selectedElement.innerHTML +=
                     `<div class="date">${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）</div>
-                    <div class="look">シフトが入っていません</div>`;
+                    <div class="look">予定が入っていません</div>`;
             }
         } else {
             if(selectedElement) {
