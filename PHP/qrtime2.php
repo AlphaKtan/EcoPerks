@@ -19,6 +19,8 @@ $timestamp = time();
 
 // 終了用QRコードのURLを生成
 $area_id = $_SESSION['area_id'] ?? null;
+$facility_name = $_SESSION['facility_name'] ?? null;
+
 if (!$area_id) {
     echo "<h3>エリアが選択されていません。</h3>";
     exit;
