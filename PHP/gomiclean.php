@@ -23,18 +23,20 @@ if (!$expiry_time) {
 $current_datetime = date('Y-m-d H:i:s');
 
 // QRコードを取得するためのクエリ
-$sql = "SELECT * FROM qr_codes 
-        WHERE area_id = :area_id 
-        AND username = ''  
-        AND used = 0
-        ORDER BY generated_time DESC 
+$sql = "SELECT qr_codes.*, travel_data.facility_name
+        FROM qr_codes
+        JOIN travel_data ON qr_codes.area_id = travel_data.id
+        WHERE qr_codes.area_id = :area_id 
+        AND qr_codes.username = ''  
+        AND qr_codes.used = 0
+        ORDER BY qr_codes.generated_time DESC 
         LIMIT 1";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':area_id', $area_id);
 $stmt->execute();
 
-$qrCode = $stmt->fetch();
+$qrCode = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$qrCode) {
     echo "<h3>無効なQRコードです。</h3>";
@@ -59,11 +61,13 @@ if ($qrCode['expiry_time'] <= $current_datetime) {
 
 if ($action === 'start') {
     // ゴミ拾い開始のデータをログに保存
-    $sql = "INSERT INTO cleaning_records (username, area_id, start_time) 
-            VALUES (:username, :area_id, :start_time)";
+    $facility_name = $qrCode['facility_name'];
+    $sql = "INSERT INTO cleaning_records (username, area_id, facility_name, start_time) 
+            VALUES (:username, :area_id, :facility_name, :start_time)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':area_id', $area_id);
+    $stmt->bindParam(':facility_name', $facility_name);
     $stmt->bindParam(':start_time', $current_datetime);
     $stmt->execute();
 
@@ -73,7 +77,7 @@ if ($action === 'start') {
     $updateStmt->bindParam(':id', $qrCode['id']);
     $updateStmt->execute();
 
-    echo "<h3>ゴミ拾いが地点 {$area_id} で開始されました！</h3>";
+    echo "<h3>ゴミ拾いが {$facility_name}（地点 {$area_id}）で開始されました！</h3>";
 } else {
     echo "<h3>無効なアクションです。</h3>";
 }

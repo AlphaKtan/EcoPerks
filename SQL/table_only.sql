@@ -15,8 +15,9 @@ CREATE TABLE `coupons` (
 
 -- QRだよ
 CREATE TABLE `qr_codes` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `area_id` int NOT NULL,
+  `facility_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL, -- 施設名を追加
   `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `generated_time` datetime NOT NULL,
   `expiry_time` datetime NOT NULL,
@@ -37,9 +38,10 @@ CREATE TABLE `access_logs` (
 --
 
 CREATE TABLE `cleaning_records` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `username` varchar(255) NOT NULL,
   `area_id` int(11) NOT NULL,
+  `facility_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL, -- 施設名を追加
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()

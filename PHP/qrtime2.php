@@ -17,20 +17,32 @@ use Endroid\QrCode\Color\Color;
 $baseUrl = 'localhost/ecoperks/php/gomiclean_end.php';
 $timestamp = time();
 
-//終了用QRコードのURLを生成
+// 終了用QRコードのURLを生成
 $area_id = $_SESSION['area_id'] ?? null;
 if (!$area_id) {
     echo "<h3>エリアが選択されていません。</h3>";
     exit;
 }
 
+//施設名を取得するためのクエリ
+$sql = "SELECT facility_name FROM travel_data WHERE id = :area_id";
+$stmt = $pdo->prepare($sql);
+$stmt->bindParam(':area_id', $area_id);
+$stmt->execute();
+$facility = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$facility) {
+    echo "<h3>施設情報が見つかりません。</h3>";
+    exit;
+}
+
+$facility_name = $facility['facility_name'];
+
 // 開始QRコードのURLを生成
 $expiry_time = date('Y-m-d H:i:s', $timestamp + 60); // 60秒後のDATETIME形式に変換
 $endUrl = $baseUrl . '?area_id=' . $area_id . '&action=end&expiry_time=' . urlencode($expiry_time);
 
-
-
-function generateQrCode($url, $area_id, $expiry_time, $pdo) {
+function generateQrCode($url, $area_id, $expiry_time, $facility_name, $pdo) {
     // QRコードを生成
     $qrCode = QrCode::create($url)
         ->setEncoding(new Encoding('UTF-8'))
@@ -43,22 +55,20 @@ function generateQrCode($url, $area_id, $expiry_time, $pdo) {
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
 
-    
     // QRコードをデータベースに保存
-    $sql = "INSERT INTO qr_codes (area_id, expiry_time, used, generated_time) 
-    VALUES (:area_id, :expiry_time, 0, NOW())"; 
+    $sql = "INSERT INTO qr_codes (area_id, facility_name, expiry_time, used, generated_time) 
+            VALUES (:area_id, :facility_name, :expiry_time, 0, NOW())"; 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':area_id', $area_id);
-    $stmt->bindParam(':expiry_time', $expiry_time); 
+    $stmt->bindParam(':facility_name', $facility_name);
+    $stmt->bindParam(':expiry_time', $expiry_time);
     $stmt->execute();
 
     // Base64にエンコードして返す
     return '<img src="data:image/png;base64,' . base64_encode($result->getString()) . '" alt="QR Code">';
 }
+
 // QRコードのHTMLを出力
 echo "<div><strong>ゴミ拾い終了用QRコード</strong></div>";
-echo generateQrCode($endUrl, $area_id, $expiry_time, $pdo);
-
-
-
+echo generateQrCode($endUrl, $area_id, $expiry_time, $facility_name, $pdo);
 
