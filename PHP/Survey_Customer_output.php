@@ -26,8 +26,8 @@ try {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/displayStyle.css">
-    <title>アンケートデータ表示</title>
+    <link rel="stylesheet" href="../CSS/formStyle.css">
+    <title>アンケートフォーム</title>
 </head>
 <body>
 
@@ -40,6 +40,7 @@ try {
         <div class="icon"></div>
     </div>
 </header>
+
 
 <section class="data_display">
     <h1>アンケートデータ一覧</h1>
@@ -81,6 +82,7 @@ try {
         <p>データがありません。</p>
     <?php endif; ?>
 </section>
+<p>FUCKINGPTでっち上げてるから修正しよう</p>
 
 </body>
 </html>

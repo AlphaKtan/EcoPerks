@@ -31,6 +31,7 @@ try {
 
 if (isset($_POST['submit'])) {
     $gomi = htmlspecialchars($_POST['gomi'] ?? '', ENT_QUOTES, 'UTF-8');
+    $areaid = htmlspecialchars($_POST['areaid'] ?? '', ENT_QUOTES, 'UTF-8');
     $body = htmlspecialchars($_POST['body'] ?? '', ENT_QUOTES, 'UTF-8');
 
     // 画像のアップロード処理
@@ -47,6 +48,7 @@ if (isset($_POST['submit'])) {
     $_SESSION['survey_data'] = [
         'gomi' => $gomi,
         'body' => $body,
+        'areaid' => $areaid,
         'image_path' => $image_path
     ];
 }
@@ -54,14 +56,15 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['confirm']) && isset($_SESSION['survey_data'])) {
     $data = $_SESSION['survey_data'];
     try {
-        $sql = "INSERT INTO survey_responses (gomi, body, image_path) VALUES (:gomi, :body, :image_path)";
+        $sql = "INSERT INTO survey_responses (gomi, body, areaid, image_path) VALUES (:gomi, :body, :areaid, :image_path)";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':gomi', $data['gomi'], PDO::PARAM_INT);
         $stmt->bindParam(':body', $data['body'], PDO::PARAM_STR);
+        $stmt->bindParam(':areaid', $data['areaid'], PDO::PARAM_STR);
         $stmt->bindParam(':image_path', $data['image_path'], PDO::PARAM_STR);
         $stmt->execute();
 
-        echo "<p>アンケートが正常に送信されました。</p>";
+        echo "<h3>アンケートが正常に送信されました。</h3>";
         unset($_SESSION['survey_data']);
         exit;
     } catch (PDOException $e) {
@@ -71,6 +74,7 @@ if (isset($_POST['confirm']) && isset($_SESSION['survey_data'])) {
 
 $data = $_SESSION['survey_data'] ?? [];
 $gomi = $data['gomi'] ?? '';
+$areaid = $data['areaid'] ?? '';
 $body = $data['body'] ?? '';
 $image_path = $data['image_path'] ?? '';
 
@@ -82,9 +86,12 @@ $image_path = $data['image_path'] ?? '';
         <div class="form-group">
             <strong>ゴミの量：</strong>
             <?php 
-                $gomi_values = ['1' => '多い', '2' => 'まぁまぁ', '3' => '少ない'];
+                $gomi_values = ['1' => '多い', '2' => 'まぁまぁ多い', '3' => 'まぁまぁ少ない', '4' => '少ない'];
                 echo $gomi_values[$gomi] ?? '不明'; 
             ?>
+        </div>
+        <div class="form-group">
+            <p><?php echo "<h3>エリアナンバー：$areaid</h3>" ;?></p>
         </div>
         <div class="form-group">
             <strong>お問い合わせ内容：</strong><br>
