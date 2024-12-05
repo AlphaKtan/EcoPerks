@@ -33,6 +33,10 @@
         .active{
             background-color:#3636365b !important;
         }
+
+        .selectBox {
+            background-color: rgba(0, 0, 255, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -67,7 +71,7 @@
         <button onclick='searchDisplay()' id="keywordSearchBtn">キーワード検索</button>
     </div>
 
-    <div class="areainfo"></div>
+   
 
     <!-- 元の位置に戻るボタン -->
     <div id="map" style="height: 800px; display: block;"></div>
@@ -77,7 +81,7 @@
         <button id="searchButton">検索</button>
     </div>
 
-
+ <div class="areainfo"></div>
 
 
     <script>
@@ -163,29 +167,24 @@ function searchDisplay() {
 
             map.addListener('zoom_changed', updateGridSize); // ズームレベルが変わったときに呼び出す
             updateGridSize(); // 初期設定
-
-            // タイルにマウスが乗った時のイベント
-            google.maps.event.addDomListener(map.getDiv(), 'mousemove', function(event) {
-                var tiles = document.getElementsByClassName('divBox');
-                for (var i = 0; i < tiles.length; i++) {
-                    var tile = tiles[i];
-                    if (tile && isMouseOverTile(event, tile)) {
-                        tile.style.backgroundColor = 'rgba(0, 0, 255, 0.5)'; // 青色の半透明背景
-                    } else {
-                        tile.style.backgroundColor = 'rgba(255, 99, 71, 0)';
-                    }
-                }
-            });
-
             
             // タイルにクリックした時のイベント
             google.maps.event.addDomListener(map.getDiv(), 'click', function(event) {
+                
                 var tiles = document.getElementsByClassName('divBox');
+                        
                 for (var i = 0; i < tiles.length; i++) {
                     var tile = tiles[i];
                     if (tile && isMouseOverTile(event, tile)) {
                         var areaId = getAreaIdFromTile(tile.innerHTML); // タイルの内容に基づいてエリアIDを取得
                         if (areaId !== null) {
+                            // 前に選択されていたセルの選択を解除
+                            if (previouslySelected) {
+                                previouslySelected.classList.remove('selectBox');
+                            }
+                            // 新しく選択されたセルにselectedクラスを追加
+                            tile.classList.add('selectBox');
+                            previouslySelected = tile;
                             // window.location.href = 'php/search.php?area_id=' + areaId; // PHPスクリプトにエリアIDを送信
                             first(areaId);
                         }
@@ -193,6 +192,7 @@ function searchDisplay() {
                 }
             });
 
+let previouslySelected = null;
 function first(areaId) {
     let selectedElement = document.querySelector('.areainfo');
     // 空にする
