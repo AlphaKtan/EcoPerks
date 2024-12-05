@@ -63,19 +63,44 @@
     </header>
 
     <div class="search-toggle">
-        <button id="mapSearchBtn">地図検索</button>
-        <button id="keywordSearchBtn">キーワード検索</button>
+        <button onclick='mapDisplay()' id="mapSearchBtn">地図検索</button>
+        <button onclick='searchDisplay()' id="keywordSearchBtn">キーワード検索</button>
     </div>
 
     <div class="areainfo"></div>
 
     <!-- 元の位置に戻るボタン -->
-    <div id="map" style="height: 800px"></div>
+    <div id="map" style="height: 800px; display: block;"></div>
+
+    <div id="searchBar" style="display: none;">
+        <input type="text" placeholder="キーワードを入力してください" />
+        <button id="searchButton">検索</button>
+    </div>
 
 
 
 
     <script>
+function mapDisplay() {
+    const mapDiv = document.getElementById('map');
+    const searchBar = document.getElementById('searchBar');
+
+    mapDiv.style.display = 'block';
+    searchBar.style.display = 'none';
+}
+
+function searchDisplay() {
+    const mapDiv = document.getElementById('map');
+    const searchBar = document.getElementById('searchBar');
+    let selectedElement = document.querySelector('.areainfo');
+    // 空にする
+    selectedElement.innerHTML = '';
+
+    mapDiv.style.display = 'none';
+    searchBar.style.display = 'block';
+
+}
+
         var initialZoom = 12; // 初期ズームレベル
         let center = {lat: 35.010121680059264, lng: 135.7370724742484};
         
@@ -167,50 +192,7 @@
                     }
                 }
             });
-            document.addEventListener('DOMContentLoaded', () => {
-    const mapDiv = document.getElementById('map');
-    const searchBar = document.getElementById('searchBar');
-    const resultsDiv = document.getElementById('results');
-    const mapSearchBtn = document.getElementById('mapSearchBtn');
-    const keywordSearchBtn = document.getElementById('keywordSearchBtn');
-    const searchBtn = document.getElementById('searchBtn');
 
-    let currentMode = 'map'; // 'map' または 'keyword'
-
-    const toggleSearchMode = (mode) => {
-        currentMode = mode;
-        if (mode === 'map') {
-            mapDiv.style.display = 'block';
-            resultsDiv.style.display = 'none';
-        } else {
-            mapDiv.style.display = 'none';
-            resultsDiv.style.display = 'block';
-        }
-    };
-
-    mapSearchBtn.addEventListener('click', () => toggleSearchMode('map'));
-    keywordSearchBtn.addEventListener('click', () => toggleSearchMode('keyword'));
-
-    searchBtn.addEventListener('click', () => {
-        const query = searchBar.value.trim();
-        if (!query) {
-            alert('検索ワードを入力してください');
-            return;
-        }
-
-        if (currentMode === 'map') {
-            // 地図検索モードの処理
-            resultsDiv.innerHTML = `<p>「${query}」の結果が地図に表示されました。</p>`;
-            resultsDiv.style.display = 'block';
-        } else {
-            // キーワード検索モードの処理
-            resultsDiv.innerHTML = `<p>「${query}」の検索結果:</p><ul><li>結果1</li><li>結果2</li></ul>`;
-        }
-    });
-
-    // 初期状態は地図検索モード
-    toggleSearchMode('map');
-});
 function first(areaId) {
     let selectedElement = document.querySelector('.areainfo');
     // 空にする
@@ -234,6 +216,8 @@ function first(areaId) {
         console.error("エラーメッセージ:", errorThrown);
     }); 
 }
+
+
 
 
 
@@ -336,11 +320,6 @@ function first(areaId) {
                 return event.clientX >= tileRect.left && event.clientX <= tileRect.right &&
                     event.clientY >= tileRect.top && event.clientY <= tileRect.bottom;
             }
-
-            document.getElementById('resetButton').addEventListener('click', function() {
-                map.setCenter(center);
-                map.setZoom(initialZoom);
-            });
         }
 
         window.initMap = initMap;
