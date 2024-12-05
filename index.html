@@ -62,54 +62,12 @@
         </div>
     </header>
 
-
-    
-
+ <div class="search-toggle">
+        <button id="mapSearchBtn">地図検索</button>
+        <button id="keywordSearchBtn">キーワード検索</button>
+    </div>
 <!-- 元の位置に戻るボタン -->
 <div id="map" style="height: 800px"></div>
-
-    <!-- <div class="profile">
-        <div class="userFlex">
-            <div class="userFlexItem">
-                <img src="img/irasto.jpg" alt="" class="irasto">
-            </div>
-            <div class="userFlexItem">
-                <h2 class="center">ユーザー名</h2>
-                <p class="center">Emily</p>
-            </div>
-            <div class="userFlexItem">
-                <h2 class="center">現在のポイント</h2>
-                <div class="pointArea">
-                    <img src="img/point.jpg" alt="" class="point">
-                    <p>111</p>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <footer>
-        <div id="flexBox02">
-            <div class="flexItem02">
-                <h4>Mission</h4>
-                <div class="progress">
-                    <div class="progress-bar" style="width: 80%;"></div>
-                </div>
-            </div>
-            <div class="flexItem02">
-                <h4>QR</h4>
-                <img src="img/qr.png"width="45px" height="45px">
-                <a href="qr.php"></a>
-            </div>
-            <div class="flexItem02">
-                <h4 class="photo3">Photo</h4>
-                <img src="img/photo2.png"width="30px" height="30px">
-            </div>
-            <div class="flexItem02">
-                <h4>Ranking</h4>
-                <img src="img/ranking.png"width="60px" height="60px">
-            </div>
-        </div>
-    </footer> -->
-    </footer> -->
 
 
     <script>
@@ -198,11 +156,57 @@
                     if (tile && isMouseOverTile(event, tile)) {
                         var areaId = getAreaIdFromTile(tile.innerHTML); // タイルの内容に基づいてエリアIDを取得
                         if (areaId !== null) {
-                            window.location.href = 'php/search.php?area_id=' + areaId; // PHPスクリプトにエリアIDを送信
+                            windows.location.href = ''
+                            // window.location.href = 'php/search.php?area_id=' + areaId; // PHPスクリプトにエリアIDを送信
                         }
                     }
                 }
             });
+            document.addEventListener('DOMContentLoaded', () => {
+    const mapDiv = document.getElementById('map');
+    const searchBar = document.getElementById('searchBar');
+    const resultsDiv = document.getElementById('results');
+    const mapSearchBtn = document.getElementById('mapSearchBtn');
+    const keywordSearchBtn = document.getElementById('keywordSearchBtn');
+    const searchBtn = document.getElementById('searchBtn');
+
+    let currentMode = 'map'; // 'map' または 'keyword'
+
+    const toggleSearchMode = (mode) => {
+        currentMode = mode;
+        if (mode === 'map') {
+            mapDiv.style.display = 'block';
+            resultsDiv.style.display = 'none';
+        } else {
+            mapDiv.style.display = 'none';
+            resultsDiv.style.display = 'block';
+        }
+    };
+
+    mapSearchBtn.addEventListener('click', () => toggleSearchMode('map'));
+    keywordSearchBtn.addEventListener('click', () => toggleSearchMode('keyword'));
+
+    searchBtn.addEventListener('click', () => {
+        const query = searchBar.value.trim();
+        if (!query) {
+            alert('検索ワードを入力してください');
+            return;
+        }
+
+        if (currentMode === 'map') {
+            // 地図検索モードの処理
+            resultsDiv.innerHTML = `<p>「${query}」の結果が地図に表示されました。</p>`;
+            resultsDiv.style.display = 'block';
+        } else {
+            // キーワード検索モードの処理
+            resultsDiv.innerHTML = `<p>「${query}」の検索結果:</p><ul><li>結果1</li><li>結果2</li></ul>`;
+        }
+    });
+
+    // 初期状態は地図検索モード
+    toggleSearchMode('map');
+});
+
 
 
             //

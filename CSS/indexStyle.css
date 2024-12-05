@@ -114,7 +114,7 @@ footer {
 
 .map {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .map2 {
@@ -160,5 +160,31 @@ footer {
     margin-bottom: 5px;
 }
 
-/* @media screen and (min-width:400px) { 
-} */
+.search-toggle {
+    display: flex;
+    justify-content: center; /* ボタンを中央揃え */
+    align-items: center;
+    gap: 10px; /* ボタン間の隙間 */
+    margin-bottom: 10px; /* 地図との間隔 */
+    position: relative;
+    top: -10px; /* 必要に応じて微調整 */
+    z-index: 10; /* 地図より上に表示 */
+}
+
+#mapSearchBtn, #keywordSearchBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#mapSearchBtn:hover, #keywordSearchBtn:hover {
+    background-color: #0056b3;
+}
+.search-toggle{
+    margin-top :100px;
+}
