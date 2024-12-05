@@ -55,6 +55,10 @@
 </body>
 </html>
 
+<?php 
+    echo '<input type="text">';
+?>
+
 
 
 
