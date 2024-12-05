@@ -185,6 +185,11 @@ footer {
 #mapSearchBtn:hover, #keywordSearchBtn:hover {
     background-color: #0056b3;
 }
+
 .search-toggle{
     margin-top :100px;
+}
+
+.areainfo{
+    text-align: center;
 }

@@ -12,7 +12,7 @@
             width: 70%; /* マップの表示領域の幅 */
             margin-left: auto;
             margin-right: auto;
-            top: 70px
+            margin-top: 40px;
         }
 
         #resetButton {
@@ -62,12 +62,17 @@
         </div>
     </header>
 
- <div class="search-toggle">
+    <div class="search-toggle">
         <button id="mapSearchBtn">地図検索</button>
         <button id="keywordSearchBtn">キーワード検索</button>
     </div>
-<!-- 元の位置に戻るボタン -->
-<div id="map" style="height: 800px"></div>
+
+    <div class="areainfo"></div>
+
+    <!-- 元の位置に戻るボタン -->
+    <div id="map" style="height: 800px"></div>
+
+
 
 
     <script>
@@ -156,8 +161,8 @@
                     if (tile && isMouseOverTile(event, tile)) {
                         var areaId = getAreaIdFromTile(tile.innerHTML); // タイルの内容に基づいてエリアIDを取得
                         if (areaId !== null) {
-                            windows.location.href = ''
                             // window.location.href = 'php/search.php?area_id=' + areaId; // PHPスクリプトにエリアIDを送信
+                            first(areaId);
                         }
                     }
                 }
@@ -206,6 +211,29 @@
     // 初期状態は地図検索モード
     toggleSearchMode('map');
 });
+function first(areaId) {
+    let selectedElement = document.querySelector('.areainfo');
+    // 空にする
+    selectedElement.innerHTML = '';
+
+    $.ajax({
+        type: "POST",
+        url: "PHP/indexinfo.php",
+        dataType: "json",
+        data: { area_id: areaId }
+    }).done(function(data) {
+        selectedElement.innerHTML += `<h2>エリア${areaId}</h2>`;
+        data.forEach(function(area) {
+            console.log(area);
+            selectedElement.innerHTML += `<div>${area.facility_name}</div>`;
+        });
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    }); 
+}
 
 
 
