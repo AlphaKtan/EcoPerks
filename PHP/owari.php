@@ -164,6 +164,7 @@ try {
 </head>
 <body>
     <h3>ゴミ拾い終わり</h3>
+    <h3>Cleaning Finish QR code</h3>
     <div id="qr-codes" class="qr-container">
         <!-- ここにQRコードが表示されます -->
     </div>

@@ -172,6 +172,7 @@
 </head>
 <body>
     <h3>ゴミ拾い開始</h3>
+    <h3>Cleaning Start QR code</h3>
     <div id="qr-codes" class="qr-container">
         <!-- ここにQRコードが表示されます -->
     </div>
