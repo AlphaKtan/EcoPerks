@@ -8,7 +8,7 @@
     if (isset($_POST['keyword'])) {
         $keyword = $_POST['keyword'];
     } else {
-        $keyword = "なにもない";
+        $keyword = null;
     }
 
     $sql = "SELECT id, facility_name, area_id, romaji, kana
@@ -23,9 +23,5 @@
     $results = $stmt->fetchAll();
     if (isset($results)) {
         echo json_encode($results);
-    } else {
-        $no = "何もない";
-        echo json_encode("$no");
     }
-    
 ?>
