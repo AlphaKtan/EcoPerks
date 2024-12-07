@@ -137,7 +137,7 @@ INSERT INTO `travel_data` (`id`, `area_id`, `facility_name`, `address`) VALUES
 -- (25, '萬福寺', '〒611-0011 京都府宇治市五ケ庄三番割３４'),
 -- (25, '三室戸寺 しだれ梅園', '〒611-0013 京都府宇治市莵道滋賀谷２１');
 
--- INSERT INTO `travel_data` (`area_id`, `facility_name`, `address`, `romaji`, `kana`) VALUES
+-- INSERT INTO `demo_travel_data` (`area_id`, `facility_name`, `address`, `romaji`, `kana`) VALUES
 -- (1, '金閣寺', '京都府京都市北区金閣寺町１', 'kinkakuji', 'きんかくじ'),
 -- (1, '今宮神社', '京都府京都市北区紫野今宮町21', 'imamiyajinja', 'いまみやじんじゃ'),
 -- (1, '大徳寺', '京都府京都市北区紫野大徳寺町５３', 'daitokuji', 'だいとくじ'),
@@ -178,7 +178,7 @@ INSERT INTO `travel_data` (`id`, `area_id`, `facility_name`, `address`) VALUES
 -- (11, '毘沙門堂', '京都府京都市山科区安朱稲荷山町１８', 'bishamondo', 'びしゃもんどう'),
 -- (11, '元慶寺', '京都府京都市山科区北花山河原町１３', 'genkyoji', 'げんきょうじ'),
 -- (11, '疏水公園', '京都府京都市山科区四ノ宮泉水町２９−６', 'sosuikoen', 'そすいこうえん'),
--- (11, '東山浄苑 東本願寺', '京都府京都市山科区上花山旭山町８−１', 'higashiyamajouen', 'ひがしやまじょうえん');
+-- (11, '東山浄苑 東本願寺', '京都府京都市山科区上花山旭山町８−１', 'higashiyamajouen', 'ひがしやまじょうえん'),
 -- (12, '正法寺', '京都府京都市西京区大原野南春日町1102', 'shouhouji', 'しょうほうじ'),
 -- (12, '大原野神社', '京都府京都市西京区大原野南春日町1152', 'ooharanojinja', 'おおはらのじんじゃ'),
 -- (12, '千弥農園', '京都府京都市西京区大枝西長町1-60', 'senyanouen', 'せんやのうえん'),
@@ -195,7 +195,7 @@ INSERT INTO `travel_data` (`id`, `area_id`, `facility_name`, `address`) VALUES
 -- (18, '乙訓寺', '京都府長岡京市今里３丁目１４−７', 'otokonji', 'おとこにんじ'),
 -- (20, '月桂冠大倉記念館', '京都府京都市伏見区南浜町２４７', 'gekkeikan okura kinenkan', 'げっけいかんおおくらきねんかん'),
 -- (20, '伏見桃山城', '京都府京都市伏見区桃山町大蔵４５', 'fushimimomoyamajou', 'ふしみももやまじょう'),
--- (20, '御香宮神社', '京都府京都市伏見区御香宮門前町１７４', 'goukoumiya jinja', 'ごこうみやじんじゃ');
+-- (20, '御香宮神社', '京都府京都市伏見区御香宮門前町１７４', 'goukoumiya jinja', 'ごこうみやじんじゃ'),
 -- (21, '大岩神社', '京都府京都市伏見区深草向ケ原町８９−２', 'oiwajinja', 'おおいわじんじゃ'),
 -- (21, '醍醐寺', ' 京都府京都市伏見区醍醐東大路町２２', 'daigoji', 'だいごじ'),
 -- (21, '一言寺（金剛王院）', '京都府京都市伏見区醍醐柏森町２−３', 'hitokotoji kongououin', 'ひとことじ こんごうおういん'),
