@@ -59,13 +59,7 @@
         }); 
     }
 
-    // search.oninput = searchFacilities;
-    // inputイベントを使って検索処理を実行
-    search.addEventListener('keydown', function(event) {
-        if (event.key !== 'Enter') {
-            searchFacilities();
-        }
-    });
+    search.oninput = searchFacilities;
 
 </script>
 
