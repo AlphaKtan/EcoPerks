@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+    <!-- test.php -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,49 +16,54 @@
     </style>
 </head>
 <body>
-<form action="" method="post">
-    <label for="facility1">
-        
-        <div class="look">
-        <input type="radio" name="facility" id="facility1">
-            <span class="time">09:00 -10:00</span>
-            <span class="facility">金閣寺</span>
-        </div>
-    </label>
+<script src="Js/jquery-3.7.1.min.js"></script>
+<input type="text" id="search">
+<div class="results"></div>
 
-    <label for="facility2">
-        
-        <div class="look">
-        <input type="radio" name="facility" id="facility2">
-            <span class="time">09:00 -10:00</span>
-            <span class="facility">金閣寺</span>
-        </div>
-    </label>
+<script>
+    let search = document.getElementById("search");
+    let result = document.querySelector('.results');
+    result.innerHTML = "";
 
-    <label for="facility3">
-        
-        <div class="look">
-        <input type="radio" name="facility" id="facility3">
-            <span class="time">09:00 -10:00</span>
-            <span class="facility">金閣寺</span>
-        </div>
-    </label>
+    function searchFacilities() {
+        const keyword = document.getElementById("search").value.trim();
+        // 入力が空の場合はリクエストしない
+        if (keyword === "") {
+            result.innerHTML = ""; // 空の場合はリセット
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "./test_output.php",
+            dataType: "json",
+            data: { keyword: keyword }
+        }).done(function(data) {
+            result.innerHTML = "";
+            console.log(data);
+            data.forEach(function(results) {
+            result.textContent += `
+            <div class="result">
+                <div class="facility">
+                    ${results.facility_name} (${results.romaji})
+                </div>
+            </div>
+            `;
+            });
+            result.innerHTML = result.textContent;
+                    
+        }).fail(function(jqXHR, textStatus, errorThrown)  {
+            console.error("AJAXリクエストに失敗しました");
+            console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+            console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+            console.error("エラーメッセージ:", errorThrown);
+        }); 
+    }
 
-    <label for="facility4">
-        
-        <div class="look">
-        <input type="radio" name="facility" id="facility4">
-            <span class="time">09:00 -10:00</span>
-            <span class="facility">金閣寺</span>
-        </div>
-    </label>
-</form>
-</body>
-</html>
+    search.oninput = searchFacilities;
 
-<?php 
-    echo '<input type="text">';
-?>
+</script>
+
+
 
 
 

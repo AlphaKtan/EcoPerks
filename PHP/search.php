@@ -9,7 +9,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //PHP例外フロー
 
     // URLからエリアIDを取得
-    $area_id = $_GET['area_id'];
+    $area_id = 10;
     $_SESSION['area_id'] = $area_id;
 
     // SQLクエリを準備して実行
