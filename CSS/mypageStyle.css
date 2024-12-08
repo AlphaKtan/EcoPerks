@@ -21,9 +21,21 @@ header {
     height: 60px;
     top: 0; /* 上部から配置の基準位置を決める */
     background-color: white;
-    position: fixed
+    /* position: fixed */
 }
 
+.sub_header{
+    display:flex; 
+    background-color: white;
+}
+.sub_header_box1{
+    padding: 23px 70%;
+    background-color: aquamarine;
+}
+.sub_header_box2{
+    padding: 23px 30%;
+    background-color: aquamarine;
+}
 footer {
     background-color: #fff;
     color: #fff;

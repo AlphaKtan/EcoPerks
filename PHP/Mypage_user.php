@@ -69,6 +69,11 @@
         <div class="icon"></div>
     </div>
     </header>
+    <div class="sub_header">
+        <div class="sub_header_box1"></div>
+        
+        <div class="sub_header_box2"></div>
+    </div>
     <div class="profile">
         <div class="userFlex">
             <div class="userFlexItem">
@@ -82,6 +87,7 @@
             </div>
 
             <div class="userFlexItem">
+            <a href="./upload.php">
                 <h2 class="center">
                     <?php
                     if($row){
@@ -91,6 +97,7 @@
                         }
                     }?>
                 </h2>
+            </a>
             </div>
             <div class="userFlexItem">
                 <h2 class="center">現在のポイント</h2>
