@@ -5,42 +5,265 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理者向け総合ページ</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        h1 {
-            font-size: 36px; /* タイトルの文字サイズ */
-            margin-bottom: 30px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 15px 0;
-        }
-        a {
-            text-decoration: none;
-            color: #007bff;
-            font-size: 24px; /* リンクの文字サイズ */
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+                    *{
+                margin: 0;
+            }
+
+            .h1_White{
+                color: white;
+                width: 100%;
+                text-align: center;
+            }
+
+            .header{
+                background-color: #99CCFF;
+                padding: 15px;
+                position: fixed;
+                width: 100%;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                z-index: 100;
+            }
+
+            .space {
+                width: 200px;
+            }
+
+            .back {
+                width:100%;
+                height: 100%;
+            }
+
+            .log_out {
+                padding: 10px;
+                background-color: #005aae;
+                border: none;
+                border-radius: 20px;
+                margin-right: 100px;
+                color: white;
+                font-size: 16px;
+            }
+
+            .log_out:hover {
+                background-color: #004488;
+            }
+
+            .New_log {
+                display: flex;
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .log_style {
+                padding: 10px;
+                background-color: #005aae;
+                border: none;
+                border-radius: 20px;
+                margin-right: 10px;
+                color: white;
+                font-size: 16px;
+            }
+
+            .log_style:hover {
+                background-color: #004488;
+            }
+
+            .rightM {
+                margin-right: 100px;
+            }
+
+            .left-menu{
+                margin-top: 88px;
+            }
+
+            .right-content {
+                margin-top: 88px;
+            }
+
+            .user_top_form {
+                position: fixed;
+            }
+
+            .seller_top_form {
+                position: fixed;
+            }
+
+            .error_red {
+                color: red;
+            }
+
+            .Amozon-container {
+                display: flex;
+                font-family: 'Arial', sans-serif;
+                width: 100%;
+                height: 100vh;
+            }
+
+
+            .logo{
+                width: 40px;
+                height: auto;
+            }
+
+            .logo_moji{
+                height: 40px;
+            }
+
+            .left-menu {
+                width: 0 auto;
+                padding: 20px 20px 20px 10px;
+                border-right: 1px solid #e0e0e0;
+                display: flex;
+                position: fixed;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 88%;
+            }
+
+            .menu-list-bottom {
+                list-style-type: none;
+                padding: 0;
+                width: 100%;
+                text-align: left;
+            }
+
+            .menu-list {
+                list-style-type: none;
+                padding: 0;
+                width: 100%;
+                margin-bottom: auto;
+            }
+
+            .menu-item, .menu-item-logo {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                width: 100%;
+                padding: 10px 0 10px 5px;
+                margin-bottom: 10px;
+                cursor: pointer;
+                border-radius: 8px;
+            }
+
+            .menu-item:hover {
+                background-color: #DBDBDB;
+            }
+
+            .menu-item-icon {
+                font-size: 24px;
+                margin-right: 10px;
+            }
+
+            .menu-item-text-logo {
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                top: -3px;  /* 下に移動する量。調整が必要な場合はこの値を変更してください */
+            }
+
+            .menu-item-text{
+                margin-left: 10px;
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                top: -5px;
+            }
+
+            .menu-item-text-chat{
+                margin-left: 10px;
+            }
+
+            a, a:hover, a:active, a:visited {
+                color: #000;
+                text-decoration: none;
+            }
+
+            .right-content {
+                margin-left: 280px;
+                width: 100%;
+                height: 100%;
+            }
+
+            .tuuti {
+                max-width: 35px;
+                margin-left: 10px;
+                padding: 5px;
+                border-radius: 100px;
+                background-color: #000;
+                color: white;
+            }
+
+
+
+            /* 1266px以下でのスタイル */
+            @media screen and (max-width: 1266px) {
+                .left-menu {
+                    width: 60px;
+                    padding: 20px 10px 20px 5px;
+                }
+
+                .menu-item-text, .menu-item-text-logo, .menu-item-text-chat{
+                    display: none;
+                }
+
+                .menu-item, .menu-item-logo {
+                    justify-content: center;
+                    padding: 10px;
+                    box-sizing: border-box;   
+                }
+
+                .menu-item:hover {
+                    background-color: #DBDBDB;
+                    border-radius: 10%; /* 丸いホバーエフェクトを適用するためのスタイル */
+                }
+
+                .right-content {
+                    margin-left: 110px;
+                }
+
+                .tuuti {
+                    margin-left: 8px;
+                }
+            }
+
+            .backBtn {
+                width:48px;
+                height: 100%;
+                margin-left: 64px;
+                padding-left: 15px;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+            .backBtn:hover {
+                background-color: white;
+            }
+
     </style>
 </head>
 <body>
+    <div class="left-menu">
     <h1>管理者向け総合ページ</h1>
-    <ul>
-        <li><a href="admin.php">管理者ページ</a></li>
-        <li><a href="adminqr.php">QRコード生成ページ</a></li>
-        <li><a href="adminqr_end.php">QRコード終了管理</a></li>
-        <li><a href="data.php">データ管理ページ</a></li>
-        <li><a href="access_log.php">アクセスログ表示ページ</a></li>
-        <li><a href="sankakanri.php">参加者管理ページ</a></li>
-        <li><a href="shift.php">シフトページ</a></li>
-        <li><a href="time_change.php">シフト削除</a></li>
+    <ul class="menu-list">
+                    <ul class="menu-list">
+                        <li class="menu-item-logo"><a href="admin.php" class="a_link">管理者ページ</span></a></li>
+                        <li class="menu-item"><a href="adminqr.php" class="a_link">QRコード生成ページ</span></a></li>
+                        <li class="menu-item"><a href="adminqr_end.php" class="a_link">QRコード終了管理</span></a></li>
+                        <li class="menu-item"><a href="data.php" class="a_link">データ管理ページ</span></a></li>
+                        <li class="menu-item"><a href="access_log.php" class="a_link">アクセスログ表示ページ</span></a></li>
+                        <li class="menu-item"><a href="sankakanri.php" class="a_link">参加者管理ページ</span></a></li>
+                        <li class="menu-item"><a href="shift.php" class="a_link">シフトページ</span></a></li>
+                        <li class="menu-item"><a href="time_change.php" class="a_link">シフト削除</span></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="menu-list-bottom">
+                    </ul>
+                </div>
+            </div>
+            <div class="right-content"></div>
     </ul>
 </body>
 </html>
