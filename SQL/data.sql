@@ -137,7 +137,7 @@ INSERT INTO `travel_data` (`id`, `area_id`, `facility_name`, `address`) VALUES
 -- (25, '萬福寺', '〒611-0011 京都府宇治市五ケ庄三番割３４'),
 -- (25, '三室戸寺 しだれ梅園', '〒611-0013 京都府宇治市莵道滋賀谷２１');
 
-INSERT INTO `demo_travel_data` (`area_id`, `facility_name`, `address`, `romaji`, `kana`) VALUES
+INSERT INTO `travel_data` (`area_id`, `facility_name`, `address`, `romaji`, `kana`) VALUES
 (1, '金閣寺', '京都府京都市北区金閣寺町１', 'kinkakuji', 'きんかくじ'),
 (1, '今宮神社', '京都府京都市北区紫野今宮町21', 'imamiyajinja', 'いまみやじんじゃ'),
 (1, '大徳寺', '京都府京都市北区紫野大徳寺町５３', 'daitokuji', 'だいとくじ'),
