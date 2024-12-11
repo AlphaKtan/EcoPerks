@@ -123,6 +123,10 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         .look {
             padding: 10px;
         }
+
+        .facility_span {
+            margin-left: auto;
+        }
     </style>
 </head>
 <body>
@@ -133,7 +137,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
                 <?= $html_title ?>
             </span>
             <a href="?ym=<?= $next ?>&location=<?= $location ?>">&gt;</a>
-            <?php if(isset($facilityRow['facility_name'])){echo $facilityRow['facility_name'];} ?>
+            <?php if(isset($facilityRow['facility_name'])){echo "<span class='facility_span'>".$facilityRow['facility_name']."</span>";} ?>
         </h3>
         <table class="table table-bordered">
             <tr>
