@@ -138,7 +138,7 @@ let search = document.getElementById("search");
             data.forEach(function(results) {
             result.textContent += `
             <div class="result">
-                <a href='PHP/yoyaku.php' link class="facility">
+                <a href='PHP/yoyaku.php?location=${results.id}' link class="facility">
                     ${results.facility_name} (${results.romaji})
                 </a>
             </div>
