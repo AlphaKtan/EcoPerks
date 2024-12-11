@@ -41,6 +41,11 @@
             position: relative;
             left: 4%;
         }
+
+        .logo1 {
+            width: 30%;
+            min-width: 120px;
+        }
         .peoplue{
             bottom: 20px;
             width: 10%;
@@ -95,13 +100,14 @@
     </style>
 </head>
 <body>
-<!-- <div id="div">
-    <img src="../img/logo.jpg" class="logo" alt="">
+
+<div id="div">
+    <img src="../img/logo_yoko.svg" class="logo1" alt="">
     <div class="textBox">
         <p>Eco Perksは、ゴミ掃除ツアーを通じて京都を美しくするサポートをします。</p>
     </div>
     <img src="../img/mountain.png" class="mountain" alt="">
-</div> -->
+</div>
 
 
 <!-- <div id="div2">
@@ -135,7 +141,7 @@
     <img src="../img/mountain.png" class="mountain" alt="">
 </div> -->
 
-<div id="div2">
+<!-- <div id="div2">
     <div>
         <h1>さあ、ツアーを始めましょう！</h1>
         <span class="border_span"></span>
@@ -149,13 +155,13 @@
             ツアーに参加しましょう！</p>
     </div>
     <img src="../img/mountain.png" class="mountain" alt="">
-</div>
+</div> -->
 
-<div class="your-class">
+<!-- <div class="your-class">
     <div>your content</div>
     <div>your content</div>
     <div>your content</div>
-  </div>
+</div> -->
 
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
