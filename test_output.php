@@ -12,7 +12,7 @@
     }
 
     $sql = "SELECT id, facility_name, area_id, romaji, kana
-            FROM `demo_travel_data`
+            FROM `travel_data`
             WHERE `facility_name` COLLATE utf8mb4_unicode_ci LIKE :keyword
             OR `romaji` COLLATE utf8mb4_unicode_ci LIKE :keyword
             OR `kana` COLLATE utf8mb4_unicode_ci LIKE :keyword
