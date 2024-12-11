@@ -42,6 +42,7 @@
         #search {
             border: solid 1px;
             background: white;
+            margin: 5px;
         }
     </style>
 </head>
@@ -137,9 +138,9 @@ let search = document.getElementById("search");
             data.forEach(function(results) {
             result.textContent += `
             <div class="result">
-                <div class="facility">
+                <a href='PHP/yoyaku.php' link class="facility">
                     ${results.facility_name} (${results.romaji})
-                </div>
+                </a>
             </div>
             `;
             });

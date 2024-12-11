@@ -193,3 +193,12 @@ footer {
 .areainfo{
     text-align: center;
 }
+
+.facility {
+    display: block;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border: solid 1px #000;
+    background: #fff;
+}
