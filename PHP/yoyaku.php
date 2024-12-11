@@ -128,11 +128,11 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 <body>
     <div class="container mt-5">
         <h3 class="mb-4">
-            <a href="?ym=<?= $prev ?>&location=<?= $prev ?>">&lt;</a>
+            <a href="?ym=<?= $prev ?>&location=<?= $location ?>">&lt;</a>
             <span class="mx-3">
                 <?= $html_title ?>
             </span>
-            <a href="?ym=<?= $next ?>">&gt;</a>
+            <a href="?ym=<?= $next ?>&location=<?= $location ?>">&gt;</a>
             <?php if(isset($facilityRow['facility_name'])){echo $facilityRow['facility_name'];} ?>
         </h3>
         <table class="table table-bordered">

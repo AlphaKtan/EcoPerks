@@ -40,9 +40,25 @@
         }
 
         #search {
+            width: 40%;
             border: solid 1px;
             background: white;
-            margin: 5px;
+            margin: 5px 5px 5px 8%;
+            padding: 10px;
+        }
+
+        .facility {
+            display: block;
+            width: 80%;
+            margin: 10px 10px 10px 8%;
+            padding: 15px;
+            border: solid 1px #43AEA9;
+            background: #fff;
+            transition-duration: .4s;
+        }
+
+        .facility:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -85,7 +101,6 @@
 
     <div id="searchBar" style="display: none;">
         <input type="text" id="search" placeholder="キーワードを入力してください" />
-        <button id="searchButton">検索</button>
     </div>
 
  <div class="areainfo"></div>
@@ -95,7 +110,7 @@
 
 
 
-    <script>
+<script>
 function mapDisplay() {
     const mapDiv = document.getElementById('map');
     const searchBar = document.getElementById('searchBar');
@@ -107,6 +122,7 @@ function mapDisplay() {
 function searchDisplay() {
     const mapDiv = document.getElementById('map');
     const searchBar = document.getElementById('searchBar');
+    const search = document.getElementById('search');
     let selectedElement = document.querySelector('.areainfo');
     // 空にする
     selectedElement.innerHTML = '';
@@ -114,6 +130,8 @@ function searchDisplay() {
     mapDiv.style.display = 'none';
     searchBar.style.display = 'block';
 
+    search.value = '';
+    search.focus();
 }
 
 let search = document.getElementById("search");
