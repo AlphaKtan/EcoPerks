@@ -29,8 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['facility_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理者様施設選択ページ</title>
 </head>
+<style>
+body{
+        background-color: #FFF6E9;
+}
+
+</style>    
 <body>
-    <h2>施設を選択してください</h2>
+    <h2>エリア検索</h2>
+    <p class="area">エリアID</p>
     <form action="" method="post"> <!-- 現在のページにPOSTリクエストを送信 -->
         <label for="facility_id">施設名:</label>
         <select name="facility_id" id="facility_id">
@@ -38,10 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['facility_id'])) {
                 <option value="<?php echo htmlspecialchars($facility['id'], ENT_QUOTES, 'UTF-8'); ?>">
                     <?php echo htmlspecialchars($facility['facility_name'], ENT_QUOTES, 'UTF-8'); ?>
                 </option>
-            <?php endforeach; ?>
+            <?php endforeach; ?>    
         </select>
+       <p>※QR発行後、参加者が読み取り次第、ゴミ拾いが開始します。</p>
         <br><br>
-        <button type="submit">選択</button>
+            <button type="submit">選択する</button>
     </form>
 </body>
 </html>
