@@ -112,9 +112,10 @@ body {
     padding: 0;
     width: 100%;
     margin-bottom: auto;
+    
 }
 
-.menu-item, .menu-item-logo {
+.menu-item{
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -123,6 +124,14 @@ body {
     margin-bottom: 10px;
     cursor: pointer;
     border-radius: 8px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    padding: 10px 5px;
 }
 
 .menu-item:hover {
@@ -145,8 +154,6 @@ body {
     margin-left: 10px;
     display: inline-block;
     vertical-align: middle;
-    position: relative;
-    top: -5px;
 }
 
 .menu-item-text-chat{
@@ -182,13 +189,12 @@ a, a:hover, a:active, a:visited {
         padding: 20px 10px 20px 5px;
     }
 
-    .menu-item-text, .menu-item-text-logo, .menu-item-text-chat{
+    .menu-item-text, .text-box, .menu-item-text-chat{
         display: none;
     }
 
-    .menu-item, .menu-item-logo {
+    .menu-item {
         justify-content: center;
-        padding: 10px;
         box-sizing: border-box;   
     }
 
@@ -217,4 +223,16 @@ a, a:hover, a:active, a:visited {
 
 .backBtn:hover {
     background-color: white;
+}
+
+.text-box{
+    margin-top: 25px;
+}
+
+.a_link{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
 }

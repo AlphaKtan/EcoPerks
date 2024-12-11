@@ -12,9 +12,12 @@
     <div class="left-menu">
         <div>
             <ul class="menu-list">
-                <li class="menu-item-logo"><a href="admin.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text-logo">ログイン</span></a></li>
+                <p class="text-box">アカウント情報</p>
+                <li class="menu-item"><a href="admin.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text">ログイン</span></a></li>
+                <p class="text-box">QRコード</p>
                 <li class="menu-item"><a href="adminqr.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text">QRコード生成ページ</span></a></li>
                 <li class="menu-item"><a href="adminqr_end.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text">QRコード終了管理</span></a></li>
+                <p class="text-box">その他/管理・表示</p>
                 <li class="menu-item"><a href="data.php" class="a_link"><img src="../img/qr.png" class="logo"></span><span class="menu-item-text-chat">データ管理ページ</span></a></li>
                 <li class="menu-item"><a href="sankakanri.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text">参加者管理ページ</span></a></li>
                 <li class="menu-item"><a href="shift.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text">シフトページ</span></a></li>
