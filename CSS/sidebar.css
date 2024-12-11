@@ -1,0 +1,220 @@
+body {
+    background-color: #FFF6E9;
+}
+.header{
+    background-color: #99CCFF;
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.space {
+    width: 200px;
+}
+
+.back {
+    width:100%;
+    height: 100%;
+}
+
+.log_out {
+    padding: 10px;
+    background-color: #005aae;
+    border: none;
+    border-radius: 20px;
+    margin-right: 100px;
+    color: white;
+    font-size: 16px;
+}
+
+.log_out:hover {
+    background-color: #004488;
+}
+
+.New_log {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.log_style {
+    padding: 10px;
+    background-color: #005aae;
+    border: none;
+    border-radius: 20px;
+    margin-right: 10px;
+    color: white;
+    font-size: 16px;
+}
+
+.log_style:hover {
+    background-color: #004488;
+}
+
+.rightM {
+    margin-right: 100px;
+}
+
+.user_top_form {
+    position: fixed;
+}
+
+.seller_top_form {
+    position: fixed;
+}
+
+.error_red {
+    color: red;
+}
+
+.Amozon-container {
+    display: flex;
+    font-family: 'Arial', sans-serif;
+    width: 100%;
+    height: 100vh;
+}
+
+
+.logo{
+    width: 40px;
+    height: auto;
+}
+
+.logo_moji{
+    height: 40px;
+}
+
+.left-menu {
+    width: 250px;
+    padding: 20px 20px 20px 10px;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 88%;
+}
+
+.menu-list-bottom {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin-bottom: auto;
+}
+
+.menu-item, .menu-item-logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px 0 10px 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.menu-item:hover {
+    background-color: #DBDBDB;
+}
+
+.menu-item-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.menu-item-text-logo {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;  /* 下に移動する量。調整が必要な場合はこの値を変更してください */
+}
+
+.menu-item-text{
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -5px;
+}
+
+.menu-item-text-chat{
+    margin-left: 10px;
+}
+
+a, a:hover, a:active, a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+.right-content {
+    margin-left: 280px;
+    width: 100%;
+    height: 100%;
+}
+
+.tuuti {
+    max-width: 35px;
+    margin-left: 10px;
+    padding: 5px;
+    border-radius: 100px;
+    background-color: #000;
+    color: white;
+}
+
+
+
+/* 1266px以下でのスタイル */
+@media screen and (max-width: 1266px) {
+    .left-menu {
+        width: 60px;
+        padding: 20px 10px 20px 5px;
+    }
+
+    .menu-item-text, .menu-item-text-logo, .menu-item-text-chat{
+        display: none;
+    }
+
+    .menu-item, .menu-item-logo {
+        justify-content: center;
+        padding: 10px;
+        box-sizing: border-box;   
+    }
+
+    .menu-item:hover {
+        background-color: #DBDBDB;
+        border-radius: 10%; /* 丸いホバーエフェクトを適用するためのスタイル */
+    }
+
+    .right-content {
+        margin-left: 110px;
+    }
+
+    .tuuti {
+        margin-left: 8px;
+    }
+}
+
+.backBtn {
+    width:48px;
+    height: 100%;
+    margin-left: 64px;
+    padding-left: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.backBtn:hover {
+    background-color: white;
+}

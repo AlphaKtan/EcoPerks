@@ -192,4 +192,13 @@ footer {
 
 .areainfo{
     text-align: center;
+    background-color: white;
+    width:400px;
+    margin: 0 auto;
+
+}
+
+.simple1{
+    color:green;
+    font-size: 32px;
 }

@@ -204,7 +204,7 @@ function first(areaId) {
         dataType: "json",
         data: { area_id: areaId }
     }).done(function(data) {
-        selectedElement.innerHTML += `<h2>エリア${areaId}</h2>`;
+        selectedElement.innerHTML += `<h2 class ="simple1">エリア${areaId}</h2>`;
         data.forEach(function(area) {
             console.log(area);
             selectedElement.innerHTML += `<div>${area.facility_name}</div>`;
