@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>QRコードのテスト</title>
+    <title>QRコードの読み取り</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
     <style>
         #wrapper{
@@ -34,7 +34,7 @@
             left: 0px;
         }
 
-        #qr-msg2{
+        #reload{
             position: absolute;
             top: 550px;
             left: 0px;
@@ -48,7 +48,7 @@
             <canvas id="camera-canvas"></canvas>
             <canvas id="rect-canvas"></canvas>
             <span id="qr-msg">QRコード: 見つかりません</span>
-            <button onclick="checkImage()" id="qr-msg2">もう一度</button>
+            <button onclick="checkImage()" id="reload">もう一度</button>
         </div>
     <script src="../JS/jsQR.js"></script>
 </body>
