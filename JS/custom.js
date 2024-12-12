@@ -46,11 +46,11 @@ function getAreaData(areaId){
         data: {area: areaId}
     }).done(function(data) {
         // 取得したデータをループで回す
-        data.forEach(function(test){
+        data.forEach(function(area){
             // optionがある場合、データのループを実施
             var option = document.createElement("option");
-            option.text = test.facility_name;
-            option.value = test.id;
+            option.text = area.facility_name;
+            option.value = area.id;
             facility.appendChild(option);
         });
     });

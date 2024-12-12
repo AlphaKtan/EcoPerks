@@ -1,16 +1,13 @@
 <?php
-// データベース接続情報
-//require_once('db_connection.php');
-require_once('db_local.php'); // データベース接続に関する
-
+require '../Model/dbModel.php';
 
 try {
-    // データベースに接続
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $dbUsername, $password);
+    // DB接続
+    $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     // データ取得用のSQLクエリ
-    $sql = "SELECT `id`, `area_id`, `facility_name`, `address` FROM travel_data";
+    $sql = "SELECT `area_id`, `facility_name` FROM travel_data";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     
