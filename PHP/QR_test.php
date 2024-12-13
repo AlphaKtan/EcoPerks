@@ -141,3 +141,24 @@
     }
 
 </script>
+
+<!--いつか使う
+開始時間より30分を超えている場合:
+「30分経過したので参加できません」
+開始時間より15分以上早い場合:
+「マイページから予約時間を確認してください」マイページのリンク張る、マイページに「開始時間の15分前から参加可能です」と書く
+予約が見つからない場合:
+「予約データが見つかりません。予約が確認できないか、キャンセルされた可能性があります。」
+参加できた場合:
+「参加できました！お楽しみください。エリア: X、開始時間: Y」
+UPDATE yoyaku
+SET status = 1
+WHERE 
+  area_id = :area_id AND 
+  location = :location AND 
+  username = :username AND 
+  reservation_date = CURDATE() AND 
+  start_time - INTERVAL 15 MINUTE <= NOW() AND 
+  start_time + INTERVAL 30 MINUTE > NOW(); -->
+
+
