@@ -55,6 +55,8 @@
 </html>
 
 <script>
+    // 有効期限　今回は3分
+    const VALID_DURATION = 3 * 60 * 1000;
     // Webカメラの起動
     const video = document.getElementById('video');
     let contentWidth;
@@ -88,6 +90,7 @@
     const rectCvs = document.getElementById('rect-canvas');
     const rectCtx =  rectCvs.getContext('2d');
     let checkImageTimer; // タイマーIDを保持する変数
+    let jsonCode = null;
 
     const checkImage = () => {
         // imageDataを作る
@@ -95,12 +98,43 @@
         // jsQRに渡す
         const code = jsQR(imageData.data, contentWidth, contentHeight);
 
+
+
         // 検出結果に合わせて処理を実施
+        // QRが検出された場合
         if (code) {
+            // 今日の日付をnowに保存
+            const now = new Date();
+            // QRの情報がjsonかを判定
+            try {
+                // QRの情報がjson
+                jsonCode = JSON.parse(code.data);
+            } catch (error) {
+                // QRの情報がjsonではない
+                jsonCode = null;
+                console.log("jsonじゃない");
+            }
+            // QRの情報がjsonの場合
+            if(jsonCode){
+                // create_timeをDateオブジェクトに変換
+                const create_time = new Date(jsonCode.create_time); 
+                if(now - create_time <= VALID_DURATION) {
+                    // jsonCodeの中にaraa_idとlocationとcreate_timeが入っているかを判定
+                    if(jsonCode.area_id && jsonCode.location && jsonCode.create_time) {
+                        console.log("jsonです");
+                        console.log(jsonCode);
+                    }
+                } else {
+                    console.log("時間が経過している");
+                }
+            }
+
             console.log("QRcodeが見つかりました", code);
-            drawRect(code.location);
+            // 後で内容を変える
             document.getElementById('qr-msg').innerHTML = `QRコード：<a href="${code.data}">${code.data}</a>`;
 
+            // 四辺形の描画
+            drawRect(code.location);
             // タイマーを停止
             if (checkImageTimer) {
                 clearTimeout(checkImageTimer);
@@ -108,6 +142,7 @@
 
                 console.log("QRコードが検出されたため、タイマーを停止しました。");
             }
+        // QRが検出されてない場合
         } else {
             console.log("QRcodeが見つかりません…", code);
             rectCtx.clearRect(0, 0, contentWidth, contentHeight);
