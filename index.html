@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
     <link rel="stylesheet" href="CSS/indexStyle.css">
     <link rel="stylesheet" href="CSS/hannbaka.css">
+    <script src="Js/jquery-3.7.1.min.js"></script>
     <title>Google マップの表示</title>
     <style>
         #map {
@@ -12,7 +13,7 @@
             width: 70%; /* マップの表示領域の幅 */
             margin-left: auto;
             margin-right: auto;
-            top: 70px
+            margin-top: 40px;
         }
 
         #resetButton {
@@ -32,6 +33,32 @@
         } */
         .active{
             background-color:#3636365b !important;
+        }
+
+        .selectBox {
+            background-color: rgba(0, 0, 255, 0.5);
+        }
+
+        #search {
+            width: 40%;
+            border: solid 1px;
+            background: white;
+            margin: 5px 5px 5px 8%;
+            padding: 10px;
+        }
+
+        .facility {
+            display: block;
+            width: 80%;
+            margin: 10px 10px 10px 8%;
+            padding: 15px;
+            border: solid 1px #43AEA9;
+            background: #fff;
+            transition-duration: .4s;
+        }
+
+        .facility:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -62,57 +89,92 @@
         </div>
     </header>
 
+    <div class="search-toggle">
+        <button onclick='mapDisplay()' id="mapSearchBtn">地図検索</button>
+        <button onclick='searchDisplay()' id="keywordSearchBtn">キーワード検索</button>
+    </div>
 
-    
+   
 
-<!-- 元の位置に戻るボタン -->
-<div id="map" style="height: 800px"></div>
+    <!-- 元の位置に戻るボタン -->
+    <div id="map" style="height: 800px; display: block;"></div>
 
-    <!-- <div class="profile">
-        <div class="userFlex">
-            <div class="userFlexItem">
-                <img src="img/irasto.jpg" alt="" class="irasto">
-            </div>
-            <div class="userFlexItem">
-                <h2 class="center">ユーザー名</h2>
-                <p class="center">Emily</p>
-            </div>
-            <div class="userFlexItem">
-                <h2 class="center">現在のポイント</h2>
-                <div class="pointArea">
-                    <img src="img/point.jpg" alt="" class="point">
-                    <p>111</p>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <footer>
-        <div id="flexBox02">
-            <div class="flexItem02">
-                <h4>Mission</h4>
-                <div class="progress">
-                    <div class="progress-bar" style="width: 80%;"></div>
-                </div>
-            </div>
-            <div class="flexItem02">
-                <h4>QR</h4>
-                <img src="img/qr.png"width="45px" height="45px">
-                <a href="qr.php"></a>
-            </div>
-            <div class="flexItem02">
-                <h4 class="photo3">Photo</h4>
-                <img src="img/photo2.png"width="30px" height="30px">
-            </div>
-            <div class="flexItem02">
-                <h4>Ranking</h4>
-                <img src="img/ranking.png"width="60px" height="60px">
-            </div>
-        </div>
-    </footer> -->
-    </footer> -->
+    <div id="searchBar" style="display: none;">
+        <input type="text" id="search" placeholder="キーワードを入力してください" />
+    </div>
+
+ <div class="areainfo"></div>
+<div class="results"></div>
 
 
-    <script>
+
+
+
+<script>
+function mapDisplay() {
+    const mapDiv = document.getElementById('map');
+    const searchBar = document.getElementById('searchBar');
+
+    mapDiv.style.display = 'block';
+    searchBar.style.display = 'none';
+}
+
+function searchDisplay() {
+    const mapDiv = document.getElementById('map');
+    const searchBar = document.getElementById('searchBar');
+    const search = document.getElementById('search');
+    let selectedElement = document.querySelector('.areainfo');
+    // 空にする
+    selectedElement.innerHTML = '';
+
+    mapDiv.style.display = 'none';
+    searchBar.style.display = 'block';
+
+    search.value = '';
+    search.focus();
+}
+
+let search = document.getElementById("search");
+    let result = document.querySelector('.results');
+    result.innerHTML = "";
+
+    function searchFacilities() {
+        const keyword = document.getElementById("search").value.trim();
+        // 入力が空の場合はリクエストしない
+        if (keyword === "") {
+            result.innerHTML = ""; // 空の場合はリセット
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "./test_output.php",
+            dataType: "json",
+            data: { keyword: keyword }
+        }).done(function(data) {
+            result.innerHTML = "";
+            console.log(data);
+            data.forEach(function(results) {
+            result.textContent += `
+            <div class="result">
+                <a href='PHP/yoyaku.php?location=${results.id}' link class="facility">
+                    ${results.facility_name} (${results.romaji})
+                </a>
+            </div>
+            `;
+            });
+            result.innerHTML = result.textContent;
+                    
+        }).fail(function(jqXHR, textStatus, errorThrown)  {
+            console.error("AJAXリクエストに失敗しました");
+            console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+            console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+            console.error("エラーメッセージ:", errorThrown);
+        }); 
+    }
+
+    search.oninput = searchFacilities;
+
+
         var initialZoom = 12; // 初期ズームレベル
         let center = {lat: 35.010121680059264, lng: 135.7370724742484};
         
@@ -175,34 +237,58 @@
 
             map.addListener('zoom_changed', updateGridSize); // ズームレベルが変わったときに呼び出す
             updateGridSize(); // 初期設定
-
-            // タイルにマウスが乗った時のイベント
-            google.maps.event.addDomListener(map.getDiv(), 'mousemove', function(event) {
-                var tiles = document.getElementsByClassName('divBox');
-                for (var i = 0; i < tiles.length; i++) {
-                    var tile = tiles[i];
-                    if (tile && isMouseOverTile(event, tile)) {
-                        tile.style.backgroundColor = 'rgba(0, 0, 255, 0.5)'; // 青色の半透明背景
-                    } else {
-                        tile.style.backgroundColor = 'rgba(255, 99, 71, 0)';
-                    }
-                }
-            });
-
             
             // タイルにクリックした時のイベント
             google.maps.event.addDomListener(map.getDiv(), 'click', function(event) {
+                
                 var tiles = document.getElementsByClassName('divBox');
+                        
                 for (var i = 0; i < tiles.length; i++) {
                     var tile = tiles[i];
                     if (tile && isMouseOverTile(event, tile)) {
                         var areaId = getAreaIdFromTile(tile.innerHTML); // タイルの内容に基づいてエリアIDを取得
                         if (areaId !== null) {
-                            window.location.href = 'php/search.php?area_id=' + areaId; // PHPスクリプトにエリアIDを送信
+                            // 前に選択されていたセルの選択を解除
+                            if (previouslySelected) {
+                                previouslySelected.classList.remove('selectBox');
+                            }
+                            // 新しく選択されたセルにselectedクラスを追加
+                            tile.classList.add('selectBox');
+                            previouslySelected = tile;
+                            // window.location.href = 'php/search.php?area_id=' + areaId; // PHPスクリプトにエリアIDを送信
+                            first(areaId);
                         }
                     }
                 }
             });
+
+let previouslySelected = null;
+function first(areaId) {
+    let selectedElement = document.querySelector('.areainfo');
+    // 空にする
+    selectedElement.innerHTML = '';
+
+    $.ajax({
+        type: "POST",
+        url: "PHP/indexinfo.php",
+        dataType: "json",
+        data: { area_id: areaId }
+    }).done(function(data) {
+        selectedElement.innerHTML += `<h2>エリア${areaId}</h2>`;
+        data.forEach(function(area) {
+            console.log(area);
+            selectedElement.innerHTML += `<div>${area.facility_name}</div>`;
+        });
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    }); 
+}
+
+
+
 
 
             //
@@ -304,11 +390,6 @@
                 return event.clientX >= tileRect.left && event.clientX <= tileRect.right &&
                     event.clientY >= tileRect.top && event.clientY <= tileRect.bottom;
             }
-
-            document.getElementById('resetButton').addEventListener('click', function() {
-                map.setCenter(center);
-                map.setZoom(initialZoom);
-            });
         }
 
         window.initMap = initMap;

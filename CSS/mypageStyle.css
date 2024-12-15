@@ -21,9 +21,25 @@ header {
     height: 60px;
     top: 0; /* 上部から配置の基準位置を決める */
     background-color: white;
-    position: fixed
+    /* position: fixed */
 }
 
+.sub_header{
+    display:flex; 
+    background-color: white;
+}
+.sub_header_box1{
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    width: 80%;
+    height: 40px;
+    background-color: #43AEA9;
+}
+.sub_header_box2{
+    width: 20%;
+    background-color: #43AEA9;
+}
 footer {
     background-color: #fff;
     color: #fff;
@@ -127,7 +143,7 @@ footer {
 .userFlexItem {
     text-align: center;
     width: 100%;
-    padding-top: 20px;
+    padding-top: 5px;
 }
 
 #dragDropArea{
@@ -179,65 +195,52 @@ footer {
     text-align: center;
 }
 
-.informationBox{
-    text-align: center;
-    margin:20px 20%;
-}
-
 .boxA {
-    width: 110%;
-    border: none;
+    width: 100%;
+    padding-top: 50px;
+    text-align: center;
   }
 
-.box1{
-    float: left;
-    background-color: #43AEA9;
-    width: 45%;
-    height: 50px;
-    margin: 2.5px;
-  }
-
-  .box2{
-    float: left;
-    background-color: #43AEA9;
-    width: 45%;
-    height: 50px;
-    margin: 2.5px;
+.boxB {
+    display: flex;
+    justify-content: center;
   }
 
   .box3{    
     float: left;
     background-color: #43AEA9;
-    width: 45%;
-    height: 50px;
-    margin: 2.5px;
-  }
-
-/*もしbox4がいらなかった時のCSS*/
-    /*float: left;
-    background-color: #43AEA9;
-    width: 90%;
-    height: 50px;
-    margin: 5.5px;*/
-
-  .box4{
-    float: left;
-    background-color: #43AEA9;
-    width: 45%;
-    height: 50px;
-    margin: 2.5px;
+    width: 120px;
+    height: 80px;
+    margin: 2.5px 20px;
+    border-radius: 5px;
+    border: solid 1px #ffff;
   }
 
   .box5{
-    float: left;
     background-color: #43AEA9;
-    width: 45%;
-    height: 50px;
-    margin: 2.5px;
+    width: 150px;
+    height: 90px;
+    margin: 15px auto;
+    border-radius: 5px;
+    border: solid 1px #ffff;
+  }
+  .QR_botton{
+    background-color: #43AEA9;
+    width: 80px;
+    height: 80px;
+    margin: 15px auto;
+    margin-top: 150px;
+    border-radius: 50px;
+    border: solid 1px #ffff;
+  }
+  .QRimg{
+    width: 60px;
+    height: 60px;
+    margin: 10px 10px;
   }
 
   .link_button{
-    width: 25%;
+    min-width: 25%;
     margin-top: 10px;
     margin-left: 10px;
     padding: 10px;

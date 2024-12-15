@@ -18,7 +18,7 @@ session_start();
 
     if ($_SESSION['location']) {
         $location = $_SESSION['location'];
-            $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";
+            $facilitySql = "SELECT facility_name, area_id FROM travel_data WHERE id = :facility";
             $facilityStmt = $pdo->prepare($facilitySql);
             $facilityStmt->bindParam(':facility', $location, PDO::PARAM_STR);
             $facilityStmt->execute();
@@ -30,7 +30,7 @@ session_start();
     VALUES(:username, :date, :area_id, :start_time, :end_time, :status, :location)");
     $stmt->bindParam(':username', $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->bindParam(':date', $_POST['date'], PDO::PARAM_STR);
-    $stmt->bindParam(':area_id', $_SESSION['area_id'], PDO::PARAM_INT);
+    $stmt->bindParam(':area_id', $facilityRow['area_id'], PDO::PARAM_INT);
     $stmt->bindParam(':start_time', $start_time, PDO::PARAM_STR);
     $stmt->bindParam(':end_time', $end_time, PDO::PARAM_STR);
     $stmt->bindParam(':status', $status, PDO::PARAM_STR);
