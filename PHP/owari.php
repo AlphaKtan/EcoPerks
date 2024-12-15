@@ -28,13 +28,12 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : '';
 
 // 終了処理時のデータベースへの情報保存
 try {
-    $sql = "INSERT INTO access_logs (username, ip_address, access_time, facility_id) 
-            VALUES (:username, :ip_address, :access_time, :facility_id)";
+    $sql = "INSERT INTO access_logs (username, ip_address, access_time) 
+            VALUES (:username, :ip_address, :access_time)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':ip_address', $ip_address);
     $stmt->bindParam(':access_time', $access_time);
-    $stmt->bindParam(':facility_id', $_SESSION['facility_id']); // 施設IDを保存
     $stmt->execute();
 } catch (PDOException $e) {
     echo "エラー: " . $e->getMessage();
@@ -49,81 +48,111 @@ try {
     <title>QRコードの更新</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFF6E9;
+    color: #333;
+}
 
-        h3 {
-            text-align: center;
-            font-size: 1.8em;
-            margin: 20px 0;
-            color: #2c3e50;
-        }
+h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin: 20px 0;
+    color: #2c3e50;
+}
 
-        #qr-codes {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 70px 0;
-        }
+#qr-codes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
 
-        #countdown {
-            text-align: center;
-            font-size: 1.2em;
-            margin: 20px 0;
-            padding: 10px;
-            color: #fff;
-            background-color: #3498db;
-            border-radius: 10px;
-            display: inline-block;
-            width: 300px;
-            margin: 0 auto;
-        }
+#countdown {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 20px 0;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #43AEA9;
+    border-radius: 8px;
+    display: inline-block;
+    width: fit-content;
+    animation: pulse 1.5s infinite;
+}
 
-        .countdown-text {
-            font-weight: bold;
-        }
+.countdown-text {
+    font-weight: bold;
+}
 
-        .qr-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-        }
+.qr-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-        .qr-container img {
-            width: 600px;
-            height: 600px;
-            margin: 0 auto;
-            display: block;
-        }
+.qr-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
 
-        .footer {
-            text-align: center;
-            margin: 40px 0;
-            font-size: 0.9em;
-            color: #7f8c8d;
-        }
+.qr-container img {
+    width: 80%;
+    max-width: 500px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
 
-        @media (max-width: 768px) {
-            h3 {
-                font-size: 1.5em;
-            }
+.footer {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
 
-            #countdown {
-                font-size: 1em;
-                width: auto;
-            }
+/* Responsive Design */
+@media (max-width: 768px) {
+    h3 {
+        font-size: 1.5rem;
+    }
 
-            .qr-container img {
-                width: 600px;
-                height: 600px;
-            }
-        }
+    #countdown {
+        font-size: 1rem;
+        width: auto;
+    }
+
+    .qr-container img {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    #countdown {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(0, 123, 255, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+    }
+}
     </style>
 
     <script>
