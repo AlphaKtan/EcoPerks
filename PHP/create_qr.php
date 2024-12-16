@@ -1,14 +1,13 @@
 <?php 
     // 仮の値を代入
     $area_id = 1;
-    $location = 2;
+    $location = 1;
 ?>
 <script src="../JS/qrcode.min.js"></script>
 <div id="qrcode"></div>
 <!-- <input type="text" id="text" placeholder="QRコードに変換するテキスト"> -->
 <button id="generate">QRコード生成</button>
 
-<script src="../Js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
     let area = "<?=$area_id; ?>";  // PHPの変数をjsの変数に代入
     let location_id = "<?=$location; ?>";

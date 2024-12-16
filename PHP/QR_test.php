@@ -1,3 +1,6 @@
+<?php
+$username = 1;
+?>
 <!DOCTYPE html>
 <head>
     <title>QRコードの読み取り</title>
@@ -51,6 +54,10 @@
             <button onclick="checkImage()" id="reload">もう一度</button>
         </div>
     <script src="../JS/jsQR.js"></script>
+    <script src="../Js/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+        let username = "<?=$username; ?>";  // PHPの変数をjsの変数に代入
+    </script>
 </body>
 </html>
 
@@ -129,7 +136,7 @@
                         statusUpDate(jsonCode.area_id, jsonCode.location, jsonCode.create_time);
                     }
                 } else {
-                    console.log("時間が経過している");
+                    console.log("有効期限が経過しています");
                 }
             }
 
@@ -179,23 +186,24 @@
     rectCtx.stroke();
     }
 
-    function statusUpDate(area_id, location, create_time) {
-        console.log(area_id);
-        
+    function statusUpDate(area_id, location_id, create_time) {
         $.ajax({
             type: "POST",
-            url: "./PHP/statusUpDate.php",
+            url: "../PHP/statusUpDate.php",
             dataType: "json",
-            data: { area_id: area_id, location: location, create_time: create_time }
+            data: { username: username, area_id: area_id, location: location_id, create_time: create_time }
         }).done(function(data) {
-            
-            if(data === "正常に完了") {
-                console.log("成功");
-                
-            } else {
-                console.log("しっぱい");
-            }
+            data.forEach(data => {
+                if(data === '正常に完了') {
+                    console.log("成功");
                     
+                } else if(data = '時間が経過しているので参加できません。') {
+                        console.log("マイページより予約時間を確認してください");
+                } else {
+                    console.log("しっぱい");
+                    console.log(data);
+                }
+            });    
         }).fail(function(jqXHR, textStatus, errorThrown)  {
             console.error("AJAXリクエストに失敗しました");
             console.error("HTTPステータス:", jqXHR.status); // ステータスコード

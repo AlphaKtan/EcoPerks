@@ -7,8 +7,6 @@
 
     if ($_POST["username"]) {
         $username = $_POST["username"];
-    } else {
-        $username = 1;
     }
 
     if ($_POST["area_id"]) {
@@ -16,11 +14,7 @@
     }
 
     if ($_POST["location"]) {
-        $location = $_POST["location"];
-    }
-
-    if ($_POST["facility"]) {
-        $facilityName = $_POST["facility"];
+        $facilityName = $_POST["location"];
             $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";
             $facilityStmt = $pdo->prepare($facilitySql);
             $facilityStmt->bindParam(':facility', $facilityName, PDO::PARAM_STR);
@@ -43,11 +37,24 @@
     $stmt->bindParam(':username', $username, PDO::PARAM_INT);
     $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
     $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
-    $stmt->execute();
-    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $results[] = "正常に完了";
+
+    // 実行し、影響を受けた行数を確認
+    $executed = $stmt->execute();
+    $affectedRows = $stmt->rowCount();
+
+    // SQLの実行と結果の確認
+    if ($executed && $affectedRows > 0) {
+        // 範囲内での成功
+        $results[] = "正常に完了 ";
+    } elseif ($executed && $affectedRows == 0) {    
+        // 範囲を超えている場合
+        $results[] = "時間が経過しているので参加できません。";
+    } else {
+        // SQLが失敗した場合
+        $results[] = "エラーが発生しました";
+    }
+
     echo json_encode($results);
 
 ?>
-
 
