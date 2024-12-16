@@ -1,5 +1,15 @@
 <?php
-$username = 1;
+session_start();
+$URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$_SESSION['URL'] = $URL;
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+    header('Location: message.php');
+    exit;
+}
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 ?>
 <!DOCTYPE html>
 <head>
@@ -56,7 +66,7 @@ $username = 1;
     <script src="../JS/jsQR.js"></script>
     <script src="../Js/jquery-3.7.1.min.js"></script>
     <script type="text/javascript">
-        let username = "<?=$username; ?>";  // PHPの変数をjsの変数に代入
+        let username = "<?=$user_id; ?>";  // PHPの変数をjsの変数に代入
     </script>
 </body>
 </html>
