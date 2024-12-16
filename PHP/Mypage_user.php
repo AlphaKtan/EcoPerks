@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
     <link rel="stylesheet" href="../CSS/mypageStyle.css">
     <link rel="stylesheet" href="../CSS/hannbaka.css">
-    <title>Google マップの表示</title>
+    <title>マイページ</title>
     <style>
         html {
             zoom:normal !important;
@@ -21,12 +21,13 @@
         // echo "</pre>";
 
         session_start();
-        // if (!isset($_SESSION['user_id'])) {
-        //     $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
-        //     header('Location: message.php');
-        //     exit;
-        // }
-
+        $URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $_SESSION['URL'] = $URL;
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+            header('Location: message.php');
+            exit;
+        }
         if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
         }
@@ -61,10 +62,10 @@
     ?>
     <div class="flexBox">
         <div class="menu">
-        <button class="link_button" onclick="history.back();">戻る</button>
+        <button class="link_button" onclick="location.href='../index.html';">戻る</button>
         </div>
         <div class="logo">
-            <img src="../img/logo.jpg" alt="" class="logo2">
+            <img src="../img/logo_yoko.svg" alt="" class="logo2">
         </div>
         <div class="icon"></div>
     </div>
