@@ -1,6 +1,5 @@
 <?php
 session_start();
-// 今はデータベースの登録をtest_time_changeにしている
 require '../Model/dbModel.php';
 
 // DB接続
@@ -443,6 +442,8 @@ function entryPresetFunction() {
         
         if(data === "正常に完了") {
             presetAmazingSample(data);
+            console.log(data);
+            
         } else {
             oopsSwalSample(data);
         }

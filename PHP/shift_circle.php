@@ -28,7 +28,7 @@ session_start();
 
     // シフトが入っている日を出す
     $sql = "SELECT DISTINCT DATE_FORMAT(start_time, '%Y-%m-%d') AS shift_date 
-            FROM test_time_change 
+            FROM time_change 
             WHERE DATE_FORMAT(start_time, '%Y-%m-%d') BETWEEN :first_day AND :last_day
             AND facility_name = :facilityName 
             AND status = '1'

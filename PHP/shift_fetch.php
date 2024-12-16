@@ -20,7 +20,7 @@
         
     // シフトが入っている日を出す
     $sql = "SELECT DATE_FORMAT(start_time, '%H:%i') AS start_time_only, DATE_FORMAT(end_time, '%H:%i') AS end_time_only, facility_name, areaid
-            FROM test_time_change
+            FROM time_change
             WHERE DATE_FORMAT(start_time, '%Y-%m-%d') = :reservation_date
             AND facility_name = :facilityName
             AND status = '1'

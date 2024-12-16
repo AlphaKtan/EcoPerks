@@ -1,5 +1,4 @@
 <?php 
-// 今はデータベースの登録をtest_time_changeにしている
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -42,10 +41,10 @@ error_reporting(E_ALL);
         // $results[] = $row;
         if ($row) {
             // INSERT前に重複チェック
-            $insertSql = "INSERT INTO test_time_change (start_time, end_time, facility_name, areaid, status)
+            $insertSql = "INSERT INTO time_change (start_time, end_time, facility_name, areaid, status)
                           SELECT :start_time, :end_time, :facility_name, :area_id, :status
                           WHERE NOT EXISTS (
-                              SELECT 1 FROM test_time_change 
+                              SELECT 1 FROM time_change 
                               WHERE start_time = :start_time 
                               AND end_time = :end_time
                               AND facility_name = :facility_name
