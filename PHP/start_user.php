@@ -11,13 +11,25 @@ $_SESSION['user_id'] = 1;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お知らせ</title>
     <script type="text/javascript">
-        // 3秒後にリダイレクトする
-        setTimeout(function() {
-            window.history.back();
-        }, 3000); // 3000ミリ秒 = 3秒
+        let URL = "<?=$_SESSION['URL']; ?>"; 
+        let countdown = 3; // カウントダウンの初期値
+
+        // カウントダウンを表示する関数
+        function updateCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.textContent = countdown;
+            if (countdown === 0) {
+                window.location.href = URL;
+            } else {
+                countdown--;
+            }
+        }
+
+        // 1秒ごとにカウントダウンを更新
+        setInterval(updateCountdown, 1000);
     </script>
 </head>
 <body>
-    <p>3秒後に元のページに戻ります...</p>
+    <p>あと <span id="countdown">3</span> 秒で元のページに戻ります...</p>
 </body>
 </html>
