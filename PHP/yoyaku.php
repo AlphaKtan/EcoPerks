@@ -112,7 +112,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>シフト登録画面</title>
+    <title>予約画面</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/shiftStyle.css">
     <style>
@@ -341,13 +341,15 @@ function fetchShiftData() {
             data.forEach(function(circle) {
                 // circleが空でないことを確認
                 if (Object.keys(circle).length !== 0) {
+                    let data = {
+                        start_time: circle.start_time_only + ':00',
+                        end_time: circle.end_time_only + ':00',
+                    };
                     if (selectedElement) {
                         selectedElement.textContent += `
                             <label for="facility${i}">    
                                 <div class="look">
-                                    <input type="hidden" name="start_time" value="${circle.start_time_only}">
-                                    <input type="hidden" name="end_time" value="${circle.end_time_only}">
-                                    <input type="radio" name="facility" id="facility${i}">
+                                    <input type="radio" name="facility" id="facility${i}" value='${JSON.stringify(data)}'>
                                     <span class="time">${circle.start_time_only} - ${circle.end_time_only}</span>
                                     <span class="facility">${circle.facility_name}</span>
                                 </div>
