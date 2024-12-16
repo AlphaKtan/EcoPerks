@@ -122,7 +122,11 @@
                     // jsonCodeの中にaraa_idとlocationとcreate_timeが入っているかを判定
                     if(jsonCode.area_id && jsonCode.location && jsonCode.create_time) {
                         console.log("jsonです");
-                        console.log(jsonCode);
+                        // console.log(jsonCode);
+                        // console.log("area_idは"+jsonCode.area_id);
+                        // console.log("locationは"+jsonCode.location);
+                        // console.log("create_timeは"+jsonCode.create_time);
+                        statusUpDate(jsonCode.area_id, jsonCode.location, jsonCode.create_time);
                     }
                 } else {
                     console.log("時間が経過している");
@@ -175,6 +179,32 @@
     rectCtx.stroke();
     }
 
+    function statusUpDate(area_id, location, create_time) {
+        console.log(area_id);
+        
+        $.ajax({
+            type: "POST",
+            url: "./PHP/statusUpDate.php",
+            dataType: "json",
+            data: { area_id: area_id, location: location, create_time: create_time }
+        }).done(function(data) {
+            
+            if(data === "正常に完了") {
+                console.log("成功");
+                
+            } else {
+                console.log("しっぱい");
+            }
+                    
+        }).fail(function(jqXHR, textStatus, errorThrown)  {
+            console.error("AJAXリクエストに失敗しました");
+            console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+            console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+            console.error("エラーメッセージ:", errorThrown);
+        }); 
+    }
+
+
 </script>
 
 <!--いつか使う
@@ -186,14 +216,6 @@
 「予約データが見つかりません。予約が確認できないか、キャンセルされた可能性があります。」
 参加できた場合:
 「参加できました！お楽しみください。エリア: X、開始時間: Y」
-UPDATE yoyaku
-SET status = 1
-WHERE 
-  area_id = :area_id AND 
-  location = :location AND 
-  username = :username AND 
-  reservation_date = CURDATE() AND 
-  start_time - INTERVAL 15 MINUTE <= NOW() AND 
-  start_time + INTERVAL 30 MINUTE > NOW(); -->
+ -->
 
 
