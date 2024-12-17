@@ -31,7 +31,7 @@
         /* .divBox.active{
             background-color:seashell !important;
         } */
-        .active{
+        .noArea{
             background-color:#3636365b !important;
         }
 
@@ -350,7 +350,7 @@ function first(areaId) {
                 return null;
             }
             
-            //IDが付与されていないタイルにclass"active"を付与してカラーを変える
+            //IDが付与されていないタイルにclass"noArea"を付与してカラーを変える
             const locationID = [
                     "(9196, 4151)", "(9197, 4151)", "(9194, 4152)", "(9195, 4152)", "(9196, 4152)",
                     "(9197, 4152)", "(9198, 4152)", "(9195, 4153)", "(9196, 4153)", "(9197, 4153)",
@@ -375,7 +375,7 @@ function first(areaId) {
                     // もし座標が一覧にあった場合
                     if (!findMethod) {
                         // 対象行にactiveクラスを付与する
-                        element.classList.add('active');
+                        element.classList.add('noArea');
                     } // else if (findMethod === "(9196, 4151)"){
                     //     element.textContent = "エリア１";
                     // }
