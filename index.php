@@ -417,8 +417,8 @@
                 // ゴミアンケートのデータベースにあるエリアを取得
                 coordList.forEach(function(coordID) {
                         
-                    if(coordID.coord === findMethod) {
-                        switch (coordID.gomi) {
+                    if(coordID.area === findMethod) {
+                        switch (coordID.level) {
                             case 1:
                                 element.classList.add('level_1');
                                 break;
@@ -446,7 +446,7 @@
             const interval = setInterval(() => {
                 coord();
                 console.log("更新");
-            }, 2000); // 2msごとにチェック
+            }, 5000); // 2msごとにチェック
         // }
         
 
@@ -458,6 +458,8 @@
             }).done(function(data) {
                 coordList = data; // グローバル変数にデータを格納
                 checkTiles(coordList);
+                console.log(data);
+                
             }).fail(function(jqXHR, textStatus, errorThrown)  {
                 console.error("AJAXリクエストに失敗しました");
                 console.error("HTTPステータス:", jqXHR.status); // ステータスコード
