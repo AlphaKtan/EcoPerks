@@ -175,11 +175,9 @@
             console.log(data);
             data.forEach(function(results) {
             result.textContent += `
-            <div class="result">
                 <a href='PHP/yoyaku.php?location=${results.id}' link class="facility">
                     ${results.facility_name} (${results.romaji})
                 </a>
-            </div>
             `;
             });
             result.innerHTML = result.textContent;
@@ -297,7 +295,10 @@
                 selectedElement.innerHTML += `<h2>エリア${areaId}</h2>`;
                 data.forEach(function(area) {
                     console.log(area);
-                    selectedElement.innerHTML += `<div class="facility">${area.facility_name}</div>`;
+                    selectedElement.innerHTML += `
+                    <a href='PHP/yoyaku.php?location=${area.id}' link class="facility">
+                        ${area.facility_name} (${area.romaji})
+                    </a>`;
                 });
             }).fail(function(jqXHR, textStatus, errorThrown)  {
                 console.error("AJAXリクエストに失敗しました");
