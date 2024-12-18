@@ -65,6 +65,7 @@ if (isset($_POST['confirm']) && isset($_SESSION['survey_data'])) {
         $stmt->execute();
 
         echo "<h3>アンケートが正常に送信されました。</h3>";
+        echo '<a href="Survey_Customer_output.php">アンケート閲覧</a>';
         unset($_SESSION['survey_data']);
         exit;
     } catch (PDOException $e) {
@@ -86,7 +87,7 @@ $image_path = $data['image_path'] ?? '';
         <div class="form-group">
             <strong>ゴミの量：</strong>
             <?php 
-                $gomi_values = ['1' => '多い', '2' => 'まぁまぁ多い', '3' => 'まぁまぁ少ない', '4' => '少ない'];
+                $gomi_values = ['4' => '多い', '3' => 'まぁまぁ多い', '2' => 'まぁまぁ少ない', '1' => '少ない'];
                 echo $gomi_values[$gomi] ?? '不明'; 
             ?>
         </div>

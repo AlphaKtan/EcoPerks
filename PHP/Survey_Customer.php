@@ -23,14 +23,14 @@
     <form action="Survey_Customer_upload.php" method="post" enctype="multipart/form-data">
         <div class="form-group"> 
             <label for="gomi">ゴミの量</label><br>
-            <input type="radio" id="gomi1" name="gomi" value="1" required>
-            <label for="gomi1">多い</label>
-            <input type="radio" id="gomi2" name="gomi" value="2" required>
-            <label for="gomi2">まぁまぁ多い</label>
-            <input type="radio" id="gomi3" name="gomi" value="3">
-            <label for="gomi3">まぁまぁ少ない</label>
-            <input type="radio" id="gomi4" name="gomi" value="4">
-            <label for="gomi4">少ない</label>
+            <input type="radio" id="gomi4" name="gomi" value="4" required>
+            <label for="gomi4">多い</label>
+            <input type="radio" id="gomi3" name="gomi" value="3" required>
+            <label for="gomi3">まぁまぁ多い</label>
+            <input type="radio" id="gomi2" name="gomi" value="2">
+            <label for="gomi2">まぁまぁ少ない</label>
+            <input type="radio" id="gomi1" name="gomi" value="1">
+            <label for="gomi1">少ない</label>
         </div>
         <br>
         <div class="form-group">

@@ -1,3 +1,5 @@
+index.com
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,10 +33,27 @@
         /* .divBox.active{
             background-color:seashell !important;
         } */
-        .noArea{
+        .active{
             background-color:#3636365b !important;
         }
 
+
+
+        .level_4{
+            background-color: rgba(255, 0, 0, 0.657);
+        }
+
+        .level_3{
+            background-color: rgba(255, 0, 0, 0.588);
+        }
+
+        .level_2{
+            background-color: rgba(255, 0, 0, 0.298);
+        }
+
+        .level_1{
+            background-color: rgba(255, 0, 0, 0.093);
+        }
         .selectBox {
             background-color: rgba(0, 0, 255, 0.5);
         }
@@ -79,7 +98,7 @@
                 </nav>
             </div>
             <div class="logo">
-                <img src="img/logo.jpg" alt="" class="logo2">
+                <img src="img/logo_yoko.svg" alt="" class="logo2">
             </div>
             <div class="icon">
                 <form action="php/logout.php" method="post" class = "logout_form">
@@ -295,62 +314,144 @@ function first(areaId) {
 
             // タイル内容からエリアIDを取得する関数（例: 座標に基づくマッピング）
             function getAreaIdFromTile(tileContent) {
-                if (tileContent === "(9196, 4151)") {
-                    return 1; // 金閣寺のID
-                } else if (tileContent === "(9197, 4151)") {
-                    return 2; // 大田神社のID
-                } else if (tileContent === "(9194, 4152)") {
-                    return 3; // 大覚寺のID
-                } else if (tileContent === "(9195, 4152)") {
-                    return 4; // 仁和寺のID
-                } else if (tileContent === "(9196, 4152)") {
-                    return 5; // 晴明神社のID
-                } else if (tileContent === "(9197, 4152)") {
-                    return 6; // 平安神宮のID
-                } else if (tileContent === "(9198, 4152)") {
-                    return 7; // 東山慈照寺のID
-                } else if (tileContent === "(9195, 4153)") {
-                    return 8; // 桂離宮のID
-                } else if (tileContent === "(9196, 4153)") {
-                    return 9; // 清水寺の左エリアID
-                } else if (tileContent === "(9197, 4153)") {
-                    return 10; // 清水寺ID
-                } else if (tileContent === "(9198, 4153)") {
-                    return 11; // 清水寺の右エリアID
-                } else if (tileContent === "(9194, 4154)") {
-                    return 12; // 大原野神社のID
-                } else if (tileContent === "(9195, 4154)") {
-                    return 13; // 京都市洛西竹林公園のID
-                } else if (tileContent === "(9196, 4154)") {
-                    return 14; // ID
-                } else if (tileContent === "(9197, 4154)") {
-                    return 15; // ID
-                } else if (tileContent === "(9198, 4154)") {
-                    return 16; // ID
-                } else if (tileContent === "(9194, 4155)") {
-                    return 17; // ID
-                } else if (tileContent === "(9195, 4155)") {
-                    return 18; // ID
-                } else if (tileContent === "(9196, 4155)") {
-                    return 19; // ID
-                } else if (tileContent === "(9197, 4155)") {
-                    return 20; // ID
-                } else if (tileContent === "(9198, 4155)") {
-                    return 21; // ID
-                } else if (tileContent === "(9195, 4156)") {
-                    return 22; // ID
-                } else if (tileContent === "(9196, 4156)") {
-                    return 23; // ID
-                } else if (tileContent === "(9197, 4156)") {
-                    return 24; // ID
-                } else if (tileContent === "(9198, 4156)") {
-                    return 25; // ID
+                switch (tileContent) {
+                    case "(9196, 4151)":
+                        return 1;
+                        break;
+                    case "(9197, 4151)":
+                        return 2;
+                        break;
+                    case "(9194, 4152)":
+                        return 3;
+                        break;
+                    case "(9195, 4152)":
+                        return 4;
+                        break;
+                    case "(9196, 4152)":
+                        return 5;
+                        break;
+                    case "(9197, 4152)":
+                        return 6;
+                        break;
+                    case "(9198, 4152)":
+                        return 7;
+                        break;
+                    case "(9195, 4153)":
+                        return 8;
+                        break;
+                    case "(9196, 4153)":
+                        return 9;
+                        break;
+                    case "(9197, 4153)":
+                        return 10;
+                        break;
+                    case "(9198, 4153)":
+                        return 11;
+                        break;
+                    case "(9194, 4154)":
+                        return 12;
+                        break;
+                    case "(9195, 4154)":
+                        return 13;
+                        break;
+                    case "(9196, 4154)":
+                        return 14;
+                        break;
+                    case "(9197, 4154)":
+                        return 15;
+                        break;
+                    case "(9198, 4154)":
+                        return 16;
+                        break;
+                    case "(9194, 4155)":
+                        return 17;
+                        break;
+                    case "(9195, 4155)":
+                        return 18;
+                        break;
+                    case "(9196, 4155)":
+                        return 19;
+                        break;
+                    case "(9197, 4155)":
+                        return 20;
+                        break;
+                    case "(9198, 4155)":
+                        return 21;
+                        break;
+                    case "(9195, 4156)":
+                        return 22;
+                        break;
+                    case "(9196, 4156)":
+                        return 23;
+                        break;
+                    case "(9197, 4156)":
+                        return 24;
+                        break;
+                    case "(9198, 4156)":
+                        return 25;
+                        break;
+                    default:
+                        break;
                 }
-                // 他のタイルに対応するエリアIDも追加
-                return null;
+
+
+
+                // if (tileContent === "(9196, 4151)") {
+                //     return 1; // 金閣寺のID
+                // } else if (tileContent === "(9197, 4151)") {
+                //     return 2; // 大田神社のID
+                // } else if (tileContent === "(9194, 4152)") {
+                //     return 3; // 大覚寺のID
+                // } else if (tileContent === "(9195, 4152)") {
+                //     return 4; // 仁和寺のID
+                // } else if (tileContent === "(9196, 4152)") {
+                //     return 5; // 晴明神社のID
+                // } else if (tileContent === "(9197, 4152)") {
+                //     return 6; // 平安神宮のID
+                // } else if (tileContent === "(9198, 4152)") {
+                //     return 7; // 東山慈照寺のID
+                // } else if (tileContent === "(9195, 4153)") {
+                //     return 8; // 桂離宮のID
+                // } else if (tileContent === "(9196, 4153)") {
+                //     return 9; // 清水寺の左エリアID
+                // } else if (tileContent === "(9197, 4153)") {
+                //     return 10; // 清水寺ID
+                // } else if (tileContent === "(9198, 4153)") {
+                //     return 11; // 清水寺の右エリアID
+                // } else if (tileContent === "(9194, 4154)") {
+                //     return 12; // 大原野神社のID
+                // } else if (tileContent === "(9195, 4154)") {
+                //     return 13; // 京都市洛西竹林公園のID
+                // } else if (tileContent === "(9196, 4154)") {
+                //     return 14; // ID
+                // } else if (tileContent === "(9197, 4154)") {
+                //     return 15; // ID
+                // } else if (tileContent === "(9198, 4154)") {
+                //     return 16; // ID
+                // } else if (tileContent === "(9194, 4155)") {
+                //     return 17; // ID
+                // } else if (tileContent === "(9195, 4155)") {
+                //     return 18; // ID
+                // } else if (tileContent === "(9196, 4155)") {
+                //     return 19; // ID
+                // } else if (tileContent === "(9197, 4155)") {
+                //     return 20; // ID
+                // } else if (tileContent === "(9198, 4155)") {
+                //     return 21; // ID
+                // } else if (tileContent === "(9195, 4156)") {
+                //     return 22; // ID
+                // } else if (tileContent === "(9196, 4156)") {
+                //     return 23; // ID
+                // } else if (tileContent === "(9197, 4156)") {
+                //     return 24; // ID
+                // } else if (tileContent === "(9198, 4156)") {
+                //     return 25; // ID
+                // }
+                // // 他のタイルに対応するエリアIDも追加
+                // return null;
             }
-            
-            //IDが付与されていないタイルにclass"noArea"を付与してカラーを変える
+            var coordList = [];
+            //IDが付与されていないタイルにclass"active"を付与してカラーを変える
             const locationID = [
                     "(9196, 4151)", "(9197, 4151)", "(9194, 4152)", "(9195, 4152)", "(9196, 4152)",
                     "(9197, 4152)", "(9198, 4152)", "(9195, 4153)", "(9196, 4153)", "(9197, 4153)",
@@ -360,31 +461,98 @@ function first(areaId) {
                 ];
 
         // タイルが DOM に追加されるまで定期的に確認
-        const checkTiles = setInterval(() => {
+        function checkTiles(coordList) {
+            // `.divBox`クラスの要素を取得
             const point = document.querySelectorAll('.divBox');
-            
-            if (point.length > 0) {              
-                clearInterval(checkTiles);  
-                // 該当クラスの一覧をループする
-                // 「element」にはループ中の値、「index」には何回目のループかという情報が入っています
-                point.forEach((element, index) => {
 
-                    // 座標の一覧に該当座標があるかどうかを調べる
-                    const findMethod = locationID.find(int => int == element.textContent);
-
-                    // もし座標が一覧にあった場合
-                    if (!findMethod) {
-                        // 対象行にactiveクラスを付与する
-                        element.classList.add('noArea');
-                    } // else if (findMethod === "(9196, 4151)"){
-                    //     element.textContent = "エリア１";
-                    // }
-
-                });
+            // 取得できない場合は終了
+            if (point.length === 0) {
+                console.log('No tiles found.');
+                return;
             }
-        }, 500);
 
-            // タイルにマウスが乗ったかどうかを判定する関数
+            console.log('Checking tiles...');
+            console.log(locationID);
+
+            // 各タイルをループ処理
+            point.forEach((element, index) => {
+
+                const findMethod = locationID.find(int => int == element.textContent);
+
+                // ゴミアンケートのデータベースにあるエリアを取得
+                coordList.forEach(function(coordID) {
+                        
+                    console.log("俺"+coordID.coord);
+                    console.log("俺"+coordID.gomi);
+                    
+                    if(coordID.coord === findMethod) {
+                        switch (coordID.gomi) {
+                        case 1:
+                            element.classList.add('level_1');
+                            break;
+                        case 2:
+                            element.classList.add('level_2');
+                            break;
+                        case 3:
+                            element.classList.add('level_3');
+                            break;
+                        case 4:
+                            element.classList.add('level_4');
+                            break;
+                        }
+                        // element.classList.add('level_1');
+                        console.log('aaa');
+                        
+                    }
+                });
+                
+                if (!findMethod) {
+                    // 一致する場合にクラスを付与
+                    element.classList.add('active');
+                    console.log(`Tile activated:`);
+                } else {
+                    console.log(`Tile not in list:  `);
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 5秒後に1回だけタイルをチェックする
+            setTimeout(() => {
+                coord();
+
+                // すべてのタイルにクラスが付与された場合にチェックを停止
+                const activeTiles = document.querySelectorAll('.divBox.active');
+                if (activeTiles.length === locationID.length) {
+                    console.log('All tiles processed.');
+                }
+            }, 5000); // 5秒後に1回だけ実行
+        });
+
+
+        
+
+        function coord() {
+            $.ajax({
+                type: "POST",
+                url: "coord.php",
+                dataType: "json",
+            }).done(function(data) {
+                coordList = data; // グローバル変数にデータを格納
+                console.log("取得したデータajax:", coordList);
+                checkTiles(coordList);
+            }).fail(function(jqXHR, textStatus, errorThrown)  {
+                console.error("AJAXリクエストに失敗しました");
+                console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+                console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+                console.error("エラーメッセージ:", errorThrown);
+            });
+        }
+         
+
+        const check = document.querySelectorAll('.divBox');
+
+            // タイルにマウスがクリックしたかどうかを判定する関数
             function isMouseOverTile(event, tile) {
                 var tileRect = tile.getBoundingClientRect();
                 return event.clientX >= tileRect.left && event.clientX <= tileRect.right &&
