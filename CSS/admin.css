@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.large-button {
+    font-size: 18px;
+    padding: 12px 24px;
+    cursor: pointer;
+    display: block;
+    margin: 10px 0;
+}
+
+.large-input {
+    font-size: 18px;
+    padding: 12px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+
+.table-container {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* ダークモードのスタイル */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode h1 {
+    color: #ffffff;
+}
+
+body.dark-mode table {
+    border-color: #444;
+    background-color: #1e1e1e;
+}
+
+body.dark-mode th {
+    background-color: #333;
+    color: #ffffff;
+}
+
+body.dark-mode td {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode input,
+body.dark-mode button {
+    background-color: #333;
+    color: #ffffff;
+    border: 1px solid #555;
+}
+
+body.dark-mode input.large-input {
+    background-color: #222;
+}
+
+body.dark-mode input.large-button {
+    background-color: #555;
+}
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+    .large-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .large-input {
+        font-size: 14px;
+        padding: 8px;
+        max-width: 100%;
+    }
+
+    table {
+        font-size: 12px;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    td.login-time, td.logout-time {
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .time-wrapper {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+}

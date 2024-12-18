@@ -1,0 +1,122 @@
+header {
+    width: 100%;
+    height: 60px;
+    top: 0; /* 上部から配置の基準位置を決める */
+    background-color: white;
+    position: fixed;
+    z-index: 100;
+}
+
+.menu {
+    width: 100%;
+}
+
+.flexBox {
+    display: flex;
+    box-shadow: 0px 0px 5px;
+}
+
+.logout_form{
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 101%;
+    margin: 0px 25px;
+}
+
+.logo2 {
+    height: 60px;
+}
+
+.logo {
+    height: 60px;
+    width: 100%;
+    text-align: center  ;
+}
+
+
+.icon {
+    width: 100%;
+}
+
+.logout1 {
+    padding: 10px;
+    background-color: #43AEA9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout1:hover {
+    background-color: #557981;
+}
+
+body{
+    background-color: #FFF6E9;
+}
+
+.search{
+    background-color: #43aea9;
+    margin-top: 79px;
+    color: white;
+    font-size: 25px;
+    height: 60px;
+    line-height: 62px;
+    padding-left: 20px;
+}
+
+.area{
+    font-size:25px;
+    margin-top: 20px;
+    padding-left: 15px;
+}
+
+/* セレクトボックスの基本デザイン */
+#facility_id{
+    background-color: #fefaf2; /* 背景色 */
+    border: 1px solid #66b2af; /* 枠線の色 */
+    border-radius: 5px; /* 角を丸く */
+    padding: 8px 30px 8px 10px; /* 内側の余白 */
+    font-size: 16px; /* 文字サイズ */
+    color: #333; /* 文字色 */
+    width: 100%; /* 幅を調整（必要に応じて変更） */
+    max-width:  500px; /* 最大幅を設定 */
+    margin-left: 25px; /* 左に25px移動 */
+    outline: none; /* フォーカス時の枠線を削除 */
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* 矢印の位置を調整 */
+    background-size: 16px 16px; /* 矢印のサイズを調整 */
+    display: flex;               /* フレックスボックスを使う */
+    justify-content: center;     /* 横方向に中央揃え */
+    align-items: center;  
+}
+
+/* セレクトボックスのフォーカス時のデザイン */
+select:focus {
+    border-color: white; /* 枠線の色を変更 */
+    box-shadow: 0 0 3px rgba(102, 178, 175, 0.5); /* 軽い発光 */
+}
+
+p{
+    margin-left: 25px; /* 左に25px移動 */
+}
+
+.select-btn{
+    padding: 10px;
+    background-color: #43AEA9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 60px;
+}
+
+.button-container {
+    display: flex;               /* フレックスボックスを使う */
+    justify-content: center;     /* 横方向に中央揃え */
+    align-items: center;         /* 縦方向に中央揃え */
+}
