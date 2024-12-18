@@ -131,6 +131,9 @@
     function mapDisplay() {
         const mapDiv = document.getElementById('map');
         const searchBar = document.getElementById('searchBar');
+        let result = document.querySelector('.results');
+        
+        result.innerHTML = "";
 
         mapDiv.style.display = 'block';
         searchBar.style.display = 'none';
