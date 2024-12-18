@@ -17,7 +17,7 @@ unset($_SESSION['login_message']);
     <script type="text/javascript">
         // 3秒後にリダイレクトする
         setTimeout(function() {
-            window.location.href = '../index.html';
+            window.location.href = '../index.php';
         }, 3000); // 3000ミリ秒 = 3秒
     </script>
 </head>
