@@ -1,60 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="CSS/indexStyle.css">
-    <link rel="stylesheet" href="CSS/yoyakuStyle.css">
-    <title>予約フォーム</title>
-</head>
-<body>
-
-    <header>
-        <div class="flexBox">
-            <div class="menu">
-            </div>
-            <div class="logo">
-                <img src="img/logo.jpg" alt="" class="logo2">
-            </div>
-            <div class="icon"></div>
-        </div>
-    </header>
-
-
-
-    <form class="yoyaku_form" action="php/yoyaku.php" method="post">
-        <h1>予約フォーム</h1>
-        <label for="reservation_date">予約日:</label>
-        <input type="date" id="reservation_date" name="reservation_date" required>
+<script src="Js/jquery-3.7.1.min.js"></script>
+<script>
+    let a =coord();
+    console.log(a);
     
-        <label for="start_time">開始時間:</label>
-        <input type="time" id="start_time" name="start_time" required>
-    
-        <label for="end_time">終了時間:</label>
-        <input type="time" id="end_time" name="end_time" required>
-    
-        <!-- <label for="location">場所指定:</label>
-        <input type="text" id="location" name="location" placeholder="例とか入れれる" required> -->
-    
-        <input type="submit" value="予約する">
-    </form>
-
-
-    
-    <!-- <h1>予約フォーム</h1>
-    <form action="php/yoyaku.php" method="post">
-        <label for="reservation_date">予約日:</label>
-        <input type="date" id="reservation_date" name="reservation_date" required><br><br>
-
-        <label for="start_time">開始時間:</label>
-        <input type="time" id="start_time" name="start_time" required><br><br>
-
-        <label for="end_time">終了時間:</label>
-        <input type="time" id="end_time" name="end_time" required><br><br>
-
-        <label for="">場所指定</label>
-        <input type="text">
-
-        <input type="submit" value="予約する">
-    </form> -->
-</body>
-</html>
+function coord() {
+    $.ajax({
+        type: "POST",
+        url: "coord.php",
+        dataType: "json",
+    }).done(function(data) {
+        data.forEach(function(coord) {
+            console.log(
+                // coord.coord
+            );
+            let awa = coord.coord;
+        });
+    }).fail(function(jqXHR, textStatus, errorThrown)  {
+        console.error("AJAXリクエストに失敗しました");
+        console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+        console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+        console.error("エラーメッセージ:", errorThrown);
+    });
+}
+</script>
