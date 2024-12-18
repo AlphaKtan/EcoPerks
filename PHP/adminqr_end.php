@@ -3,30 +3,26 @@ session_start();
 require_once('../Model/dbModel.php');
 $pdo = dbConnect();
 
+
+$stmt = $pdo->query("SELECT id, area_id, facility_name FROM travel_data");
+$facilities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // POSTリクエストが送信された場合に施設名をセッションに保存
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['facility_id'])) {
     $facility_id = htmlspecialchars($_POST['facility_id'], ENT_QUOTES, 'UTF-8');
-
-    // travel_data テーブルから施設情報を取得
-    $stmt = $pdo->prepare("SELECT id, area_id, facility_name FROM travel_data WHERE id = :facility_id");
-    $stmt->bindParam(':facility_id', $facility_id, PDO::PARAM_INT);
-    $stmt->execute();
-    $facility = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($facility) {
-        $_SESSION['facility_name'] = $facility['facility_name'];
-        $_SESSION['area_id'] = $facility['area_id']; // 必要に応じて使用
-        header('Location: owari.php'); // QRコード生成ページにリダイレクト
-        exit();
-    } else {
-        echo "施設が見つかりませんでした。";
+    foreach ($facilities as $facility) {
+        if ($facility['id'] == $facility_id) {
+            $_SESSION['facility_name'] = $facility['facility_name'];
+            $_SESSION['area_id'] = $facility['area_id'];
+            header('Location: owari.php'); // QRコード生成ページにリダイレクト
+            exit();
+        }
     }
 }
-
 // travel_data テーブルから全施設を取得
-$stmt = $pdo->query("SELECT id, facility_name FROM travel_data");
-$facilities = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
+// $stmt = $pdo->query("SELECT id, facility_name FROM travel_data");
+// $facilities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// ?>
 
 <!DOCTYPE html>
 <html lang="ja">

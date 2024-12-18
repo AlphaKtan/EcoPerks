@@ -17,28 +17,15 @@ use Endroid\QrCode\Color\Color;
 $baseUrl = 'localhost/ecoperks/php/gomiclean_end.php';
 $timestamp = time();
 
-// 終了用QRコードのURLを生成
 $area_id = $_SESSION['area_id'] ?? null;
 $facility_name = $_SESSION['facility_name'] ?? null;
 
-if (!$area_id) {
-    echo "<h3>エリアが選択されていません。</h3>";
+if (!$area_id || !$facility_name) {
+    echo "<h3>エリアまたは施設が選択されていません。</h3>";
     exit;
 }
 
-//施設名を取得するためのクエリ
-$sql = "SELECT facility_name FROM travel_data WHERE id = :area_id";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':area_id', $area_id);
-$stmt->execute();
-$facility = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$facility) {
-    echo "<h3>施設情報が見つかりません。</h3>";
-    exit;
-}
-
-$facility_name = $facility['facility_name'];
+//$facility_name = $facility['facility_name'];
 
 // 開始QRコードのURLを生成
 $expiry_time = date('Y-m-d H:i:s', $timestamp + 60); // 60秒後のDATETIME形式に変換

@@ -6,9 +6,9 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // データベース接続
 require_once('../Model/dbModel.php');
-$pdo = dbConnect();
+$conn= dbConn();
 
-$conn = new mysqli($servername, $dbUsername, $password, $dbname);
+
 if ($conn->connect_error) {
     die("データベースに接続できないちゃんと確認して: " . $conn->connect_error);
 }
