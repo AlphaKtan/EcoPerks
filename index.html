@@ -526,7 +526,7 @@ function first(areaId) {
                     clearInterval(interval);
                     console.log('All tiles processed.');
                 }
-            }, 500); // 500msごとにチェック
+            }, 5000); // 500msごとにチェック
         });
 
         
@@ -548,18 +548,6 @@ function first(areaId) {
             });
         }
          
-
-        const check = docdocument.querySelectorAll('.divBox');
-            switch(check){
-                
-            }
-
-            // タイルにマウスが乗ったかどうかを判定する関数
-            function isMouseOverTile(event, tile) {
-                var tileRect = tile.getBoundingClientRect();
-                return event.clientX >= tileRect.left && event.clientX <= tileRect.right &&
-                    event.clientY >= tileRect.top && event.clientY <= tileRect.bottom;
-            }
         }
 
         window.initMap = initMap;
