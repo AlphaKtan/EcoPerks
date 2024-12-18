@@ -9,13 +9,13 @@
             INNER JOIN survey_responses
             ON map.area_id = survey_responses.areaid
             GROUP BY map.coord, survey_responses.gomi
-            ORDER BY gomi_count DESC, survey_responses.gomi DESC;";
+            ORDER BY coord ASC, gomi_count DESC, survey_responses.gomi DESC;";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($row as $rows) {
-        if($tmp = $rows['coord']) {
+        if($tmp != $rows['coord']) {
             $area = $rows['coord'];
             $level = $rows['gomi'];
 

@@ -419,6 +419,7 @@
                 coordList.forEach(function(coordID) {
                         
                     if(coordID.area === findMethod) {
+                        element.classList.remove('level_1', 'level_2', 'level_3', 'level_4');
                         switch (coordID.level) {
                             case 1:
                                 element.classList.add('level_1');
