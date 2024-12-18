@@ -11,7 +11,7 @@ try {
 
 // データを取得するSQL
 try {
-    $sql = "SELECT survey_id AS survey_id, gomi, body, image_path, created_at FROM survey_responses ORDER BY created_at DESC";
+    $sql = "SELECT survey_id AS survey_id, gomi, body, image_path, created_at, areaid FROM survey_responses ORDER BY created_at DESC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC); // 結果を取得
@@ -41,7 +41,6 @@ try {
     </div>
 </header>
 
-
 <section class="data_display">
     <h1>アンケートデータ一覧</h1>
     <?php if (!empty($results)): ?>
@@ -53,6 +52,7 @@ try {
                     <th>お問い合わせ内容</th>
                     <th>画像</th>
                     <th>作成日時</th>
+                    <th>エリアID</th>
                 </tr>
             </thead>
             <tbody>
@@ -74,6 +74,7 @@ try {
                             <?php endif; ?>
                         </td>
                         <td><?php echo htmlspecialchars($row['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td><?php echo htmlspecialchars($row['areaid'], ENT_QUOTES, 'UTF-8'); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -82,7 +83,6 @@ try {
         <p>データがありません。</p>
     <?php endif; ?>
 </section>
-<p>FUCKINGPTでっち上げてるから修正しよう</p>
-
+<a href="Survey_Customer.php">あんけーと</a>
 </body>
 </html>
