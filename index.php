@@ -297,7 +297,7 @@
                 selectedElement.innerHTML += `<h2>エリア${areaId}</h2>`;
                 data.forEach(function(area) {
                     console.log(area);
-                    selectedElement.innerHTML += `<div>${area.facility_name}</div>`;
+                    selectedElement.innerHTML += `<div class="facility">${area.facility_name}</div>`;
                 });
             }).fail(function(jqXHR, textStatus, errorThrown)  {
                 console.error("AJAXリクエストに失敗しました");
@@ -419,18 +419,18 @@
                         
                     if(coordID.coord === findMethod) {
                         switch (coordID.gomi) {
-                        case 1:
-                            element.classList.add('level_1');
-                            break;
-                        case 2:
-                            element.classList.add('level_2');
-                            break;
-                        case 3:
-                            element.classList.add('level_3');
-                            break;
-                        case 4:
-                            element.classList.add('level_4');
-                            break;
+                            case 1:
+                                element.classList.add('level_1');
+                                break;
+                            case 2:
+                                element.classList.add('level_2');
+                                break;
+                            case 3:
+                                element.classList.add('level_3');
+                                break;
+                            case 4:
+                                element.classList.add('level_4');
+                                break;
                         }
                     }
                 });
