@@ -61,7 +61,7 @@ try {
                         <td><?php echo htmlspecialchars($row['survey_id'], ENT_QUOTES, 'UTF-8'); ?></td>
                         <td>
                             <?php 
-                                $gomi_values = ['1' => '多い', '2' => 'まぁまぁ', '3' => '少ない'];
+                                $gomi_values = ['4' => '多い', '3' => 'まぁまぁ多い', '2' => 'まぁまぁ少ない', '1' => '少ない'];
                                 echo $gomi_values[$row['gomi']] ?? '不明';
                             ?>
                         </td>
