@@ -42,7 +42,7 @@ index.com
         }
 
         .level_1{
-            background-color: red;
+            background-color: rgba(255, 0, 0, 0.657);
         }
 
         .level_2{
@@ -460,44 +460,77 @@ function first(areaId) {
                 ];
 
         // タイルが DOM に追加されるまで定期的に確認
-        const checkTiles = setInterval(() => {
+        function checkTiles(coordList) {
+            // `.divBox`クラスの要素を取得
             const point = document.querySelectorAll('.divBox');
-            
-            if (point.length > 0) {              
-                clearInterval(checkTiles);  
-                // 該当クラスの一覧をループする
-                // 「element」にはループ中の値、「index」には何回目のループかという情報が入っています
-                coord();
-                console.log(coordList);
-                point.forEach((element, index) => {
 
-                    // 座標の一覧に該当座標があるかどうかを調べる
-                    const findMethod = locationID.find(int => int == element.textContent);
-
-                    coordList.forEach(function(coordID) {
-                        
-                        console.log(coordID.coord);
-                        
-                        if(coordID === findMethod) {
-                            element.classList.add('active');
-                            console.log('aaa');
-                            
-                        }
-                    });
-                    
-
-                    // もし座標が一覧にあった場合
-                    if (!findMethod)  {
-                        // 対象行にactiveクラスを付与する
-                        element.classList.add('active');
-                    } // else if (findMethod === "(9196, 4151)"){
-                    //     element.textContent = "エリア１";
-                    // } 
-                });
-
+            // 取得できない場合は終了
+            if (point.length === 0) {
+                console.log('No tiles found.');
+                return;
             }
-        }, 500);
-           
+
+            console.log('Checking tiles...');
+            console.log(locationID);
+
+            // 各タイルをループ処理
+            point.forEach((element, index) => {
+
+                const findMethod = locationID.find(int => int == element.textContent);
+
+                // ゴミアンケートのデータベースにあるエリアを取得
+                coordList.forEach(function(coordID) {
+                        
+                    console.log("俺"+coordID.coord);
+                    console.log("俺"+coordID.gomi);
+                    
+                    if(coordID.coord === findMethod) {
+                        switch (coordID.gomi) {
+                        case 1:
+                            element.classList.add('level_1');
+                            break;
+                        case 2:
+                            element.classList.add('level_2');
+                            break;
+                        case 3:
+                            element.classList.add('level_3');
+                            break;
+                        case 4:
+                            element.classList.add('level_4');
+                            break;
+                        }
+                        // element.classList.add('level_1');
+                        console.log('aaa');
+                        
+                    }
+                });
+                
+                if (!findMethod) {
+                    // 一致する場合にクラスを付与
+                    element.classList.add('active');
+                    console.log(`Tile activated:`);
+                } else {
+                    console.log(`Tile not in list:  `);
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 定期的にタイルをチェックする
+            const interval = setInterval(() => {
+                coord();
+
+                // すべてのタイルにクラスが付与された場合にチェックを停止
+                const activeTiles = document.querySelectorAll('.divBox.active');
+                if (activeTiles.length === locationID.length) {
+                    clearInterval(interval);
+                    console.log('All tiles processed.');
+                }
+            }, 5000); // 500msごとにチェック
+        });
+
+        
+
         function coord() {
             $.ajax({
                 type: "POST",
@@ -505,7 +538,8 @@ function first(areaId) {
                 dataType: "json",
             }).done(function(data) {
                 coordList = data; // グローバル変数にデータを格納
-                console.log("取得したデータ:", coordList);
+                console.log("取得したデータajax:", coordList);
+                checkTiles(coordList);
             }).fail(function(jqXHR, textStatus, errorThrown)  {
                 console.error("AJAXリクエストに失敗しました");
                 console.error("HTTPステータス:", jqXHR.status); // ステータスコード
