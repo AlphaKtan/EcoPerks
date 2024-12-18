@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- ホスト: 127.0.0.1
--- 生成日時: 2024-12-18 06:56:17
+-- 生成日時: 2024-12-18 07:16:31
 -- サーバのバージョン： 10.4.32-MariaDB
--- PHP のバージョン: 8.2.12
+-- PHP のバージョン: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- データベース: `ecoperks`
 --
-CREATE DATABASE IF NOT EXISTS `ecoperks` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `ecoperks`;
 
 -- --------------------------------------------------------
 
@@ -208,21 +206,43 @@ CREATE TABLE `survey_responses` (
   `gomi` tinyint(4) NOT NULL,
   `body` text NOT NULL,
   `image_path` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `areaid` int(11) DEFAULT NULL,
+  `coord` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `survey_responses`
 --
 
-INSERT INTO `survey_responses` (`survey_id`, `gomi`, `body`, `image_path`, `created_at`) VALUES
-(1, 1, 'ゴミが多いので、もっと回収頻度を上げてほしい', '../images/sample1.jpg', '2024-12-02 08:52:54'),
-(2, 2, 'ゴミの量はまぁまぁです。問題ありません。', NULL, '2024-12-02 08:52:54'),
-(3, 3, 'ゴミは少ないですが、ゴミ箱が不足しています。', '../images/sample2.jpg', '2024-12-02 08:52:54'),
-(4, 2, 'hhlkkhjkjhlkjh', '../images/1185888840674d77aa22b210.23011545.jpg', '2024-12-02 09:02:35'),
-(5, 2, 'だだｆｓふぁｄｄふぁあｆｄ', '../images/1181778231674d7ac8e35767.41136090.jpg', '2024-12-02 09:15:53'),
-(6, 2, 'だだｆｓふぁｄｄふぁあｆｄ', '../images/683246905674d7aea7a8622.83305329.jpg', '2024-12-02 09:16:27'),
-(7, 2, 'だだｆｓふぁｄｄふぁあｆｄ', '../images/196097546674d7b32dc7f39.72669828.jpg', '2024-12-02 09:17:39');
+INSERT INTO `survey_responses` (`survey_id`, `gomi`, `body`, `image_path`, `created_at`, `areaid`, `coord`) VALUES
+(8, 2, 'ｄｇｓｆｚｃヴぁｈｆｄｇんｂｖ86120', '../images/1352344694675a4e39e32cd2.31628963.png', '2024-12-12 02:48:53', 18, ''),
+(9, 1, 'ｄｇｓｆｚｃヴぁｈｆｄｇんｂｖ86120', '../images/1393892183675a4f187e05d3.14164069.png', '2024-12-12 02:48:57', 18, ''),
+(10, 4, 'ｄｇｓｆｚｃヴぁｈｆｄｇんｂｖ86120', '../images/933247600675a4f2ea82004.55544586.png', '2024-12-12 02:49:19', 25, ''),
+(11, 2, 'wezsxrdctfvyg54156\r\n341+4', '../images/1709066249675a4fde5bb9c4.87126838.png', '2024-12-12 02:52:15', 24, ''),
+(12, 4, 'fadf', '../images/1732946465676233b4f19d20.25033385.png', '2024-12-18 02:30:14', 18, ''),
+(13, 4, 'fadf', '../images/1493600699676233c1cc06e4.56042968.png', '2024-12-18 02:30:26', 18, ''),
+(14, 3, 'dsafadfdafsafds', '', '2024-12-18 02:31:37', 10, ''),
+(15, 3, 'dsafadfdafsafds', '', '2024-12-18 02:32:45', 10, ''),
+(16, 2, 'dsafadfdafsafds', '', '2024-12-18 02:35:02', 10, ''),
+(17, 2, 'dsafadfdafsafds', '', '2024-12-18 02:35:28', 10, ''),
+(18, 1, 'dsafadfdafsafds', '', '2024-12-18 02:36:55', 10, ''),
+(19, 4, 'あｆｄｓ', '../images/3886974056762359be07cf4.37616003.jpg', '2024-12-18 02:38:21', 14, ''),
+(20, 4, 'あｆｄｓ', '../images/9433489906762374c62f385.34458878.jpg', '2024-12-18 02:45:33', 14, ''),
+(21, 4, 'あｆｄｓ', '../images/1487805760676238a5271ed6.71717330.jpg', '2024-12-18 02:51:18', 1, ''),
+(22, 1, 'あｆｄｓ', '../images/695983043676238bb2935e5.27946576.jpg', '2024-12-18 02:51:39', 1, ''),
+(23, 4, 'あｆｄｓ', '../images/879806517676239c9f17f84.79768150.jpg', '2024-12-18 02:56:10', 6, ''),
+(24, 3, 'あｆｄｓ', '../images/1433065601676239e9248a09.89611850.jpg', '2024-12-18 02:56:41', 7, ''),
+(25, 1, 'あｆｄｓ', '../images/395645259676239f436cb17.71328292.jpg', '2024-12-18 02:56:52', 7, ''),
+(26, 4, 'あｆｄｓ', '../images/57262381067623a1bcee282.21372220.jpg', '2024-12-18 02:57:32', 10, ''),
+(27, 3, 'あｆｄｓ', '../images/20989200167623a3bef33b6.46097920.jpg', '2024-12-18 02:58:05', 10, ''),
+(28, 4, 'あｆｄｓ', '../images/127771752467623a487faba0.52994021.jpg', '2024-12-18 02:58:17', 10, ''),
+(29, 4, 'あｆｄｓ', '../images/145791972167623a631d82a8.26835951.jpg', '2024-12-18 02:58:43', 1, ''),
+(30, 4, 'あｆｄｓ', '../images/41308960067623a8615e9e3.92909094.jpg', '2024-12-18 02:59:18', 1, ''),
+(31, 3, 'あｆｄｓ', '../images/15210009967623aabae5fe6.16223308.jpg', '2024-12-18 02:59:56', 2, ''),
+(32, 3, 'あｆｄｓ', '../images/115578725767623af6859a40.17519938.jpg', '2024-12-18 03:01:11', 2, ''),
+(33, 4, 'あｆｄさｓふぁｄｆ', '', '2024-12-18 03:01:27', 1, ''),
+(34, 4, 'ｄｆｓだｓｆｄｆｓｄｆ', '', '2024-12-18 03:03:13', 3, '');
 
 -- --------------------------------------------------------
 
@@ -27884,7 +27904,7 @@ ALTER TABLE `product`
 -- テーブルの AUTO_INCREMENT `survey_responses`
 --
 ALTER TABLE `survey_responses`
-  MODIFY `survey_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `survey_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- テーブルの AUTO_INCREMENT `test_time_change`
@@ -27949,470 +27969,6 @@ ALTER TABLE `users_kokyaku`
 --
 ALTER TABLE `user_sessions`
   ADD CONSTRAINT `user_sessions_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON UPDATE CASCADE;
---
--- データベース: `phpmyadmin`
---
-CREATE DATABASE IF NOT EXISTS `phpmyadmin` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `phpmyadmin`;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__bookmark`
---
-
-CREATE TABLE `pma__bookmark` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `dbase` varchar(255) NOT NULL DEFAULT '',
-  `user` varchar(255) NOT NULL DEFAULT '',
-  `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `query` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Bookmarks';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__central_columns`
---
-
-CREATE TABLE `pma__central_columns` (
-  `db_name` varchar(64) NOT NULL,
-  `col_name` varchar(64) NOT NULL,
-  `col_type` varchar(64) NOT NULL,
-  `col_length` text DEFAULT NULL,
-  `col_collation` varchar(64) NOT NULL,
-  `col_isNull` tinyint(1) NOT NULL,
-  `col_extra` varchar(255) DEFAULT '',
-  `col_default` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Central list of columns';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__column_info`
---
-
-CREATE TABLE `pma__column_info` (
-  `id` int(5) UNSIGNED NOT NULL,
-  `db_name` varchar(64) NOT NULL DEFAULT '',
-  `table_name` varchar(64) NOT NULL DEFAULT '',
-  `column_name` varchar(64) NOT NULL DEFAULT '',
-  `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `mimetype` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `transformation` varchar(255) NOT NULL DEFAULT '',
-  `transformation_options` varchar(255) NOT NULL DEFAULT '',
-  `input_transformation` varchar(255) NOT NULL DEFAULT '',
-  `input_transformation_options` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Column information for phpMyAdmin';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__designer_settings`
---
-
-CREATE TABLE `pma__designer_settings` (
-  `username` varchar(64) NOT NULL,
-  `settings_data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Settings related to Designer';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__export_templates`
---
-
-CREATE TABLE `pma__export_templates` (
-  `id` int(5) UNSIGNED NOT NULL,
-  `username` varchar(64) NOT NULL,
-  `export_type` varchar(10) NOT NULL,
-  `template_name` varchar(64) NOT NULL,
-  `template_data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved export templates';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__favorite`
---
-
-CREATE TABLE `pma__favorite` (
-  `username` varchar(64) NOT NULL,
-  `tables` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Favorite tables';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__history`
---
-
-CREATE TABLE `pma__history` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(64) NOT NULL DEFAULT '',
-  `db` varchar(64) NOT NULL DEFAULT '',
-  `table` varchar(64) NOT NULL DEFAULT '',
-  `timevalue` timestamp NOT NULL DEFAULT current_timestamp(),
-  `sqlquery` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='SQL history for phpMyAdmin';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__navigationhiding`
---
-
-CREATE TABLE `pma__navigationhiding` (
-  `username` varchar(64) NOT NULL,
-  `item_name` varchar(64) NOT NULL,
-  `item_type` varchar(64) NOT NULL,
-  `db_name` varchar(64) NOT NULL,
-  `table_name` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Hidden items of navigation tree';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__pdf_pages`
---
-
-CREATE TABLE `pma__pdf_pages` (
-  `db_name` varchar(64) NOT NULL DEFAULT '',
-  `page_nr` int(10) UNSIGNED NOT NULL,
-  `page_descr` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='PDF relation pages for phpMyAdmin';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__recent`
---
-
-CREATE TABLE `pma__recent` (
-  `username` varchar(64) NOT NULL,
-  `tables` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Recently accessed tables';
-
---
--- テーブルのデータのダンプ `pma__recent`
---
-
-INSERT INTO `pma__recent` (`username`, `tables`) VALUES
-('root', '[{\"db\":\"ecoperks\",\"table\":\"yoyaku\"},{\"db\":\"ecoperks\",\"table\":\"time_change\"},{\"db\":\"ecoperks\",\"table\":\"preset\"},{\"db\":\"ecoperks\",\"table\":\"travel_data\"},{\"db\":\"ecoperks\",\"table\":\"users\"},{\"db\":\"ecoperks\",\"table\":\"users_kokyaku\"}]');
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__relation`
---
-
-CREATE TABLE `pma__relation` (
-  `master_db` varchar(64) NOT NULL DEFAULT '',
-  `master_table` varchar(64) NOT NULL DEFAULT '',
-  `master_field` varchar(64) NOT NULL DEFAULT '',
-  `foreign_db` varchar(64) NOT NULL DEFAULT '',
-  `foreign_table` varchar(64) NOT NULL DEFAULT '',
-  `foreign_field` varchar(64) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Relation table';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__savedsearches`
---
-
-CREATE TABLE `pma__savedsearches` (
-  `id` int(5) UNSIGNED NOT NULL,
-  `username` varchar(64) NOT NULL DEFAULT '',
-  `db_name` varchar(64) NOT NULL DEFAULT '',
-  `search_name` varchar(64) NOT NULL DEFAULT '',
-  `search_data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved searches';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__table_coords`
---
-
-CREATE TABLE `pma__table_coords` (
-  `db_name` varchar(64) NOT NULL DEFAULT '',
-  `table_name` varchar(64) NOT NULL DEFAULT '',
-  `pdf_page_number` int(11) NOT NULL DEFAULT 0,
-  `x` float UNSIGNED NOT NULL DEFAULT 0,
-  `y` float UNSIGNED NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table coordinates for phpMyAdmin PDF output';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__table_info`
---
-
-CREATE TABLE `pma__table_info` (
-  `db_name` varchar(64) NOT NULL DEFAULT '',
-  `table_name` varchar(64) NOT NULL DEFAULT '',
-  `display_field` varchar(64) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table information for phpMyAdmin';
-
---
--- テーブルのデータのダンプ `pma__table_info`
---
-
-INSERT INTO `pma__table_info` (`db_name`, `table_name`, `display_field`) VALUES
-('ecoperks', 'time_change', 'facility_name'),
-('ecoperks', 'travel_data', 'facility_name');
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__table_uiprefs`
---
-
-CREATE TABLE `pma__table_uiprefs` (
-  `username` varchar(64) NOT NULL,
-  `db_name` varchar(64) NOT NULL,
-  `table_name` varchar(64) NOT NULL,
-  `prefs` text NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Tables'' UI preferences';
-
---
--- テーブルのデータのダンプ `pma__table_uiprefs`
---
-
-INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, `last_update`) VALUES
-('root', 'ecoperks', 'yoyaku', '{\"sorted_col\":\"`reservation_date` DESC\"}', '2024-12-16 03:23:07');
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__tracking`
---
-
-CREATE TABLE `pma__tracking` (
-  `db_name` varchar(64) NOT NULL,
-  `table_name` varchar(64) NOT NULL,
-  `version` int(10) UNSIGNED NOT NULL,
-  `date_created` datetime NOT NULL,
-  `date_updated` datetime NOT NULL,
-  `schema_snapshot` text NOT NULL,
-  `schema_sql` text DEFAULT NULL,
-  `data_sql` longtext DEFAULT NULL,
-  `tracking` set('UPDATE','REPLACE','INSERT','DELETE','TRUNCATE','CREATE DATABASE','ALTER DATABASE','DROP DATABASE','CREATE TABLE','ALTER TABLE','RENAME TABLE','DROP TABLE','CREATE INDEX','DROP INDEX','CREATE VIEW','ALTER VIEW','DROP VIEW') DEFAULT NULL,
-  `tracking_active` int(1) UNSIGNED NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Database changes tracking for phpMyAdmin';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__userconfig`
---
-
-CREATE TABLE `pma__userconfig` (
-  `username` varchar(64) NOT NULL,
-  `timevalue` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `config_data` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User preferences storage for phpMyAdmin';
-
---
--- テーブルのデータのダンプ `pma__userconfig`
---
-
-INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
-('root', '2024-12-16 05:02:09', '{\"Console\\/Mode\":\"collapse\",\"lang\":\"ja\"}');
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__usergroups`
---
-
-CREATE TABLE `pma__usergroups` (
-  `usergroup` varchar(64) NOT NULL,
-  `tab` varchar(64) NOT NULL,
-  `allowed` enum('Y','N') NOT NULL DEFAULT 'N'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User groups with configured menu items';
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `pma__users`
---
-
-CREATE TABLE `pma__users` (
-  `username` varchar(64) NOT NULL,
-  `usergroup` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Users and their assignments to user groups';
-
---
--- ダンプしたテーブルのインデックス
---
-
---
--- テーブルのインデックス `pma__bookmark`
---
-ALTER TABLE `pma__bookmark`
-  ADD PRIMARY KEY (`id`);
-
---
--- テーブルのインデックス `pma__central_columns`
---
-ALTER TABLE `pma__central_columns`
-  ADD PRIMARY KEY (`db_name`,`col_name`);
-
---
--- テーブルのインデックス `pma__column_info`
---
-ALTER TABLE `pma__column_info`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`);
-
---
--- テーブルのインデックス `pma__designer_settings`
---
-ALTER TABLE `pma__designer_settings`
-  ADD PRIMARY KEY (`username`);
-
---
--- テーブルのインデックス `pma__export_templates`
---
-ALTER TABLE `pma__export_templates`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `u_user_type_template` (`username`,`export_type`,`template_name`);
-
---
--- テーブルのインデックス `pma__favorite`
---
-ALTER TABLE `pma__favorite`
-  ADD PRIMARY KEY (`username`);
-
---
--- テーブルのインデックス `pma__history`
---
-ALTER TABLE `pma__history`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `username` (`username`,`db`,`table`,`timevalue`);
-
---
--- テーブルのインデックス `pma__navigationhiding`
---
-ALTER TABLE `pma__navigationhiding`
-  ADD PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`);
-
---
--- テーブルのインデックス `pma__pdf_pages`
---
-ALTER TABLE `pma__pdf_pages`
-  ADD PRIMARY KEY (`page_nr`),
-  ADD KEY `db_name` (`db_name`);
-
---
--- テーブルのインデックス `pma__recent`
---
-ALTER TABLE `pma__recent`
-  ADD PRIMARY KEY (`username`);
-
---
--- テーブルのインデックス `pma__relation`
---
-ALTER TABLE `pma__relation`
-  ADD PRIMARY KEY (`master_db`,`master_table`,`master_field`),
-  ADD KEY `foreign_field` (`foreign_db`,`foreign_table`);
-
---
--- テーブルのインデックス `pma__savedsearches`
---
-ALTER TABLE `pma__savedsearches`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`);
-
---
--- テーブルのインデックス `pma__table_coords`
---
-ALTER TABLE `pma__table_coords`
-  ADD PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`);
-
---
--- テーブルのインデックス `pma__table_info`
---
-ALTER TABLE `pma__table_info`
-  ADD PRIMARY KEY (`db_name`,`table_name`);
-
---
--- テーブルのインデックス `pma__table_uiprefs`
---
-ALTER TABLE `pma__table_uiprefs`
-  ADD PRIMARY KEY (`username`,`db_name`,`table_name`);
-
---
--- テーブルのインデックス `pma__tracking`
---
-ALTER TABLE `pma__tracking`
-  ADD PRIMARY KEY (`db_name`,`table_name`,`version`);
-
---
--- テーブルのインデックス `pma__userconfig`
---
-ALTER TABLE `pma__userconfig`
-  ADD PRIMARY KEY (`username`);
-
---
--- テーブルのインデックス `pma__usergroups`
---
-ALTER TABLE `pma__usergroups`
-  ADD PRIMARY KEY (`usergroup`,`tab`,`allowed`);
-
---
--- テーブルのインデックス `pma__users`
---
-ALTER TABLE `pma__users`
-  ADD PRIMARY KEY (`username`,`usergroup`);
-
---
--- ダンプしたテーブルの AUTO_INCREMENT
---
-
---
--- テーブルの AUTO_INCREMENT `pma__bookmark`
---
-ALTER TABLE `pma__bookmark`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `pma__column_info`
---
-ALTER TABLE `pma__column_info`
-  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `pma__export_templates`
---
-ALTER TABLE `pma__export_templates`
-  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `pma__history`
---
-ALTER TABLE `pma__history`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `pma__pdf_pages`
---
-ALTER TABLE `pma__pdf_pages`
-  MODIFY `page_nr` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルの AUTO_INCREMENT `pma__savedsearches`
---
-ALTER TABLE `pma__savedsearches`
-  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- データベース: `test`
---
-CREATE DATABASE IF NOT EXISTS `test` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `test`;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
