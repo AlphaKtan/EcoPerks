@@ -113,21 +113,21 @@
     <div class="boxA">
         <div class="boxB">
             <div class="box3">
-                <a href="./coupons.php">
+                <a href="./coupons.php" style="display: block;/* width: 100%; */height: 100%;">
                     <h1>クーポン</h1>
                     <p>Conpon</p>
                 </a>
             </div>
 
             <div class="box3">
-                <a href="ReserveCheck_Customer.php">
+                <a href="ReserveCheck_Customer.php" style="display: block;/* width: 100%; */height: 100%;">
                     <h1>予約確認</h1>
                     <p>CheckReserve</p>
                 </a>
             </div>
         </div>
         <div class="box5">
-            <a href="./upload.php">
+            <a href="./upload.php" style="display: block;/* width: 100%; */height: 100%;">
                 <h1>名前変更</h1>
                 <p>ChangeName</p>
             </a>
