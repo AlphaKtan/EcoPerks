@@ -204,7 +204,7 @@
         Grid.prototype.getTile = function(coord, zoom, ownerDocument) {
             var div = ownerDocument.createElement('div');
             if (zoom > 11) {
-                div.innerHTML = coord;
+                div.innerHTML = `<span class="spanBox" style="display:none;">${coord}</span>`;
             }
             
             // console.log(zoom);
@@ -264,7 +264,11 @@
             for (var i = 0; i < tiles.length; i++) {
                 var tile = tiles[i];
                 if (tile && isMouseOverTile(event, tile)) {
-                    var areaId = getAreaIdFromTile(tile.innerHTML); // タイルの内容に基づいてエリアIDを取得
+                    var areaId = getAreaIdFromTile(tile.querySelector('span').innerHTML); // タイルの内容に基づいてエリアIDを取得
+                    if(areaId === undefined) {
+                        areaId = null;
+                    }
+                    
                     if (areaId !== null) {
                         // 前に選択されていたセルの選択を解除
                         if (previouslySelected) {
@@ -390,6 +394,7 @@
             }
         }
         var coordList = [];
+        var feach = [];
         //IDが付与されていないタイルにclass"active"を付与してカラーを変える
         const locationID = [
             "(9196, 4151)", "(9197, 4151)", "(9194, 4152)", "(9195, 4152)", "(9196, 4152)",
@@ -412,12 +417,27 @@
 
             // 各タイルをループ処理
             point.forEach((element, index) => {
+                const spanBox = element.querySelector('span');
+                
+                console.log(spanBox.textContent);
+                console.log(element.textContent);
+                
+                const findMethod = locationID.find(int => int == spanBox.textContent);
+                const findMethod2 = locationID.find(int => int == element.textContent);
 
-                const findMethod = locationID.find(int => int == element.textContent);
+                console.log("ファインド1"+findMethod);
+                console.log("ファインド2"+findMethod2);
+                
+
+                // エリアをとってきたやつを入れる
+                feach.forEach(function(fa) {
+                    if (findMethod === fa.coord) {
+                        element.innerHTML += `<div>エリア${fa.area_id}</div>`;
+                    }
+                });
 
                 // ゴミアンケートのデータベースにあるエリアを取得
                 coordList.forEach(function(coordID) {
-                        
                     if(coordID.area === findMethod) {
                         element.classList.remove('level_1', 'level_2', 'level_3', 'level_4');
                         switch (coordID.level) {
@@ -447,11 +467,28 @@
         // if ( document.readyState !== "loading" ) {
             const interval = setInterval(() => {
                 coord();
+                rairu();
                 console.log("更新");
             }, 5000); // 2msごとにチェック
         // }
         
 
+
+        function rairu() {
+            $.ajax({
+                type: "POST",
+                url: "PHP/area_feach.php",
+                dataType: "json",
+            }).done(function(area){
+                feach = area;
+                console.log(feach);
+            }).fail(function(jqXHR, textStatus, errorThrown)  {
+                console.error("AJAXリクエストに失敗しました");
+                console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+                console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+                console.error("エラーメッセージ:", errorThrown);
+            });
+        }
         function coord() {
             $.ajax({
                 type: "POST",
@@ -460,6 +497,7 @@
             }).done(function(data) {
                 coordList = data; // グローバル変数にデータを格納
                 checkTiles(coordList);
+                
                 console.log(data);
                 
             }).fail(function(jqXHR, textStatus, errorThrown)  {
@@ -469,6 +507,8 @@
                 console.error("エラーメッセージ:", errorThrown);
             });
         }
+
+
          
         // タイルにマウスがクリックしたかどうかを判定する関数
         function isMouseOverTile(event, tile) {
