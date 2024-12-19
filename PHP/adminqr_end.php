@@ -18,17 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['facility_id'])) {
             exit();
         }
     }
-}
-// travel_data テーブルから全施設を取得
-// $stmt = $pdo->query("SELECT id, facility_name FROM travel_data");
-// $facilities = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// ?>
+} ?>
 
 <!DOCTYPE html>
 <html lang="ja">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
     <link rel="stylesheet" href="../CSS/hannbaka.css">
     <link rel="stylesheet" href="../CSS/adminqr.css">
+    <link rel="stylesheet" href="../CSS/sidebar.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,31 +34,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['facility_id'])) {
 <header>
         <div class="flexBox">
             <div class="menu">
-                <div class="openbtn"><span></span><span></span><span></span></div>
-                <nav id="g-nav">
-                    <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
-                        <ul>
-                            <li><a href="#">Top</a></li>
-                            <li><a href="../login_page.php">ログイン</a></li> 
-                            <li><a href="regist.php">アカウント作成</a></li> 
-                            <li><a href="Mypage_user.php">Mypage</a></li> 
-                        </ul>
-                    </div>
-                </nav>
             </div>
             <div class="logo">
-                <img src="../img/logo.jpg" alt="" class="logo2">
+                <img src="../img/logo_yoko.svg" alt="" class="logo2">
             </div>
             <div class="icon">
                 <form action="logout.php" method="post" class = "logout_form">
-                    <button type="submit" class="logout1">ログアウト</button>
                 </form>
             </div>
         </div>
     </header>    
 <body>
-<h2 class="search">施設名検索</h2>
+<div class="left-menu">
+        <div>
+            <ul class="menu-list">
+                <p class="text-box">アカウント情報</p>
+                <li class="menu-item"><a href="admin.php" class="a_link"><img src="../img/hito.png" class="logo"><span class="menu-item-text">ログイン</span></a></li>
+                <p class="text-box">QRコード</p>
+                <li class="menu-item"><a href="adminqr.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text">QRコード生成ページ</span></a></li>
+                <li class="menu-item"><a href="adminqr_end.php" class="a_link"><img src="../img/qr.png" class="logo"><span class="menu-item-text">QRコード終了管理</span></a></li>
+                <p class="text-box">その他/管理・表示</p>
+                <li class="menu-item"><a href="data.php" class="a_link"><img src="../img/DB.png" class="logo"></span><span class="menu-item-text-chat">データ管理ページ</span></a></li>
+                <li class="menu-item"><a href="sankakanri.php" class="a_link"><img src="../img/tuika.png" class="logo"><span class="menu-item-text">参加者管理ページ</span></a></li>
+                <li class="menu-item"><a href="shift.php" class="a_link"><img src="../img/shift.png" class="logo"><span class="menu-item-text">シフトページ</span></a></li>
+                <li class="menu-item"><a href="time_change.php" class="a_link"><img src="../img/shiftsakujo.png" class="logo"><span class="menu-item-text">シフト削除</span></a></li>
+                <li class="menu-item"><a href="access_log.php" class="a_link"><img src="../img/log2.png" class="logo"><span class="menu-item-text">アクセスログ表示ページ</span></a></li>
+            </ul>
+            <ul class="menu-list-bottom">
+            </ul>
+        </div>
+    </div>
+<div class="right-content">
+</ul>
+
+<h2 class="search">終了画面</h2>
     <div class="A1">
+        <p class="area">施設名選択</p>
         <br>
             <form action="" method="post"> <!-- 現在のページにPOSTリクエストを送信 -->
                 <select name="facility_id" id="facility_id">
