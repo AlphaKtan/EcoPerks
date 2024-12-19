@@ -120,9 +120,7 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
             display: block;
         }
 
-        .look {
-            padding: 10px;
-        }
+
 
         .facility_span {
             margin-left: auto;
@@ -302,7 +300,7 @@ function fetchShiftData() {
     }
     $.ajax({
         type: "POST",
-        url: "../PHP/yoyaku_fetch.php",
+        url: "./yoyaku_fetch.php",
         dataType: "json",
         data: { reservation_date: selectedDate, facility: locationId }
     }).done(function(data) {
@@ -332,8 +330,10 @@ function fetchShiftData() {
                 let getWeek = newDate.getDay();
                 const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
                 
-                selectedElement.innerHTML +=
-                    `<div class="date">${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）</div>`;
+                selectedElement.textContent +=
+                    `&lt;div class="date"&gt;${newDate.getFullYear()}年${(newDate.getMonth() + 1).toString().padStart(2, '0')}月${newDate.getDate().toString().padStart(2, '0')}日（${weekdays[getWeek]}）&lt;/div&gt;`;
+                    console.log(selectedElement.textContent);
+                    selectedElement.innerHTML = selectedElement.textContent;
             }
             selectedElement.textContent +=`<form action="yoyaku_insert.php" method="post">
                 <input type="hidden" name="date" value="${selectedDate}">`;

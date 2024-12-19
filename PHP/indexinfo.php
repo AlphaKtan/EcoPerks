@@ -10,7 +10,7 @@
         $area_id = $_POST["area_id"];
     }
     
-    $sql = "SELECT area_id,facility_name
+    $sql = "SELECT id, area_id, facility_name, romaji
             FROM travel_data
             WHERE area_id  = :area_id";
     $stmt = $pdo->prepare($sql);
