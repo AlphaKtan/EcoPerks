@@ -15,7 +15,7 @@
         $stmt->execute();
 
         // 予約フォームにリダイレクト
-        header("Location: ../index.html");
+        header("Location: ../index.php");
         exit();
     }
 ?>

@@ -9,7 +9,7 @@ if(isset($_POST['submit'])){
   $body = htmlentities($_POST['body']);
 }
 else {
-  header("Location:./index.html");
+  header("Location:./index.php");
   exit();
 }
 ?>

@@ -35,7 +35,7 @@ session_start();
     $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
     $stmt->execute();
 
-    header('Location: ../index.html');
+    header('Location: ../index.php');
     exit();
 
 ?>

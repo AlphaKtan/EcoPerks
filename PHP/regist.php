@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" name="add">登録</button>
             <br><br>
-            <button onclick="window.location.href='../index.html'" type="button" class="home_button">ホームに戻る</button>
+            <button onclick="window.location.href='../index.php'" type="button" class="home_button">ホームに戻る</button>
         </form>
     </section>
 </body>

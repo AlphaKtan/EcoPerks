@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
         // クッキーに認証成功を保存する
         //setcookie('verification_code', $verificationCode, time() + 720, '/'); // 有効期限は1時間
 
-        header("Location: ../index.html");
+        header("Location: ../index.php");
         exit;
     } else {
         // 認証失敗したとき
