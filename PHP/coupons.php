@@ -15,7 +15,16 @@ $username = $_SESSION['username'];
 // クーポンが発行されているか確認し、未定義の場合は初期化
 // if (!isset($_SESSION['coupon_issued'])) {
 //     $_SESSION['coupon_issued'] = false;
-// }
+// 
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------
+
+// ここにクーポン発行資格の判定
+
+// ----------------------------------------------------------------------------------------------------------------------
+
 
 // クーポンコードを生成する関数
 function generateSequentialCouponCode($pdo) {
@@ -84,9 +93,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $couponStmt = $pdo->prepare($couponSql);
         $couponStmt->bindParam(':username', $username);
         $couponStmt->bindParam(':coupon_code', $couponCode);
-        $couponStmt->bindValue(':discount', 50);
+        $couponStmt->bindValue(':discount', 50); //予約にて割引価格参照---------------------------------
         $couponStmt->bindParam(':expiry_date', $expiry_date);
         $couponStmt->execute();
+
+
+        // ----------------------------------------------------------------------------------------------------------------------
+        
+        // ここに予約の更新関係の記述(ステータス２)
+
+        // ----------------------------------------------------------------------------------------------------------------------
+
         // クーポンコードと有効期限をセッション変数に保存
         $_SESSION['coupon_code'] = $couponCode;
         $_SESSION['expiry_date'] = $expiry_date;
