@@ -38,19 +38,19 @@
 
 
         .level_4{
-            background-color: rgba(255, 0, 0, 0.657);
+            background-color: rgba(255, 0, 0, 0.7);
         }
 
         .level_3{
-            background-color: rgba(255, 0, 0, 0.588);
+            background-color: rgba(255, 0, 0, 0.5);
         }
 
         .level_2{
-            background-color: rgba(255, 0, 0, 0.298);
+            background-color: rgba(255, 0, 0, 0.3);
         }
 
         .level_1{
-            background-color: rgba(255, 0, 0, 0.093);
+            background-color: rgba(255, 0, 0, 0.1);
         }
         .selectBox {
             background-color: rgba(0, 0, 255, 0.5);
