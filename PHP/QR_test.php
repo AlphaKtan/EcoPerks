@@ -56,13 +56,13 @@ if (isset($_SESSION['user_id'])) {
     </style>
 </head>
 <body>
-        <div id="wrapper">
-            <video id="video" autoplay muted playsinline></video>
-            <canvas id="camera-canvas"></canvas>
-            <canvas id="rect-canvas"></canvas>
-            <span id="qr-msg">QRコード: 見つかりません</span>
-            <button onclick="checkImage()" id="reload">もう一度</button>
-        </div>
+    <div id="wrapper">
+        <video id="video" autoplay muted playsinline></video>
+        <canvas id="camera-canvas"></canvas>
+        <canvas id="rect-canvas"></canvas>
+        <span id="qr-msg">QRコード: 見つかりません</span>
+        <button onclick="checkImage()" id="reload">もう一度</button>
+    </div>
     <script src="../JS/jsQR.js"></script>
     <script src="../Js/jquery-3.7.1.min.js"></script>
     <script type="text/javascript">
@@ -117,62 +117,57 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-        // 検出結果に合わせて処理を実施
-        // QRが検出された場合
-        if (code) {
-            // 今日の日付をnowに保存
-            const now = new Date();
-            // QRの情報がjsonかを判定
-            try {
-                // QRの情報がjson
-                jsonCode = JSON.parse(code.data);
-            } catch (error) {
-                // QRの情報がjsonではない
-                jsonCode = null;
-                console.log("jsonじゃない");
-            }
-            // QRの情報がjsonの場合
-            if(jsonCode){
-                // create_timeをDateオブジェクトに変換
-                const create_time = new Date(jsonCode.create_time); 
-                if(now - create_time <= VALID_DURATION) {
-                    // jsonCodeの中にaraa_idとlocationとcreate_timeが入っているかを判定
-                    if(jsonCode.area_id && jsonCode.location && jsonCode.create_time) {
-                        console.log("jsonです");
-                        // console.log(jsonCode);
-                        // console.log("area_idは"+jsonCode.area_id);
-                        // console.log("locationは"+jsonCode.location);
-                        // console.log("create_timeは"+jsonCode.create_time);
-                        statusUpDate(jsonCode.area_id, jsonCode.location, jsonCode.create_time);
-                    }
-                } else {
-                    console.log("有効期限が経過しています");
-                }
-            }
-
-            console.log("QRcodeが見つかりました", code);
-            // 後で内容を変える
-            document.getElementById('qr-msg').innerHTML = `QRコード：<a href="${code.data}">${code.data}</a>`;
-
-            // 四辺形の描画
-            drawRect(code.location);
-            // タイマーを停止
-            if (checkImageTimer) {
-                clearTimeout(checkImageTimer);
-                setTimeout(() => { rectCtx.clearRect(0, 0, contentWidth, contentHeight); }, 500);
-
-                console.log("QRコードが検出されたため、タイマーを停止しました。");
-            }
-        // QRが検出されてない場合
-        } else {
+        // QRが検出されなかった場合「QRコード: 見つかりません」を表示する
+        if (!code) {
             console.log("QRcodeが見つかりません…", code);
             rectCtx.clearRect(0, 0, contentWidth, contentHeight);
             document.getElementById('qr-msg').textContent = `QRコード: 見つかりません`;
 
             // タイマーをセット
             checkImageTimer = setTimeout(() => { checkImage(); }, 500);
+            return;
         }
 
+        // 今日の日付をnowに保存
+        const now = new Date();
+
+        // QRの情報がjsonに変換する
+        // jsonに変換できなかった場合は、nullを格納する
+        try {
+            jsonCode = JSON.parse(code.data);
+        } catch (error) {
+            jsonCode = null; 
+            console.log("jsonじゃない");
+            return;     
+        }
+
+        // create_timeをDateオブジェクトに変換
+        // QRcodeの有効期限が切れていたら「有効期限が過ぎています」を表示する
+        const create_time = new Date(jsonCode.create_time);
+        if(now - create_time > VALID_DURATION) {
+            console.log("有効期限が過ぎています");
+            return;
+        }
+
+        console.log("QRcodeが見つかりました", code);
+
+        // もし、「area_id」と「location」と「create_time」がjsonに入っていればDBを更新する
+        if(jsonCode.area_id && jsonCode.location && jsonCode.create_time) {
+            console.log("更新処理を開始");
+            statusUpDate(jsonCode.area_id, jsonCode.location, jsonCode.create_time);
+        }
+
+        // 後で内容を変える
+        document.getElementById('qr-msg').innerHTML = `QRコード：<a href="${code.data}">${code.data}</a>`;
+
+        // 四辺形の描画
+        drawRect(code.location);
+        // タイマーを停止
+        if (checkImageTimer) {
+            clearTimeout(checkImageTimer);
+            setTimeout(() => { rectCtx.clearRect(0, 0, contentWidth, contentHeight); }, 500);
+            console.log("QRコードが検出されたため、タイマーを停止しました。");
+        }
     };
 
 
