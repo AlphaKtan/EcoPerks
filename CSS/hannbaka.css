@@ -8,7 +8,7 @@
     /*ナビの位置と形状*/
 	top:0;
 	width:100%;
-	background:#999;
+    background-color: #FFF6E9;
     /*動き*/
 	transition: all 0.3s;
 }

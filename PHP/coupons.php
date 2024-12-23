@@ -4,13 +4,13 @@ session_start();
 require_once('../Model/dbModel.php');
 $pdo = dbConnect();
 //$_SESSION['username'] = 'やー';
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id'])) {
     $_SESSION['login_message'] = "ログインしてください。";
     header('Location: message.php');
     exit;
 }
 
-$username = $_SESSION['username'];
+$username = $_SESSION['user_id'];
 
 // クーポンが発行されているか確認し、未定義の場合は初期化
 // if (!isset($_SESSION['coupon_issued'])) {
