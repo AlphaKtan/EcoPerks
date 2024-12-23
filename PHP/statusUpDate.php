@@ -25,6 +25,24 @@
     if ($_POST["status"]) {
         $status = $_POST["status"];
     }
+
+    $sql = "SELECT COUNT(survey_responses.gomi) AS gomi_count, reservation_ date, area_id, start_time, end_time, status
+            FROM yoyaku
+            WHERE
+                username = :username AND
+                area_id = :area_id AND
+                location = :location AND
+                reservation_date = CURDATE() AND
+                end_time - INTERVAL 30 MINUTE <= NOW() AND
+                end_time + INTERVAL 15 MINUTE > NOW()";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':username', $username, PDO::PARAM_INT);
+    $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
+    $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
+
+// 実行し、影響を受けた行数を確認
+$executed = $stmt->execute();
     
     switch ($status) {
         case 0:

@@ -159,8 +159,7 @@ if (isset($_SESSION['user_id'])) {
 
         // もし、「area_id」と「location」と「create_time」がjsonに入っていて、sが1の時(参加終了)の時はDBを更新する
         if(jsonCode.area_id && jsonCode.location && jsonCode.create_time && jsonCode.s === 1) {
-            console.log("更新処理を開始");
-
+            console.log("終わりの更新処理を開始");
         }
 
 

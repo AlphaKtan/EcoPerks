@@ -22,17 +22,16 @@
             cursor: pointer;
             box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
         }
+
         .reset {
             position: absolute;
             top: 10px !important;
             left: 10px !important;
             z-index: 5;
         }
-        /* .divBox.active{
-            background-color:seashell !important;
-        } */
+
         .no_area{
-            background-color:#3636365b !important;
+            background-color:#3636365b;
         }
 
 
@@ -174,7 +173,6 @@
             data: { keyword: keyword }
         }).done(function(data) {
             result.innerHTML = "";
-            console.log(data);
             data.forEach(function(results) {
             result.textContent += `
                 <a href='PHP/yoyaku.php?location=${results.id}' link class="facility">
@@ -209,7 +207,6 @@
                 div.innerHTML = `<span class="spanBox" style="display:none;">${coord}</span>`;
             }
             
-            // console.log(zoom);
             div.style.width = this.tileSize.width + 'px';
             div.style.height = this.tileSize.height + 'px';
             div.style.borderStyle = 'solid';
@@ -222,7 +219,6 @@
 
             // div要素にidを設定する
             div.id = "div" + this.nextId;
-            // console.log(div.id);
             div.classList.add('divBox');
             // div.classList.add('active');
             // 次のdiv要素のidに進める
@@ -300,7 +296,6 @@
             }).done(function(data) {
                 selectedElement.innerHTML += `<h2>エリア${areaId}</h2>`;
                 data.forEach(function(area) {
-                    console.log(area);
                     selectedElement.innerHTML += `
                     <a href='PHP/yoyaku.php?location=${area.id}' link class="facility">
                         ${area.facility_name} (${area.romaji})
@@ -421,20 +416,20 @@
             point.forEach((element, index) => {
                 const spanBox = element.querySelector('span');
                 
-                console.log(spanBox.textContent);
-                console.log(element.textContent);
-                
                 const findMethod = locationID.find(int => int == spanBox.textContent);
                 const findMethod2 = locationID.find(int => int == element.textContent);
-
-                console.log("ファインド1"+findMethod);
-                console.log("ファインド2"+findMethod2);
-                
 
                 // エリアをとってきたやつを入れる
                 feach.forEach(function(fa) {
                     if (findMethod === fa.coord) {
-                        element.innerHTML += `<div>エリア${fa.area_id}</div>`;
+                        let divBoxArea_id = element.querySelector('.area_id');
+    
+                        // すでに存在する .area_id の span を削除
+                        if (divBoxArea_id) {
+                            divBoxArea_id.remove();
+                        }
+
+                        element.innerHTML += `<span class="area_id">エリア${fa.area_id}</span>`;
                     }
                 });
 
@@ -471,7 +466,7 @@
                 coord();
                 rairu();
                 console.log("更新");
-            }, 5000); // 2msごとにチェック
+            }, 2000); // 2msごとにチェック
         // }
         
 
@@ -483,7 +478,6 @@
                 dataType: "json",
             }).done(function(area){
                 feach = area;
-                console.log(feach);
             }).fail(function(jqXHR, textStatus, errorThrown)  {
                 console.error("AJAXリクエストに失敗しました");
                 console.error("HTTPステータス:", jqXHR.status); // ステータスコード
@@ -499,9 +493,6 @@
             }).done(function(data) {
                 coordList = data; // グローバル変数にデータを格納
                 checkTiles(coordList);
-                
-                console.log(data);
-                
             }).fail(function(jqXHR, textStatus, errorThrown)  {
                 console.error("AJAXリクエストに失敗しました");
                 console.error("HTTPステータス:", jqXHR.status); // ステータスコード
