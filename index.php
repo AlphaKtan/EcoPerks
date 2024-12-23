@@ -110,8 +110,10 @@
         <button onclick='mapDisplay()' id="mapSearchBtn">地図検索</button>
         <button onclick='searchDisplay()' id="keywordSearchBtn">キーワード検索</button>
     </div>
-
-   
+    
+    <div style="display: flex;">
+    <p style="margin: 0 auto;">地図をクリックすると、下に施設一覧が表示されます</p>
+    </div>
 
     <!-- 元の位置に戻るボタン -->
     <div id="map" style="height: 800px; display: block;"></div>
