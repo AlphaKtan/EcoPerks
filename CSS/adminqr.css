@@ -71,6 +71,7 @@ body{
     font-size:25px;
     margin-top: 20px;
     padding-left: 15px;
+    margin: center;
 }
 
 /* セレクトボックスの基本デザイン */
@@ -91,7 +92,8 @@ body{
     background-size: 16px 16px; /* 矢印のサイズを調整 */
     display: flex;               /* フレックスボックスを使う */
     justify-content: center;     /* 横方向に中央揃え */
-    align-items: center;  
+    align-items: center; 
+    margin: 5px 5px 5px 30%;
 }
 
 /* セレクトボックスのフォーカス時のデザイン */
@@ -101,7 +103,7 @@ select:focus {
 }
 
 p{
-    margin-left: 25px; /* 左に25px移動 */
+    margin: 5px 5px 5px 30%
 }
 
 .select-btn{
