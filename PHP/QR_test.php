@@ -151,11 +151,18 @@ if (isset($_SESSION['user_id'])) {
 
         console.log("QRcodeが見つかりました", code);
 
-        // もし、「area_id」と「location」と「create_time」がjsonに入っていればDBを更新する
-        if(jsonCode.area_id && jsonCode.location && jsonCode.create_time) {
+        // もし、「area_id」と「location」と「create_time」がjsonに入っていて、sが0の時(参加)の時はDBを更新する
+        if(jsonCode.area_id && jsonCode.location && jsonCode.create_time && jsonCode.s === 0) {
             console.log("更新処理を開始");
-            statusUpDate(jsonCode.area_id, jsonCode.location, jsonCode.create_time);
+            statusUpDate(jsonCode.area_id, jsonCode.location, jsonCode.create_time, jsonCode.s);
         }
+
+        // もし、「area_id」と「location」と「create_time」がjsonに入っていて、sが1の時(参加終了)の時はDBを更新する
+        if(jsonCode.area_id && jsonCode.location && jsonCode.create_time && jsonCode.s === 1) {
+            console.log("更新処理を開始");
+
+        }
+
 
         // 後で内容を変える
         document.getElementById('qr-msg').innerHTML = `QRコード：<a href="${code.data}">${code.data}</a>`;
@@ -191,12 +198,12 @@ if (isset($_SESSION['user_id'])) {
     rectCtx.stroke();
     }
 
-    function statusUpDate(area_id, location_id, create_time) {
+    function statusUpDate(area_id, location_id, create_time, status) {
         $.ajax({
             type: "POST",
             url: "../PHP/statusUpDate.php",
             dataType: "json",
-            data: { username: username, area_id: area_id, location: location_id, create_time: create_time }
+            data: { username: username, area_id: area_id, location: location_id, create_time: create_time, status: status }
         }).done(function(data) {
             data.forEach(data => {
                 if(data === '正常に完了') {

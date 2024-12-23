@@ -24,7 +24,7 @@
             area_id: area,
             location: location_id,
             create_time: now,
-            s: 0
+            s: 1
         };
 
         // データをJSON文字列に変換

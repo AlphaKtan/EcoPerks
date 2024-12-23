@@ -31,7 +31,7 @@
         /* .divBox.active{
             background-color:seashell !important;
         } */
-        .active{
+        .no_area{
             background-color:#3636365b !important;
         }
 
@@ -459,7 +459,7 @@
                 
                 if (!findMethod) {
                     // 一致する場合にクラスを付与
-                    element.classList.add('active');
+                    element.classList.add('no_area');
                 }
             });
         }
