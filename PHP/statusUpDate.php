@@ -21,9 +21,15 @@
             $facilityStmt->execute();
             $facilityRow = $facilityStmt->fetch(PDO::FETCH_ASSOC);
     }
-        
-    // yoyakuのstatusをアップデート
-    $sql = "UPDATE yoyaku
+
+    if ($_POST["status"]) {
+        $status = $_POST["status"];
+    }
+    
+    switch ($status) {
+        case 0:
+            // 参加の時yoyakuのstatusをアップデート
+            $sql = "UPDATE yoyaku
             SET status = 1
             WHERE
                 username = :username AND
@@ -32,6 +38,21 @@
                 reservation_date = CURDATE() AND
                 start_time - INTERVAL 15 MINUTE <= NOW() AND
                 start_time + INTERVAL 30 MINUTE > NOW()";
+            break;
+
+        case 1:
+            // 参加終了の時yoyakuのstatusをアップデート
+            $sql = "UPDATE yoyaku
+            SET status = 2
+            WHERE
+                username = :username AND
+                area_id = :area_id AND
+                location = :location AND
+                reservation_date = CURDATE() AND
+                end_time - INTERVAL 30 MINUTE <= NOW() AND
+                end_time + INTERVAL 15 MINUTE > NOW()";
+            break;
+    }
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':username', $username, PDO::PARAM_INT);
