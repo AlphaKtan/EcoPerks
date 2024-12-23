@@ -18,7 +18,7 @@
         <button class="link_button" onclick="history.back();">戻る</button>
         </div>
         <div class="logo">
-            <img src="../img/logo.jpg" alt="" class="logo2">
+            <img src="../img/logo_yoko.svg" alt="" class="logo2">
         </div>
         <div class="icon"></div>
     </div>
@@ -58,6 +58,7 @@ try {
 
 <div class="container">
     <h1>予約確認フォーム</h1>
+    <p class="p">予約を変更する場合は、一度予約を削除し、再度予約をしてください</p>
     <?php
         if($row){
             foreach($row as $rows){
