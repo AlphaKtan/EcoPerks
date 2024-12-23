@@ -120,22 +120,26 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
             display: block;
         }
 
-
-
         .facility_span {
+            padding: 10px;
+            background-color: #43AEA9;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
             margin-left: auto;
+            font-size: 50px;
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
+    <?php if(isset($facilityRow['facility_name'])){echo "<span class='facility_span'>".$facilityRow['facility_name']."</span>";} ?>
         <h3 class="mb-4">
             <a href="?ym=<?= $prev ?>&location=<?= $location ?>">&lt;</a>
             <span class="mx-3">
                 <?= $html_title ?>
             </span>
             <a href="?ym=<?= $next ?>&location=<?= $location ?>">&gt;</a>
-            <?php if(isset($facilityRow['facility_name'])){echo "<span class='facility_span'>".$facilityRow['facility_name']."</span>";} ?>
         </h3>
         <table class="table table-bordered">
             <tr>
