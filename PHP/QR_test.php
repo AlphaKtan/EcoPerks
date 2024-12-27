@@ -200,15 +200,17 @@ if (isset($_SESSION['user_id'])) {
     function statusUpDate(area_id, location_id, create_time, status) {
         $.ajax({
             type: "POST",
-            url: "../PHP/statusUpDate.php",
+            url: "../PHP/update_test.php",
             dataType: "json",
             data: { username: username, area_id: area_id, location: location_id, create_time: create_time, status: status }
         }).done(function(data) {
             data.forEach(data => {
+                console.log(data);
+                
                 if(data === '正常に完了') {
                     console.log("成功");
                     
-                } else if(data = '時間が経過しているので参加できません。') {
+                } else if(data === '時間が経過しているので参加できません。') {
                         console.log("マイページより予約時間を確認してください");
                 } else {
                     console.log("しっぱい");
