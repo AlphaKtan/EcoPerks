@@ -23,6 +23,10 @@ error_reporting(E_ALL);
             $facilityRow = $facilityStmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    if ($_POST["price"]) {
+        $price = $_POST["price"];
+    } 
+
     if ($_POST["presets"]) {
     // POST情報取得
         $i = 0;
@@ -41,14 +45,15 @@ error_reporting(E_ALL);
         // $results[] = $row;
         if ($row) {
             // INSERT前に重複チェック
-            $insertSql = "INSERT INTO time_change (start_time, end_time, facility_name, areaid, status)
-                          SELECT :start_time, :end_time, :facility_name, :area_id, :status
+            $insertSql = "INSERT INTO time_change (start_time, end_time, facility_name, areaid, price, status)
+                          SELECT :start_time, :end_time, :facility_name, :area_id, :price, :status
                           WHERE NOT EXISTS (
                               SELECT 1 FROM time_change 
                               WHERE start_time = :start_time 
                               AND end_time = :end_time
                               AND facility_name = :facility_name
                               AND areaid = :area_id
+                              AND price = :price
                           )";
         
             $insertStmt = $pdo->prepare($insertSql);
@@ -69,6 +74,7 @@ error_reporting(E_ALL);
                 $insertStmt->bindParam(':facility_name', $facilityRow['facility_name'], PDO::PARAM_STR);
                 $insertStmt->bindParam(':area_id', $areaId, PDO::PARAM_INT);
                 $insertStmt->bindParam(':status', $status, PDO::PARAM_INT);
+                $insertStmt->bindParam(':price', $price, PDO::PARAM_INT);
 
                 $insertStmt->execute();
 

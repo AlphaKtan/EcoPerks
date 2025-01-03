@@ -104,6 +104,21 @@ form {
     font-weight: bold;
 }
 
+.entryTimeBtn {
+    display: block;
+    color: white;
+    background-color: transparent;
+    border: none;
+    /* border-bottom: solid 1px white; */
+    text-decoration:underline;
+    text-decoration-color:white;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    margin: 0 0 0 auto;
+    appearance: none;
+}
+
 @media (min-width: 768px) {
     .container{
         max-width: 100%;

@@ -151,6 +151,8 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="shiftDiv" id="shiftDiv">
         <p style="color: white;">プリセットから追加</p>
     <div class="presetDiv">
+    <button onclick='entryTimeFunction()' class="entryTimeBtn">プリセット時間を追加する</button>
+    <button onclick='entryTimeFunction()' class="back entryTimeBtn" style="display: none;">プリセットから追加に戻る</button>
         <div class="entryTime" style="display: none; background: white; padding: 5px; margin-bottom: 10px;">
             <form id="presetForm" action="" method="post">
                 <label for="start-time" step="1">開始時間:</label><br>
@@ -160,7 +162,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </div>
 
-        <button onclick='entryTimeFunction()' class="back" style="display: none;">戻る</button>
+        
         <button onclick='entryPresetFunction()' class="entryPreset" style="display: none;">プリセットに追加</button>
 
         <form action="" method="post" class="form">
@@ -183,8 +185,15 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?>
         </form>
 
-        <button onclick='entryTimeFunction()' class="entryTimeBtn" style="">その他時間追加</button>
-        <button onclick='entryFunction()' class="entryBtn" style="">シフト追加</button>
+        <select name="" class="coupon">
+            <option hidden value="">クーポンの価格</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="150">150</option>
+            <option value="200">200</option>
+            <option value="250">250</option>
+        </select>
+        <button onclick='entryFunction()' class="entryBtn" style="">ゴミ拾い日追加</button>
         <script>
             const startTimeInput = document.getElementById("start-time");
             const endTimeInput = document.getElementById("end-time");
@@ -287,6 +296,13 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
 
         })
+    });
+
+    let coupon;
+    $('.coupon').on('change', function() {
+        coupon = $(this).val(); // 選択された値を取得
+        console.log(coupon);
+        
     });
 
 // 選ばれた日付マスに色を付ける処理
@@ -406,6 +422,7 @@ function entryTimeFunction() {
     let entryPreset = document.querySelector('.entryPreset');
     let entryTimeBtn = document.querySelector('.entryTimeBtn');
     let entryBtn = document.querySelector('.entryBtn');
+    let coupon = document.querySelector('.coupon');
 
     if (styleForm.display !== 'none') {
         // 現在表示されている場合に非表示にする
@@ -415,6 +432,7 @@ function entryTimeFunction() {
         entryPreset.style.display = '';
         entryTimeBtn.style.display = 'none';
         entryBtn.style.display = 'none';
+        coupon.style.display = 'none';
     } else {
         // 非表示の場合に再表示
         presetForm.style.display = 'block';
@@ -423,6 +441,7 @@ function entryTimeFunction() {
         entryPreset.style.display = 'none';
         entryTimeBtn.style.display = '';
         entryBtn.style.display = '';
+        coupon.style.display = '';
     }
 }
 
@@ -468,7 +487,7 @@ function entryFunction() {
             type: "POST",
             url: "../PHP/shift_entry.php",
             dataType: "json",
-            data: { presets: selectedPresets, date: selectedDate, area: area_id, facility: facility_id }
+            data: { presets: selectedPresets, date: selectedDate, area: area_id, facility: facility_id, price: coupon }
         }).done(function(responseData) {
             console.log("レスポンスデータ:", responseData);
             if (Array.isArray(responseData)) {
