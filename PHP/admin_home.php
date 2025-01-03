@@ -21,8 +21,8 @@
                 <p class="text-box">アカウント情報</p>
                 <li class="menu-item"><a href="admin.php" class="a_link"><img src="../img/main_user.svg" class="logo"><span class="menu-item-text">ログイン</span></a></li>
                 <p class="text-box">QRコード</p>
-                <li class="menu-item"><a href="adminqr.php" class="a_link"><img src="../img/QR.svg" class="logo"><span class="menu-item-text">QRコード生成ページ</span></a></li>
-                <li class="menu-item"><a href="adminqr_end.php" class="a_link"><img src="../img/QR.svg" class="logo"><span class="menu-item-text">QRコード終了管理</span></a></li>
+                <li class="menu-item"><a href="create_qr.php" class="a_link"><img src="../img/QR.svg" class="logo"><span class="menu-item-text">QRコード参加ページ</span></a></li>
+                <li class="menu-item"><a href="end_create_qr.php" class="a_link"><img src="../img/QR.svg" class="logo"><span class="menu-item-text">QRコード終了ページ</span></a></li>
                 <p class="text-box">その他/管理・表示</p>
                 <li class="menu-item"><a href="data.php" class="a_link"><img src="../img/dataDB.svg" class="logo"></span><span class="menu-item-text-chat">データ管理ページ</span></a></li>
                 <li class="menu-item"><a href="sankakanri.php" class="a_link"><img src="../img/user.svg" class="logo"><span class="menu-item-text">参加者管理ページ</span></a></li>

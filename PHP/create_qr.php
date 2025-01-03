@@ -3,7 +3,7 @@
     $area_id = 1;
     $location = 1;
     // このページのタイトルを入力
-    $title = "QRコード生成";
+    $title = "参加QRコード生成";
     include "admin_home.php";
 ?>
 <script src="../JS/qrcode.min.js"></script>

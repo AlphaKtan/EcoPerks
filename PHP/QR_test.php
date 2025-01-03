@@ -209,7 +209,7 @@ if (isset($_SESSION['user_id'])) {
                 
                 if(data === '正常に完了') {
                     console.log("成功");
-                    
+                    alert("参加開始されました");
                 } else if(data === '時間が経過しているので参加できません。') {
                         console.log("マイページより予約時間を確認してください");
                 } else {
