@@ -6,9 +6,17 @@ if (isset($_GET['location'])) {
     $_SESSION['location'] = $location;
 }
 
-?>
+$URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$_SESSION['URL'] = $URL;
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+    header('Location: message.php');
+    exit;
+}
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
 
-<?php
 require '../Model/dbModel.php';
 
 // DB接続

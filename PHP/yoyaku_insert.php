@@ -35,7 +35,10 @@ session_start();
     $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
     $stmt->execute();
 
-    header('Location: ../index.php');
+    echo <<<HTML
+        <div><p>予約が完了しました！！</p></div>
+        <a href="../index.php">ホームに戻る</a>
+    HTML;
     exit();
 
 ?>
