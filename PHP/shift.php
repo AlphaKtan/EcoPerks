@@ -483,8 +483,10 @@ function entryFunction() {
                 selectedPresets.push($(this).val());
             });
             // クーポンが選択されているかどうか
-            let coupon = document.querySelector('.coupon');
-            if (coupon !== null || coupon !== "") {
+            let coupon2 = document.querySelector('.coupon');
+            console.log(coupon);
+            
+            if (coupon2.value !== null && coupon2.value !== "") {
                 // エリア情報があれば情報取得する
                 $.ajax({
                 type: "POST",
@@ -514,7 +516,17 @@ function entryFunction() {
                 });            
             } else {
                 console.log("sentaku");
-                
+                const shiftDivElement = document.getElementById('shiftDiv');
+                // 既にエラーメッセージが存在しないか確認
+                if (!shiftDivElement.querySelector('.error')) {
+                    // エラーを出す処理
+                    shiftDivElement.insertAdjacentHTML('afterbegin', '<p class="error" style="color: red; margin-top: 10px;">couponの価格を選択してください</p>');
+                } else {
+                    const errorStyle = getComputedStyle(errorElement); 
+                    if (errorStyle.display === 'none') {
+                        errorStyle.display = '';
+                    }
+                }
             }
     } else if(flag === 0) {
         const shiftDivElement = document.getElementById('shiftDiv');
