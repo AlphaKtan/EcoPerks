@@ -63,24 +63,6 @@
 
     // 実行し、影響を受けた行数を確認
     $executed = $stmt->execute();
-    $affectedRows = $stmt->rowCount();
-    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-    // SQLの実行と結果の確認
-    // if ($executed && $affectedRows > 0) {
-    //     // 範囲内での成功
-    //     $results[] = "正常に完了 ";
-    // } elseif ($executed && $affectedRows == 0) {    
-    //     // 範囲を超えている場合
-    //     $results[] = "時間が経過しているので参加できません。";
-    // } else {
-    //     // SQLが失敗した場合
-    //     $results[] = "エラーが発生しました";
-    // }
-    $results[] = $status;
-
-    echo json_encode($results);
-
+    json_encode('正常に完了');
 ?>
 

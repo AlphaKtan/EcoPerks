@@ -482,33 +482,40 @@ function entryFunction() {
             $('input[name="preset"]:checked').each(function() {
                 selectedPresets.push($(this).val());
             });
-            // エリア情報があれば情報取得する
-            $.ajax({
-            type: "POST",
-            url: "../PHP/shift_entry.php",
-            dataType: "json",
-            data: { presets: selectedPresets, date: selectedDate, area: area_id, facility: facility_id, price: coupon }
-        }).done(function(responseData) {
-            console.log("レスポンスデータ:", responseData);
-            if (Array.isArray(responseData)) {
-                responseData.forEach(data => {
-                    console.log(data);
-                    if (data === "正常に完了") {
-                        amazingSample(data);    
+            // クーポンが選択されているかどうか
+            let coupon = document.querySelector('.coupon');
+            if (coupon !== null || coupon !== "") {
+                // エリア情報があれば情報取得する
+                $.ajax({
+                type: "POST",
+                url: "../PHP/shift_entry.php",
+                dataType: "json",
+                data: { presets: selectedPresets, date: selectedDate, area: area_id, facility: facility_id, price: coupon }
+                }).done(function(responseData) {
+                    console.log("レスポンスデータ:", responseData);
+                    if (Array.isArray(responseData)) {
+                        responseData.forEach(data => {
+                            console.log(data);
+                            if (data === "正常に完了") {
+                                amazingSample(data);    
+                            } else {
+                                oopsSwalSample(data);
+                            }
+                            fetchShiftDates();
+                        });
                     } else {
-                        oopsSwalSample(data);
+                        console.warn("期待していない形式のデータが返されました:", responseData);
                     }
-                    fetchShiftDates();
-                });
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error("AJAXリクエストに失敗しました");
+                    console.error("HTTPステータス:", jqXHR.status); // ステータスコード
+                    console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
+                    console.error("エラーメッセージ:", errorThrown);
+                });            
             } else {
-                console.warn("期待していない形式のデータが返されました:", responseData);
+                console.log("sentaku");
+                
             }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            console.error("AJAXリクエストに失敗しました");
-            console.error("HTTPステータス:", jqXHR.status); // ステータスコード
-            console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
-            console.error("エラーメッセージ:", errorThrown);
-        });            
     } else if(flag === 0) {
         const shiftDivElement = document.getElementById('shiftDiv');
         // 既にエラーメッセージが存在しないか確認

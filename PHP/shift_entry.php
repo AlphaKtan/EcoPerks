@@ -53,7 +53,6 @@ error_reporting(E_ALL);
                               AND end_time = :end_time
                               AND facility_name = :facility_name
                               AND areaid = :area_id
-                              AND price = :price
                           )";
         
             $insertStmt = $pdo->prepare($insertSql);
