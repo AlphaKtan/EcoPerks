@@ -10,7 +10,7 @@
                     echo "EcoPerks";
                 }
 
-                $directory = "home";
+                $directory = "管理者ページ";
          ?>
     </title>
     <link rel="stylesheet" href="../CSS/indexStyle.css">
@@ -21,7 +21,6 @@
 
         <div class="flexBox">
             <div class="menu">
-            <button class="link_button" onclick="location.href='../index.php';">戻る</button>
             </div>
             <div class="logo">
                 <img src="../img/logo_yoko.svg" alt="" class="logo2">
