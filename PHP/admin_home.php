@@ -31,7 +31,7 @@
         <div class="sub_header">
             <div class="sub_header_box1">
                 <div style="display: flex;">
-                    <p style="padding-left: 10px;"><?php echo $directory; ?></p>
+                    <p style="padding-left: 10px; color:#ffff;"><?php echo $directory; ?></p>
                 </div>
             </div>
             <div class="sub_header_box2" style="border-left:solid 1px #ffff;">

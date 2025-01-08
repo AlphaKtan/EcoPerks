@@ -133,6 +133,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="icon"></div>
         </div>
+
+        <div class="sub_header">
+            <div class="sub_header_box1">
+                <div style="display: flex;">
+                    <p style="padding-left: 10px; color:#ffff;">マップ > 新規登録</p>
+                </div>
+            </div>
+            <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
+            </div>
+        </div>
+
     </header>
 
     <section class="login_form">

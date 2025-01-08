@@ -38,7 +38,7 @@
         require_once('../Model/dbmodel.php');
         $pdo = dbConnect();
 
-        $directory = '<a href="./Mypage_user.php">マイページ</a>';
+        $directory = 'マップ > <a href="./Mypage_user.php">マイページ</a>';
         try {
 
             $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";

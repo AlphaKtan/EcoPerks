@@ -18,7 +18,7 @@
             </div>
             <div class="icon"></div>
         </div>
-</header>
+
 
 <?php
 // データベース接続情報
@@ -26,7 +26,7 @@ session_start();
     require_once('../Model/dbmodel.php');
     try {
         $pdo = dbConnect();
-        $directory = '<a href="./Mypage_user.php">マイページ > 名前変更</a>';
+        $directory = 'マップ > <a href="./Mypage_user.php">マイページ</a> > 名前変更';
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
@@ -65,7 +65,8 @@ session_start();
             $stmt_username->execute();
         }
 ?>
-        <div class="sub_header">
+
+<div class="sub_header">
             <div class="sub_header_box1">
                 <div style="display: flex;">
                     <p style="padding-left: 10px;"><?php echo $directory; ?></p>
@@ -74,6 +75,7 @@ session_start();
             <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
             </div>
         </div>
+</header>
 <section class="login_form">
     <h1>画像アップロード</h1>
     <!--送信ボタンが押された場合-->

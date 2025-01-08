@@ -23,12 +23,12 @@
         <div class="icon"></div>
     </div>
     <div class="sub_header">
-    <div class="sub_header_box1">
-        <div style="display: flex;">
-            <p style="padding-left: 10px;">マイページ</p>
+        <div class="sub_header_box1">
+            <div style="display: flex;">
+                <p style="padding-left: 10px; color:#ffff;">マップ > マイページ > 予約確認</p>
+            </div>
         </div>
-        </div>
-            <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
+        <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
         </div>
     </div>
 </header>
