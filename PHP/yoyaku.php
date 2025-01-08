@@ -22,6 +22,8 @@ require '../Model/dbModel.php';
 // DB接続
 $pdo = dbConnect();
 
+$directory = 'マップ > <a href="./Mypage_user.php">マイページ</a> > 予約ページ';
+
 if ($_SESSION['location']) {
     $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";
     $facilityStmt = $pdo->prepare($facilitySql);
@@ -140,8 +142,8 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
     </style>
 </head>
 <body>
+    <?php include 'header.php';?>
     <div class="container mt-5">
-    <?php if(isset($facilityRow['facility_name'])){echo "<span class='facility_span'>".$facilityRow['facility_name']."</span>";} ?>
         <h3 class="mb-4">
             <a href="?ym=<?= $prev ?>&location=<?= $location ?>">&lt;</a>
             <span class="mx-3">
