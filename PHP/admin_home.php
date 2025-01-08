@@ -9,12 +9,38 @@
                 } else {
                     echo "EcoPerks";
                 }
+
+                $directory = "home";
          ?>
     </title>
-    <link rel="stylesheet" href="../CSS/hannbaka.css">
+    <link rel="stylesheet" href="../CSS/indexStyle.css">
     <link rel="stylesheet" href="../CSS/sidebar.css">
 </head>
 <body>
+<header style = "height:65px">
+
+        <div class="flexBox">
+            <div class="menu">
+            <button class="link_button" onclick="location.href='../index.php';">戻る</button>
+            </div>
+            <div class="logo">
+                <img src="../img/logo_yoko.svg" alt="" class="logo2">
+            </div>
+            <div class="icon"></div>
+        </div>
+
+        <div class="sub_header">
+            <div class="sub_header_box1">
+                <div style="display: flex;">
+                    <p style="padding-left: 10px;"><?php echo $directory; ?></p>
+                </div>
+            </div>
+            <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
+            </div>
+        </div>
+
+</header>
+  
     <div class="left-menu">
         <div>
             <ul class="menu-list">
