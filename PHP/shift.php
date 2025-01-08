@@ -236,8 +236,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     let day_count = "<?=$day_count; ?>";
     let facility_id = "<?=$_SESSION['location_id']; ?>";
     let area_id = "<?=$_SESSION['admin_area_id']; ?>";
-    console.log(area_id);
-    
+
 </script>
 <script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
@@ -278,8 +277,11 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     let coupon;
     $('.coupon').on('change', function() {
         coupon = $(this).val(); // 選択された値を取得
-        console.log(coupon);
-        
+        const shiftDivElement = document.getElementById('shiftDiv');
+        const errorElement = shiftDivElement.querySelector('.error');
+        if (errorElement) {
+            errorElement.remove();
+        }
     });
 
 // 選ばれた日付マスに色を付ける処理
@@ -305,7 +307,6 @@ function selectDate(date) {
     // 施設名が選択されていてカーソルがあっている状態の時だけシフトを取得
     if (flag === 1) {
         fetchShiftData();
-        console.log("daf");
     }
 }
 
@@ -421,6 +422,12 @@ function entryTimeFunction() {
         entryBtn.style.display = '';
         coupon.style.display = '';
     }
+// いるかいらんかわからん
+    // const shiftDivElement = document.getElementById('shiftDiv');
+    // const errorElement = shiftDivElement.querySelector('.error');
+    // if (errorElement) {
+    //     errorElement.remove();
+    // }
 }
 
 // プリセットに追加ボタンを押すと追加された時間をプリセットテーブルにinsertする処理
@@ -453,7 +460,6 @@ function entryPresetFunction() {
 // データベースに登録する処理
 function entryFunction() {
     if (flag === 1) {       // 施設が選択されている時
-            console.log(selectedDate);
             
             // チェックされたチェックボックスの値を取得
             let selectedPresets = [];
@@ -462,8 +468,6 @@ function entryFunction() {
             });
             // クーポンが選択されているかどうか
             let coupon2 = document.querySelector('.coupon');
-            console.log(coupon);
-            
             if (coupon2.value !== null && coupon2.value !== "") {
                 // エリア情報があれば情報取得する
                 $.ajax({
@@ -475,7 +479,6 @@ function entryFunction() {
                     console.log("レスポンスデータ:", responseData);
                     if (Array.isArray(responseData)) {
                         responseData.forEach(data => {
-                            console.log(data);
                             if (data === "正常に完了") {
                                 amazingSample(data);    
                             } else {
@@ -493,7 +496,6 @@ function entryFunction() {
                     console.error("エラーメッセージ:", errorThrown);
                 });            
             } else {
-                console.log("sentaku");
                 const shiftDivElement = document.getElementById('shiftDiv');
                 // 既にエラーメッセージが存在しないか確認
                 if (!shiftDivElement.querySelector('.error')) {
@@ -591,8 +593,6 @@ function fetchShiftData() {
         dataType: "json",
         data: { reservation_date: selectedDate, facility: facility_id }
     }).done(function(data) {
-        console.log(data);
-        
         if(selectedElement) {
             selectedElement.innerHTML = '';
         }

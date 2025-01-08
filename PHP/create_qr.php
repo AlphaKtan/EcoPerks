@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
     // 仮の値を代入
     $area_id = $_SESSION['admin_area_id'];
     $location = $_SESSION['location_id'];

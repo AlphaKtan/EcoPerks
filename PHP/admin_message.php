@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // セッションにメッセージが保存されていない場合は、直接ログインページへ
 // if (!isset($_SESSION['login_message'])) {
@@ -22,7 +24,6 @@ unset($_SESSION['login_message']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>お知らせ</title>
     <script type="text/javascript">
-        alert();
         // 3秒後にリダイレクトする
         setTimeout(function() {
             window.location.href = './admin_login.php';
