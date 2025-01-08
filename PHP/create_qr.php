@@ -1,7 +1,8 @@
-<?php 
+<?php
+session_start();
     // 仮の値を代入
-    $area_id = 1;
-    $location = 1;
+    $area_id = $_SESSION['admin_area_id'];
+    $location = $_SESSION['location_id'];
     // このページのタイトルを入力
     $title = "参加QRコード生成";
     include "admin_home.php";

@@ -21,19 +21,53 @@ $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
 $stmt->bindParam(':pass', $password, PDO::PARAM_STR);
 $stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if(!empty($result)) {
-    foreach ($result as $row) {
-        $_SESSION['facility'] = $row['facility_name'];
-        $_SESSION['location_id'] = $row['id'];
-        $_SESSION['area_id'] = $row['area_id'];
-        $_SESSION['romaji'] = $row['romaji'];
-        $_SESSION['kana'] = $row['kana'];
-    }
+    $_SESSION['admin_id'] = $result['login_id'];
+    $_SESSION['facility'] = $result['facility_name'];
+    $_SESSION['location_id'] = $result['id'];
+    $_SESSION['admin_area_id'] = $result['area_id'];
+    $_SESSION['romaji'] = $result['romaji'];
+    $_SESSION['kana'] = $result['kana'];
+
+    echo <<<HTML
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>お知らせ</title>
+        <script type="text/javascript">
+            let URL = "{$_SESSION['URL']}";
+            let countdown = 3; // カウントダウンの初期値
+
+            // カウントダウンを表示する関数
+            function updateCountdown() {
+                const countdownElement = document.getElementById('countdown');
+                countdownElement.textContent = countdown;
+                if (countdown === 0) {
+                    window.location.href = URL;
+                } else {
+                    countdown--;
+                }
+            }
+
+            // 1秒ごとにカウントダウンを更新
+            setInterval(updateCountdown, 1000);
+        </script>
+    </head>
+    <body>
+        <p>あと <span id="countdown">3</span> 秒で元のページに戻ります...</p>
+    </body>
+    </html>
+    HTML;
+
     echo $_SESSION['facility']."でログインしました";
+
 } else {
-    $error_message = "ユーザー名もしくはパスワードが間違えています。";
+    $error_message = "ログイン番号もしくはパスワードが間違えています。";
     header("Location: admin_login.php?error=".urlencode($error_message));
     exit();
 }

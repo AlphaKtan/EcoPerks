@@ -1,3 +1,18 @@
+<?php
+
+
+$URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$_SESSION['URL'] = null;
+$_SESSION['URL'] = $URL;
+if (!isset($_SESSION['admin_id'])) {
+    $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+    header('Location: ./admin_message.php');
+    exit;
+}
+if (isset($_SESSION['admin_id'])) {
+    $admin_id = $_SESSION['admin_id'];
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>

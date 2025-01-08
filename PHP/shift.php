@@ -5,6 +5,17 @@ require '../Model/dbModel.php';
 // DB接続
 $pdo = dbConnect();
 
+$URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$_SESSION['URL'] = $URL;
+if (!isset($_SESSION['admin_id'])) {
+    $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+    header('Location: ./admin_message.php');
+    exit;
+}
+if (isset($_SESSION['admin_id'])) {
+    $admin_id = $_SESSION['admin_id'];
+}
+
 // タイムゾーンを設定
 date_default_timezone_set('Asia/Tokyo');
 
@@ -114,19 +125,9 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </span>
             <a href="?ym=<?= $next ?>">&gt;</a>
 
-            <form action="" method="post">
-                <select name="area" id="area">
-                    <option hidden>選択してください</option>
-                    <?php for($i=1;$i<=25;$i++){ ?>
-                        <option value="<?php echo $i ?>">エリア<?php echo $i ?></option>
-                    <?php }?>
-                </select>
-                <br>
-                <select name="facility" id="facility">
-                    <option hidden>選択してください</option>
-                    <option disabled="disabled" id="notApplicable">該当なし</option>
-                </select>
-            </form>
+            
+
+            <?= $_SESSION['facility']; ?>
         </h3>
         <table class="table table-bordered">
             <tr>
@@ -233,6 +234,10 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script type="text/javascript">
     let ym = "<?=$ym; ?>";  // 無理やりPHPの$ymをJavaScriptの変数ymに代入
     let day_count = "<?=$day_count; ?>";
+    let facility_id = "<?=$_SESSION['location_id']; ?>";
+    let area_id = "<?=$_SESSION['admin_area_id']; ?>";
+    console.log(area_id);
+    
 </script>
 <script src="../Js/jquery-3.7.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
@@ -246,57 +251,29 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <script>
     var optval;
-    let flag = 0;
-    let area_id;
+    let flag = 1;
+    
     $(function(){
         // よく使う要素を変数へ格納する
         var area = document.getElementById("area");
         var facility = document.getElementById("facility");
         var notApplicable = document.getElementById("notApplicable");
         
-        // エリア情報切り替え
-        $('#area').on("change",function(){
-            flag = 0;
-            // エリアが切り替わるたびにshift_lookの中身を削除
             let selectedElement = document.querySelector('.shift_look');
             // 空にする
             if(selectedElement) {
                 selectedElement.innerHTML = '';
             }
             // エリアを変えたときに<span class="circle"></span>を削除
-            circleDeleteAll()
-            // 選ばれたエリアを保存
-            area_id = area.value;
-
-            // 施設情報をクリアする
-            selectDataClearOnly(facility);
-            
-            // 施設のデータを取得する
-            getAreaData(area.value);
+            circleDeleteAll();
             // 施設が選択されるたびに関数起動
-            $('#facility').on("change",function(){
-                // フラグが1なら施設が選択されている状態
-                flag = 1;
-                // 施設IDを保存
-                facility_id = facility.value;
 
-                if(document.querySelector('.selected')) {
-                    // 施設を切り替えるたびにシフトを取ってくる
-                    fetchShiftData();
-                }
-                fetchShiftDates();
-            })
-
-            // エリアが選ばれていたら「該当なし」を消す処理
-            notApplicable.style.display ='none';
-
-            // 施設が選択されたらerrorを消す
-            if (document.querySelector('.error')) {
-                document.querySelector('.error').style.display = 'none';
-            }
-
+            // if(document.querySelector('.selected')) {
+            //     // 施設を切り替えるたびにシフトを取ってくる
+            //     fetchShiftData();
+            // }
+            fetchShiftDates();
         })
-    });
 
     let coupon;
     $('.coupon').on('change', function() {
@@ -328,6 +305,7 @@ function selectDate(date) {
     // 施設名が選択されていてカーソルがあっている状態の時だけシフトを取得
     if (flag === 1) {
         fetchShiftData();
+        console.log("daf");
     }
 }
 

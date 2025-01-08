@@ -5,7 +5,7 @@
             echo htmlspecialchars($error_message)."<br>"; 
         }
     ?>
-    id:<input type="text" name="admin_id" id=""><br>
-    パスワード:<input type="password" name="password" id=""><br>
+    ログイン番号:<input type="text" name="admin_id" id="login"><br>
+    パスワード:<input type="password" name="password" id="pass"><br>
     <input type="submit" value="ログイン">
 </form>

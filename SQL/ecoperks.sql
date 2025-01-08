@@ -13656,15 +13656,16 @@ CREATE TABLE `yoyaku` (
   `status` int(11) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `location` varchar(255) DEFAULT NULL
+  `location` varchar(255) DEFAULT NULL,
+  `price` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- テーブルのデータのダンプ `yoyaku`
 --
 
-INSERT INTO `yoyaku` (`id`, `username`, `reservation_date`, `area_id`, `start_time`, `end_time`, `status`, `created_at`, `update_at`, `location`) VALUES
-(28, '1', '2025-06-04', 1, '15:00:00', '16:00:00', 0, '2024-10-16 05:16:40', '2024-10-16 05:16:40', '金閣寺');
+INSERT INTO `yoyaku` (`id`, `username`, `reservation_date`, `area_id`, `start_time`, `end_time`, `status`, `created_at`, `update_at`, `location`,`price`) VALUES
+(28, '1', '2025-06-04', 1, '15:00:00', '16:00:00', 0, '2024-10-16 05:16:40', '2024-10-16 05:16:40', '金閣寺', '200');
 
 --
 -- ダンプしたテーブルのインデックス

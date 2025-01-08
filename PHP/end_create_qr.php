@@ -1,7 +1,17 @@
-<?php 
+<?php
+    $URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $_SESSION['URL'] = $URL;
+    if (!isset($_SESSION['admin_id'])) {
+        $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+        header('Location: ./admin_message.php');
+        exit;
+    }
+    if (isset($_SESSION['admin_id'])) {
+        $admin_id = $_SESSION['admin_id'];
+    }
     // 仮の値を代入
-    $area_id = 1;
-    $location = 1;
+    $area_id = $_SESSION['admin_area_id'];
+    $location = $_SESSION['location_id'];
     // このページのタイトルを入力
     $title = "終了QRコード生成";
     include "admin_home.php";
