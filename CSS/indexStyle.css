@@ -12,6 +12,23 @@ header {
     z-index: 100;
 }
 
+.sub_header{
+    display:flex; 
+    background-color: white;
+}
+.sub_header_box1{
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    width: 80%;
+    height: 40px;
+    background-color: #43AEA9;
+}
+.sub_header_box2{
+    width: 20%;
+    background-color: #43AEA9;
+}
+
 .logout_form{
     display: flex;
     justify-content: right;
@@ -188,7 +205,7 @@ footer {
 }
 
 .search-toggle{
-    margin-top :100px;
+    margin-top :140px;
 }
 
 .areainfo{

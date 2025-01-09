@@ -40,6 +40,7 @@ header {
     width: 20%;
     background-color: #43AEA9;
 }
+
 footer {
     background-color: #fff;
     color: #fff;
@@ -243,7 +244,7 @@ footer {
     min-width: 25%;
     margin-top: 10px;
     margin-left: 10px;
-    padding: 10px;
+    padding: 8px;
     background-color: #43AEA9;
     color: #fff;
     border: none;
