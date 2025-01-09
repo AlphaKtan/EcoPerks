@@ -4,7 +4,7 @@ require_once('../Model/dbModel.php');
 // echo "a";
 $pdo = dbConnect();
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['user_id'])) {
     $_SESSION['login_message'] = "ログインしてください。";
     header('Location: message.php');
     exit;
@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])) {
 $area_id = isset($_POST['area_id']) ? (int)$_POST['area_id'] : null;
 $location = isset($_POST['location_id']) ? trim($_POST['location_id']) : null;
 
-$username = $_SESSION['username'];
+$username = $_SESSION['user_id'];
 
 /* ------------------------------------------------------------
    1) 発行資格の判定 (ステータスチェックなし)
@@ -132,6 +132,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_coupon'])) {
             $_SESSION['coupon_code'] = $couponCode;
             $_SESSION['expiry_date'] = $expiry_date;
             $_SESSION['coupon_issued'] = true;
+
+
+
             // echo "<h3>クーポンが発行されました！</h3>";
         }
     } catch (Exception $e) {
@@ -147,6 +150,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['use_coupon'])) {
     if (isset($_SESSION['coupon_issued']) && !isset($_SESSION['coupon_used'])) {
         $_SESSION['coupon_used'] = true;
         echo "<p style='color: green;'>クーポンを正常に使用しました。</p>";
+
+
+        
     } elseif (isset($_SESSION['coupon_used'])) {
         echo "<p style='color: red;'>このクーポンはすでに使用済みです。</p>";
     } else {

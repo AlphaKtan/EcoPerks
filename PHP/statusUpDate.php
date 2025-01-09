@@ -38,7 +38,7 @@
                 area_id = :area_id AND
                 location = :location AND
                 reservation_date = CURDATE() AND
-                start_time - INTERVAL 15 MINUTE <= NOW() AND
+                start_time - INTERVAL 50 MINUTE <= NOW() AND
                 start_time + INTERVAL 30 MINUTE > NOW()";
             break;
 
@@ -48,10 +48,11 @@
             SET status = 2
             WHERE
                 username = :username AND
+                status = 1 AND
                 area_id = :area_id AND
                 location = :location AND
                 reservation_date = CURDATE() AND
-                end_time - INTERVAL 30 MINUTE <= NOW() AND
+                end_time - INTERVAL 59 MINUTE <= NOW() AND
                 end_time + INTERVAL 15 MINUTE > NOW()";
             break;
     }

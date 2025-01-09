@@ -7,9 +7,11 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: message.php');
     exit;
 }
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-}
+// if (isset($_SESSION['user_id'])) {
+//     $user_id = $_SESSION['user_id'];
+// }
+$user_id = 2;
+$_SESSION['user_id'] = 2;
 ?>
 <!DOCTYPE html>
 <head>
@@ -67,6 +69,8 @@ if (isset($_SESSION['user_id'])) {
     <script src="../Js/jquery-3.7.1.min.js"></script>
     <script type="text/javascript">
         let username = "<?=$user_id; ?>";  // PHPの変数をjsの変数に代入
+        console.log("user_id"+username);
+        
     </script>
 </body>
 </html>
@@ -161,6 +165,8 @@ if (isset($_SESSION['user_id'])) {
         if(jsonCode.area_id && jsonCode.location && jsonCode.create_time && jsonCode.s === 1) {
             console.log("終わりの更新処理を開始");
             statusUpDate(jsonCode.area_id, jsonCode.location, jsonCode.create_time, jsonCode.s);
+
+            sendDownloadedFileName(jsonCode.area_id, jsonCode.location);
         }
 
 
@@ -206,27 +212,49 @@ if (isset($_SESSION['user_id'])) {
             data: { username: username, area_id: area_id, location: location_id, create_time: create_time, status: status }
         }).done(function(data) {
             console.log(data);
-            alert("参加できました");
-            
-            // data.forEach(data => {
-            //     console.log(data);
-                
-            //     if(data === '正常に完了') {
-            //         console.log("成功");
-            //         alert("参加開始されました");
-            //     } else if(data === '時間が経過しているので参加できません。') {
-            //             console.log("マイページより予約時間を確認してください");
-            //     } else {
-            //         console.log("しっぱい");
-            //         console.log(data);
-            //     }
-            // });    
+              
+            if(data === '正常に完了') {
+                console.log("成功");
+                alert("参加開始されました");
+            } else if(data === '時間が経過しているので参加できません。') {
+                    console.log("マイページより予約時間を確認してください");
+            } else {
+                console.log("しっぱい");
+                console.log(data);
+            }
+ 
         }).fail(function(jqXHR, textStatus, errorThrown)  {
             console.error("AJAXリクエストに失敗しました");
             console.error("HTTPステータス:", jqXHR.status); // ステータスコード
             console.error("レスポンス内容:", jqXHR.responseText); // サーバーの返答内容
             console.error("エラーメッセージ:", errorThrown);
         }); 
+    }
+
+    // ダウンロードしたファイル名を送信する
+    function sendDownloadedFileName(area, location){
+        
+        /* post送信する */
+        const form = document.createElement('form');
+        form.action = 'coupons.php';
+        form.method = 'post';
+        // 送信データ作成
+        // 下記のように動的にフォームを作る
+        // もちろん複数フォームを作成することもできる　
+        const data1 = document.createElement('input');
+        data1.value = area;
+        data1.name = 'area';
+
+        const data2 = document.createElement('input');
+        data2.value = location;
+        data2.name = 'location';
+
+        form.appendChild(data1);
+        form.appendChild(data2);
+    
+        document.body.appendChild(form);
+
+        form.submit();
     }
 
 
