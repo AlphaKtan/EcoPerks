@@ -83,13 +83,14 @@
             width: 100%;
             padding: 10px 0 10px 5px;
             margin-bottom: 10px;
+            margin-left: 30px;
             cursor: pointer;
             border-radius: 8px;
             background-color: white;
             display: flex;
             align-items: center;
             gap: 10px;
-            width: 100%;
+            width: 85%;
             height: 100%;
             border-radius: 8px;
             padding: 10px 5px;
@@ -112,7 +113,6 @@
                 <nav id="g-nav">
                     <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
                         <ul class="menu-list">
-                            <li class="menu-item" ><a href="#">Top</a></li>
                             <li class="menu-item"><a href="login_page.php">ログイン</a></li> 
                             <li class="menu-item"><a href="php/regist.php">アカウント作成</a></li> 
                             <li class="menu-item"><a href="php/Mypage_user.php">Mypage</a></li> 
