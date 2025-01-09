@@ -22,6 +22,8 @@ require '../Model/dbModel.php';
 // DB接続
 $pdo = dbConnect();
 
+$directory = '<a href="../index.php">マップ</a> > 予約ページ';
+
 if ($_SESSION['location']) {
     $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";
     $facilityStmt = $pdo->prepare($facilitySql);
@@ -137,17 +139,21 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
             margin-left: auto;
             font-size: 50px;
         }
+
+        .aaa{
+            color:#000;
+        }
     </style>
 </head>
 <body>
+    <?php include 'header.php';?>
     <div class="container mt-5">
-    <?php if(isset($facilityRow['facility_name'])){echo "<span class='facility_span'>".$facilityRow['facility_name']."</span>";} ?>
         <h3 class="mb-4">
-            <a href="?ym=<?= $prev ?>&location=<?= $location ?>">&lt;</a>
+            <a href="?ym=<?= $prev ?>&location=<?= $location ?>" style="color: rgba(13, 110, 253);">&lt;</a>
             <span class="mx-3">
                 <?= $html_title ?>
             </span>
-            <a href="?ym=<?= $next ?>&location=<?= $location ?>">&gt;</a>
+            <a href="?ym=<?= $next ?>&location=<?= $location ?>"  style="color: rgba(13, 110, 253);">&gt;</a>
         </h3>
         <table class="table table-bordered">
             <tr>

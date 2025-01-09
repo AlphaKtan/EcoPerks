@@ -15,6 +15,23 @@ header {
     box-shadow: 0px 0px 5px;
 }
 
+.sub_header{
+    display:flex; 
+    background-color: white;
+}
+.sub_header_box1{
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    width: 80%;
+    height: 40px;
+    background-color: #43AEA9;
+}
+.sub_header_box2{
+    width: 20%;
+    background-color: #43AEA9;
+}
+
 .menu {
     width: 100%;
 }
@@ -134,7 +151,7 @@ button[type="submit"]:hover {
     background-color: #557981;
 }
 p{
-    color:red;
+    color:#ffff;
     font-size: 80%;
 }
 button.home_button {
@@ -162,10 +179,10 @@ button.home_button:active {
 }
 
 .link_button{
-    width: 25%;
+    min-width: 25%;
     margin-top: 10px;
     margin-left: 10px;
-    padding: 10px;
+    padding: 8px;
     background-color: #43AEA9;
     color: #fff;
     border: none;

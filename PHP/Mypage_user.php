@@ -11,6 +11,7 @@
             zoom:normal !important;
         }
     </style>
+    
 </head>
 <body>
     <header>
@@ -37,7 +38,7 @@
         require_once('../Model/dbmodel.php');
         $pdo = dbConnect();
 
-
+        $directory = '<a href="../index.php">マップ</a> > <a href="./Mypage_user.php">マイページ</a>';
         try {
 
             $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
@@ -62,7 +63,6 @@
     ?>
     <div class="flexBox">
         <div class="menu">
-        <button class="link_button" onclick="location.href='../index.php';">戻る</button>
         </div>
         <div class="logo">
             <img src="../img/logo_yoko.svg" alt="" class="logo2">
@@ -73,7 +73,9 @@
 
     <div class="sub_header">
         <div class="sub_header_box1">
-            <p style="padding-left: 10px;">登録状況</p>
+            <div style="display: flex;">
+                <p style="padding-left: 10px;"><?php echo $directory; ?></p>
+            </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
         </div>

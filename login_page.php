@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="CSS/loginStyle.css">
-    
+    <link rel="stylesheet" href="CSS/indexStyle.css">
     <title>ログイン</title>
     <script src="JS/update_time.js" defer></script>
 </head>
@@ -22,6 +22,15 @@
             </div>
             <div class="icon"></div>
         </div>
+        <div class="sub_header">
+            <div class="sub_header_box1">
+                <div style="display: flex;">
+                    <p style="padding-left: 10px; color:#ffff;">マップ > ログイン</p>
+                </div>
+                </div>
+                    <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
+                </div>
+            </div>
     </header>
 
 <section class="login_form">

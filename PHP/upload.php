@@ -11,14 +11,13 @@
 <header>
         <div class="flexBox">
             <div class="menu">
-            <button class="link_button" onclick="history.back();">戻る</button>
             </div>
             <div class="logo">
                 <img src="../img/logo.jpg" alt="" class="logo2">
             </div>
             <div class="icon"></div>
         </div>
-</header>
+
 
 <?php
 // データベース接続情報
@@ -26,6 +25,7 @@ session_start();
     require_once('../Model/dbmodel.php');
     try {
         $pdo = dbConnect();
+        $directory = '<a href="./Mypage_user.php">マップ</a> > <a href="./Mypage_user.php">マイページ</a> > 名前変更';
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
@@ -37,7 +37,6 @@ session_start();
     $message = "";
 
         if (isset($_FILES['image'])) {//送信ボタンが押された場合
-            echo $_SESSION['user_id'];
             $image = uniqid(mt_rand(), true);//ファイル名をユニーク化
             $image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
             $file = "../images/$image";
@@ -57,7 +56,6 @@ session_start();
         }
 
         if (!empty($_POST['username'])) {//送信ボタンが押された場合
-            echo $_SESSION['user_id'];
             $username = $_POST['username'];
             $sql_username = "UPDATE users SET username = :username WHERE id = :user_id";
             $stmt_username = $pdo->prepare($sql_username);
@@ -67,6 +65,16 @@ session_start();
         }
 ?>
 
+<div class="sub_header">
+            <div class="sub_header_box1">
+                <div style="display: flex;">
+                    <p style="padding-left: 10px;"><?php echo $directory; ?></p>
+                </div>
+            </div>
+            <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
+            </div>
+        </div>
+</header>
 <section class="login_form">
     <h1>画像アップロード</h1>
     <!--送信ボタンが押された場合-->
