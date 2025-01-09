@@ -90,6 +90,8 @@
                             <li><a href="login_page.php">ログイン</a></li> 
                             <li><a href="php/regist.php">アカウント作成</a></li> 
                             <li><a href="php/Mypage_user.php">Mypage</a></li> 
+                            <li><a href="php/coupons.php">クーポン</a></li>
+                            <li><a href="php/ReserveCheck_Customer.php">予約確認</a></li>
                         </ul>
                     </div>
                 </nav>
