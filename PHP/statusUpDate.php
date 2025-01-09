@@ -40,6 +40,15 @@
                 reservation_date = CURDATE() AND
                 start_time - INTERVAL 50 MINUTE <= NOW() AND
                 start_time + INTERVAL 30 MINUTE > NOW()";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':username', $username, PDO::PARAM_INT);
+                $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
+                $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
+
+                // 実行し、影響を受けた行数を確認
+                $executed = $stmt->execute();
+                echo json_encode('正常に完了1');
             break;
 
         case 1:
@@ -54,16 +63,18 @@
                 reservation_date = CURDATE() AND
                 end_time - INTERVAL 59 MINUTE <= NOW() AND
                 end_time + INTERVAL 15 MINUTE > NOW()";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':username', $username, PDO::PARAM_INT);
+                $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
+                $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
+
+                // 実行し、影響を受けた行数を確認
+                $executed = $stmt->execute();
+                echo json_encode('正常に完了2');
             break;
     }
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':username', $username, PDO::PARAM_INT);
-    $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
-    $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
 
-    // 実行し、影響を受けた行数を確認
-    $executed = $stmt->execute();
-    echo json_encode('正常に完了');
 ?>
 

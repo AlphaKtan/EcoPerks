@@ -135,11 +135,12 @@
             </a>
         </div>
     </div>
-
+    
+    <a href="./QR.php">
     <div class="QR_botton">
         <img src="..\img\qr_white.png" class="QRimg">
     </div>
-
+    </a>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="../JS/hannbaka.js"></script>

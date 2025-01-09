@@ -213,11 +213,12 @@ $_SESSION['user_id'] = 2;
         }).done(function(data) {
             console.log(data);
               
-            if(data === '正常に完了') {
+            if(data === '正常に完了1') {
                 console.log("成功");
                 alert("参加開始されました");
-            } else if(data === '時間が経過しているので参加できません。') {
-                    console.log("マイページより予約時間を確認してください");
+            } else if(data === '正常に完了2') {
+                console.log("成功");
+                alert("終了されました");
             } else {
                 console.log("しっぱい");
                 console.log(data);
