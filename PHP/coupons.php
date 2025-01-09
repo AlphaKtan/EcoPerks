@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('../Model/dbModel.php');
+// echo "a";
 $pdo = dbConnect();
 
 if (!isset($_SESSION['username'])) {
@@ -9,7 +10,7 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 $area_id = isset($_POST['area_id']) ? (int)$_POST['area_id'] : null;
-$location = isset($_POST['location_id']) ? trim($_POST['location']) : null;
+$location = isset($_POST['location_id']) ? trim($_POST['location_id']) : null;
 
 $username = $_SESSION['username'];
 
@@ -17,14 +18,14 @@ $username = $_SESSION['username'];
    1) 発行資格の判定 (ステータスチェックなし)
    ------------------------------------------------------------ */
 function userHasQualifiedReservation($pdo, $username) {
-    $sql = "SELECT COUNT(*) 
-            FROM yoyaku 
-            WHERE username = :username";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':username', $username, PDO::PARAM_STR);
-    $stmt->execute();
-    return $stmt->fetchColumn() > 0;
-}
+     $sql = "SELECT COUNT(*) 
+             FROM yoyaku 
+             WHERE username = :username";
+     $stmt = $pdo->prepare($sql);
+     $stmt->bindValue(':username', $username, PDO::PARAM_STR);
+     $stmt->execute();
+     return $stmt->fetchColumn() > 0;
+ }
 
 /* ------------------------------------------------------------
    2) クーポンコード生成
@@ -72,33 +73,47 @@ function incrementAlphabet($alphabet) {
 
 /* ------------------------------------------------------------
    3) クーポン発行処理 
+   
    ------------------------------------------------------------ */
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_coupon'])) {
     try {
+        
         if (!userHasQualifiedReservation($pdo, $username)) {
-            echo "<h3>まだクーポン発行条件を満たしていません。</h3>";
-        } else {
+             echo "<h3>まだクーポン発行条件を満たしていません。</h3>";
+        } else 
+        {
             //価格を取得し、割引額として使用 
-            $priceSql = "SELECT price FROM yoyaku
-                         WHERE username = :username 
-                         AND area_id = :area_id 
-                         AND location = :location 
-                         AND reservation_date = CURDATE()
-                         AND end_time - INTERVAL 30 MINUTE <= NOW() 
-                         AND end_time + INTERVAL 15 MINUTE > NOW()
-                         LIMIT 1";
-            $priceStmt = $pdo->prepare($priceSql);
-            $priceStmt->bindValue(':username', $username);
-            $priceStmt->bindValue(':area_id', $area_id, PDO::PARAM_INT); 
-            $priceStmt->bindValue(':location', $location, PDO::PARAM_STR); 
-            $priceStmt->execute();
-            $discountPrice = $priceStmt->fetchColumn();
+            // $priceSql = "SELECT price FROM yoyaku
+            //              WHERE username = :username 
+            //             --  AND area_id = :area_id 
+            //             --  AND location = :location 
+            //             --  AND reservation_date = CURDATE()
+            //             --  AND end_time - INTERVAL 30 MINUTE <= NOW() 
+            //             --  AND end_time + INTERVAL 15 MINUTE > NOW()
+            //              LIMIT 1";
+            // $priceStmt = $pdo->prepare($priceSql);
+            // $priceStmt->bindValue(':username', $username);
+            // // $priceStmt->bindValue(':area_id', $area_id, PDO::PARAM_INT); 
+            // // $priceStmt->bindValue(':location', $location, PDO::PARAM_STR); 
+            // $priceStmt->execute();
+            // $discountPrice = $priceStmt->fetchColumn();
 
-            if (!$discountPrice) {
-                echo "該当の価格データが見つかりませんでした。";
-                exit;
-            }
+            $priceSql = "SELECT price FROM yoyaku WHERE username = :username LIMIT 1";
+        $priceStmt = $pdo->prepare($priceSql);
+        $priceStmt->bindValue(':username', $username);
+        $priceStmt->execute();
+        $discountPrice = $priceStmt->fetchColumn();
 
+
+
+
+            // if (!$discountPrice) {
+            //     echo "該当の価格データが見つかりませんでした。";
+            //     exit;
+            // }
+            
+            
             // クーポンコード生成
             $couponCode = generateSequentialCouponCode($pdo);
             $expiry_date = date('Y-m-d H:i:s', strtotime('+35 days'));
@@ -113,10 +128,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_coupon'])) {
             $couponStmt->bindParam(':expiry_date', $expiry_date);
             $couponStmt->execute();
 
+            $_SESSION['discount_price'] = $discountPrice;
             $_SESSION['coupon_code'] = $couponCode;
             $_SESSION['expiry_date'] = $expiry_date;
             $_SESSION['coupon_issued'] = true;
-            echo "<h3>クーポンが発行されました！</h3>";
+            // echo "<h3>クーポンが発行されました！</h3>";
         }
     } catch (Exception $e) {
         echo "<h3>クーポンの発行に失敗しました。</h3>";
@@ -141,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_coupon'])) {
         </form>
     <?php else: ?>
         <div class="coupon">
-            <p class="discount">割引額: ¥<?= htmlspecialchars($_SESSION['coupon_code'], ENT_QUOTES, 'UTF-8'); ?></p>
+            <p class="discount">割引額: ¥<?= htmlspecialchars($_SESSION['discount_price'], ENT_QUOTES, 'UTF-8'); ?></p>
             <p class="coupon-code">クーポンコード: <?= htmlspecialchars($_SESSION['coupon_code'], ENT_QUOTES, 'UTF-8'); ?></p>
             <p class="expiry-date">有効期限: <?= htmlspecialchars($_SESSION['expiry_date'], ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
