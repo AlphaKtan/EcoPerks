@@ -1,3 +1,43 @@
+<?php
+    session_start();
+    $URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $_SESSION['URL'] = $URL;
+    if (!isset($_SESSION['user_id'])) {
+        $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+        header('Location: message.php');
+        exit;
+    }
+    if (isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+    }
+        
+
+
+    require_once('Model/dbmodel.php');
+    $pdo = dbConnect();
+
+    try {
+            $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
+            $stmt = $pdo->prepare($yoyakusql);
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $sql = "SELECT imgpath FROM users WHERE id = :id";
+            $stmt2 = $pdo->prepare($sql);
+            $stmt2->bindValue(':id', $user_id);
+            $stmt2->execute();
+
+            $image = $stmt2->fetch();
+
+            } catch (PDOException $e) {
+                echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
+            } catch (Exception $e) {
+                echo "<p>エラー: " . $e->getMessage() . "</p>";
+        }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,6 +116,62 @@
         .facility:hover {
             transform: scale(1.1);
         }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            /* justify-content: flex-start; */
+            width: 100%;
+            padding: 10px 0 10px 5px;
+            margin-bottom: 10px;
+            margin-left: 30px;
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 85%;
+            height: 100%;
+            border-radius: 8px;
+            padding: 10px 5px;
+        }
+
+        .menu-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            margin-bottom: auto;   
+        }
+
+        .a_link{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .logout_form{
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            height: 101%;
+            margin: 0px 25px;
+        }
+
+        .iconImg{
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .sub_header_box2{
+            padding-left: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
     </style>
 </head>
 <body>
@@ -85,11 +181,12 @@
                 <div class="openbtn"><span></span><span></span><span></span></div>
                 <nav id="g-nav">
                     <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
-                        <ul>
-                            <li><a href="#">Top</a></li>
-                            <li><a href="login_page.php">ログイン</a></li> 
-                            <li><a href="php/regist.php">アカウント作成</a></li> 
-                            <li><a href="php/Mypage_user.php">Mypage</a></li> 
+                        <ul class="menu-list">
+                            <li class="menu-item"><a href="login_page.php" class="a_link">ログイン</a></li> 
+                            <li class="menu-item"><a href="php/regist.php" class="a_link">アカウント作成</a></li> 
+                            <li class="menu-item"><a href="php/Mypage_user.php" class="a_link">Mypage</a></li>
+                            <li class="menu-item"><a href="php/coupons.php" class="a_link">クーポン</a></li>
+                            <li class="menu-item"><a href="php/ReserveCheck_Customer.php" class="a_link">予約確認</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -98,20 +195,31 @@
                 <img src="img/logo_yoko.svg" alt="" class="logo2">
             </div>
             <div class="icon">
-                <form action="php/logout.php" method="post" class = "logout_form">
-                    <button type="submit">ログアウト</button>
-                </form>
+                <div class="logout_form">
+                    <img src="images/<?php echo $image['imgpath']; ?>"  width="50px" height="50px" class="iconImg">
+                </div>
             </div>
         </div>
 
     <div class="sub_header">
         <div class="sub_header_box1">
             <div style="display: flex;">
-                <p style="padding-left: 10px; color:#ffff;">マップ</p>
+                <p style="padding-left: 10px; color:#ffff;"><a href="#">マップ</a></p>
             </div>
         </div>
-            <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-        </div>
+            <div class="sub_header_box2" style="border-left:solid 1px #ffff; color:#ffff;">
+                <p>ユーザーネーム</p>
+                <p>
+                    <?php
+                        if($row){
+                            foreach($row as $rows){
+                        $username = $rows['username'];
+                            echo "$username";
+                            }
+                        }
+                    ?>
+                </p>
+            </div>
     </div>
     </header>
 
