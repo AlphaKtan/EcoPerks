@@ -135,7 +135,7 @@
     <div class="sub_header">
         <div class="sub_header_box1">
             <div style="display: flex;">
-                <p style="padding-left: 10px; color:#ffff;">マップ</p>
+                <p style="padding-left: 10px; color:#ffff;"><a href="#">マップ</a></p>
             </div>
         </div>
             <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
