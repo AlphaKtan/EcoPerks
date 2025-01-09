@@ -50,10 +50,10 @@ if (isset($_SESSION['admin_id'])) {
             <script>
                 let directory = <?= json_encode(pathinfo(basename($_SERVER['REQUEST_URI']), PATHINFO_FILENAME)); ?>;
                 console.log(directory);
-                let element = document.querySelector('create_qr');
+                let element = document.querySelector('.create_qr');
                 console.log(element);
                 
-                element.style.background = 'gainsboro';
+                element.style.background = '#000';
             </script>
 
 

@@ -63,6 +63,6 @@
 
     // 実行し、影響を受けた行数を確認
     $executed = $stmt->execute();
-    json_encode('正常に完了');
+    echo json_encode('正常に完了');
 ?>
 

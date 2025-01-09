@@ -27,26 +27,26 @@
     } else {
         $status = null; // 適切なデフォルト値を設定
     }
-    $sql = "SELECT COUNT(area_id) AS count, reservation_date, area_id, start_time, end_time, status
+
+    // 参加の時yoyakuのstatusをアップデート
+    $sql = "SELECT id
             FROM yoyaku
             WHERE
                 username = :username AND
                 area_id = :area_id AND
                 location = :location AND
                 reservation_date = CURDATE() AND
-                end_time - INTERVAL 40 MINUTE >= NOW() AND
-                end_time + INTERVAL 15 MINUTE <= NOW()";
+                start_time - INTERVAL 15 MINUTE <= NOW() AND
+                start_time + INTERVAL 30 MINUTE > NOW()";
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':username', $username, PDO::PARAM_INT);
     $stmt->bindParam(':area_id', $area_id, PDO::PARAM_INT);
     $stmt->bindParam(':location', $facilityRow['facility_name'], PDO::PARAM_STR);
 
-    // $executed = $stmt->execute();
-    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    $results[] = $row;
-
-    echo json_encode($results);
-
+    // 実行し、影響を受けた行数を確認
+    $stmt->execute();
+    $result = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    echo json_encode($result);
 ?>
+

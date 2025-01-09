@@ -205,6 +205,8 @@ if (isset($_SESSION['user_id'])) {
             dataType: "json",
             data: { username: username, area_id: area_id, location: location_id, create_time: create_time, status: status }
         }).done(function(data) {
+            console.log(data);
+            
             data.forEach(data => {
                 console.log(data);
                 
