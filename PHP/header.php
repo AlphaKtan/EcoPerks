@@ -58,8 +58,7 @@ a:active {
 </style>
 <header>
     <div class="flexBox">
-        <div class="menu">
-        </div>
+        <div class="menu"></div>
         <div class="logo">
             <img src="../img/logo_yoko.svg" alt="" class="logo2">
         </div>
