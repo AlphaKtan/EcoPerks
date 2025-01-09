@@ -93,7 +93,7 @@ body {
 
 .left-menu {
     width: 250px;
-    padding: 140px 20px 20px 10px;
+    padding: 0 20px 20px 10px;
     border-right: 1px solid #e0e0e0;
     display: flex;
     position: fixed;
@@ -135,10 +135,10 @@ body {
     border-radius: 8px;
     padding: 10px 5px;
 }
-
+/* 
 .menu-item:hover {
     background-color: #DBDBDB;
-}
+} */
 
 .menu-item-icon {
     font-size: 24px;

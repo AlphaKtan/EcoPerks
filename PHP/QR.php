@@ -201,25 +201,26 @@ if (isset($_SESSION['user_id'])) {
     function statusUpDate(area_id, location_id, create_time, status) {
         $.ajax({
             type: "POST",
-            url: "../PHP/update_test.php",
+            url: "../PHP/statusUpDate.php",
             dataType: "json",
             data: { username: username, area_id: area_id, location: location_id, create_time: create_time, status: status }
         }).done(function(data) {
             console.log(data);
+            alert("参加できました");
             
-            data.forEach(data => {
-                console.log(data);
+            // data.forEach(data => {
+            //     console.log(data);
                 
-                if(data === '正常に完了') {
-                    console.log("成功");
-                    alert("参加開始されました");
-                } else if(data === '時間が経過しているので参加できません。') {
-                        console.log("マイページより予約時間を確認してください");
-                } else {
-                    console.log("しっぱい");
-                    console.log(data);
-                }
-            });    
+            //     if(data === '正常に完了') {
+            //         console.log("成功");
+            //         alert("参加開始されました");
+            //     } else if(data === '時間が経過しているので参加できません。') {
+            //             console.log("マイページより予約時間を確認してください");
+            //     } else {
+            //         console.log("しっぱい");
+            //         console.log(data);
+            //     }
+            // });    
         }).fail(function(jqXHR, textStatus, errorThrown)  {
             console.error("AJAXリクエストに失敗しました");
             console.error("HTTPステータス:", jqXHR.status); // ステータスコード

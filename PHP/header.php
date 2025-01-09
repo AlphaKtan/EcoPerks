@@ -26,9 +26,10 @@
 }
 .menu {
     width: 100%;
+    display: block;
 }
 
-.logo {
+.logo_yoko {
     height: 60px;
     width: 100%;
     text-align: center  ;
@@ -40,6 +41,7 @@
 
 .icon {
     width: 100%;
+    display: block;
 }
 
 a:visited {
@@ -59,7 +61,7 @@ a:active {
 <header>
     <div class="flexBox">
         <div class="menu"></div>
-        <div class="logo">
+        <div class="logo_yoko">
             <img src="../img/logo_yoko.svg" alt="" class="logo2">
         </div>
         <div class="icon"></div>
