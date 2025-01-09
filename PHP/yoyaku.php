@@ -139,17 +139,21 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
             margin-left: auto;
             font-size: 50px;
         }
+
+        .aaa{
+            color:#000;
+        }
     </style>
 </head>
 <body>
     <?php include 'header.php';?>
     <div class="container mt-5">
         <h3 class="mb-4">
-            <a href="?ym=<?= $prev ?>&location=<?= $location ?>">&lt;</a>
+            <a href="?ym=<?= $prev ?>&location=<?= $location ?>" style="color: rgba(13, 110, 253);">&lt;</a>
             <span class="mx-3">
                 <?= $html_title ?>
             </span>
-            <a href="?ym=<?= $next ?>&location=<?= $location ?>">&gt;</a>
+            <a href="?ym=<?= $next ?>&location=<?= $location ?>"  style="color: rgba(13, 110, 253);">&gt;</a>
         </h3>
         <table class="table table-bordered">
             <tr>
