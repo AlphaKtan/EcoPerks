@@ -12,31 +12,13 @@
 </style>
 <body>
 
-<header>
-    <div class="flexBox">
-        <div class="menu">
-        </div>
-        <div class="logo">
-            <img src="../img/logo_yoko.svg" alt="" class="logo2">
-        </div>
-        <div class="icon"></div>
-    </div>
-    <div class="sub_header">
-        <div class="sub_header_box1">
-            <div style="display: flex;">
-                <p style="padding-left: 10px; color:#ffff;">マップ > マイページ > 予約確認</p>
-            </div>
-        </div>
-        <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-        </div>
-    </div>
-</header>
-
 
 
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
+$directory = '<a href="../index.php">マップ</a> > <a href="./ReserveCheck_Customer.php">予約確認ページ</a>';
+
 
 try {
     require_once('../Model/dbModel.php');
@@ -65,6 +47,8 @@ try {
     echo "<p>エラー: " . $e->getMessage() . "</p>";
 }
 ?>
+
+<?php include 'header.php';?>
 
 <div class="container">
     <h1>予約確認フォーム</h1>

@@ -11,7 +11,6 @@
 <header>
         <div class="flexBox">
             <div class="menu">
-            <button class="link_button" onclick="history.back();">戻る</button>
             </div>
             <div class="logo">
                 <img src="../img/logo.jpg" alt="" class="logo2">
@@ -26,7 +25,7 @@ session_start();
     require_once('../Model/dbmodel.php');
     try {
         $pdo = dbConnect();
-        $directory = 'マップ > <a href="./Mypage_user.php">マイページ</a> > 名前変更';
+        $directory = '<a href="./Mypage_user.php">マップ</a> > <a href="./Mypage_user.php">マイページ</a> > 名前変更';
     } catch (PDOException $e) {
         echo $e->getMessage();
     }

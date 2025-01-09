@@ -22,7 +22,7 @@ require '../Model/dbModel.php';
 // DB接続
 $pdo = dbConnect();
 
-$directory = 'マップ > <a href="./Mypage_user.php">マイページ</a> > 予約ページ';
+$directory = '<a href="../index.php">マップ</a> > 予約ページ';
 
 if ($_SESSION['location']) {
     $facilitySql = "SELECT facility_name FROM travel_data WHERE id = :facility";

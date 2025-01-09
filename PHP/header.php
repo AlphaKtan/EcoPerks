@@ -41,12 +41,13 @@
 .icon {
     width: 100%;
 }
-a:link {
- color: #ffff;
-}
 
 a:visited {
  color: #ffff;
+}
+
+a {
+    text-decoration: none;
 }
 
 a:hover {}
