@@ -141,13 +141,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_coupon'])) {
 }
 ?>
 
+<?php
+// クーポン使用処理のロジック
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['use_coupon'])) {
+    if (isset($_SESSION['coupon_issued']) && !isset($_SESSION['coupon_used'])) {
+        $_SESSION['coupon_used'] = true;
+        echo "<p style='color: green;'>クーポンを正常に使用しました。</p>";
+    } elseif (isset($_SESSION['coupon_used'])) {
+        echo "<p style='color: red;'>このクーポンはすでに使用済みです。</p>";
+    } else {
+        echo "<p style='color: red;'>クーポンが見つかりません。</p>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../CSS/indexStyle.css">
     <link rel="stylesheet" href="../CSS/coupons.css">
-    <title>クーポン発行</title>
+    <title>クーポン発行と使用</title>
 </head>
 <body>
 <div class="coupon-container">
@@ -161,8 +175,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_coupon'])) {
             <p class="coupon-code">クーポンコード: <?= htmlspecialchars($_SESSION['coupon_code'], ENT_QUOTES, 'UTF-8'); ?></p>
             <p class="expiry-date">有効期限: <?= htmlspecialchars($_SESSION['expiry_date'], ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
+
+        <!-- クーポン使用ボタン -->
+        <?php if (!isset($_SESSION['coupon_used'])): ?>
+            <form method="POST">
+                <button type="submit" name="use_coupon">使用する</button>
+            </form>
+        <?php else: ?>
+            <p class="used-message">このクーポンは使用済みです。</p>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 </body>
 </html>
-
