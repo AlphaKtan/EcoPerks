@@ -76,6 +76,32 @@
         .facility:hover {
             transform: scale(1.1);
         }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            /* justify-content: flex-start; */
+            width: 100%;
+            padding: 10px 0 10px 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            padding: 10px 5px;
+        }
+
+        .menu-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            margin-bottom: auto;
+            
+        }
     </style>
 </head>
 <body>
@@ -85,13 +111,13 @@
                 <div class="openbtn"><span></span><span></span><span></span></div>
                 <nav id="g-nav">
                     <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
-                        <ul>
-                            <li><a href="#">Top</a></li>
-                            <li><a href="login_page.php">ログイン</a></li> 
-                            <li><a href="php/regist.php">アカウント作成</a></li> 
-                            <li><a href="php/Mypage_user.php">Mypage</a></li> 
-                            <li><a href="php/coupons.php">クーポン</a></li>
-                            <li><a href="php/ReserveCheck_Customer.php">予約確認</a></li>
+                        <ul class="menu-list">
+                            <li class="menu-item" ><a href="#">Top</a></li>
+                            <li class="menu-item"><a href="login_page.php">ログイン</a></li> 
+                            <li class="menu-item"><a href="php/regist.php">アカウント作成</a></li> 
+                            <li class="menu-item"><a href="php/Mypage_user.php">Mypage</a></li> 
+                            <li class="menu-item"><a href="php/coupons.php">クーポン</a></li>
+                            <li class="menu-item"><a href="php/ReserveCheck_Customer.php">予約確認</a></li>
                         </ul>
                     </div>
                 </nav>
