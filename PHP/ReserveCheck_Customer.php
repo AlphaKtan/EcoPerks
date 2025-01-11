@@ -8,7 +8,11 @@
     <title>予約フォーム</title>
 </head>
 <style>
-    
+    .gray-out {
+        color: gray;
+        opacity: 0.6;
+        pointer-events: none;
+    }
 </style>
 <body>
 
@@ -27,14 +31,26 @@ try {
     $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location FROM yoyaku WHERE username = :user_id AND reservation_date >= DATE(NOW())";
+    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location, 
+                  CASE 
+                  WHEN reservation_date < DATE(NOW()) THEN 'past' 
+                  ELSE 'future'
+                  END AS reservation_status
+                  FROM yoyaku
+                  WHERE username = :user_id
+                  AND (reservation_date >= DATE_SUB(DATE(NOW()), INTERVAL 1 DAY) OR :show_all = 1);";
     $stmt = $pdo->prepare($yoyakusql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->bindParam(':show_all', $show_all, PDO::PARAM_INT);
     $stmt->execute();
 
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $usersql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
+    $usersql = "SELECT username 
+                FROM users_kokyaku 
+                INNER JOIN users 
+                ON users_kokyaku.user_id = users.id 
+                WHERE users.id = :user_id";
     $stmt = $pdo->prepare($usersql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
@@ -62,13 +78,17 @@ try {
                 $start_time = $rows['start_time'];
                 $end_time = $rows['end_time'];
                 $id = $rows['id'];
+                $status = $rows['reservation_status'];
 
-                echo "<li><h2>施設名: $location</h2>";
+                $class = ($status === 'past') ? 'gray-out' : '';
+                
+                echo '<li class="' . $class . '"><h2>施設名: ' . $location . '</h2>';
                 echo "<p>ユーザー名: $username</p>";
                 echo "<p>日程: $reservation_date</p>";
                 echo "<p>開始時間: $start_time</p>";
                 echo "<p>終了時間: $end_time</p>";
                 echo <<<HTML
+                
                 <form action="./resv_change.php" method="post">
                     <div class='resvChange'>
                         <input type="hidden" name="reservation_id" value="$id">
