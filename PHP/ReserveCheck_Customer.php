@@ -43,9 +43,15 @@ try {
     $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location
-                  FROM yoyaku 
-                  WHERE username = :user_id " . $order_sql;
+    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location,
+                    CASE 
+                    WHEN reservation_date < CURDATE() THEN 'past' 
+                    ELSE 'future'
+                    END AS reservation_status
+                    FROM yoyaku 
+                    WHERE username = :user_id
+                    AND reservation_date >= CURDATE() - INTERVAL 5 YEAR
+                    " . $order_sql;
     $stmt = $pdo->prepare($yoyakusql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
