@@ -23,6 +23,18 @@ session_start();
 $user_id = $_SESSION['user_id'];
 $directory = '<a href="../index.php">マップ</a> > <a href="./ReserveCheck_Customer.php">予約確認ページ</a>';
 
+$order_by = isset($_GET['order']) ? $_GET['order'] : 'asc';
+
+// SQLの並べ替え順を動的に変更
+if ($order_by == 'asc') {
+    $order_sql = "ORDER BY reservation_date ASC";
+} elseif ($order_by == 'desc') {
+    $order_sql = "ORDER BY reservation_date DESC";
+} else {
+    // 今日から近い順
+    $order_sql = "ORDER BY ABS(DATEDIFF(reservation_date, CURDATE())) ASC";
+}
+
 
 try {
     require_once('../Model/dbModel.php');
@@ -31,14 +43,9 @@ try {
     $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location,
-                  CASE 
-                  WHEN reservation_date < CURDATE() THEN 'past' 
-                  ELSE 'future'
-                  END AS reservation_status
+    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location
                   FROM yoyaku 
-                  WHERE username = :user_id
-                  AND reservation_date >= CURDATE() - INTERVAL 5 YEAR";
+                  WHERE username = :user_id " . $order_sql;
     $stmt = $pdo->prepare($yoyakusql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
@@ -68,6 +75,15 @@ try {
 <div class="container">
     <h1>予約確認フォーム</h1>
     <p class="p">予約を変更する場合は、一度予約を削除し、再度予約をしてください</p>
+    <form method="GET" action="ReserveCheck_Customer.php">
+        <label for="order">並べ替え順: </label>
+        <select name="order" id="order">
+            <option value="asc">昇順（古い日付順）</option>
+            <option value="desc">降順（新しい日付順）</option>
+            <option value="near">今日から近い順</option>
+        </select>
+        <input type="submit" value="並べ替え">
+    </form>
     <?php
         if($row){
             foreach($row as $rows){
@@ -77,8 +93,9 @@ try {
                 $start_time = $rows['start_time'];
                 $end_time = $rows['end_time'];
                 $id = $rows['id'];
-                $status = $rows['reservation_status'];
 
+                // 今日以前の予約をグレーアウト
+                $status = (strtotime($reservation_date) < strtotime('today')) ? 'past' : 'future';
                 $class = ($status === 'past') ? 'gray-out' : '';
                 
                 echo '<li class="' . $class . '"><h2>施設名: ' . $location . '</h2>';
