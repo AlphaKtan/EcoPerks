@@ -31,17 +31,16 @@ try {
     $pdo = dbConnect();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location, 
+    $yoyakusql = "SELECT username, id, reservation_date, start_time, end_time, location,
                   CASE 
-                  WHEN reservation_date < DATE(NOW()) THEN 'past' 
+                  WHEN reservation_date < CURDATE() THEN 'past' 
                   ELSE 'future'
                   END AS reservation_status
-                  FROM yoyaku
+                  FROM yoyaku 
                   WHERE username = :user_id
-                  AND (reservation_date >= DATE_SUB(DATE(NOW()), INTERVAL 1 DAY) OR :show_all = 1);";
+                  AND reservation_date >= CURDATE() - INTERVAL 5 YEAR";
     $stmt = $pdo->prepare($yoyakusql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-    $stmt->bindParam(':show_all', $show_all, PDO::PARAM_INT);
     $stmt->execute();
 
     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
