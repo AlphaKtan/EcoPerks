@@ -13,6 +13,17 @@
         opacity: 0.6;
         pointer-events: none;
     }
+    .button{
+        width: 15%;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #43AEA9;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
 </style>
 <body>
 
@@ -102,9 +113,9 @@ try {
     <form method="GET" action="ReserveCheck_Customer.php">
         <label for="order">並べ替え順: </label>
         <select name="order" id="order">
-            <option value="asc">昇順（古い日付順）</option>
-            <option value="desc">降順（新しい日付順）</option>
-            <option value="near">今日から近い順</option>
+            <option value="asc" <?= $order_by === 'asc' ? 'selected' : '' ?>>昇順（古い日付順）</option>
+            <option value="desc" <?= $order_by === 'desc' ? 'selected' : '' ?>>降順（新しい日付順）</option>
+            <option value="near" <?= $order_by === 'near' ? 'selected' : '' ?>>今日から近い順</option>
         </select>
 
         <label for="status">参加状態: </label>
@@ -115,7 +126,7 @@ try {
             <option value="2" <?= $selected_status === '2' ? 'selected' : '' ?>>参加済み</option>
         </select>
 
-        <input type="submit" value="適用">
+        <input  type="submit" value="適用" class="button">
     </form>
 
     <?php
