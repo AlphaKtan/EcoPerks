@@ -238,13 +238,13 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     let area_id = "<?=$_SESSION['admin_area_id']; ?>";
 
 </script>
-<script src="../Js/jquery-3.7.1.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/jquery-3.5.1.min.js"></script>
-<script src="../js/moment.min.js"></script>
-<script src="../js/ja.js"></script>
-<script src="../js/bootstrap-datetimepicker.min.js"></script>
-<script src="../Js/custom.js"></script>
+<script src="../JS/jquery-3.7.1.min.js"></script>
+<script src="../JS/bootstrap.min.js"></script>
+<script src="../JS/jquery-3.5.1.min.js"></script>
+<script src="../JS/moment.min.js"></script>
+<script src="../JS/ja.js"></script>
+<script src="../JS/bootstrap-datetimepicker.min.js"></script>
+<script src="../JS/custom.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
