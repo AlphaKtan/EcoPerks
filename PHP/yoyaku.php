@@ -362,6 +362,7 @@ function fetchShiftData() {
                     let data = {
                         start_time: circle.start_time_only + ':00',
                         end_time: circle.end_time_only + ':00',
+                        price: circle.price
                     };
                     if (selectedElement) {
                         selectedElement.textContent += `
@@ -370,6 +371,7 @@ function fetchShiftData() {
                                     <input type="radio" name="facility" id="facility${i}" value='${JSON.stringify(data)}'>
                                     <span class="time">${circle.start_time_only} - ${circle.end_time_only}</span>
                                     <span class="facility">${circle.facility_name}</span>
+                                    <span class="price">クーポンの割引額¥${circle.price}</span>
                                 </div>
                             </label>
                         `;

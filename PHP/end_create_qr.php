@@ -12,7 +12,6 @@
     if (isset($_SESSION['admin_id'])) {
         $admin_id = $_SESSION['admin_id'];
     }
-    // 仮の値を代入
     $area_id = $_SESSION['admin_area_id'];
     $location = $_SESSION['location_id'];
     // このページのタイトルを入力
