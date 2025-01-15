@@ -32,7 +32,7 @@
 <?php
 session_start();
 $user_id = $_SESSION['user_id'];
-$directory = '<a href="../index.php">マップ</a> > <a href="./Mypage_user.php">マイページ</a> > <a href="./ReserveCheck_Customer.php">予約確認ページ</a>';
+$directory = '<a class="link" href="../index.php">マップ</a> > <a class="link" href="./ReserveCheck_Customer.php">予約確認ページ</a>';
 
 $order_by = isset($_GET['order']) ? $_GET['order'] : 'asc';
 

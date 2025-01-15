@@ -44,17 +44,19 @@
     display: block;
 }
 
-a:visited {
+.link:visited {
  color: #ffff;
 }
 
-a {
+.link {
     text-decoration: none;
+    margin: 10px;
+    color:#ffff;
 }
 
-a:hover {}
+.link:hover {}
 
-a:active {
+.link:active {
  color: #ffff;
 }
 </style>
@@ -69,7 +71,7 @@ a:active {
     <div class="sub_header">
         <div class="sub_header_box1">
             <div style="display: flex;">
-                <p style="margin: 10px; color:#ffff;"><?php echo $directory; ?></p>
+                <p class="link"><?php echo $directory; ?></p>
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
