@@ -4,7 +4,7 @@
     $_SESSION['URL'] = $URL;
     if (!isset($_SESSION['user_id'])) {
         $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
-        header('Location: message.php');
+        header('Location: php/message.php');
         exit;
     }
     if (isset($_SESSION['user_id'])) {
