@@ -24,6 +24,7 @@
             WHERE DATE_FORMAT(start_time, '%Y-%m-%d') = :reservation_date
             AND facility_name = :facilityName
             AND status = '1'
+            AND DATE_FORMAT(start_time, '%Y-%m-%d') >= CURDATE()
             ORDER BY start_time_only, end_time_only ASC";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':reservation_date', $reservation_date, PDO::PARAM_STR);

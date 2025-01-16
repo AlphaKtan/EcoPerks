@@ -290,13 +290,17 @@ let selectedDate = null;
 let shiftDiv = document.getElementsByClassName('shiftDiv');
 
 function selectDate(date) {
+    // 新しく選択されたセルにselectedクラスを追加
+    let element = event.target;
+    if (element.classList.contains('circle')) {
+        return;  // 'circle' クラスがある要素がクリックされた場合、何もしないで終了
+    }
+
     // 前に選択されていたセルの選択を解除
     if (previouslySelected) {
         previouslySelected.classList.remove('selected');
     }
-
-    // 新しく選択されたセルにselectedクラスを追加
-    let element = event.target;
+    
     element.classList.add('selected');
     previouslySelected = element;
 

@@ -32,6 +32,7 @@ session_start();
             WHERE DATE_FORMAT(start_time, '%Y-%m-%d') BETWEEN :first_day AND :last_day
             AND facility_name = :facilityName
             AND status = '1'
+            AND DATE_FORMAT(start_time, '%Y-%m-%d') >= CURDATE()
             ORDER BY shift_date ASC";
 
 
