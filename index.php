@@ -17,25 +17,25 @@
     $pdo = dbConnect();
 
     try {
-            $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
-            $stmt = $pdo->prepare($yoyakusql);
-            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-            $stmt->execute();
+        $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
+        $stmt = $pdo->prepare($yoyakusql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
 
-            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $sql = "SELECT imgpath FROM users WHERE id = :id";
-            $stmt2 = $pdo->prepare($sql);
-            $stmt2->bindValue(':id', $user_id);
-            $stmt2->execute();
+        $sql = "SELECT imgpath FROM users WHERE id = :id";
+        $stmt2 = $pdo->prepare($sql);
+        $stmt2->bindValue(':id', $user_id);
+        $stmt2->execute();
 
-            $image = $stmt2->fetch();
+        $image = $stmt2->fetch();
 
-            } catch (PDOException $e) {
-                echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
-            } catch (Exception $e) {
-                echo "<p>エラー: " . $e->getMessage() . "</p>";
-        }
+        } catch (PDOException $e) {
+            echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
+        } catch (Exception $e) {
+            echo "<p>エラー: " . $e->getMessage() . "</p>";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -182,11 +182,10 @@
                 <nav id="g-nav">
                     <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
                         <ul class="menu-list">
-                            <li class="menu-item"><a href="login_page.php" class="a_link">ログイン</a></li> 
-                            <li class="menu-item"><a href="php/regist.php" class="a_link">アカウント作成</a></li> 
-                            <li class="menu-item"><a href="php/Mypage_user.php" class="a_link">Mypage</a></li>
+                            <li class="menu-item"><a href="php/Mypage_user.php" class="a_link">マイページ</a></li>
                             <li class="menu-item"><a href="php/coupons.php" class="a_link">クーポン</a></li>
                             <li class="menu-item"><a href="php/ReserveCheck_Customer.php" class="a_link">予約確認</a></li>
+                            <li class="menu-item"><a href="php/qr.php" class="a_link">QR読み取り</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -207,19 +206,19 @@
                 <p style="padding-left: 10px; color:#ffff;"><a href="#">マップ</a></p>
             </div>
         </div>
-            <div class="sub_header_box2" style="border-left:solid 1px #ffff; color:#ffff;">
-                <p>ユーザーネーム</p>
-                <p>
-                    <?php
-                        if($row){
-                            foreach($row as $rows){
+        <div class="sub_header_box2" style="border-left:solid 1px #ffff; color:#ffff;">
+            <p>ユーザーネーム</p>
+            <p>
+                <?php
+                    if($row){
+                        foreach($row as $rows){
                         $username = $rows['username'];
-                            echo "$username";
-                            }
+                        echo $username;
                         }
-                    ?>
-                </p>
-            </div>
+                    }
+                ?>
+            </p>
+        </div>
     </div>
     </header>
 

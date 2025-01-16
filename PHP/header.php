@@ -1,5 +1,31 @@
+<?php
+    try {
+        $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
+        $stmt = $pdo->prepare($yoyakusql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $sql = "SELECT imgpath FROM users WHERE id = :id";
+        $stmt2 = $pdo->prepare($sql);
+        $stmt2->bindValue(':id', $user_id);
+        $stmt2->execute();
+
+        $image = $stmt2->fetch();
+
+        } catch (PDOException $e) {
+            echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
+        } catch (Exception $e) {
+            echo "<p>エラー: " . $e->getMessage() . "</p>";
+    }
+?>
 <style>
-    header {
+* {
+    box-sizing: border-box;
+}
+
+header {
     width: 100%;
     height: 60px;
     top: 0; /* 上部から配置の基準位置を決める */
@@ -23,6 +49,11 @@
 .sub_header_box2{
     width: 20%;
     background-color: #43AEA9;
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 .menu {
     width: 100%;
@@ -54,10 +85,8 @@
     color:#ffff;
 }
 
-.link:hover {}
-
 .link:active {
- color: #ffff;
+    color: #ffff;
 }
 </style>
 <header>
@@ -75,6 +104,15 @@
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
+        <p style="margin:0;">ユーザーネーム</p>
+            <p style="margin:0;">
+                <?php
+                    if($userRow){
+                        $username = $userRow['username'];
+                        echo $username;
+                    }
+                ?>
+            </p>
         </div>
     </div>
 </header>

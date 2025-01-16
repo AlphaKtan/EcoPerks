@@ -46,7 +46,7 @@
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->execute();
 
-            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $sql = "SELECT imgpath FROM users WHERE id = :id";
             $stmt2 = $pdo->prepare($sql);
@@ -54,6 +54,9 @@
             $stmt2->execute();
 
             $image = $stmt2->fetch();
+            if($row){
+                $username = $row['username'];
+            }
 
             } catch (PDOException $e) {
                 echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
@@ -78,6 +81,15 @@
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
+            <p>ユーザーネーム</p>
+            <p>
+                <?php
+                    if($row){
+                        $row = $row['username'];
+                        echo $row;
+                    }
+                ?>
+            </p>
         </div>
     </div>
 
@@ -100,14 +112,7 @@
     <div class="userFlexItem">
         <a href="./upload.php">
         <h2 class="center">
-            <?php
-                if($row){
-                    foreach($row as $rows){
-                $username = $rows['username'];
-                    echo "$username";
-                    }
-                }
-            ?>
+            <?php echo $username; ?>
         </h2>
         </a>
     </div>
