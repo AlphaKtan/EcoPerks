@@ -7,18 +7,6 @@
     <title>アカウント登録</title>
 </head>
 <body>
-
-<header>
-        <div class="flexBox">
-            <div class="menu">
-            </div>
-            <div class="logo">
-                <img src="../img/logo.jpg" alt="" class="logo2">
-            </div>
-            <div class="icon"></div>
-        </div>
-
-
 <?php
 // データベース接続情報
 session_start();
@@ -64,6 +52,15 @@ session_start();
             $stmt_username->execute();
         }
 ?>
+<header>
+        <div class="flexBox">
+            <div class="menu">
+            </div>
+            <div class="logo">
+                <img src="../img/logo_yoko.svg" alt="" class="logo2">
+            </div>
+            <div class="icon"></div>
+        </div>
 
 <div class="sub_header">
             <div class="sub_header_box1">
