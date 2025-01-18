@@ -32,7 +32,7 @@ if (isset($_SESSION['admin_id'])) {
     <link rel="stylesheet" href="../CSS/sidebar.css">
 </head>
 <body>
-<?php include './header.php' ?>  
+<?php include './admin_header.php' ?>  
     <div class="left-menu">
         <div>
             <ul class="menu-list">

@@ -14,7 +14,7 @@
         <div class="flexBox">
             <div class="menu">
                 <button class="menu_button" type="button">
-                    管理者?
+                    管理者
                 </button>
             </div>
             <div class="logo">
@@ -34,21 +34,19 @@
     </header>
 
 <section class="login_form">
-    <h1>アカウントにサインアップ</h1>
-    <p id="time">現在の時刻: </p>
+    <img src="img/logo_yoko.svg" class="login_img">
+    <b class="b">ユーザーのログイン</b>
     <form action="php/login.php" method="post">
         <div class="form-group">
-            <label for="providedUsername">ユーザーネーム</label>
-            <input type="text" name="providedUsername" required>
+            <input type="text" name="providedUsername" placeholder="ユーザーネーム" required>
         </div>
         <div class="form-group">
-            <label for="providedPassword">パスワード</label>
-            <input type="password" name="providedPassword" required>
+            <input type="password" name="providedPassword"  id="providedPassword" placeholder="パスワード"required>
         </div>
-        <button type="submit">続行</button>
-
+        <button type="submit">ログイン</button>
     </form>
-    <p>続行すると、利用規約とプライバシーポリシーを理解し、同意したことになります。</p>
+    <a href="PHP/regist.php">新規登録</a>
+    <div>管理者の方は<a href="PHP/admin_home.php">こちら</a></div>
 </section>
 <script>
     let inputText = ''; // 入力されたテキストを保持する変数

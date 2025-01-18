@@ -1,31 +1,3 @@
-<?php
-    try {
-
-        require '../Model/dbModel.php';
-    
-        // DB接続
-        $pdo = dbConnect();
-        
-        $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
-        $stmt = $pdo->prepare($yoyakusql);
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $sql = "SELECT imgpath FROM users WHERE id = :id";
-        $stmt2 = $pdo->prepare($sql);
-        $stmt2->bindValue(':id', $user_id);
-        $stmt2->execute();
-
-        $image = $stmt2->fetch();
-
-        } catch (PDOException $e) {
-            echo "<p>データベースエラー: " . $e->getMessage() . "</p>";
-        } catch (Exception $e) {
-            echo "<p>エラー: " . $e->getMessage() . "</p>";
-    }
-?>
 <style>
 * {
     box-sizing: border-box;
@@ -33,7 +5,6 @@
 
 header {
     width: 100%;
-    height: 60px;
     top: 0; /* 上部から配置の基準位置を決める */
     background-color: white;
     position: fixed;
@@ -110,12 +81,11 @@ header {
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-        <p style="margin:0;">ユーザーネーム</p>
-            <p style="margin:0;">
+        <p style="margin:0; color:white;">施設名</p>
+            <p style="margin:0; color:white;">
                 <?php
-                    if($userRow){
-                        $username = $userRow['username'];
-                        echo $username;
+                    if($_SESSION['facility']){
+                        echo $_SESSION['facility'];
                     }
                 ?>
             </p>

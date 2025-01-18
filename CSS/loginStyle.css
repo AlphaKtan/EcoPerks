@@ -50,6 +50,11 @@ header {
     height: 60px;
 }
 
+.login_img {
+    height: auto;
+    width: 215px;
+}
+
 .icon {
     width: 100%;
 }
@@ -66,17 +71,20 @@ header {
     width: 130px;
 }
 
-a {
-    color: #fff;
-    text-decoration: none;
+.b {
+    display: block;
+    text-align: left;
+    padding: 20px 10px;
+    font-size: 14px;
 }
 
 .login_form {
-    max-width: 75%;
+    max-width: 282px;
     margin: 130px auto;
+    border: 2px solid #DBDBDB;
     background-color: #fff;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }

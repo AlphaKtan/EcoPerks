@@ -2,6 +2,7 @@ body {
     background-color: #FFF6E9;
     padding: 0px;
     margin: 0px;
+    line-height: 1.15;
 }
 .header{
     background-color: #99CCFF;
@@ -93,6 +94,7 @@ body {
 
 .left-menu {
     width: 250px;
+    margin-top: 80px;
     padding: 0 20px 20px 10px;
     border-right: 1px solid #e0e0e0;
     display: flex;
@@ -185,7 +187,7 @@ a, a:hover, a:active, a:visited {
 
 
 /* 1266px以下でのスタイル */
-@media screen and (max-width: 1266px) {
+@media screen and (max-width: 800px) {
     .left-menu {
         width: 60px;
         padding: 120px 10px 20px 5px;
