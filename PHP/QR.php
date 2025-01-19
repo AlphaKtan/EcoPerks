@@ -7,6 +7,11 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: message.php');
     exit;
 }
+require_once('../Model/dbmodel.php');
+$pdo = dbConnect();
+
+$directory = '<a href="../index.php">マップ</a> > <a href="./Mypage_user.php">マイページ</a>';
+
 // if (isset($_SESSION['user_id'])) {
 //     $user_id = $_SESSION['user_id'];
 // }
@@ -17,6 +22,8 @@ $_SESSION['user_id'] = 2;
 <head>
     <title>QRコードの読み取り</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
+    <link rel="stylesheet" href="../CSS/mypageStyle.css">
     <style>
         #wrapper{
             position: relative;
@@ -58,6 +65,8 @@ $_SESSION['user_id'] = 2;
     </style>
 </head>
 <body>
+<?php include 'header.php';?>
+
     <div id="wrapper">
         <video id="video" autoplay muted playsinline></video>
         <canvas id="camera-canvas"></canvas>

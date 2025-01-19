@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
     <link rel="stylesheet" href="../CSS/mypageStyle.css">
-    <link rel="stylesheet" href="../CSS/hannbaka.css">
     <title>マイページ</title>
     <style>
         html {
@@ -14,7 +13,6 @@
     
 </head>
 <body>
-    <header>
     <?php
         // デバッグ用の出力
         // echo "<pre>";
@@ -64,91 +62,66 @@
                 echo "<p>エラー: " . $e->getMessage() . "</p>";
             }
     ?>
-    <div class="flexBox">
-        <div class="menu">
-        </div>
-        <div class="logo">
-            <img src="../img/logo_yoko.svg" alt="" class="logo2">
-        </div>
-        <div class="icon"></div>
-    </div>
-    </header>
 
-    <div class="sub_header">
-        <div class="sub_header_box1">
-            <div style="display: flex;">
-                <p style="padding-left: 10px;"><?php echo $directory; ?></p>
-            </div>
-        </div>
-        <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-            <p>ユーザーネーム</p>
-            <p>
-                <?php
-                    if($row){
-                        $row = $row['username'];
-                        echo $row;
-                    }
-                ?>
-            </p>
-        </div>
-    </div>
+<?php include 'header.php';?>
 
-    <div class="userFlexItem">
-        <a href="./upload.php">
-            <div id="dragDropArea">
-                <div class="drag-drop-inside">
-                    <div id="previewArea">
-                    <img src="../images/<?php echo $image['imgpath']; ?>" width="146" height="140" class="iconImg">
+
+<div class="userpage" style="margin-top:100px;">
+        <div class="userFlexItem">
+            <a href="./upload.php">
+                <div id="dragDropArea">
+                    <div class="drag-drop-inside">
+                        <div id="previewArea">
+                        <img src="../images/<?php echo $image['imgpath']; ?>" width="146" height="140" class="iconImg">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </a>
-    </div>
-
-    <div class="userFlexItem">
-        <h2 class="center">ユーザー名</h2>
-    </div>
-    
-    <div class="userFlexItem">
-        <a href="./upload.php">
-        <h2 class="center">
-            <?php echo $username; ?>
-        </h2>
-        </a>
-    </div>
-
-    <div class="boxA">
-        <div class="boxB">
-            <div class="box3">
-                <a href="./coupons.php" style="display: block;/* width: 100%; */height: 100%;">
-                    <h1>クーポン</h1>
-                    <p>Conpon</p>
-                </a>
-            </div>
-
-            <div class="box3">
-                <a href="ReserveCheck_Customer.php" style="display: block;/* width: 100%; */height: 100%;">
-                    <h1>予約確認</h1>
-                    <p>CheckReserve</p>
-                </a>
-            </div>
-        </div>
-        <div class="box5">
-            <a href="./upload.php" style="display: block;/* width: 100%; */height: 100%;">
-                <h1>名前変更</h1>
-                <p>ChangeName</p>
             </a>
         </div>
-    </div>
-    
-    <a href="./QR.php">
-    <div class="QR_botton">
-        <img src="..\img\qr_white.png" class="QRimg">
-    </div>
-    </a>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="../JS/hannbaka.js"></script>
+        <div class="userFlexItem">
+            <h2 class="center">ユーザー名</h2>
+        </div>
+        
+        <div class="userFlexItem">
+            <a href="./upload.php">
+            <h2 class="center">
+                <?php echo $username; ?>
+            </h2>
+            </a>
+        </div>
+
+        <div class="boxA">
+            <div class="boxB">
+                <div class="box3">
+                    <a href="./coupons.php" style="display: block;/* width: 100%; */height: 100%;">
+                        <h1>クーポン</h1>
+                        <p>Conpon</p>
+                    </a>
+                </div>
+
+                <div class="box3">
+                    <a href="ReserveCheck_Customer.php" style="display: block;/* width: 100%; */height: 100%;">
+                        <h1>予約確認</h1>
+                        <p>CheckReserve</p>
+                    </a>
+                </div>
+            </div>
+            <div class="box5">
+                <a href="./upload.php" style="display: block;/* width: 100%; */height: 100%;">
+                    <h1>名前変更</h1>
+                    <p>ChangeName</p>
+                </a>
+            </div>
+        </div>
+        
+        <a href="./QR.php">
+        <div class="QR_botton">
+            <img src="..\img\qr_white.png" class="QRimg">
+        </div>
+        </a>
+</div>
+
     <script src="../JS/pass.js"></script>
 
 
