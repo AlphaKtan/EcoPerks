@@ -13,8 +13,8 @@ if (session_status() == PHP_SESSION_NONE) {
 <style>
     div#qrcode {
     width: fit-content;
-    padding: 25px;
-    margin-top: 100px;
+    padding:25px;
+    margin-top: 20px;
     background: white;
     border-radius: 5%;
 }
