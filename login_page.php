@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="CSS/loginStyle.css">
     <link rel="stylesheet" href="CSS/indexStyle.css">
     <title>ログイン</title>
-    <script src="JS/update_time.js" defer></script>
 </head>
 <body>
     <header>
