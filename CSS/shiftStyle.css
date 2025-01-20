@@ -70,13 +70,13 @@ form {
 }
 
 .mb-4 {
-    margin-top: 190px;
     display: flex;
 }
 
 .shift_look {
     margin-bottom: 20px;
     margin-left: 10px;
+    background:white;
 }
 
 .date {

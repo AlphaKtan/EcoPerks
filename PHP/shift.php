@@ -5,6 +5,8 @@ require '../Model/dbModel.php';
 // DB接続
 $pdo = dbConnect();
 
+$directory="管理者ページ>ゴミ拾い日追加";
+
 $URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $_SESSION['URL'] = $URL;
 if (!isset($_SESSION['admin_id'])) {
@@ -116,20 +118,38 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/shiftStyle.css">
 </head>
+
 <body>
-    <div class="container mt-5">
-        <h3 class="mb-4">
-            <a href="?ym=<?= $prev ?>">&lt;</a>
+
+<?php include './admin_header.php' ?>
+
+<style>
+.right-content {
+    margin-left: 280px;
+    padding-top: 105px;
+    width: 80%;
+    height: 100%;
+}
+
+.facilityName{
+    margin-left:auto;
+}
+</style>
+    <div class="container mt-5" style="background: white; padding: 10px 10px 30px 10px; border: solid;">
+        <h3 class="mb-4" style="padding-bottom: 1.5rem !important;margin-bottom: 0 !important; background:white;">
+            <a href="?ym=<?= $prev ?>" style="color:rgb(13, 110, 253);">&lt;</a>
             <span class="mx-3">
                 <?= $html_title ?>
             </span>
-            <a href="?ym=<?= $next ?>">&gt;</a>
+            <a href="?ym=<?= $next ?>" style="color:rgb(13, 110, 253);">&gt;</a>
 
             
 
-            <?= $_SESSION['facility']; ?>
+            <div class="facilityName">
+                <?= $_SESSION['facility']; ?>
+            </div>
         </h3>
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="margin-bottom: 0 !important;">
             <tr>
                 <th>日</th>
                 <th>月</th>
