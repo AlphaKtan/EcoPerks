@@ -88,6 +88,42 @@ header {
     object-fit: cover;
 }
 
+.menu-item {
+    display: flex;
+    align-items: center;
+    /* justify-content: flex-start; */
+    width: 100%;
+    padding: 10px 0 10px 5px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 85%;
+    height: 100%;
+    border-radius: 8px;
+    padding: 10px 5px;
+}
+
+.menu-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin-bottom: auto;   
+}
+
+.a_link{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+}
+
+
 .link:visited {
  color: #ffff;
 }
