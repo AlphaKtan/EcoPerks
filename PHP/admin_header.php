@@ -80,7 +80,7 @@ header {
 
 .left-menu {
     width: 250px;
-    margin-top: 9%;
+    margin-top: 100px;
     padding: 0 20px 20px 10px;
     border-right: 1px solid #e0e0e0;
     display: flex;
@@ -170,6 +170,53 @@ a, a:hover, a:active, a:visited {
     height: 100%;
 }
 
+/* スマホ用のスタイル (最大幅 768px) */
+@media screen and (max-width: 768px) {
+    .left-menu {
+        position: fixed; /* 位置を固定 */
+        width: 80px; /* メニューを縮小 */
+        height: 100%; /* 全画面の高さ */
+        overflow-y: auto; /* スクロールを許可 */
+        border-right: 1px solid #e0e0e0; /* ボーダーを維持 */
+    }
+
+    .menu-item {
+        justify-content: center; /* アイコンを中央揃え */
+        flex-direction: column; /* アイコンを縦配置（オプション） */
+        padding: 10px 0; /* 縦方向の余白を調整 */
+    }
+
+    .menu-item-text {
+        display: none; /* テキストを非表示 */
+    }
+    
+    .text-box {
+        display: none; /* テキストを非表示 */
+    }
+    
+    .logo {
+        width: 40px; /* アイコンサイズを調整 */
+        height: auto; /* アスペクト比を維持 */
+    }
+}
+
+/* より小さいデバイス (最大幅 480px) */
+@media screen and (max-width: 480px) {
+    .left-menu {
+        width: 60px; /* さらに縮小 */
+    }
+
+    .logo {
+        width: 30px; /* アイコンをさらに縮小 */
+    }
+
+    .menu-item {
+        padding: 5px 0; /* 余白をさらに縮小 */
+    }
+}
+
+
+
 </style>
 <header>
     <div class="flexBox">
@@ -212,7 +259,7 @@ a, a:hover, a:active, a:visited {
                 <p class="text-box">オプション</p>
                 <li class="menu-item admin_login"><a href="./admin_login.php" class="a_link"><img src="../img/main_user.svg" class="logo"><span class="menu-item-text">ログイン</span></a></li>
                 <li class="menu-item access_log"><a href="access_log.php" class="a_link"><img src="../img/log.svg" class="logo"><span class="menu-item-text">アクセスログ表示ページ</span></a></li>
-                <li class="menu-item data"><a href="data.php" class="a_link"><img src="../img/dataDB.svg" class="logo"></span><span class="menu-item-text-chat">データ管理ページ</span></a></li>
+                <li class="menu-item data"><a href="data.php" class="a_link"><img src="../img/dataDB.svg" class="logo"></span><span class="menu-item-text">データ管理ページ</span></a></li>
             </ul>
             <ul class="menu-list-bottom">
             <script>

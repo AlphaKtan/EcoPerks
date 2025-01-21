@@ -4,7 +4,6 @@
         session_start();
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -19,8 +18,9 @@
     </style>
 </head>
 <body>
-
 <?php include './admin_header.php' ?>
+
+
 
     <form action="" method="post">
         <select name="area" id="area">
