@@ -1,8 +1,5 @@
 <?php
     try {
-
-
-        
         $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
         $stmt = $pdo->prepare($yoyakusql);
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
@@ -24,21 +21,24 @@
     }
 ?>
 <style>
+<style>
 * {
     box-sizing: border-box;
+    line-height: 1.15;
+}
+
+body {
+    background-color: #FFF6E9;
+    padding: 0px;
+    margin: 0px;
 }
 
 header {
     width: 100%;
-    height: 60px;
     top: 0; /* 上部から配置の基準位置を決める */
     background-color: white;
     position: fixed;
     z-index: 100;
-}
-
-.flexBox {
-    display: flex;
 }
 
 .sub_header{
@@ -50,7 +50,7 @@ header {
     justify-content: center;
     flex-flow: column;
     width: 80%;
-    height: 47px;
+    height: 40px;
     background-color: #43AEA9;
 }
 .sub_header_box2{
@@ -61,7 +61,6 @@ header {
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
-    color: #ffff;
 }
 .menu {
     width: 100%;
@@ -72,6 +71,11 @@ header {
     height: 60px;
     width: 100%;
     text-align: center  ;
+}
+
+.logo{
+    width: 40px;
+    height: auto;
 }
 
 .logo2 {
@@ -87,47 +91,6 @@ header {
     margin: 0px 25px;
 }
 
-.iconImg {
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    /* justify-content: flex-start; */
-    width: 100%;
-    padding: 10px 0 10px 5px;
-    margin-bottom: 10px;
-    margin-left: 30px;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 85%;
-    height: 100%;
-    border-radius: 8px;
-    padding: 10px 5px;
-}
-
-.menu-list {
-    list-style-type: none;
-    padding: 0;
-    width: 100%;
-    margin-bottom: auto;   
-}
-
-.a_link{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    height: 100%;
-}
-
-
 .link:visited {
  color: #ffff;
 }
@@ -141,9 +104,156 @@ header {
 .link:active {
     color: #ffff;
 }
+
+.left-menu {
+    width: 250px;
+    margin-top: 100px;
+    padding: 0 20px 20px 10px;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 88%;
+}
+
+.menu-list-bottom {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin-bottom: auto;
+    
+}
+
+.menu-item{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px 0 10px 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    padding: 10px 5px;
+}
+/* 
+.menu-item:hover {
+    background-color: #DBDBDB;
+} */
+
+.menu-item-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.menu-item-text-logo {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;  /* 下に移動する量。調整が必要な場合はこの値を変更してください */
+}
+
+.menu-item-text{
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.menu-item-text-chat{
+    margin-left: 10px;
+}
+
+a, a:hover, a:active, a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+.a_link{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+}
+
+.right-content {
+    margin-left: 280px;
+    padding-top:105px;
+    width: auto;
+    height: 100%;
+}
+
+/* スマホ用のスタイル (最大幅 768px) */
+@media screen and (max-width: 768px) {
+    .left-menu {
+        position: fixed; /* 位置を固定 */
+        width: 80px; /* メニューを縮小 */
+        height: 100%; /* 全画面の高さ */
+        overflow-y: auto; /* スクロールを許可 */
+        border-right: 1px solid #e0e0e0; /* ボーダーを維持 */
+    }
+
+    .menu-item {
+        justify-content: center; /* アイコンを中央揃え */
+        flex-direction: column; /* アイコンを縦配置（オプション） */
+        padding: 10px 0; /* 縦方向の余白を調整 */
+    }
+
+    .menu-item-text {
+        display: none; /* テキストを非表示 */
+    }
+    
+    .text-box {
+        display: none; /* テキストを非表示 */
+    }
+    
+    .logo {
+        width: 40px; /* アイコンサイズを調整 */
+        height: auto; /* アスペクト比を維持 */
+    }
+
+    .right-content {
+        margin-left: 70px;
+        padding-top: 105px;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+/* より小さいデバイス (最大幅 480px) */
+@media screen and (max-width: 480px) {
+    .left-menu {
+        width: 60px; /* さらに縮小 */
+    }
+
+    .logo {
+        width: 30px; /* アイコンをさらに縮小 */
+    }
+
+    .menu-item {
+        padding: 5px 0; /* 余白をさらに縮小 */
+    }
+}
+
+
 </style>
 <link rel="stylesheet" href="../CSS/hannbaka.css">
 <header>
+
     <div class="flexBox">
         <div class="menu">
             <div class="openbtn"><span></span><span></span><span></span></div>
@@ -172,7 +282,7 @@ header {
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-        <p style="margin:0;">ユーザーネーム</p>
+        <p class="user_Name">ユーザーネーム</p>
             <p style="margin:0;">
                 <?php
                     if($userRow){
