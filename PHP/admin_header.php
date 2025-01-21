@@ -166,7 +166,7 @@ a, a:hover, a:active, a:visited {
 .right-content {
     margin-left: 280px;
     padding-top:105px;
-    width: 100%;
+    width: auto;
     height: 100%;
 }
 
@@ -197,6 +197,13 @@ a, a:hover, a:active, a:visited {
     .logo {
         width: 40px; /* アイコンサイズを調整 */
         height: auto; /* アスペクト比を維持 */
+    }
+
+    .right-content {
+        margin-left: 70px;
+        padding-top: 105px;
+        width: 100%;
+        height: 100%;
     }
 }
 

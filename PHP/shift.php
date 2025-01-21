@@ -114,6 +114,7 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="ja">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>シフト登録画面</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../CSS/shiftStyle.css">
@@ -124,19 +125,45 @@ $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php include './admin_header.php' ?>
 
 <style>
-.right-content {
-    margin-left: 280px;
-    padding-top: 105px;
-    width: 80%;
-    height: 100%;
-}
 
 .facilityName{
     margin-left:auto;
 }
+
+.container{
+        background: white;
+        padding: 10px 10px 30px 10px;
+        border: solid;
+        width: 80%;
+        margin: 0 0 0 0;
+    }
+
+@media screen and (max-width: 768px) {
+    .container{
+        background: white;
+        padding: 10px 10px 30px 10px;
+        border: solid;
+        width: 80%;
+        margin: 0 0 0 0;
+    }
+
+    .shift_look {
+        width: 75%;
+        margin-bottom: 20px;
+        margin-left: 10px;
+        background: white;
+    }
+
+    #shiftDiv {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 30px;
+        width: 80%;
+    }
+}
+
 </style>
-    <div class="container mt-5" style="background: white; padding: 10px 10px 30px 10px; border: solid;">
-        <h3 class="mb-4" style="padding-bottom: 1.5rem !important;margin-bottom: 0 !important; background:white;">
+    <div class="container mt-5" style="">
+        <h3 class="mb-4" style="">
             <a href="?ym=<?= $prev ?>" style="color:rgb(13, 110, 253);">&lt;</a>
             <span class="mx-3">
                 <?= $html_title ?>
