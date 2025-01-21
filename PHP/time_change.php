@@ -27,6 +27,11 @@
             #date{
                 font-size: 18px;
             }
+
+            .inputDelete{
+                font-size: 15px;
+                margin-right: 10px;
+            }
         }
     </style>
 </head>
