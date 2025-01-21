@@ -25,42 +25,49 @@ $_SESSION['user_id'] = 2;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
     <link rel="stylesheet" href="../CSS/mypageStyle.css">
     <style>
-        #wrapper{
-            position: relative;
-        }
+#wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 画面全体を使用 */
+    display: flex;
+    flex-direction: column; /* 縦方向に要素を並べる */
+    justify-content: center; /* 中央揃え */
+    align-items: center; /* 横方向も中央揃え */
+    background-color: #FFF6E9; /* 背景色（任意） */
+}
 
-        #video{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            visibility: hidden;
-        }
+#video, #camera-canvas, #rect-canvas {
+    position: absolute;
+    width: 640px; /* 映像の幅 */
+    height: 480px; /* 映像の高さ */
+    top: 140px;
+}
 
-        #camera-canvas{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 50;
-        }
+#qr-msg {
+    position: relative;
+    margin-top: 500px; /* 映像の下に固定 */
+    font-size: 18px; /* 文字サイズ */
+    text-align: center; /* テキスト中央揃え */
+    color: #333; /* テキスト色 */
+}
 
-        #rect-canvas{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 100;
-        }
+#reload {
+    position: relative;
+    margin-top: 20px; /* メッセージの下に余白 */
+    padding: 10px 20px; /* 内側の余白を調整 */
+    font-size: 16px; /* ボタンの文字サイズ */
+    background-color: #007bff; /* ボタン背景色 */
+    color: #fff; /* ボタン文字色 */
+    border: none; /* ボーダーを消す */
+    border-radius: 5px; /* 角を丸くする */
+    cursor: pointer; /* ポインタ変更 */
+    transition: background-color 0.3s ease; /* ホバー時のアニメーション */
+}
 
-        #qr-msg{
-            position: absolute;
-            top: 500px;
-            left: 0px;
-        }
+#reload:hover {
+    background-color: #0056b3; /* ホバー時の色変更 */
+}
 
-        #reload{
-            position: absolute;
-            top: 550px;
-            left: 0px;
-        }
 
     </style>
 </head>

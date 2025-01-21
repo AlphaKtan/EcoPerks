@@ -1,10 +1,7 @@
 <?php
     try {
 
-        require '../Model/dbModel.php';
-    
-        // DB接続
-        $pdo = dbConnect();
+
         
         $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
         $stmt = $pdo->prepare($yoyakusql);
