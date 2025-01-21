@@ -80,7 +80,7 @@ header {
 
 .left-menu {
     width: 250px;
-    margin-top: 80px;
+    margin-top: 9%;
     padding: 0 20px 20px 10px;
     border-right: 1px solid #e0e0e0;
     display: flex;
