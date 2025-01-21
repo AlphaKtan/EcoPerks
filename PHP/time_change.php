@@ -15,6 +15,19 @@
         select {
             width: 200px;
         }
+        @media screen and (max-width: 768px) {
+            #area{
+                font-size: 18px;
+            }
+
+            #facility{
+                font-size: 18px;
+            }
+
+            #date{
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
