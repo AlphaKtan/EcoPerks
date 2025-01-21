@@ -1,3 +1,10 @@
+<?php
+    $directory = "管理者ページ";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -12,6 +19,9 @@
     </style>
 </head>
 <body>
+
+<?php include './admin_header.php' ?>
+
     <form action="" method="post">
         <select name="area" id="area">
             <option hidden>選択してください</option>

@@ -9,28 +9,7 @@
     <title>ログイン</title>
 </head>
 <body>
-    <header>
-        <div class="flexBox">
-            <div class="menu">
-                <button class="menu_button" type="button">
-                    管理者
-                </button>
-            </div>
-            <div class="logo">
-                <img src="img/logo.jpg" alt="" class="logo2">
-            </div>
-            <div class="icon"></div>
-        </div>
-        <div class="sub_header">
-            <div class="sub_header_box1">
-                <div style="display: flex;">
-                    <p style="padding-left: 10px; color:#ffff;">マップ > ログイン</p>
-                </div>
-                </div>
-                    <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-                </div>
-            </div>
-    </header>
+  
 
 <section class="login_form">
     <img src="img/logo_yoko.svg" class="login_img">
@@ -46,6 +25,7 @@
     </form>
     <a href="PHP/regist.php">新規登録</a>
     <div>管理者の方は<a href="PHP/admin_home.php">こちら</a></div>
+    <div>発表会用<a href="PHP/start_user.php">こちら</a></div>
 </section>
 <script>
     let inputText = ''; // 入力されたテキストを保持する変数
