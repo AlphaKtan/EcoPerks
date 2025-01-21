@@ -145,9 +145,13 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         }
     </style>
 </head>
-<body>
+<body style="line-height: 1.15;">
+
+
     <?php include 'header.php';?>
-    <div class="container mt-5">
+
+
+    <div class="container mt-5" style="padding-top: 6%;">
         <h3 class="mb-4">
             <a href="?ym=<?= $prev ?>&location=<?= $location ?>" style="color: rgba(13, 110, 253);">&lt;</a>
             <span class="mx-3">

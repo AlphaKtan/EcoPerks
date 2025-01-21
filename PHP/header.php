@@ -37,6 +37,10 @@ header {
     z-index: 100;
 }
 
+.flexBox {
+    display: flex;
+}
+
 .sub_header{
     display:flex; 
     background-color: white;
