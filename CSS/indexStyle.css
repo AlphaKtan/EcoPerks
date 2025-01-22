@@ -211,3 +211,9 @@ footer {
 .areainfo{
     text-align: center;
 }
+
+@media screen and (max-width: 768px) {
+    .user_Name{
+        font-size:10px;
+    }
+}

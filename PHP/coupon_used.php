@@ -19,6 +19,7 @@ $expiryDate = $_SESSION['expiry_date'];
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/indexStyle.css">
     <link rel="stylesheet" href="../CSS/coupons.css">
     <title>クーポン使用済み</title>

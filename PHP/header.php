@@ -91,6 +91,10 @@ header {
     margin: 0px 25px;
 }
 
+.iconImg{
+    border-radius: 50%;
+    object-fit: cover;
+}
 .link:visited {
  color: #ffff;
 }
@@ -178,7 +182,7 @@ header {
 }
 
 a, a:hover, a:active, a:visited {
-    color: #000;
+    color: #ffff;
     text-decoration: none;
 }
 
@@ -196,6 +200,7 @@ a, a:hover, a:active, a:visited {
     width: auto;
     height: 100%;
 }
+
 
 /* スマホ用のスタイル (最大幅 768px) */
 @media screen and (max-width: 768px) {
@@ -226,12 +231,21 @@ a, a:hover, a:active, a:visited {
         height: auto; /* アスペクト比を維持 */
     }
 
+    .link_button:hover {
+    background-color: #557981;
+    }
+    .user_Name{
+        font-size: 10px;
+    }
+
+
     .right-content {
         margin-left: 70px;
         padding-top: 105px;
         width: 100%;
         height: 100%;
     }
+
 }
 
 /* より小さいデバイス (最大幅 480px) */
@@ -282,8 +296,8 @@ a, a:hover, a:active, a:visited {
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-        <p class="user_Name">ユーザーネーム</p>
-            <p style="margin:0;">
+        <p class="user_Name" style="color:#f3f3f3;">ユーザーネーム</p>
+            <p style="margin:0; color:#f3f3f3;">
                 <?php
                     if($userRow){
                         $username = $userRow['username'];

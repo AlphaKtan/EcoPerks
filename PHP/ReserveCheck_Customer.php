@@ -13,17 +13,7 @@
         opacity: 0.6;
         pointer-events: none;
     }
-    .button{
-        width: 15%;
-        margin-top: 10px;
-        padding: 10px;
-        background-color: #43AEA9;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+
 </style>
 <body>
 

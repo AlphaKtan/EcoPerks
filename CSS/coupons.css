@@ -100,3 +100,20 @@
     color: #555;
 }
 
+
+@media screen and (max-width: 768px) {
+    .coupon {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding:0;
+        position: relative;
+        flex-direction: column;
+    }
+
+    .used-message {
+        margin: 10px 0px 20px 20px;
+        font-size: 1.2em;
+        color: #555;
+    }
+}

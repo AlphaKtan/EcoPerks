@@ -208,7 +208,7 @@
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff; color:#ffff;">
-            <p>ユーザーネーム</p>
+            <p class="user_Name">ユーザーネーム</p>
             <p>
                 <?php
                     if($row){

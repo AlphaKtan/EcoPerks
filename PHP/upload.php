@@ -7,6 +7,21 @@
     <title>アカウント登録</title>
 </head>
 <body>
+    <style>
+        .iconImg{
+            width: 300px;
+            height: 300px;
+        }
+
+        
+@media screen and (max-width: 768px) {
+    .iconImg {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+    </style>
 <?php
 // データベース接続情報
 session_start();
@@ -76,8 +91,7 @@ session_start();
     <h1>画像アップロード</h1>
     <!--送信ボタンが押された場合-->
     <?php if (isset($_POST['upload'])): ?>
-        <img src="../images/<?php echo $file; ?>"
-         width="300" height="300" class="iconImg">
+        <img src="../images/<?php echo $file; ?>" class="iconImg">
         <?php 
         if (isset($username)) {
             echo "<h3>$username</h>";

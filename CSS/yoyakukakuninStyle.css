@@ -2,7 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    }
+    line-height: 1.15;
+}
+
 .container {
     max-width: 75%;
     margin: 120px auto;
@@ -59,3 +61,29 @@ li {
     .link_button:hover {
         background-color: #557981;
     }
+
+.button{
+    width: 15%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #43AEA9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+    .button {
+        width: 30%;
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #43AEA9;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+}

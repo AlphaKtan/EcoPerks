@@ -45,6 +45,8 @@ footer {
     background-color: #43AEA9;
 }
 
+
+
 /* ここからフッターの要素 */
 .loadingBar {
     width: 0;
@@ -231,6 +233,3 @@ footer {
     text-align: center;
 }
 
-.link_button:hover {
-    background-color: #557981;
-}
