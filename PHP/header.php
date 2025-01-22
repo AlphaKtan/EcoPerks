@@ -19,6 +19,8 @@
         } catch (Exception $e) {
             echo "<p>エラー: " . $e->getMessage() . "</p>";
     }
+    $imagePath = '../images/' . $image['imgpath']; // 画像のフルパス
+    $defaultImage = '../img/irasto.jpg'; // デフォルト画像のパス
 ?>
 <style>
 * {
@@ -285,7 +287,7 @@ a, a:hover, a:active, a:visited {
             <img src="../img/logo_yoko.svg" alt="" class="logo2">
         </div>
         <div class="icon">
-            <img src="../images/<?php echo $image['imgpath']; ?>"  width="50px" height="50px" class="iconImg">
+            <img src="<?php echo file_exists($imagePath) ? $imagePath : $defaultImage; ?>" width="50px" height="50px" class="iconImg">
         </div>
     </div>
     <div class="sub_header">
