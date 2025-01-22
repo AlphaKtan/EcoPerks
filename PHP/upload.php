@@ -7,19 +7,8 @@
     <title>アカウント登録</title>
 </head>
 <body>
-    <style>
-        .iconImg{
-            width: 300px;
-            height: 300px;
-        }
+    <style>        
 
-        
-@media screen and (max-width: 768px) {
-    .iconImg {
-        width: 200px;
-        height: 200px;
-    }
-}
 
     </style>
 <?php

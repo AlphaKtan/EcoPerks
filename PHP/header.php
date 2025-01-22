@@ -294,13 +294,16 @@ a, a:hover, a:active, a:visited {
         <div class="icon">
         <img 
     src="<?php 
-        // 画像パスを構築
-        $imagePath = '../images/' . $image['imgpath'];
+        // $image が false でないことを確認
+        if ($image && isset($image['imgpath']) && !empty($image['imgpath'])) {
+            $imagePath = '../images/' . $image['imgpath'];
 
-        // 画像が存在すればそのパスを使用、存在しなければデフォルト画像を使用
-        echo (isset($image['imgpath']) && file_exists($imagePath) && !empty($image['imgpath'])) 
-            ? $imagePath 
-            : '../img/irasto.jpg'; 
+            // 画像が存在すればそのパスを使用、存在しなければデフォルト画像を使用
+            echo (file_exists($imagePath)) ? $imagePath : '../img/irasto.jpg';
+        } else {
+            // $image が false または imgpath が存在しない場合はデフォルト画像
+            echo '../img/irasto.jpg';
+        }
     ?>" 
     width="50px" 
     height="50px" 
