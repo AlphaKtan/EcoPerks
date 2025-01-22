@@ -50,7 +50,7 @@
     <title>Google マップの表示</title>
     <style>
         #map {
-            height: 360px; /* マップの表示領域の高さ */
+            height: 800px; 
             width: 70%; /* マップの表示領域の幅 */
             margin-left: auto;
             margin-right: auto;
@@ -173,6 +173,12 @@
             align-items: flex-start;
         }
 
+        @media screen and (max-width: 768px) {
+            #map {
+                height: 400px; 
+                width: 90%; /* マップの表示領域の幅 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -236,7 +242,7 @@
     </div>
 
     <!-- 元の位置に戻るボタン -->
-    <div id="map" style="height: 800px; display: block;"></div>
+    <div id="map" style="display: block;"></div>
 
     <div id="searchBar" style="display: none;">
         <input type="text" id="search" placeholder="キーワードを入力してください" />
@@ -324,7 +330,7 @@
 
         Grid.prototype.getTile = function(coord, zoom, ownerDocument) {
             var div = ownerDocument.createElement('div');
-            if (zoom > 11) {
+            if (zoom > 10) {
                 div.innerHTML = `<span class="spanBox" style="display:none;">${coord}</span>`;
             }
             
@@ -348,21 +354,39 @@
             return div;
         };
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: initialZoom, // 初期ズームレベルを設定
-            center: center,
-            mapTypeId: 'roadmap',
-            minZoom: initialZoom,
-            maxZoom: initialZoom + 3,
-            restriction: {
-                latLngBounds: {
-                    north: 35.510121680059264, // 最北の緯度
-                    south: 34.510121680059264, // 最南の緯度
-                    east: 136.7370724742484,   // 最東の経度
-                    west: 134.7370724742484,   // 最西の経度
-                },
+
+            // 画面サイズを取得して判定
+    var isMobile = window.innerWidth <= 768; // スマホの場合
+
+            // スマホの場合の設定
+    if (isMobile) {
+        initialZoom = 11; // スマホでは初期ズームを11に設定
+        center = { lat: 34.985121680059264, lng: 135.7370724742484 };
+    } else {
+        initialZoom = 12; // パソコンでは初期ズームを12に設定
+    }
+
+    // マップの設定
+    var mapOptions = {
+        zoom: initialZoom, // 初期ズームレベルを設定
+        center: center,
+        mapTypeId: 'roadmap',
+        minZoom: initialZoom,
+        maxZoom: initialZoom + 3,
+        restriction: {
+            latLngBounds: {
+                north: 35.510121680059264, // 最北の緯度
+                south: 34.510121680059264, // 最南の緯度
+                east: 136.7370724742484,   // 最東の経度
+                west: 134.7370724742484,   // 最西の経度
             },
-        });
+        },
+        disableDefaultUI: true, // すべてのデフォルトUIを無効化
+        mapTypeControl: false, // 地図タイプ切り替えコントロールを無効化
+    };
+
+    // Google Mapを作成
+    var map = new google.maps.Map(document.getElementById('map'), mapOptions);       
 
         function updateGridSize() {
             var zoom = map.getZoom();
@@ -529,7 +553,7 @@
 
             // 取得できない場合は終了
             if (point.length === 0) {
-                console.log('No tiles found.');
+                console.log('タイルがないよ');
                 return;
             }
 
