@@ -67,26 +67,9 @@ session_start();
             $stmt_username->execute();
         }
 ?>
-<header>
-        <div class="flexBox">
-            <div class="menu">
-            </div>
-            <div class="logo">
-                <img src="../img/logo_yoko.svg" alt="" class="logo2">
-            </div>
-            <div class="icon"></div>
-        </div>
 
-<div class="sub_header">
-            <div class="sub_header_box1">
-                <div style="display: flex;">
-                    <p style="padding-left: 10px;"><?php echo $directory; ?></p>
-                </div>
-            </div>
-            <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-            </div>
-        </div>
-</header>
+<?php include 'header.php';?>
+
 <section class="login_form">
     <h1>画像アップロード</h1>
     <!--送信ボタンが押された場合-->

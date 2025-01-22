@@ -21,7 +21,6 @@
     }
 ?>
 <style>
-<style>
 * {
     box-sizing: border-box;
     line-height: 1.15;
@@ -296,7 +295,7 @@ a, a:hover, a:active, a:visited {
             </div>
         </div>
         <div class="sub_header_box2" style="border-left:solid 1px #ffff;">
-        <p class="user_Name" style="color:#f3f3f3;">ユーザーネーム</p>
+        <p class="user_Name" style="margin:0; color:#f3f3f3;">ユーザーネーム</p>
             <p style="margin:0; color:#f3f3f3;">
                 <?php
                     if($userRow){
