@@ -38,6 +38,8 @@ session_start();
     $stmt->execute();
 
     echo <<<HTML
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <div><p>予約が完了しました！！</p></div>
         <a href="../index.php">ホームに戻る</a>
     HTML;

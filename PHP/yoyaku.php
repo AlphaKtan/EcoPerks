@@ -144,6 +144,11 @@ for ( $day = 1; $day <= $day_count; $day++, $youbi++) {
         .aaa{
             color:#000;
         }
+        @media screen and (max-width: 768px) {
+            .mt-5 {
+                margin-top: 6rem !important;
+            }
+        }
     </style>
 </head>
 <body style="line-height: 1.15;">
