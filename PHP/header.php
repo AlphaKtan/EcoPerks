@@ -19,8 +19,13 @@
         } catch (Exception $e) {
             echo "<p>エラー: " . $e->getMessage() . "</p>";
     }
+// $imageが存在し、配列であり、'imgpath'キーが存在するか確認
+if (isset($image) && is_array($image) && isset($image['imgpath'])) {
     $imagePath = '../images/' . $image['imgpath']; // 画像のフルパス
-    $defaultImage = '../img/irasto.jpg'; // デフォルト画像のパス
+} else {
+    $imagePath = 'img/default.jpg'; // デフォルト画像のパス
+}
+
 ?>
 <style>
 * {
@@ -287,7 +292,20 @@ a, a:hover, a:active, a:visited {
             <img src="../img/logo_yoko.svg" alt="" class="logo2">
         </div>
         <div class="icon">
-            <img src="<?php echo file_exists($imagePath) ? $imagePath : $defaultImage; ?>" width="50px" height="50px" class="iconImg">
+        <img 
+    src="<?php 
+        // 画像パスを構築
+        $imagePath = '../images/' . $image['imgpath'];
+
+        // 画像が存在すればそのパスを使用、存在しなければデフォルト画像を使用
+        echo (isset($image['imgpath']) && file_exists($imagePath) && !empty($image['imgpath'])) 
+            ? $imagePath 
+            : '../img/irasto.jpg'; 
+    ?>" 
+    width="50px" 
+    height="50px" 
+    class="iconImg">
+
         </div>
     </div>
     <div class="sub_header">
