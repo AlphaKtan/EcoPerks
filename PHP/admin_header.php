@@ -4,6 +4,40 @@
     line-height: 1.15;
 }
 
+html {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* 通常のテキストに対してのフォント設定 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* ヘッダータグに対するフォント設定 */
+h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+/* ボタンに対するフォント設定 */
+button, .btn {
+    font-family: inherit;
+    font-weight: 400;
+}
+
+/* リストに対するフォント設定 */
+ul, ol {
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
 body {
     background-color: #FFF6E9;
     padding: 0px;
@@ -221,9 +255,6 @@ a, a:hover, a:active, a:visited {
         padding: 5px 0; /* 余白をさらに縮小 */
     }
 }
-
-
-
 </style>
 <header>
     <div class="flexBox">
@@ -254,17 +285,17 @@ a, a:hover, a:active, a:visited {
 
 <div class="left-menu">
         <div>
-            <ul class="menu-list">
-                <p class="text-box">シフト設定</p>
+            <ul class="menu-list" style="margin: 1rem 0;">
+                <p class="text-box" style="margin: 5px 0;">シフト設定</p>
                 <li class="menu-item shift"><a href="shift.php" class="a_link"><img src="../img/shift.svg" class="logo"><span class="menu-item-text">シフト追加</span></a></li>
                 <li class="menu-item time_change"><a href="time_change.php" class="a_link"><img src="../img/shift.svg" class="logo"><span class="menu-item-text">シフト削除</span></a></li>
-                <p class="text-box">申込確認</p>
+                <p class="text-box" style="margin-top: 25px;">申込確認</p>
                 <li class="menu-item sankakanri"><a href="sankakanri.php" class="a_link"><img src="../img/user.svg" class="logo"><span class="menu-item-text">参加者一覧</span></a></li>
-                <p class="text-box">当日処理</p>
+                <p class="text-box" style="margin-top: 25px;">当日処理</p>
                 <li class="menu-item create_qr"><a href="create_qr.php" class="a_link"><img src="../img/QR.svg" class="logo"><span class="menu-item-text">QRコード参加ページ</span></a></li>
                 <li class="menu-item end_create_qr"><a href="end_create_qr.php" class="a_link"><img src="../img/QR.svg" class="logo"><span class="menu-item-text">QRコード終了ページ</span></a></li>
-                <p class="text-box">オプション</p>
-                <li class="menu-item admin_login"><a href="./admin_login.php" class="a_link"><img src="../img/main_user.svg" class="logo"><span class="menu-item-text">ログイン</span></a></li>
+                <p class="text-box" style="margin-top: 25px;">オプション</p>
+                <li class="menu-item admin_login"><a href="./logout_page.php" class="a_link"><img src="../img/main_user.svg" class="logo"><span class="menu-item-text">ログアウト</span></a></li>
                 <li class="menu-item access_log"><a href="access_log.php" class="a_link"><img src="../img/log.svg" class="logo"><span class="menu-item-text">アクセスログ表示ページ</span></a></li>
                 <li class="menu-item data"><a href="data.php" class="a_link"><img src="../img/dataDB.svg" class="logo"></span><span class="menu-item-text">データ管理ページ</span></a></li>
             </ul>

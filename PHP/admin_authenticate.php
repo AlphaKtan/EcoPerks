@@ -67,7 +67,7 @@ if(!empty($result)) {
     echo $_SESSION['facility']."でログインしました";
 
 } else {
-    $error_message = "ログイン番号もしくはパスワードが間違えています。";
+    $error_message = "ログインIDもしくはパスワードが間違えています。";
     header("Location: admin_login.php?error=".urlencode($error_message));
     exit();
 }
