@@ -8,12 +8,32 @@
 </head>
 <body>
     <style>        
+    .uploadIconImg {
+        width: 300px;
+        height: 300px;
+    }   
 
-
+        
+    @media screen and (max-width: 768px) {
+        .uploadIconImg {
+            width: 200px;
+            height: 200px;
+        }
+    }
     </style>
 <?php
 // データベース接続情報
 session_start();
+$URL = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$_SESSION['URL'] = $URL;
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['login_message'] = "ログインしてください。"; // メッセージをセッションに保存
+    header('Location: message.php');
+    exit;
+}
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+}
     require_once('../Model/dbmodel.php');
     try {
         $pdo = dbConnect();
@@ -55,6 +75,11 @@ session_start();
             $stmt_username->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
             $stmt_username->execute();
         }
+
+        $yoyakusql = "SELECT username FROM users_kokyaku INNER JOIN users ON users_kokyaku.user_id = users.id WHERE users.id = :user_id";
+        $stmt = $pdo->prepare($yoyakusql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
 ?>
 
 <?php include 'header.php';?>
@@ -63,7 +88,7 @@ session_start();
     <h1>画像アップロード</h1>
     <!--送信ボタンが押された場合-->
     <?php if (isset($_POST['upload'])): ?>
-        <img src="../images/<?php echo $file; ?>" class="iconImg">
+        <img src="../images/<?php echo $file; ?>" class="uploadIconImg">
         <?php 
         if (isset($username)) {
             echo "<h3>$username</h>";
