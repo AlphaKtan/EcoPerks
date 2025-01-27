@@ -85,7 +85,7 @@
         
         <div class="userFlexItem">
             <a href="./upload.php">
-            <h2 class="center">
+            <h2 class="center" style="color: black;">
                 <?php echo $username; ?>
             </h2>
             </a>
