@@ -188,7 +188,7 @@ $_SESSION['user_id'] = 2;
 
 
         // 後で内容を変える
-        document.getElementById('qr-msg').innerHTML = `QRコード：<a href="${code.data}">${code.data}</a>`;
+        // document.getElementById('qr-msg').innerHTML = `QRコード：<a href="${code.data}">${code.data}</a>`;
 
         // 四辺形の描画
         drawRect(code.location);
